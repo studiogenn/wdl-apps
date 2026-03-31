@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />		
+        <script type="text/javascript">
+            "use strict";
+            var custom_blog_css = "";
+            if (document.getElementById("custom_blog_styles")) {
+                document.getElementById("custom_blog_styles").innerHTML += custom_blog_css;
+            } else if (custom_blog_css !== "") {
+                document.head.innerHTML += '<style id="custom_blog_styles" type="text/css">'+custom_blog_css+'</style>';
+            }
+        </script>
+    <meta name='robots' content='noindex, follow' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	
+	<!-- This site is optimized with the Yoast SEO plugin v26.8 - https://yoast.com/product/yoast-seo-wordpress/ -->
+	<title>Page not found | We Deliver Laundry</title>
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:title" content="Page not found | We Deliver Laundry" />
+	<meta property="og:site_name" content="We Deliver Laundry" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wedeliverlaundry.com/#website","url":"https://wedeliverlaundry.com/","name":"We Deliver Laundry","description":"Laundry Pickup and Delivery Service","publisher":{"@id":"https://wedeliverlaundry.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://wedeliverlaundry.com/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en"},{"@type":"Organization","@id":"https://wedeliverlaundry.com/#organization","name":"We Deliver Laundry","url":"https://wedeliverlaundry.com/","logo":{"@type":"ImageObject","inLanguage":"en","@id":"https://wedeliverlaundry.com/#/schema/logo/image/","url":"https://wedeliverlaundry.com/wp-content/uploads/2021/02/WDL_logos_04_Alt_Blue-e1761152661405.png","contentUrl":"https://wedeliverlaundry.com/wp-content/uploads/2021/02/WDL_logos_04_Alt_Blue-e1761152661405.png","width":199,"height":133,"caption":"We Deliver Laundry"},"image":{"@id":"https://wedeliverlaundry.com/#/schema/logo/image/"},"sameAs":["https://www.facebook.com/wedeliverlaundry/","https://www.instagram.com/wedeliverlaundry/"]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+<link rel="alternate" type="application/rss+xml" title="We Deliver Laundry &raquo; Feed" href="https://wedeliverlaundry.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="We Deliver Laundry &raquo; Comments Feed" href="https://wedeliverlaundry.com/comments/feed/" />
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/wedeliverlaundry.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.8.3"}};
+/*! This file is auto-generated */
+!function(s,n){var o,i,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),a=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===a[t]})}function u(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);for(var n=e.getImageData(16,16,1,1),a=0;a<n.data.length;a++)if(0!==n.data[a])return!1;return!0}function f(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\udedf")}return!1}function g(e,t,n,a){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):s.createElement("canvas"),o=r.getContext("2d",{willReadFrequently:!0}),i=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(function(e){i[e]=t(o,e,n,a)}),i}function t(e){var t=s.createElement("script");t.src=e,t.defer=!0,s.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",i=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){s.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+g.toString()+"("+[JSON.stringify(i),f.toString(),p.toString(),u.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"}),r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=function(e){c(n=e.data),r.terminate(),t(n)})}catch(e){}c(n=g(i,f,p,u))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<style id='gt3-core-elementor-core-inline-css' type='text/css'>
+.elementor-section {
+    z-index: 1;
+}
+img {
+    vertical-align: top;
+    outline: none !important;
+    max-width: 100%;
+    height: auto;
+    user-select: none;
+}
+.isotope_item  {
+    opacity: 1;
+ 
+}
+.isotope_item.loading,
+.isotope_item.lazy_loading {
+    opacity: 0 !important;
+}
+.elementor-widget-gt3-core-blog .isotope_item.loading,
+.elementor-widget-gt3-core-blog .isotope_item.lazy_loading {
+    opacity: 1 !important;
+} 
+.elementor-element-gt3_portfolio_archive {
+    margin-bottom: 50px;
+}
+.archive .isotope_wrapper {
+    margin-right: -30px;
+}
+.archive .isotope_wrapper .isotope_item {
+    padding-right: 30px;
+    padding-bottom: 30px;
+}
+
+</style>
+<link rel='stylesheet' id='gt3-core/widgets/column-css' href='https://wedeliverlaundry.com/wp-content/plugins/gt3-themes-core/dist/css/widgets/column.css?ver=1749610028' type='text/css' media='all' />
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='gt3-core/animations-css' href='https://wedeliverlaundry.com/wp-content/plugins/gt3-themes-core/dist/css/animations.css?ver=1749610028' type='text/css' media='all' />
+<link rel='stylesheet' id='elementor-frontend-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/css/custom-frontend.min.css?ver=1771123817' type='text/css' media='all' />
+<link rel='stylesheet' id='widget-image-css' href='https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/css/widget-image.min.css?ver=3.34.4' type='text/css' media='all' />
+<link rel='stylesheet' id='widget-nav-menu-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/css/custom-pro-widget-nav-menu.min.css?ver=1771123817' type='text/css' media='all' />
+<link rel='stylesheet' id='e-sticky-css' href='https://wedeliverlaundry.com/wp-content/plugins/elementor-pro/assets/css/modules/sticky.min.css?ver=3.34.4' type='text/css' media='all' />
+<link rel='stylesheet' id='widget-heading-css' href='https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/css/widget-heading.min.css?ver=3.34.4' type='text/css' media='all' />
+<link rel='stylesheet' id='widget-icon-list-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/css/custom-widget-icon-list.min.css?ver=1771123817' type='text/css' media='all' />
+<link rel='stylesheet' id='widget-social-icons-css' href='https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/css/widget-social-icons.min.css?ver=3.34.4' type='text/css' media='all' />
+<link rel='stylesheet' id='e-apple-webkit-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/css/custom-apple-webkit.min.css?ver=1771123817' type='text/css' media='all' />
+<link rel='stylesheet' id='elementor-post-110-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/css/post-110.css?ver=1771123818' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-5-all-css' href='https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/all.min.css?ver=3.34.4' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-4-shim-css' href='https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/v4-shims.min.css?ver=3.34.4' type='text/css' media='all' />
+<link rel='stylesheet' id='elementor-post-13908-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/css/post-13908.css?ver=1771123818' type='text/css' media='all' />
+<link rel='stylesheet' id='elementor-post-14003-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/css/post-14003.css?ver=1771123818' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css' href='https://wedeliverlaundry.com/wp-includes/css/dashicons.min.css?ver=6.8.3' type='text/css' media='all' />
+<link rel='stylesheet' id='gt3-theme-default-style-css' href='https://wedeliverlaundry.com/wp-content/themes/clengo/style.css?ver=1.1.7' type='text/css' media='all' />
+<link rel='stylesheet' id='gt3-theme-icon-css' href='https://wedeliverlaundry.com/wp-content/themes/clengo/fonts/theme-font/theme_icon.css?ver=6.8.3' type='text/css' media='all' />
+<link rel='stylesheet' id='select2-css' href='https://wedeliverlaundry.com/wp-content/themes/clengo/css/select2.min.css?ver=4.0.5' type='text/css' media='1' />
+<link rel='stylesheet' id='gt3-theme-css' href='https://wedeliverlaundry.com/wp-content/themes/clengo/css/theme.css?ver=1.1.7' type='text/css' media='all' />
+<link rel='stylesheet' id='gt3-elementor-css' href='https://wedeliverlaundry.com/wp-content/themes/clengo/css/base-elementor.css?ver=1.1.7' type='text/css' media='all' />
+<link rel='stylesheet' id='gt3-photo-modules-css' href='https://wedeliverlaundry.com/wp-content/themes/clengo/css/photo_modules.css?ver=1.1.7' type='text/css' media='all' />
+<link rel='stylesheet' id='gt3-responsive-css' href='https://wedeliverlaundry.com/wp-content/themes/clengo/css/responsive.css?ver=1.1.7' type='text/css' media='all' />
+<style id='gt3-responsive-inline-css' type='text/css'>
+/* Custom CSS */*{}body,.main_footer .widget-title,.widget-title,body .widget .yit-wcan-select-open,body .widget-hotspot,body div[id*="ajaxsearchlitesettings"].searchsettings form fieldset legend,.prev_next_links_fullwidht .link_item,span.elementor-drop-cap span.elementor-drop-cap-letter,input[type="date"],input[type="email"],input[type="number"],input[type="password"],input[type="search"],input[type="tel"],input[type="text"],input[type="url"],select,textarea,input[type="submit"],button,blockquote cite,blockquote code,blockquote:before,.blog_post_media--quote .quote_text:before,.blog_post_media__link_text:before {font-family:Poppins;}body {background:#ffffff;font-size:16px;line-height:24px;font-weight:400;color: #646464;}div.wpcf7-response-output {color: #646464 !important;}.post_share_block:hover > .post_share_wrap ul li {background:#ffffff;}.single .post_share_block:hover > .post_share_wrap ul li {background:#ffffff !important;}p {line-height: 1.5;}/* Secondaty Fonts */.secondary {font-family:Poppins;font-size:14px;line-height:20px;font-weight: 400;color: #a3a3a3;}/* Custom Fonts */.module_team .team_info,h1,h2,h3,h4,h5,h6,.gt3_header_builder_component.gt3_header_builder_search_cat_component .gt3-search_cat-select,.main_wrapper .gt3_search_form:before,.widget_search .gt3_search_form label,.main_wrapper .gt3_search_form label,.main_wrapper .sidebar-container .widget_categories ul li > a:hover:before,.main_wrapper .sidebar-container .widget_product_categories ul li > a:hover:before,.main_wrapper .sidebar-container .widget_layered_nav ul li > a:hover:before,.logged-in-as a:hover,.sidebar-container .widget.widget_posts .recent_posts .post_title a,.gt3_header_builder_component .woocommerce-mini-cart__empty-message,.elementor-widget-gt3-core-tabs .ui-tabs-nav .ui-state-default a,.single_prev_next_posts .gt3_post_navi:after,.gt3-wpcf7-subscribe-style input[type="date"], .gt3-wpcf7-subscribe-style input[type="email"], .gt3-wpcf7-subscribe-style input[type="number"], .gt3-wpcf7-subscribe-style input[type="password"], .gt3-wpcf7-subscribe-style input[type="search"], .gt3-wpcf7-subscribe-style input[type="tel"], .gt3-wpcf7-subscribe-style input[type="text"], .gt3-wpcf7-subscribe-style input[type="url"], .gt3-wpcf7-subscribe-style textarea, .gt3-wpcf7-subscribe-style select,.elementor-widget-gt3-core-portfolio .portfolio_wrapper.hover_type6 .text_wrap .title,.gt3_price_item-elementor .gt3_item_cost_wrapper h3,.gt3_custom_header_btn a,.gt3_dropcaps,blockquote,.blog_post_media--quote .quote_text,.blog_post_media__link_text,.comment-reply-title{color: #282828;}.search-results .blogpost_title a {color: #282828 !important;}.search-results .blogpost_title a:hover {color: #90c73e !important;}.gt3_icon_box__icon--number,h1,h2,h3,h4,h5,h6,.strip_template .strip-item a span,.column1 .item_title a,.index_number,.price_item_btn a,.shortcode_tab_item_title,.gt3_twitter .twitt_title,.elementor-widget-gt3-core-counter .counter,.gt3_process_item .gt3_process_item__number,.gt3_dropcaps,.dropcap{font-family: Poppins;font-weight: 600;}.gt3-page-title .page_title_meta.cpt_portf * {font-weight: inherit;}.gt3_page_title_cats a:hover,.format-video .gt3_video__play_button:hover,.widget .calendar_wrap tbody td > a:before,.portfolio_wrapper .elementor-widget-gt3-core-button.gt3_portfolio_view_more_link_wrapper .gt3_module_button_elementor:not(.hover_type2):not(.hover_type4):not(.hover_type5) a,.gt3_custom_header_btn a:hover,span.post-page-numbers.current span.page-number,ul.pagerblock li a.current,.pagination .page-numbers.current{background: #90c73e;}h1,.elementor-widget-heading h1.elementor-heading-title {font-family:Poppins;font-weight:600;font-size:36px;line-height:43px;}h2,.elementor-widget-heading h2.elementor-heading-title,.elementor-widget-gt3-core-blog .blogpost_title {font-family:Poppins;font-weight:600;font-size:30px;line-height:40px;}h3,.elementor-widget-heading h3.elementor-heading-title,#customer_login h2,.gt3_header_builder__login-modal_container h2,.sidepanel .title{font-family:Poppins;font-weight:600;font-size:24px;line-height:30px;}h4,.elementor-widget-heading h4.elementor-heading-title {font-family:Poppins;font-weight:600;font-size:20px;line-height:33px;}h5,.elementor-widget-heading h5.elementor-heading-title {font-family:Poppins;font-weight:600;font-size:18px;line-height:30px;}h6,.elementor-widget-heading h6.elementor-heading-title {font-family:Poppins;font-weight:600;font-size:16px;line-height:24px;}.woocommerce-MyAccount-navigation ul li a,.diagram_item .chart,.item_title a ,.contentarea ul,.blog_post_media--link .blog_post_media__link_text p,.elementor-shortcode .has_only_email input[type="text"],.elementor-shortcode .has_only_email .mc_merge_var label, .woocommerce-LostPassword a:hover{color:#282828;}button,.gt3_header_builder_cart_component .buttons .button,.gt3_module_button a,.learn_more,.testimonials_title,blockquote p:last-child {font-family:Poppins;}/* Theme color */a,.calendar_wrap thead,.gt3_practice_list__image-holder i,.load_more_works:hover,.copyright a:hover,.price_item .items_text ul li:before,.price_item.most_popular .item_cost_wrapper h3,.gt3_practice_list__title a:hover,#select2-gt3_product_cat-results li,.listing_meta,.ribbon_arrow,.flow_arrow,.main_wrapper ol > li:before,.main_wrapper #main_content ul.gt3_list_line li:before,.main_wrapper .elementor-section ul.gt3_list_line li:before,.main_wrapper #main_content ul.gt3_list_disc li:before,.main_wrapper .elementor-section ul.gt3_list_disc li:before,.top_footer a:hover,.main_wrapper .sidebar-container .widget_categories ul > li.current-cat > a,.main_wrapper .sidebar-container .widget_categories ul > li > a:hover,.single_prev_next_posts a:hover .gt3_post_navi:after,.sidebar .widget.gt3_widget.widget_search .search_form:before,.gt3_practice_list__link:before,.load_more_works,.woocommerce ul.products li.product .woocommerce-loop-product__title:hover,.woocommerce ul.cart_list li a:hover,ul.gt3_list_disc li:before,.woocommerce-MyAccount-navigation ul li a:hover,.elementor-widget-gt3-core-portfolio .portfolio_wrapper.hover_type6 .text_wrap:hover .title,.elementor-widget-gt3-core-team .module_team.type3 .team_link a:hover,.elementor-widget-gt3-core-team .module_team .team_title__text a:hover,.search_form.button-hover:hover:after,.widget_product_search .search_form.button-hover:hover:after,.widget.widget_text ul li:hover:before,.widget.widget_product_categories ul li:hover:before,.widget.widget_nav_menu ul li:hover:before,.widget.widget_archive ul li:hover:before,.widget.widget_pages ul li:hover:before,.widget.widget_categories ul li:hover:before,.widget.widget_recent_entries ul li:hover:before,.widget.widget_meta ul li:hover:before,.widget.widget_recent_comments ul li:hover:before,.widget.main_wrapper ul li:hover:before,.widget.main_footer ul li:hover:before,ul.wp-block-archives li:hover:before,ul.wp-block-categories li:hover:before,ul.wp-block-latest-posts li:hover:before,.sidebar .widget_nav_menu ul.menu li.menu-item.current-menu-item > a,.sidebar .widget_nav_menu ul.menu li.current-menu-ancestor > a,.sidebar .widget_nav_menu ul.menu li.current-menu-parent > a,.sidebar .widget_nav_menu ul.menu li.menu-item.current-menu-item:before,.sidebar .widget_nav_menu ul.menu li.current-menu-ancestor:before,.sidebar .widget_nav_menu ul.menu li.current-menu-parent:before {color: #90c73e;}.gt3_practice_list__link:before,.load_more_works,.woocommerce ul.products:not(.list) li.product .gt3_woocommerce_open_control_tag div a:before,.woocommerce ul.products:not(.list) li.product .gt3_woocommerce_open_control_tag .added_to_cart:hover,.woocommerce ul.products:not(.list) li.product .gt3_woocommerce_open_control_tag div a:hover,#back_to_top,.pre_footer .mc_signup_submit{background-color: #90c73e;}.comment-reply-link,.main_wrapper .gt3_product_list_nav li a:hover {color: #90c73e;}.calendar_wrap caption,.widget .calendar_wrap table td#today:before {background: #90c73e;}.wpcf7-form label,.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover,div:not(.packery_wrapper) .blog_post_preview .listing_meta a:hover,.blog_post_media--quote .quote_text a:hover {color: #90c73e;}.blogpost_title a:hover {color: #90c73e !important;}.gt3_icon_box__link a:before,.gt3_icon_box__link a:before,.stripe_item-divider{background-color: #90c73e;}.single-member-page .member-icon:hover,.single-member-page .team-link:hover,.module_testimonial blockquote:before,.module_testimonial .testimonials_title,.sidebar .widget_nav_menu .menu .menu-item:hover > a, .widget.widget_recent_entries > ul > li:hover a,.gt3_widget > ul > li a:hover,#main_content ul.wp-block-archives li > a:hover,#main_content ul.wp-block-categories li > a:hover,#main_content ul.wp-block-latest-posts li > a:hover,#respond #commentform p[class*="comment-form-"] > label.gt3_onfocus,.comment-notes .required,#cancel-comment-reply-link,.top_footer .widget.widget_recent_entries ul li > a:hover {color: #90c73e;}/* menu fonts */.main-menu>.gt3-menu-categories-title,.main-menu>ul,.main-menu>div>ul,.column_menu>ul,.column_menu>.gt3-menu-categories-title,.column_menu>div>ul {font-family:Poppins;font-weight:400;line-height:24px;font-size:16px;}/* sub menu styles */.main-menu ul.sub-menu li.menu-item:hover > a:hover,.column_menu ul li.menu-item:hover > a:hover,.main-menu .current_page_item,.main-menu .current-menu-item,.main-menu .current-menu-ancestor,.gt3_header_builder_menu_component .column_menu .menu li.current_page_item > a,.gt3_header_builder_menu_component .column_menu .menu li.current-menu-item > a,.gt3_header_builder_menu_component .column_menu .menu li.current-menu-ancestor > a,.column_menu .current_page_item,.column_menu .current-menu-item,.column_menu .current-menu-ancestor{color: #90c73e;}.main-menu ul li ul.sub-menu,.column_menu ul li ul.sub-menu,.main_header .header_search__inner .search_form,.mobile_menu_container {background-color: rgba(244,249,235,0) ;color: #ffffff ;}.main_header .header_search__inner .search_text::-webkit-input-placeholder{color: #ffffff !important;}.main_header .header_search__inner .search_text:-moz-placeholder {color: #ffffff !important;}.main_header .header_search__inner .search_text::-moz-placeholder {color: #ffffff !important;}.main_header .header_search__inner .search_text:-ms-input-placeholder {color: #ffffff !important;}/* widgets */body div[id*='ajaxsearchlitesettings'].searchsettings fieldset .label:hover,body div[id*='ajaxsearchlite'] .probox .proclose:hover,.module_team.type2 .team_title__text,.widget.widget_rss > ul > li a,.sidebar-container .widget.widget_posts .recent_posts .listing_meta span,.woocommerce ul.cart_list li .quantity,.woocommerce ul.product_list_widget li .quantity,.gt3_header_builder_cart_component__cart-container .total{color: #282828;}#back_to_top.show:hover {background-color: #282828;}/* blog */.countdown-period,.gt3-page-title_default_color_a .gt3-page-title__content .gt3_breadcrumb a,.gt3-page-title__content .gt3_breadcrumb .current,.gt3-page-title_default_color_a .gt3-page-title__content .gt3_breadcrumb .gt3_pagination_delimiter,.module_team.type2 .team-positions,.gt3_widget > ul > li a,#main_content ul.wp-block-archives li > a,#main_content ul.wp-block-categories li > a,#main_content ul.wp-block-latest-posts li > a,.sidebar .widget_nav_menu .menu .menu-item > a,.blog_post_info,.likes_block.already_liked .icon,.likes_block.already_liked:hover .icon,blockquote cite:before,blockquote code:before,.header_search__inner .search_form,blockquote cite,.isotope-filter a{color: #646464;}div:not(.packery_wrapper) .blog_post_preview .listing_meta {color: rgba(100,100,100, 0.7);}.listing_meta span.post_category a:after {color: rgba(100,100,100, 0.7) !important;}.single_prev_next_posts,ul.pagerblock li a,ul.pagerblock li span,.pagination .page-numbers,.page-link .page-number,.woocommerce .gt3-products-bottom nav.woocommerce-pagination ul li .page-numbers,.gt3_comments_pagination .page,.gt3_comments_pagination .page-numbers{background: rgba(144,199,62, 0.09);}blockquote:before,.blog_post_media--quote .quote_text:before,.blog_post_media__link_text:before{background: rgba(144,199,62, 0.3);}.elementor-widget-gt3-core-testimonials .module_testimonial.style3 .module_content .testimonial_item_wrapper .testimonials-text:before {background: rgba(144,199,62, 0.1);}body .gt3_module_related_posts .blog_post_preview .listing_meta {color: rgba(100,100,100, 0.7);}.blogpost_title i,.widget.widget_recent_comments > ul > li a:hover,.widget.widget_rss > ul > li:hover a,.sidebar-container .widget.widget_posts .recent_posts .post_title a:hover,.comment_info a:hover,.gt3_module_button_list a,.elementor-widget-gt3-core-pricebox .price_button-elementor a:hover,.main_wrapper .content-container ul:not(.variable-items-wrapper) > li:before,.content-container ul > li:before,.main_wrapper .content-container ol > li:before,.gt3_styled_list .gt3_list__icon {color: #90c73e;}.gt3_header_builder_cart_component__cart-container .total strong,.prev_next_links .title,.widget.widget_recent_comments > ul > li a,.gt3_module_button_list a:hover,.widget.widget_recent_entries > ul > li a,.comment-reply-link:hover {color: #282828;}.elementor-widget-gt3-core-pricebox .price_button-elementor a,.gt3_module_title .carousel_arrows a:hover span,.stripe_item:after,.packery-item .packery_overlay,.ui-datepicker .ui-datepicker-buttonpane button.ui-state-hover,.woocommerce div.product form.cart .button,.wc-proceed-to-checkout a.checkout-button.button.alt.wc-forward,.woocommerce-cart table.cart td.actions .coupon .button,.elementor-widget-gt3-core-testimonials .module_testimonial .slick-arrow:hover,.gt3_header_builder .menu_item_line{background: #90c73e;}.elementor-widget-gt3-core-pricebox .price_button-elementor a,.elementor-widget-gt3-core-pricebox .price_button-elementor a:hover,button,.ui-datepicker .ui-datepicker-buttonpane button.ui-state-hover,.woocommerce ul.products li.product .gt3_woocommerce_open_control_tag_bottom div a,.woocommerce ul.products li.product .gt3_woocommerce_open_control_tag_bottom div a:hover,.woocommerce div.product form.cart .button,.woocommerce div.product form.cart .button:hover,.woocommerce-account .woocommerce-MyAccount-content .woocommerce-message--info .button,.woocommerce-account .woocommerce-MyAccount-content .woocommerce-message--info .button:hover,.elementor-widget-gt3-core-testimonials .module_testimonial .slick-arrow:hover {border-color: #90c73e;}.gt3_module_title .carousel_arrows a:hover span:before,input[type="submit"],.mc_form_inside.has_only_email .mc_signup_submit:hover:before{border-color: #90c73e;}.gt3_module_title .carousel_arrows a span,.elementor-slick-slider .slick-slider .slick-prev:after,.elementor-slick-slider .slick-slider .slick-next:after,.woocommerce ul.products li.product .gt3_woocommerce_open_control_tag .button:hover,.woocommerce div.product form.cart button.single_add_to_cart_button.button.alt:hover,.woocommerce .woocommerce-message a.button:hover,.wc-proceed-to-checkout a.checkout-button.button.alt.wc-forward:hover,.woocommerce-cart table.cart td.actions .coupon .button:hover,.woocommerce .woocommerce-message a.woocommerce-Button.button:hover,.woocommerce-account .woocommerce-MyAccount-content .woocommerce-message--info .button:hover,.woocommerce-account .woocommerce-MyAccount-content .woocommerce-Message.woocommerce-Message--info.woocommerce-info .button:hover {background: #282828;}.gt3_module_title .carousel_arrows a span:before {border-color: #282828;}.post_share_block:hover > a,.woocommerce ul.products li.product .gt3_woocommerce_open_control_tag_bottom div a:hover,.woocommerce ul.products.list li.product .gt3_woocommerce_open_control_tag div a:hover:before, .woocommerce ul.products li.product .gt3_woocommerce_open_control_tag_bottom div a:hover:before,.woocommerce div.product form.cart .button:hover,.single-product.woocommerce div.product .product_meta a:hover,.woocommerce div.product span.price,.likes_block:hover .icon,.woocommerce .gt3-pagination_nav nav.woocommerce-pagination ul li a.prev:hover,.woocommerce .gt3-pagination_nav nav.woocommerce-pagination ul li a.next:hover,.woocommerce .gt3-pagination_nav nav.woocommerce-pagination ul li a.gt3_show_all:hover,.woocommerce div.product div.images div.woocommerce-product-gallery__trigger:hover,.mc_form_inside.has_only_email .mc_signup_submit:hover:before,.woocommerce ul.products li.product .price del{color: #90c73e;}.gt3_practice_list__filter,.isotope-filter,.woocommerce ul.products li.product .price {color: #282828;}ul.products:not(.list) li.product:hover .gt3_woocommerce_open_control_tag div a{background: #282828;}.gt3_module_title .external_link .learn_more {line-height:24px;}.gt3_image_rotate .gt3_image_rotate_title {background:#ffffff;}blockquote:before,.blog_post_media__link_text a:hover,h3#reply-title a,.comment_author_says a:hover,.dropcap,.gt3_custom_text a,.gt3_custom_button i,.main_wrapper #main_content ul[class*="gt3_list_"] li:before,.single .post_tags > span,h3#reply-title a:hover {color: #90c73e;}::-moz-selection{background: #90c73e;}::selection{background: #90c73e;}.gt3_practice_list__overlay:before {background-color: #90c73e;}@media only screen and (max-width: 767px){.gt3-hotspot-shortcode-wrapper .gt3_tooltip{background-color: #ffffff;}}.body_pp .gt3_header_builder.header_over_bg,.post-type-archive.post-type-archive-product .gt3_header_builder.header_over_bg{background-color: #ffffff;}.top_footer .widget.widget_posts .recent_posts li > .recent_posts_content .post_title a,.top_footer .widget.widget_archive ul li > a,.top_footer .widget.widget_categories ul li > a,.top_footer .widget.widget_pages ul li > a,.top_footer .widget.widget_meta ul li > a,.top_footer .widget.widget_recent_comments ul li > a,.top_footer .widget.widget_recent_entries ul li > a,.main_footer .top_footer .widget h3.widget-title,.top_footer strong,.top_footer .widget-title{color: #282828 ;}.top_footer{color: #646464;}.main_footer .copyright{color: #646464;}.gt3_header_builder__section--top .gt3_currency_switcher:hover ul,.gt3_header_builder__section--top .gt3_lang_switcher:hover ul{background-color:rgba(255,255,255,1);}.gt3_header_builder__section--middle .gt3_currency_switcher:hover ul,.gt3_header_builder__section--middle .gt3_lang_switcher:hover ul{background-color:rgba(0,0,0,0);}.gt3_header_builder__section--bottom .gt3_currency_switcher:hover ul,.gt3_header_builder__section--bottom .gt3_lang_switcher:hover ul{background-color:rgba(255,255,255,1);}.main_footer .pre_footer{color: #909aa3;}@media only screen and (max-width: 1200px){.header_side_container .logo_container .tablet_logo{height: 33px;}}@media only screen and (max-width: 767px){.header_side_container .logo_container {max-width: 149px;}.header_side_container .logo_container img{height: auto !important;}}.woocommerce div.product form.cart .qty{font-family: Poppins;}.quantity-spinner.quantity-up:hover,.quantity-spinner.quantity-down:hover,.woocommerce .gt3-products-header .gridlist-toggle:hover,.elementor-widget-gt3-core-accordion .item_title .ui-accordion-header-icon:before,.elementor-element.elementor-widget-gt3-core-accordion .accordion_wrapper .item_title.ui-accordion-header-active.ui-state-active,.elementor-widget-gt3-core-accordion .accordion_wrapper .item_title:hover,.top_footer .widget.widget_nav_menu ul li:hover > a,.top_footer .widget.widget_archive ul li:hover > a,.widget_archive ul li:hover .post_count,.top_footer .widget.widget_recent_comments ul li > a:hover,.gt3_widget.widget_meta > ul > li:hover a,.top_footer .widget.widget_pages ul li > a:hover,.top_footer .widget.widget_categories ul li:hover > a,.widget_categories ul li:hover > .post_count{color: #90c73e;}.woocommerce #respond input#submit:hover,.woocommerce a.button:hover,.woocommerce button.button,.woocommerce input.button,.woocommerce input.button:hover,.woocommerce #respond input#submit.alt:hover,.woocommerce a.button.alt:hover,.woocommerce button.button.alt:hover,.woocommerce input.button.alt:hover,.woocommerce #reviews a.button:hover,.woocommerce #reviews button.button:hover,.woocommerce #reviews input.button:hover,.woocommerce #respond input#submit.disabled:hover,.woocommerce #respond input#submit:disabled:hover,.woocommerce #respond input#submit:disabled[disabled]:hover,.woocommerce a.button.disabled:hover,.woocommerce a.button:disabled:hover,.woocommerce a.button:disabled[disabled]:hover,.woocommerce button.button.disabled:hover,.woocommerce button.button:disabled:hover,.woocommerce button.button:disabled[disabled]:hover,.woocommerce input.button.disabled:hover,.woocommerce input.button:disabled:hover,.woocommerce input.button:disabled[disabled]:hover,.tagcloud a:hover,.blog_post_preview.format-gallery .slick-arrow:hover{border-color: #90c73e;background-color: #90c73e;}.woocommerce #respond input#submit.alt.disabled:hover,.woocommerce #respond input#submit.alt:disabled:hover,.woocommerce #respond input#submit.alt:disabled[disabled]:hover,.woocommerce a.button.alt.disabled:hover,.woocommerce a.button.alt:disabled:hover,.woocommerce a.button.alt:disabled[disabled]:hover,.woocommerce button.button.alt.disabled:hover,.woocommerce button.button.alt:disabled:hover,.woocommerce button.button.alt:disabled[disabled]:hover,.woocommerce input.button.alt.disabled:hover,.woocommerce input.button.alt:disabled:hover,.woocommerce input.button.alt:disabled[disabled]:hover,.woocommerce div.product form.cart .qty{font-family: Poppins;}.quantity-spinner.quantity-up:hover,.quantity-spinner.quantity-down:hover,.woocommerce .gt3-products-header .gridlist-toggle:hover,.elementor-widget-gt3-core-accordion .item_title .ui-accordion-header-icon:before,.elementor-element.elementor-widget-gt3-core-accordion .accordion_wrapper .item_title.ui-accordion-header-active.ui-state-active,.woocommerce .widget_price_filter .price_slider_amount .button:hover{color: #90c73e;}.woocommerce #respond input#submit:hover,.woocommerce a.button:hover,.woocommerce button.button:hover,.woocommerce input.button:hover,.woocommerce #respond input#submit.alt:hover,.woocommerce a.button.alt:hover,.woocommerce button.button.alt:hover,.woocommerce input.button.alt:hover,.woocommerce #reviews a.button:hover,.woocommerce #reviews button.button:hover,.woocommerce #reviews input.button:hover,.woocommerce #respond input#submit.disabled:hover,.woocommerce #respond input#submit:disabled:hover,.woocommerce #respond input#submit:disabled[disabled]:hover,.woocommerce a.button.disabled:hover,.woocommerce a.button:disabled:hover,.woocommerce a.button:disabled[disabled]:hover,.woocommerce button.button.disabled:hover,.woocommerce button.button:disabled:hover,.woocommerce button.button:disabled[disabled]:hover,.woocommerce input.button.disabled:hover,.woocommerce input.button:disabled:hover,.woocommerce input.button:disabled[disabled]:hover{border-color: #90c73e;background-color: #90c73e;}.woocommerce #respond input#submit.alt.disabled,.woocommerce #respond input#submit.alt:disabled,.woocommerce #respond input#submit.alt:disabled[disabled],.woocommerce a.button.alt.disabled,.woocommerce a.button.alt:disabled,.woocommerce a.button.alt:disabled[disabled],.woocommerce button.button.alt.disabled,.woocommerce button.button.alt:disabled,.woocommerce button.button.alt:disabled[disabled],.woocommerce input.button.alt.disabled,.woocommerce input.button.alt:disabled,.woocommerce input.button.alt:disabled[disabled]{color: #90c73e;}.woocommerce #respond input#submit.alt.disabled:hover,.woocommerce #respond input#submit.alt:disabled:hover,.woocommerce #respond input#submit.alt:disabled[disabled]:hover,.woocommerce a.button.alt.disabled:hover,.woocommerce a.button.alt:disabled:hover,.woocommerce a.button.alt:disabled[disabled]:hover,.woocommerce button.button.alt.disabled:hover,.woocommerce button.button.alt:disabled:hover,.woocommerce button.button.alt:disabled[disabled]:hover,.woocommerce input.button.alt.disabled:hover,.woocommerce input.button.alt:disabled:hover,.woocommerce input.button.alt:disabled[disabled]:hover,.woocommerce .woocommerce-message a.button {background-color: #90c73e;border-color: #90c73e;}.woocommerce table.shop_table .product-quantity .qty.allotted,.woocommerce div.product form.cart .qty.allotted,.image_size_popup .close,#yith-quick-view-content .product_meta,.single-product.woocommerce div.product .product_meta,.woocommerce div.product form.cart .variations td,.woocommerce div.product .woocommerce-tabs ul.tabs li,.woocommerce .widget_shopping_cart .total,.woocommerce.widget_shopping_cart .total,.woocommerce table.shop_table thead th,.woocommerce table.woocommerce-checkout-review-order-table tfoot td .woocommerce-Price-amount,.gt3_custom_tooltip,.comment_author_says,.comment_author_says a,.woocommerce ul.products li.product .price ins,.woocommerce ul.products li.product .woocommerce-loop-product__title{color: #282828;}.gt3_custom_tooltip:before,.gt3_price_item-elementor .label_text span{background: #282828;}.gt3_custom_tooltip:after {border-color: #282828 transparent transparent transparent;}#yith-quick-view-content .product_meta a,#yith-quick-view-content .product_meta .sku,.single-product.woocommerce div.product .product_meta a,.single-product.woocommerce div.product .product_meta .sku,.select2-container--default .select2-selection--single .select2-selection__rendered,.gt3_404_search .search_form label,.search_result_form .search_form label,.woocommerce .star-rating::before,.woocommerce #reviews p.stars span a,.woocommerce p.stars span a:hover~a::before,.woocommerce p.stars.selected span a.active~a::before,.select2-container--default .select2-results__option--highlighted[aria-selected],.select2-container--default .select2-results__option--highlighted[data-selected],.cart_list.product_list_widget a.remove,.elementor-widget-gt3-core-accordion .accordion_wrapper .item_title,.woocommerce .gt3-pagination_nav nav.woocommerce-pagination ul li .gt3_pagination_delimiter,.woocommerce .woocommerce-widget-layered-nav-list .woocommerce-widget-layered-nav-list__item span.count,.widget_categories ul li .post_count,.widget .tagcloud a,.comment_author_says span {color: #646464;} .woocommerce #reviews a.button:hover,.woocommerce #reviews button.button:hover,.woocommerce #reviews input.button:hover,.woocommerce div.product > .woocommerce-tabs ul.tabs li.active a,.woocommerce ul.products li.product a:hover .woocommerce-loop-product__title,.widget .calendar_wrap table td#today,.woocommerce ul.products li.product .woocommerce-loop-product__title:hover{color: #90c73e;}.woocommerce.single-product #respond #commentform textarea:focus,.woocommerce div.product > .woocommerce-tabs ul.tabs li.active a, .woocommerce div.product .woocommerce-tabs ul.tabs li a:hover{border-bottom-color: #90c73e;}.woocommerce .gridlist-toggle,.woocommerce .gt3-products-header .gt3-gridlist-toggle{background-color: #ffffff;}.woocommerce ul.products li.product .onsale,#yith-quick-view-content .onsale,.woocommerce span.onsale{background-color: rgba(230,55,100,1);}.woocommerce ul.products li.product .onsale.hot-product,#yith-quick-view-content .onsale.hot-product,.woocommerce span.onsale.hot-product{background-color: rgba(113,208,128,1);}.woocommerce ul.products li.product .onsale.new-product,#yith-quick-view-content .onsale.new-product,.woocommerce span.onsale.new-product{background-color: rgba(106,209,228,1);}.price_item .item_cost_wrapper h3,.price_item-cost,.elementor-widget-slider-gt3 .slider_type_1 .controls .slick-position span:not(.all_slides),.elementor-widget-slider-gt3 .slider_type_3 .controls .slick-position span:not(.all_slides),.elementor-widget-slider-gt3 .controls .slick_control_text span:not(.all_slides),.ribbon_arrow .control_text span:not(.all_slides),.elementor-widget-tabs .elementor-tab-desktop-title,.woocommerce-cart .wc-proceed-to-checkout a.checkout-button,.woocommerce.widget_product_categories ul li:hover > a,.product-categories > li.cat-parent:hover .gt3-button-cat-open,.woocommerce .woocommerce-widget-layered-nav-list .woocommerce-widget-layered-nav-list__item:hover > a,.woocommerce .woocommerce-widget-layered-nav-list .woocommerce-widget-layered-nav-list__item:hover span,.cart_list.product_list_widget a.remove:hover,.woocommerce .return-to-shop a.button.wc-backward,.woocommerce ul.products li.product a:hover,.woocommerce table.shop_table td.product-remove a:hover:before,.woocommerce table.shop_table td.product-name a:hover,input[type="submit"]:hover,.widget_product_search .gt3_search_form:hover:after{color: #90c73e;}.price_item .label_text span,a.bordered:hover,.woocommerce ul.products li.product .gt3_woocommerce_open_control_tag_bottom div a,.woocommerce-cart table.cart td.actions > .button:hover, .woocommerce-cart .shipping-calculator-form .button:hover,.woocommerce button.button.alt:hover,.woocommerce #payment .woocommerce-page #place_order,.woocommerce #payment .woocommerce-page #place_order:hover,.woocommerce .return-to-shop a.button.wc-backward:hover,.prev_next_links_fullwidht .link_item,span.ui-slider-handle.ui-state-default.ui-corner-all.ui-state-hover,body table.compare-list .add-to-cart td a:hover,.woocommerce ul.products li.product .gt3_woocommerce_open_control_tag .button,.woocommerce .widget_price_filter .price_slider_amount .button,.woocommerce-account .woocommerce-MyAccount-content .woocommerce-Message.woocommerce-Message--info.woocommerce-info .button,.woo_mini-count > span:not(:empty),input[type="submit"],button,#review_form form#commentform input#submit,.mc_signup_submit,.woocommerce .widget_price_filter .ui-slider .ui-slider-range,.infinite-scroll-request > div,.woocommerce .gt3-products-bottom nav.woocommerce-pagination ul li .page-numbers.current{background-color: #90c73e;}.elementor-shortcode .mc_form_inside.has_only_email .mc_signup_submit:hover {background-color: rgba(100,100,100, 0.9);}ul.pagerblock li a,ul.pagerblock li span,.pagination .page-numbers,.gt3_comments_pagination .page-numbers,.page-link .page-number,.woocommerce nav.woocommerce-pagination ul li a {color: rgba(100,100,100, 1);}ul.pagerblock li a:hover,.pagination .page-numbers a:hover,.woocommerce nav.woocommerce-pagination ul li a:hover{color: #646464;}.gt3_comments_pagination .page-numbers.current,.page-link > span.page-number,.elementor-widget-gt3-core-tabs .ui-tabs-nav .ui-state-default.ui-tabs-active a,#review_form form#commentform input#submit:hover,.woocommerce #respond input#submit,.woocommerce a.button,.woocommerce button.button:hover,.woocommerce input.button,.woocommerce #respond input#submit.alt,.woocommerce a.button.alt,.woocommerce button.button.alt,.woocommerce input.button.alt{background-color: #646464;}a.bordered:hover,.elementor-widget-tabs.elementor-tabs-view-horizontal .elementor-tab-desktop-title.elementor-active:after,.woocommerce .widget_price_filter .ui-slider .ui-slider-handle,.woocommerce .widget_price_filter .ui-slider .ui-slider-handle:before,.woocommerce .widget_price_filter .price_slider_amount .button:hover,.woocommerce .widget_price_filter .price_slider_amount .button{border-color: #90c73e;}.price_item-cost,.countdown-section{font-family: Poppins;}.price_item-cost span,.elementor-widget-slider-gt3 .controls .slick_control_text span.all_slides,.ribbon_arrow .control_text span.all_slides,.woocommerce ul.cart_list li a {color: #646464;}.fs_gallery_wrapper .status .first,.fs_gallery_wrapper .status .divider,.countdown-section,.page_nav_ancor a,.gt3_widget span.woocommerce-Price-amount.amount,.woocommerce table.shop_table td.product-remove a,.woocommerce table.shop_table td.product-name a,.sidebar-container .widget.widget_posts .recent_posts .listing_meta span,.gt3_header_builder_cart_component:hover .gt3_header_builder_cart_component__cart{color: #282828;}/* PixProof */.mfp-container button.mfp-arrow-right:hover {border-left-color: #90c73e;}.mfp-container button.mfp-arrow-left:hover {border-right-color: #90c73e;}/* End PixProof *//* Map */.map_info_marker {background: #f9f9f9;}.map_info_marker:after {border-color: #f9f9f9 transparent transparent transparent;}.marker_info_street_number,.marker_info_street,.footer_back2top .gt3_svg_line_icon, .isotope-filter a:hover,.isotope-filter a.active,button:hover{color: #90c73e;}.marker_info_desc {color: #949494;}.map_info_marker_content {font-family:Poppins;font-weight:600;}.marker_info_divider:after {background: #949494;}.elementor-widget-gt3-core-button .gt3_module_button_elementor:not(.hover_type2) a,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type2 .gt3_module_button__container span.gt3_module_button__cover.front,.isotope-filter a:hover,.isotope-filter a.active {border-color: #90c73e;}.elementor-element.elementor-widget-gt3-core-button .gt3_module_button_elementor a:not(.hover_type2):not(.hover_type5) a:hover{border-color: #90c73e;background: #90c73e;}.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type4 .gt3_module_button__cover:before {background: #90c73e;border: 0px solid #90c73e;}.elementor-widget-gt3-core-button .gt3_module_button_elementor:not(.hover_type2):not(.hover_type4):not(.hover_type5) a,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type2 .gt3_module_button__container span.gt3_module_button__cover.front,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type4 .gt3_module_button__cover:before,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type5 .gt3_module_button__container .gt3_module_button__cover.front:before,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type5 .gt3_module_button__container .gt3_module_button__cover.front:after,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type6 {background: #90c73e;}.elementor-widget-gt3-core-button .gt3_module_button_elementor.button_icon_icon:not(.hover_type2) a:hover .elementor_gt3_btn_icon,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type2 .gt3_module_button__container span.gt3_module_button__cover.back .elementor_btn_icon_container .elementor_gt3_btn_icon,.elementor-widget-gt3-core-button a:hover .icon_svg_btn,.elementor-element.elementor-widget-gt3-core-button .gt3_module_button_elementor a:hover,.elementor-widget-gt3-core-button a:not(.hover_type2):hover .elementor_gt3_btn_text,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type2 .gt3_module_button__container .gt3_module_button__cover.back .elementor_gt3_btn_text,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type4:hover .gt3_module_button__container .gt3_module_button__cover.front .elementor_gt3_btn_text,.elementor-element.elementor-widget-gt3-core-button .gt3_module_button_elementor a:not(.hover_type2):not(.hover_type5){color: #90c73e;}.elementor-widget-gt3-core-button .gt3_module_button_elementor:not(.hover_type2) a:hover,.elementor-widget-gt3-core-button .gt3_module_button_elementor .hover_type2 .gt3_module_button__container span.gt3_module_button__cover.back {border-color: #90c73e;}.gt3_header_builder__section--top{background-color:rgba(255,255,255,1);color:#646464;/*height:75px;*/}.gt3_header_builder__section--top .gt3_header_builder__section-container{height:75px;background-color:rgba(255,255,255,0);}.gt3_header_builder__section--top ul.menu{line-height:75px;}.gt3_header_builder__section--top a:hover,.gt3_header_builder__section--top .menu-item.active_item > a,.gt3_header_builder__section--top .current-menu-item a,.gt3_header_builder__section--top .current-menu-ancestor > a,.gt3_header_builder__section--top .gt3_header_builder_login_component:hover .wpd_login__user_name,.gt3_header_builder__section--top .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:hover, .gt3_header_builder__section--top .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:focus, .gt3_header_builder__section--top .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown .wpml-ls-current-language:hover > a, .gt3_header_builder__section--top .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:hover, .gt3_header_builder__section--top .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:focus, .gt3_header_builder__section--top .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click .wpml-ls-current-language:hover > a{color:#90c73e;}.gt3_header_builder__section--middle{background-color:rgba(0,0,0,0);color:#ffffff;/*height:92px;*/}.gt3_header_builder__section--middle .gt3_header_builder__section-container{height:92px;background-color:rgba(255,255,255,0);}.gt3_header_builder__section--middle ul.menu{line-height:92px;}.gt3_header_builder__section--middle a:hover,.gt3_header_builder__section--middle .menu-item.active_item > a,.gt3_header_builder__section--middle .current-menu-item a,.gt3_header_builder__section--middle .current-menu-ancestor > a,.gt3_header_builder__section--middle .gt3_header_builder_login_component:hover .wpd_login__user_name,.gt3_header_builder__section--middle .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:hover, .gt3_header_builder__section--middle .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:focus, .gt3_header_builder__section--middle .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown .wpml-ls-current-language:hover > a, .gt3_header_builder__section--middle .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:hover, .gt3_header_builder__section--middle .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:focus, .gt3_header_builder__section--middle .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click .wpml-ls-current-language:hover > a{color:#90c73e;}.gt3_header_builder__section--bottom{background-color:rgba(255,255,255,1);color:#232325;/*height:100px;*/}.gt3_header_builder__section--bottom .gt3_header_builder__section-container{height:100px;background-color:rgba(255,255,255,0);}.gt3_header_builder__section--bottom ul.menu{line-height:100px;}.gt3_header_builder__section--bottom a:hover,.gt3_header_builder__section--bottom .menu-item.active_item > a,.gt3_header_builder__section--bottom .current-menu-item a,.gt3_header_builder__section--bottom .current-menu-ancestor > a,.gt3_header_builder__section--bottom .gt3_header_builder_login_component:hover .wpd_login__user_name,.gt3_header_builder__section--bottom .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:hover, .gt3_header_builder__section--bottom .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:focus, .gt3_header_builder__section--bottom .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown .wpml-ls-current-language:hover > a, .gt3_header_builder__section--bottom .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:hover, .gt3_header_builder__section--bottom .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:focus, .gt3_header_builder__section--bottom .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click .wpml-ls-current-language:hover > a{color:#232325;}.gt3_header_builder__section--top__tablet{background-color:rgba(255,255,255,1);color:#646464;/*height:50px;*/}.gt3_header_builder__section--top__tablet .gt3_header_builder__section-container{height:50px;background-color:rgba(255,255,255,0);}.gt3_header_builder__section--top__tablet ul.menu{line-height:50px;}.gt3_header_builder__section--top__tablet a:hover,.gt3_header_builder__section--top__tablet .menu-item.active_item > a,.gt3_header_builder__section--top__tablet .current-menu-item a,.gt3_header_builder__section--top__tablet .current-menu-ancestor > a,.gt3_header_builder__section--top__tablet .gt3_header_builder_login_component:hover .wpd_login__user_name,.gt3_header_builder__section--top__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:hover, .gt3_header_builder__section--top__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:focus, .gt3_header_builder__section--top__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown .wpml-ls-current-language:hover > a, .gt3_header_builder__section--top__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:hover, .gt3_header_builder__section--top__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:focus, .gt3_header_builder__section--top__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click .wpml-ls-current-language:hover > a{color:#90c73e;}.gt3_header_builder__section--middle__tablet{background-color:rgba(244,249,235,1);color:#646464;/*height:72px;*/}.gt3_header_builder__section--middle__tablet .gt3_header_builder__section-container{height:72px;background-color:rgba(255,255,255,0);}.gt3_header_builder__section--middle__tablet ul.menu{line-height:72px;}.gt3_header_builder__section--middle__tablet a:hover,.gt3_header_builder__section--middle__tablet .menu-item.active_item > a,.gt3_header_builder__section--middle__tablet .current-menu-item a,.gt3_header_builder__section--middle__tablet .current-menu-ancestor > a,.gt3_header_builder__section--middle__tablet .gt3_header_builder_login_component:hover .wpd_login__user_name,.gt3_header_builder__section--middle__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:hover, .gt3_header_builder__section--middle__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:focus, .gt3_header_builder__section--middle__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown .wpml-ls-current-language:hover > a, .gt3_header_builder__section--middle__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:hover, .gt3_header_builder__section--middle__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:focus, .gt3_header_builder__section--middle__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click .wpml-ls-current-language:hover > a{color:#90c73e;}.gt3_header_builder__section--bottom__tablet{background-color:rgba(255,255,255,1);color:#232325;/*height:100px;*/}.gt3_header_builder__section--bottom__tablet .gt3_header_builder__section-container{height:100px;background-color:rgba(255,255,255,0);}.gt3_header_builder__section--bottom__tablet ul.menu{line-height:100px;}.gt3_header_builder__section--bottom__tablet a:hover,.gt3_header_builder__section--bottom__tablet .menu-item.active_item > a,.gt3_header_builder__section--bottom__tablet .current-menu-item a,.gt3_header_builder__section--bottom__tablet .current-menu-ancestor > a,.gt3_header_builder__section--bottom__tablet .gt3_header_builder_login_component:hover .wpd_login__user_name,.gt3_header_builder__section--bottom__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:hover, .gt3_header_builder__section--bottom__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:focus, .gt3_header_builder__section--bottom__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown .wpml-ls-current-language:hover > a, .gt3_header_builder__section--bottom__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:hover, .gt3_header_builder__section--bottom__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:focus, .gt3_header_builder__section--bottom__tablet .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click .wpml-ls-current-language:hover > a{color:#232325;}.gt3_header_builder__section--top__mobile{background-color:rgba(255,255,255,1);color:#646464;/*height:50px;*/}.gt3_header_builder__section--top__mobile .gt3_header_builder__section-container{height:50px;background-color:rgba(255,255,255,0);}.gt3_header_builder__section--top__mobile ul.menu{line-height:50px;}.gt3_header_builder__section--top__mobile a:hover,.gt3_header_builder__section--top__mobile .menu-item.active_item > a,.gt3_header_builder__section--top__mobile .current-menu-item a,.gt3_header_builder__section--top__mobile .current-menu-ancestor > a,.gt3_header_builder__section--top__mobile .gt3_header_builder_login_component:hover .wpd_login__user_name,.gt3_header_builder__section--top__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:hover, .gt3_header_builder__section--top__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:focus, .gt3_header_builder__section--top__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown .wpml-ls-current-language:hover > a, .gt3_header_builder__section--top__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:hover, .gt3_header_builder__section--top__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:focus, .gt3_header_builder__section--top__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click .wpml-ls-current-language:hover > a{color:#90c73e;}.gt3_header_builder__section--middle__mobile{background-color:rgba(244,249,235,1);color:#646464;/*height:72px;*/}.gt3_header_builder__section--middle__mobile .gt3_header_builder__section-container{height:72px;background-color:rgba(255,255,255,0);}.gt3_header_builder__section--middle__mobile ul.menu{line-height:72px;}.gt3_header_builder__section--middle__mobile a:hover,.gt3_header_builder__section--middle__mobile .menu-item.active_item > a,.gt3_header_builder__section--middle__mobile .current-menu-item a,.gt3_header_builder__section--middle__mobile .current-menu-ancestor > a,.gt3_header_builder__section--middle__mobile .gt3_header_builder_login_component:hover .wpd_login__user_name,.gt3_header_builder__section--middle__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:hover, .gt3_header_builder__section--middle__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:focus, .gt3_header_builder__section--middle__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown .wpml-ls-current-language:hover > a, .gt3_header_builder__section--middle__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:hover, .gt3_header_builder__section--middle__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:focus, .gt3_header_builder__section--middle__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click .wpml-ls-current-language:hover > a{color:#90c73e;}.gt3_header_builder__section--bottom__mobile{background-color:rgba(255,255,255,1);color:#232325;/*height:100px;*/}.gt3_header_builder__section--bottom__mobile .gt3_header_builder__section-container{height:100px;background-color:rgba(255,255,255,0);}.gt3_header_builder__section--bottom__mobile ul.menu{line-height:100px;}.gt3_header_builder__section--bottom__mobile a:hover,.gt3_header_builder__section--bottom__mobile .menu-item.active_item > a,.gt3_header_builder__section--bottom__mobile .current-menu-item a,.gt3_header_builder__section--bottom__mobile .current-menu-ancestor > a,.gt3_header_builder__section--bottom__mobile .gt3_header_builder_login_component:hover .wpd_login__user_name,.gt3_header_builder__section--bottom__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:hover, .gt3_header_builder__section--bottom__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown a:focus, .gt3_header_builder__section--bottom__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown .wpml-ls-current-language:hover > a, .gt3_header_builder__section--bottom__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:hover, .gt3_header_builder__section--bottom__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click a:focus, .gt3_header_builder__section--bottom__mobile .gt3_header_builder_wpml_component .wpml-ls-legacy-dropdown-click .wpml-ls-current-language:hover > a{color:#232325;}.site_wrapper{margin-top: 80px;}
+</style>
+<link rel='stylesheet' id='eael-general-css' href='https://wedeliverlaundry.com/wp-content/plugins/essential-addons-for-elementor-lite/assets/front-end/css/view/general.min.css?ver=6.5.9' type='text/css' media='all' />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900,100italic,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic&#038;display=swap&#038;ver=1607719245" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900,100italic,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic&#038;display=swap&#038;ver=1607719245" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900,100italic,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic&#038;display=swap&#038;ver=1607719245" /></noscript><link rel='stylesheet' id='elementor-gf-local-worksans-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/google-fonts/css/worksans.css?ver=1748425554' type='text/css' media='all' />
+<link rel='stylesheet' id='elementor-gf-local-montserrat-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/google-fonts/css/montserrat.css?ver=1748425533' type='text/css' media='all' />
+<link rel='stylesheet' id='elementor-gf-local-inter-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/google-fonts/css/inter.css?ver=1756829147' type='text/css' media='all' />
+<link rel='stylesheet' id='elementor-gf-local-dmsans-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/google-fonts/css/dmsans.css?ver=1765570359' type='text/css' media='all' />
+<script type="text/javascript" id="jquery-core-js-extra">
+/* <![CDATA[ */
+var gt3_themes_core = {"ajaxurl":"https:\/\/wedeliverlaundry.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/lib/font-awesome/js/v4-shims.min.js?ver=3.34.4" id="font-awesome-4-shim-js"></script>
+
+<!-- Google tag (gtag.js) snippet added by Site Kit -->
+<!-- Google Analytics snippet added by Site Kit -->
+<!-- Google Ads snippet added by Site Kit -->
+<script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=GT-55NNLBPX" id="google_gtagjs-js" async></script>
+<script type="text/javascript" id="google_gtagjs-js-after">
+/* <![CDATA[ */
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["wedeliverlaundry.com"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "GT-55NNLBPX");
+gtag("config", "AW-783874388");
+ window._googlesitekit = window._googlesitekit || {}; window._googlesitekit.throttledEvents = []; window._googlesitekit.gtagEvent = (name, data) => { var key = JSON.stringify( { name, data } ); if ( !! window._googlesitekit.throttledEvents[ key ] ) { return; } window._googlesitekit.throttledEvents[ key ] = true; setTimeout( () => { delete window._googlesitekit.throttledEvents[ key ]; }, 5 ); gtag( "event", name, { ...data, event_source: "site-kit" } ); }; 
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/themes/clengo/js/select2.full.min.js?ver=4.0.5" id="select2-js"></script>
+<link rel="https://api.w.org/" href="https://wedeliverlaundry.com/wp-json/" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://wedeliverlaundry.com/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 6.8.3" />
+<style id="essential-blocks-global-styles">
+            :root {
+                --eb-global-primary-color: #101828;
+--eb-global-secondary-color: #475467;
+--eb-global-tertiary-color: #98A2B3;
+--eb-global-text-color: #475467;
+--eb-global-heading-color: #1D2939;
+--eb-global-link-color: #444CE7;
+--eb-global-background-color: #F9FAFB;
+--eb-global-button-text-color: #FFFFFF;
+--eb-global-button-background-color: #101828;
+--eb-gradient-primary-color: linear-gradient(90deg, hsla(259, 84%, 78%, 1) 0%, hsla(206, 67%, 75%, 1) 100%);
+--eb-gradient-secondary-color: linear-gradient(90deg, hsla(18, 76%, 85%, 1) 0%, hsla(203, 69%, 84%, 1) 100%);
+--eb-gradient-tertiary-color: linear-gradient(90deg, hsla(248, 21%, 15%, 1) 0%, hsla(250, 14%, 61%, 1) 100%);
+--eb-gradient-background-color: linear-gradient(90deg, rgb(250, 250, 250) 0%, rgb(233, 233, 233) 49%, rgb(244, 243, 243) 100%);
+
+                --eb-tablet-breakpoint: 1024px;
+--eb-mobile-breakpoint: 767px;
+
+            }
+            
+            
+        </style><meta name="generator" content="Site Kit by Google 1.171.0" /><!-- HFCM by 99 Robots - Snippet # 2: Endorsal Script Global -->
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "LocalBusiness",
+  "name" : "We Deliver Laundry",
+  "image" : "https://wedeliverlaundry.com/wp-content/uploads/2020/03/WDL_logos_04_Main_Blue.png",
+  "telephone" : "855-968-5511",
+  "email" : "hello@wedeliverlaundry.com",
+  "address" : {
+    "@type" : "PostalAddress",
+    "addressLocality" : "Manhattan",
+    "addressRegion" : "New York",
+    "addressCountry" : "USA",
+    "postalCode" : "10012"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "We Deliver Laundry"
+  },
+  "url" : "https://wedeliverlaundry.com/"
+}
+</script>
+
+<script>!function(){window;var e,t=document;e=function(){var e=t.createElement("script");e.defer=!0,e.src="https://cdn.endorsal.io/widgets/widget.min.js";var n=t.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n),e.onload=function(){NDRSL.init("63c65c124b528654bc683b70")}},"interactive"===t.readyState||"complete"===t.readyState?e():t.addEventListener("DOMContentLoaded",e())}();</script>
+<!-- /end HFCM by 99 Robots -->
+<!-- HFCM by 99 Robots - Snippet # 3: Tag manager -->
+<!-- Google Tag Manager -->
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+
+})(window,document,'script','dataLayer','GTM-T53NGMDS');</script>
+
+<!-- End Google Tag Manager -->
+<!-- /end HFCM by 99 Robots -->
+<!-- HFCM by 99 Robots - Snippet # 4: podium -->
+<script defer src="https://connect.podium.com/widget.js#ORG_TOKEN=8641dcf8-330b-46f2-8ab5-c9a09db7c1b6" id="podium-widget" data-organization-api-token="8641dcf8-330b-46f2-8ab5-c9a09db7c1b6"></script>
+<!-- /end HFCM by 99 Robots -->
+<meta name="ti-site-data" content="eyJyIjoiMTowITc6MCEzMDowIiwibyI6Imh0dHBzOlwvXC93ZWRlbGl2ZXJsYXVuZHJ5LmNvbVwvd3AtYWRtaW5cL2FkbWluLWFqYXgucGhwP2FjdGlvbj10aV9vbmxpbmVfdXNlcnNfZ29vZ2xlJmFtcDtwPSUyRndwLWNvbnRlbnQlMkZ1cGxvYWRzJTJGMjAyNSUyRjA1JTJGU3ByaW5nLUZyZXNoLVN0YXJ0cy1MYXVuZHJ5LnBuZyZhbXA7X3dwbm9uY2U9MjljZTdjODg3OSJ9" />	<script>
+		;(function($) {
+			'use strict'
+
+			var testMobile;
+			var isMobile = {
+				Android: function() {
+					return navigator.userAgent.match(/Android/i);
+				},
+				BlackBerry: function() {
+					return navigator.userAgent.match(/BlackBerry/i);
+				},
+				iOS: function() {
+					return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+				},
+				Opera: function() {
+					return navigator.userAgent.match(/Opera Mini/i);
+				},
+				Windows: function() {
+					return navigator.userAgent.match(/IEMobile/i);
+				},
+				any: function() {
+					return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+				}
+			};
+
+			var gt3_parallax = function() {
+				testMobile = isMobile.any();
+				if (jQuery(".gt3_parallax-yes").length && testMobile == null) {
+					jQuery(".gt3_parallax-yes").parallax("50%", 0.3);
+				}
+			};
+
+			// Dom Ready
+			jQuery(function() {
+				gt3_parallax();
+			});
+		})(jQuery);
+
+		/*
+		jQuery Parallax 1.1.3
+		Author: Ian Lunn
+		Plugin URL: https://www.ianlunn.co.uk/plugins/jquery-parallax/
+
+		Dual licensed under the MIT and GPL licenses:
+		https://www.opensource.org/licenses/mit-license.php
+		https://www.gnu.org/licenses/gpl.html
+		*/
+		!function(n){var t=n(window),e=t.height();t.resize(function(){e=t.height()}),n.fn.parallax=function(o,r,i){function u(){var i=t.scrollTop();l.each(function(t,u){var l=n(u),f=l.offset().top,s=a(l);i>f+s||f>i+e||l.css("backgroundPosition",o+" "+Math.round((l.data("firstTop")-i)*r)+"px")})}var a,l=n(this);l.each(function(t,e){$element=n(e),$element.data("firstTop",$element.offset().top)}),a=i?function(n){return n.outerHeight(!0)}:function(n){return n.height()},(arguments.length<1||null===o)&&(o="50%"),(arguments.length<2||null===r)&&(r=.1),(arguments.length<3||null===i)&&(i=!0),t.bind("scroll",u).resize(u),u()}}(jQuery);
+
+	</script>
+<meta name="framework" content="Redux 4.3.2" /><meta name="generator" content="Elementor 3.34.4; features: e_font_icon_svg, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-swap">
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>			<style>
+				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
+				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload) * {
+					background-image: none !important;
+				}
+				@media screen and (max-height: 1024px) {
+					.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload),
+					.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload) * {
+						background-image: none !important;
+					}
+				}
+				@media screen and (max-height: 640px) {
+					.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload),
+					.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload) * {
+						background-image: none !important;
+					}
+				}
+			</style>
+			<script>/**
+ * We Deliver Laundry — PostHog Tracking
+ * ======================================
+ * PostHog SDK + site-wide tracking + CleanCloud widget events.
+ * Adapted for CleanCloud running as inline JS (not iframe).
+ *
+ * Install via: Elementor > Custom Code (wp_head, priority 1)
+ * Wrap in <script> tags when pasting into Elementor.
+ * Must load BEFORE CleanCloud's embed script.
+ */
+
+// ─── PostHog SDK Loader ─────────────────────────────────────────────
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init Rr Mr fi Cr Ar ci Tr Fr capture Mi calculateEventProperties Lr register register_once register_for_session unregister unregister_for_session Hr getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty Ur jr createPersonProfile zr kr Br opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Dr debug M Nr getPageViewId captureTraceFeedback captureTraceMetric $r".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+posthog.init('phc_jTCyplvSb3DR3M4uNbUBbnMxDyu73O6qgkzKj4WzeWJ', {
+  api_host: 'https://wedeliverlaundry.com/ingest',
+  ui_host: 'https://us.posthog.com',
+  autocapture: true,
+  capture_pageview: true,
+  capture_pageleave: true,
+  capture_hashes: true,
+  person_profiles: 'always',
+  disable_session_recording: false,
+  session_recording: {
+    maskAllInputs: false,
+    recordCanvas: true,
+    recordCrossOriginIframes: true,
+    inlineStylesheet: true,
+    collectFonts: false,
+    sample_rate: 1.0,
+    minimum_duration: null,
+    network_payload_capture: {
+      recordHeaders: true,
+      recordBody: true
+    }
+  },
+  persistence: 'cookie',
+  cross_subdomain_cookie: true,
+  cookie_domain: '.wedeliverlaundry.com',
+  secure_cookie: true,
+  cookie_expiration: 365
+});
+
+
+// ─── Tracking Layer ─────────────────────────────────────────────────
+(function () {
+  'use strict';
+
+  var DEBUG = false;
+  var SCROLL_THRESHOLDS = [25, 50, 75, 90];
+
+  // CleanCloud localStorage keys
+  var CC_KEYS = {
+    uid: '_cc_uid',
+    order: '_cc_order_data',
+    token: '_cc_token',
+    customer: '_cc_customer'
+  };
+
+  var state = {
+    uid: null,
+    email: null,
+    orderId: null,
+    orderStarted: false,
+    orderItems: 0,
+    scrollMarks: {},
+    lastStep: null
+  };
+
+  var originalLS = window.localStorage;
+
+  // ─── Logging ───────────────────────────────────────────────────────
+
+  function log() {
+    if (!DEBUG) return;
+    console.log.apply(console, ['[WDL]'].concat(Array.prototype.slice.call(arguments)));
+  }
+
+  // ─── Utilities ─────────────────────────────────────────────────────
+
+  function safeJSON(str) {
+    try { return JSON.parse(str); } catch (e) { return null; }
+  }
+
+  function getPageContext() {
+    return {
+      page_path: window.location.pathname,
+      page_title: document.title,
+      page_url: window.location.href
+    };
+  }
+
+  // ─── PostHog Helpers ───────────────────────────────────────────────
+
+  function waitForPostHog(cb) {
+    if (typeof posthog !== 'undefined' && posthog.capture) { cb(); }
+    else { setTimeout(function () { waitForPostHog(cb); }, 200); }
+  }
+
+  function track(eventName, props) {
+    waitForPostHog(function () {
+      posthog.capture(eventName, Object.assign({ _source: 'wdl_tracker' }, getPageContext(), props || {}));
+    });
+    log('Event:', eventName, props);
+  }
+
+
+  // ═════════════════════════════════════════════════════════════════════
+  // 1. IDENTITY STITCHING
+  // ═════════════════════════════════════════════════════════════════════
+  //
+  // Priority: cc_uid (CleanCloud customer ID) > email
+  // Flow:
+  //   1. Anonymous → PostHog assigns anon_id
+  //   2. Email captured (form or widget) → identify(email)
+  //   3. CleanCloud login → identify(cc_uid), merges email → cc_uid
+
+  function identifyWithUID(uid) {
+    if (!uid || state.uid === uid) return;
+    state.uid = uid;
+    waitForPostHog(function () {
+      var props = { cleancloud_id: uid };
+      if (state.email) props.email = state.email;
+      posthog.identify(uid, props, { first_seen: new Date().toISOString() });
+    });
+    log('Identified (cc_uid):', uid);
+  }
+
+  function identifyWithEmail(email, properties) {
+    if (!email) return;
+    state.email = email;
+    waitForPostHog(function () {
+      if (state.uid) {
+        posthog.setPersonProperties(Object.assign({ email: email }, properties || {}));
+      } else {
+        posthog.identify(email, Object.assign({ email: email }, properties || {}));
+      }
+    });
+    log('Identified (email):', email);
+  }
+
+  function resetIdentity() {
+    waitForPostHog(function () { posthog.reset(); });
+    state.uid = null;
+    state.email = null;
+    log('Identity reset');
+  }
+
+
+  // ═════════════════════════════════════════════════════════════════════
+  // 2. CLEANCLOUD WIDGET TRACKING (inline JS, not iframe)
+  // ═════════════════════════════════════════════════════════════════════
+
+  // ─── 2A: localStorage Proxy ────────────────────────────────────────
+
+  function installStorageProxy() {
+    var handler = {
+      get: function (target, prop) {
+        if (prop === 'setItem') {
+          return function (key, val) {
+            onStorageWrite(key, val);
+            return target.setItem(key, val);
+          };
+        }
+        if (prop === 'removeItem') {
+          return function (key) {
+            onStorageRemove(key);
+            return target.removeItem(key);
+          };
+        }
+        if (prop === 'clear') {
+          return function () {
+            onStorageClear();
+            return target.clear();
+          };
+        }
+        var value = target[prop];
+        return typeof value === 'function' ? value.bind(target) : value;
+      },
+      set: function (target, prop, value) {
+        onStorageWrite(prop, value);
+        target.setItem(prop, value);
+        return true;
+      }
+    };
+
+    try {
+      Object.defineProperty(window, 'localStorage', {
+        value: new Proxy(originalLS, handler),
+        configurable: true,
+        writable: false
+      });
+      log('localStorage proxy installed');
+    } catch (e) {
+      console.error('[WDL] localStorage proxy failed:', e);
+    }
+  }
+
+  function onStorageWrite(key, value) {
+    if (key === CC_KEYS.uid) {
+      identifyWithUID(value);
+      return;
+    }
+
+    if (key === CC_KEYS.customer) {
+      var customer = safeJSON(value);
+      if (customer) {
+        var email = customer.email || customer.emailAddress || null;
+        var name = customer.name || customer.fullName || null;
+        var phone = customer.phone || customer.phoneNumber || null;
+        if (email) identifyWithEmail(email, { name: name, phone: phone });
+        track('cc_customer_loaded', { has_email: !!email, has_phone: !!phone });
+      }
+      return;
+    }
+
+    if (key === CC_KEYS.order) {
+      handleOrderData(value);
+      return;
+    }
+  }
+
+  function onStorageRemove(key) {
+    if (key === CC_KEYS.uid) resetIdentity();
+    if (key === CC_KEYS.order) {
+      track('order_cleared', { order_id: state.orderId });
+      state.orderId = null;
+      state.orderStarted = false;
+      state.orderItems = 0;
+    }
+  }
+
+  function onStorageClear() {
+    resetIdentity();
+    state.orderId = null;
+    state.orderStarted = false;
+    state.orderItems = 0;
+  }
+
+  function handleOrderData(raw) {
+    var parsed = safeJSON(raw);
+    if (!parsed || !parsed.order) return;
+
+    var order = parsed.order;
+    var orderId = order.id || order.orderId || null;
+
+    if (orderId && orderId !== state.orderId) {
+      state.orderId = orderId;
+      state.orderStarted = false;
+    }
+
+    if (!state.orderStarted) {
+      state.orderStarted = true;
+      track('order_started', { order_id: orderId });
+    }
+
+    var items = order.items || order.orderItems || [];
+    var itemCount = Array.isArray(items) ? items.length : 0;
+    if (itemCount !== state.orderItems) {
+      state.orderItems = itemCount;
+      track('order_updated', {
+        order_id: orderId,
+        item_count: itemCount,
+        subtotal: order.subtotal || order.total || null,
+        service_type: order.serviceType || order.service || null,
+        has_premium_care: !!(order.premiumCare || order.delicates),
+        tip_amount: order.tip || order.tipAmount || null,
+        promo_code: order.promoCode || null
+      });
+    }
+  }
+
+  // ─── 2B: CleanCloud API Intercept ──────────────────────────────────
+
+  var originalFetch = window.fetch;
+  var originalXHROpen = XMLHttpRequest.prototype.open;
+  var originalXHRSend = XMLHttpRequest.prototype.send;
+
+  function isCleanCloudURL(url) {
+    if (!url) return false;
+    return url.toLowerCase().indexOf('cleancloud') !== -1;
+  }
+
+  function extractEndpoint(url) {
+    try { return new URL(url, window.location.origin).pathname; } catch (e) { return url; }
+  }
+
+  function installNetworkInterceptors() {
+    window.fetch = function (input, init) {
+      var url = typeof input === 'string' ? input : (input && input.url) || '';
+      var method = (init && init.method) || 'GET';
+
+      if (isCleanCloudURL(url)) {
+        var endpoint = extractEndpoint(url);
+        track('cc_api_call', { method: method, endpoint: endpoint });
+
+        return originalFetch.apply(this, arguments).then(function (response) {
+          handleAPIResponse(method, endpoint, response.status);
+          return response;
+        });
+      }
+      return originalFetch.apply(this, arguments);
+    };
+
+    XMLHttpRequest.prototype.open = function (method, url) {
+      this._wdlMethod = method;
+      this._wdlUrl = url;
+      return originalXHROpen.apply(this, arguments);
+    };
+
+    XMLHttpRequest.prototype.send = function (body) {
+      var xhr = this;
+      var url = xhr._wdlUrl || '';
+      var method = xhr._wdlMethod || 'GET';
+
+      if (isCleanCloudURL(url)) {
+        var endpoint = extractEndpoint(url);
+        track('cc_api_call', { method: method, endpoint: endpoint });
+        xhr.addEventListener('load', function () {
+          handleAPIResponse(method, endpoint, xhr.status);
+        });
+      }
+      return originalXHRSend.apply(this, arguments);
+    };
+
+    log('Network interceptors installed');
+  }
+
+  function handleAPIResponse(method, endpoint, status) {
+    var ep = endpoint.toLowerCase();
+
+    if (method === 'POST' && (ep.indexOf('/order') !== -1 || ep.indexOf('/checkout') !== -1)) {
+      if (status >= 200 && status < 300) {
+        track('order_completed', { order_id: state.orderId, item_count: state.orderItems });
+      } else {
+        track('order_failed', { order_id: state.orderId, status: status });
+      }
+    }
+
+    if (ep.indexOf('/login') !== -1 || ep.indexOf('/auth') !== -1 || ep.indexOf('/signin') !== -1) {
+      if (status >= 200 && status < 300) track('cc_login', { method: method });
+    }
+
+    if (method === 'POST' && (ep.indexOf('/register') !== -1 || ep.indexOf('/signup') !== -1)) {
+      if (status >= 200 && status < 300) track('cc_signup', {});
+    }
+  }
+
+  // ─── 2C: Widget Step Tracking via DOM ─────────────────────────────
+
+  function installWidgetStepTracker() {
+    var container = document.getElementById('myStoreContainer');
+    if (!container) return;
+
+    var observer = new MutationObserver(function () {
+      var heading = container.querySelector('h1, h2, .__cc_heading, [class*="heading"]');
+      var stepText = heading ? heading.textContent.trim().toLowerCase() : '';
+      if (!stepText || stepText === state.lastStep) return;
+      state.lastStep = stepText;
+
+      var stepMap = {
+        'welcome': 'widget_step_welcome',
+        'sign in': 'widget_step_login',
+        'log in': 'widget_step_login',
+        'sign up': 'widget_step_signup',
+        'register': 'widget_step_signup',
+        'address': 'widget_step_address',
+        'pickup': 'widget_step_schedule',
+        'schedule': 'widget_step_schedule',
+        'delivery': 'widget_step_schedule',
+        'services': 'widget_step_services',
+        'select': 'widget_step_services',
+        'items': 'widget_step_items',
+        'order details': 'widget_step_items',
+        'review': 'widget_step_review',
+        'confirm': 'widget_step_confirm',
+        'payment': 'widget_step_payment',
+        'thank': 'widget_step_complete',
+        'success': 'widget_step_complete',
+        'confirmed': 'widget_step_complete'
+      };
+
+      var eventName = null;
+      var keys = Object.keys(stepMap);
+      for (var i = 0; i < keys.length; i++) {
+        if (stepText.indexOf(keys[i]) !== -1) {
+          eventName = stepMap[keys[i]];
+          break;
+        }
+      }
+
+      track(eventName || 'widget_step_changed', {
+        step_heading: stepText.substring(0, 80),
+        order_id: state.orderId
+      });
+    });
+
+    observer.observe(container, { childList: true, subtree: true, characterData: true });
+    log('Widget step tracker installed');
+  }
+
+
+  // ═════════════════════════════════════════════════════════════════════
+  // 3. SITE-WIDE TRACKING
+  // ═════════════════════════════════════════════════════════════════════
+
+  // ─── 3A: Scroll Depth ─────────────────────────────────────────────
+
+  function trackScrollDepth() {
+    state.scrollMarks = {};
+    var ticking = false;
+
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(function () {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var docHeight = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight
+        ) - window.innerHeight;
+
+        if (docHeight <= 0) { ticking = false; return; }
+        var percent = Math.round((scrollTop / docHeight) * 100);
+
+        SCROLL_THRESHOLDS.forEach(function (t) {
+          if (percent >= t && !state.scrollMarks[t]) {
+            state.scrollMarks[t] = true;
+            track('scroll_depth', { depth_percent: t });
+          }
+        });
+        ticking = false;
+      });
+    }, { passive: true });
+
+    log('Scroll tracking installed');
+  }
+
+  // ─── 3B: Phone & Email Click Tracking ─────────────────────────────
+
+  function trackIntentClicks() {
+    document.addEventListener('click', function (e) {
+      var target = e.target;
+      while (target && target.tagName !== 'A') target = target.parentElement;
+      if (!target) return;
+
+      var href = target.href || '';
+      var text = (target.textContent || '').trim().substring(0, 100);
+
+      if (href.indexOf('tel:') === 0) {
+        track('phone_clicked', {
+          phone_number: href.replace('tel:', '').replace(/\s/g, ''),
+          link_text: text
+        });
+      } else if (href.indexOf('mailto:') === 0) {
+        track('email_clicked', {
+          email_address: href.replace('mailto:', '').split('?')[0],
+          link_text: text
+        });
+      } else if (href.match(/sms:|whatsapp:|wa\.me/i)) {
+        track('messaging_clicked', { link_url: href, link_text: text });
+      }
+    }, true);
+
+    log('Intent click tracking installed');
+  }
+
+  // ─── 3C: Elementor Form Submissions ────────────────────────────────
+
+  function trackElementorForms() {
+    function bindJQuery() {
+      if (!window.jQuery) return false;
+
+      jQuery(document).on('submit_success', '.elementor-form', function (event, response) {
+        var $form = jQuery(this);
+        var formName = $form.find('[name="form_name"]').val()
+          || $form.closest('.elementor-widget').data('id')
+          || 'unknown';
+
+        var fields = {};
+        $form.find('input, select, textarea').each(function () {
+          var name = this.name || this.id || '';
+          var value = this.value || '';
+          if (name.match(/password|pass|pwd|credit|card|cvv|ssn|token|nonce|_wp/i)) return;
+          if (this.type === 'hidden' && !name.match(/form_name|form_id/i)) return;
+          if (name && value) fields[name] = value;
+        });
+
+        var email = fields.email || fields.your_email || fields.field_email || null;
+        if (email) {
+          identifyWithEmail(email, {
+            first_name: fields.name || fields.first_name || fields.your_name || undefined,
+            phone: fields.phone || fields.tel || fields.telephone || undefined
+          });
+        }
+
+        track('form_submitted', {
+          form_name: formName,
+          has_email: !!email,
+          has_phone: !!(fields.phone || fields.tel),
+          field_count: Object.keys(fields).length
+        });
+      });
+
+      jQuery(document).on('error', '.elementor-form', function () {
+        track('form_error', {
+          form_name: jQuery(this).find('[name="form_name"]').val() || 'unknown'
+        });
+      });
+
+      return true;
+    }
+
+    if (!bindJQuery()) {
+      var retries = 0;
+      var interval = setInterval(function () {
+        if (bindJQuery() || ++retries > 30) clearInterval(interval);
+      }, 500);
+    }
+    log('Elementor form tracking installed');
+  }
+
+  // ─── 3D: Elementor Popup Tracking ─────────────────────────────────
+
+  function trackElementorPopups() {
+    var tracked = new Set();
+
+    function bind() {
+      if (!window.jQuery || !window.elementorProFrontend) return false;
+
+      jQuery(document).on('elementor/popup/show', function (event, popupId) {
+        if (tracked.has(popupId)) return;
+        tracked.add(popupId);
+
+        var el = document.getElementById('elementor-popup-modal-' + popupId);
+        var title = el ? (el.querySelector('.elementor-heading-title') || {}).textContent || '' : '';
+
+        track('popup_shown', {
+          popup_id: popupId,
+          popup_title: title.trim().substring(0, 100)
+        });
+      });
+
+      jQuery(document).on('elementor/popup/hide', function (event, popupId) {
+        track('popup_closed', { popup_id: popupId });
+      });
+
+      return true;
+    }
+
+    if (!bind()) {
+      var retries = 0;
+      var interval = setInterval(function () {
+        if (bind() || ++retries > 30) clearInterval(interval);
+      }, 500);
+    }
+    log('Popup tracking installed');
+  }
+
+
+  // ═════════════════════════════════════════════════════════════════════
+  // INIT
+  // ═════════════════════════════════════════════════════════════════════
+
+  function init() {
+    installStorageProxy();
+    installNetworkInterceptors();
+
+    function initDOM() {
+      trackScrollDepth();
+      trackIntentClicks();
+      trackElementorForms();
+      trackElementorPopups();
+      setTimeout(installWidgetStepTracker, 2000);
+    }
+
+    if (document.body) {
+      initDOM();
+    } else {
+      document.addEventListener('DOMContentLoaded', initDOM);
+    }
+
+    var existingUID = originalLS.getItem(CC_KEYS.uid);
+    if (existingUID) identifyWithUID(existingUID);
+
+    var existingOrder = safeJSON(originalLS.getItem(CC_KEYS.order));
+    if (existingOrder && existingOrder.order) {
+      state.orderId = existingOrder.order.id || existingOrder.order.orderId || null;
+    }
+
+    log('Initialized | Page:', window.location.pathname);
+  }
+
+  // ─── Debug API ─────────────────────────────────────────────────────
+  window._wdl = {
+    state: function () { console.table(state); return state; },
+    reset: function () {
+      resetIdentity();
+      state.orderId = null;
+      state.orderStarted = false;
+      state.orderItems = 0;
+      state.scrollMarks = {};
+      state.lastStep = null;
+    },
+    debug: function (on) { DEBUG = on !== false; },
+    track: track,
+    identify: identifyWithUID,
+    identifyFromForm: identifyWithEmail
+  };
+
+  init();
+
+})();</script><meta name="generator" content="Powered by Slider Revolution 6.7.34 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
+<link rel="icon" href="https://wedeliverlaundry.com/wp-content/uploads/2026/02/cropped-TheWash_Favicon_WhiteOnBlue-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://wedeliverlaundry.com/wp-content/uploads/2026/02/cropped-TheWash_Favicon_WhiteOnBlue-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://wedeliverlaundry.com/wp-content/uploads/2026/02/cropped-TheWash_Favicon_WhiteOnBlue-180x180.png" />
+<meta name="msapplication-TileImage" content="https://wedeliverlaundry.com/wp-content/uploads/2026/02/cropped-TheWash_Favicon_WhiteOnBlue-270x270.png" />
+<script>function setREVStartSize(e){
+			//window.requestAnimationFrame(function() {
+				window.RSIW = window.RSIW===undefined ? window.innerWidth : window.RSIW;
+				window.RSIH = window.RSIH===undefined ? window.innerHeight : window.RSIH;
+				try {
+					var pw = document.getElementById(e.c).parentNode.offsetWidth,
+						newh;
+					pw = pw===0 || isNaN(pw) || (e.l=="fullwidth" || e.layout=="fullwidth") ? window.RSIW : pw;
+					e.tabw = e.tabw===undefined ? 0 : parseInt(e.tabw);
+					e.thumbw = e.thumbw===undefined ? 0 : parseInt(e.thumbw);
+					e.tabh = e.tabh===undefined ? 0 : parseInt(e.tabh);
+					e.thumbh = e.thumbh===undefined ? 0 : parseInt(e.thumbh);
+					e.tabhide = e.tabhide===undefined ? 0 : parseInt(e.tabhide);
+					e.thumbhide = e.thumbhide===undefined ? 0 : parseInt(e.thumbhide);
+					e.mh = e.mh===undefined || e.mh=="" || e.mh==="auto" ? 0 : parseInt(e.mh,0);
+					if(e.layout==="fullscreen" || e.l==="fullscreen")
+						newh = Math.max(e.mh,window.RSIH);
+					else{
+						e.gw = Array.isArray(e.gw) ? e.gw : [e.gw];
+						for (var i in e.rl) if (e.gw[i]===undefined || e.gw[i]===0) e.gw[i] = e.gw[i-1];
+						e.gh = e.el===undefined || e.el==="" || (Array.isArray(e.el) && e.el.length==0)? e.gh : e.el;
+						e.gh = Array.isArray(e.gh) ? e.gh : [e.gh];
+						for (var i in e.rl) if (e.gh[i]===undefined || e.gh[i]===0) e.gh[i] = e.gh[i-1];
+											
+						var nl = new Array(e.rl.length),
+							ix = 0,
+							sl;
+						e.tabw = e.tabhide>=pw ? 0 : e.tabw;
+						e.thumbw = e.thumbhide>=pw ? 0 : e.thumbw;
+						e.tabh = e.tabhide>=pw ? 0 : e.tabh;
+						e.thumbh = e.thumbhide>=pw ? 0 : e.thumbh;
+						for (var i in e.rl) nl[i] = e.rl[i]<window.RSIW ? 0 : e.rl[i];
+						sl = nl[0];
+						for (var i in nl) if (sl>nl[i] && nl[i]>0) { sl = nl[i]; ix=i;}
+						var m = pw>(e.gw[ix]+e.tabw+e.thumbw) ? 1 : (pw-(e.tabw+e.thumbw)) / (e.gw[ix]);
+						newh =  (e.gh[ix] * m) + (e.tabh + e.thumbh);
+					}
+					var el = document.getElementById(e.c);
+					if (el!==null && el) el.style.height = newh+"px";
+					el = document.getElementById(e.c+"_wrapper");
+					if (el!==null && el) {
+						el.style.height = newh+"px";
+						el.style.display = "block";
+					}
+				} catch(e){
+					console.log("Failure at Presize of Slider:" + e)
+				}
+			//});
+		  };</script>
+		<style type="text/css" id="wp-custom-css">
+			.eicon-close:before {
+    content: "" !important;
+}
+.eicon-menu-bar:before {
+    content: '';
+    background-image: url('https://wedeliverlaundry.com/wp-content/uploads/2022/03/options-menubar-blue.png');
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background-position: center;
+    background-size: contain;
+}
+div#hotel-banner {
+    margin-top: 65px;
+	background-color:#000; opacity:0.62;padding:20px;
+}
+
+
+#wpcf7-f6452-p6405-o1 input.wpcf7-form-control.has-spinner.wpcf7-submit {
+    border-radius: 6px !important;
+    padding: 11px 28px !important;
+    height: 45px !important;
+}
+div#hotel-banner br{display:none;}
+div#hotel-text{margin-bottom:0px !important;}
+div#hotel-banner form label{    color: #2a7de1;
+    font-weight: bold;}
+div#hotel-banner input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required{margin:0px;}
+div#banner-register {
+    margin-bottom: 0px;
+    background-color: #000;
+    opacity: 0.5;
+	padding: 20px 20px 0px 20px;}
+div#banner-form label{font-weight: bold;color: #2a7de1;}
+div#banner-form{background-color: #000;
+    opacity: 0.5;
+    padding: 20px;}
+div#banner-form span#select2-menu-320-hz-container{color: #94bdef;}
+div#banner-form .wpcf7-form label, .gt3_form label{margin-top: 0px; line-height:20px;
+ margin-bottom: 0px;}
+div#banner-form input.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required{margin:0px;}
+div#banner-form textarea {
+	height: 75px;}
+div#banner-form br{display:none;}
+
+.blog_post_preview {
+	margin-top: 140px;
+}
+
+.post_block_info {
+	display: none;
+}
+
+.absubmit {
+	color:#307fe2 !important;
+	background: #F7EA48 !important;
+	border-radius: 5px 5px 5px 5px;
+	border: 2px solid #F7EA48;
+	padding: 5px 25px;
+	margin-top: -3px;
+	font-weight: 600;
+}
+
+.absubmit:hover {
+	color: #F7EA48 !important;
+	border: 2px solid #F7EA48;
+	background-color: #307fe2 !important;
+}
+
+@media (max-width: 767px) {
+/* i.elementor-menu-toggle__icon--close.eicon-close:before {
+    content: "";
+    background-image: url('https://wedeliverlaundry.com/wp-content/uploads/2022/03/close.png');
+    display: inline-block;
+    background-position: center;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+} */
+	.elementor-kit-110 h1 {
+    font-size: 30px;
+}
+	.elementor-6818 .elementor-element.elementor-element-6d996197 {
+    font-size: 13px;
+}
+	.elementor-element.elementor-element-6d996197.salon-text-mid.elementor-widget.elementor-widget-text-editor.elementor-element-custom_font_size {
+    font-size: 16px;
+}
+	.elementor-7578 .elementor-element.elementor-element-4b7c4f49 {font-size: 18px;}
+p.new-text {font-size: 18px;}
+span.new-text{font-size: 18px;}
+li.new-list {font-size: 18px;}
+	div#bellevillebanner .elementor-section.elementor-section-boxed > .elementor-container{width:100% !important;}
+p.spa-text {font-size: 18px;}
+.elementor-element.elementor-element-34c6d3a.elementor-widget.elementor-widget-button {
+    text-align: center;
+}
+
+	.elementor-6315 .elementor-element.elementor-element-453afe8f > .elementor-container {
+    min-height: auto !important;
+}
+	.elementor-element.elementor-element-14d55a55.elementor-widget.elementor-widget-text-editor{margin-top: 55px;}
+}
+
+.single-product .container {
+	margin-top: 140px;
+}
+
+.sidebar {
+	display: none;
+}
+
+/** Start Block Kit CSS: 105-3-0fb64e69c49a8e10692d28840c54ef95 **/
+
+.envato-kit-102-phone-overlay {
+	position: absolute !important;
+	display: block !important;
+	top: 0%;
+	left: 0%;
+	right: 0%;
+	margin: auto;
+	z-index: 1;
+}
+
+/** End Block Kit CSS: 105-3-0fb64e69c49a8e10692d28840c54ef95 **/
+
+
+
+/** Start Block Kit CSS: 144-3-3a7d335f39a8579c20cdf02f8d462582 **/
+
+.envato-block__preview{overflow: visible;}
+
+/* Envato Kit 141 Custom Styles - Applied to the element under Advanced */
+
+.elementor-headline-animation-type-drop-in .elementor-headline-dynamic-wrapper{
+	text-align: center;
+}
+.envato-kit-141-top-0 h1,
+.envato-kit-141-top-0 h2,
+.envato-kit-141-top-0 h3,
+.envato-kit-141-top-0 h4,
+.envato-kit-141-top-0 h5,
+.envato-kit-141-top-0 h6,
+.envato-kit-141-top-0 p {
+	margin-top: 0;
+}
+
+.envato-kit-141-newsletter-inline .elementor-field-textual.elementor-size-md {
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+
+.envato-kit-141-bottom-0 p {
+	margin-bottom: 0;
+}
+
+.envato-kit-141-bottom-8 .elementor-price-list .elementor-price-list-item .elementor-price-list-header {
+	margin-bottom: .5rem;
+}
+
+.envato-kit-141.elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .swiper-container {
+	padding-bottom: 52px;
+}
+
+.envato-kit-141-display-inline {
+	display: inline-block;
+}
+
+.envato-kit-141 .elementor-slick-slider ul.slick-dots {
+	bottom: -40px;
+}
+
+/** End Block Kit CSS: 144-3-3a7d335f39a8579c20cdf02f8d462582 **/
+
+
+
+/** Start Block Kit CSS: 141-3-1d55f1e76be9fb1a8d9de88accbe962f **/
+
+.envato-kit-138-bracket .elementor-widget-container > *:before{
+	content:"[";
+	color:#ffab00;
+	display:inline-block;
+	margin-right:4px;
+	line-height:1em;
+	position:relative;
+	top:-1px;
+}
+
+.envato-kit-138-bracket .elementor-widget-container > *:after{
+	content:"]";
+	color:#ffab00;
+	display:inline-block;
+	margin-left:4px;
+	line-height:1em;
+	position:relative;
+	top:-1px;
+}
+
+/** End Block Kit CSS: 141-3-1d55f1e76be9fb1a8d9de88accbe962f **/
+
+
+
+/** Start Block Kit CSS: 71-3-d415519effd9e11f35d2438c58ea7ebf **/
+
+.envato-block__preview{overflow: visible;}
+
+/** End Block Kit CSS: 71-3-d415519effd9e11f35d2438c58ea7ebf **/
+
+
+
+/** Start Block Kit CSS: 72-3-34d2cc762876498c8f6be5405a48e6e2 **/
+
+.envato-block__preview{overflow: visible;}
+
+/*Kit 69 Custom Styling for buttons */
+.envato-kit-69-slide-btn .elementor-button,
+.envato-kit-69-cta-btn .elementor-button,
+.envato-kit-69-flip-btn .elementor-button{
+	border-left: 0px !important;
+	border-bottom: 0px !important;
+	border-right: 0px !important;
+	padding: 15px 0 0 !important;
+}
+.envato-kit-69-slide-btn .elementor-slide-button:hover,
+.envato-kit-69-cta-btn .elementor-button:hover,
+.envato-kit-69-flip-btn .elementor-button:hover{
+	margin-bottom: 20px;
+}
+.envato-kit-69-menu .elementor-nav-menu--main a:hover{
+	margin-top: -7px;
+	padding-top: 4px;
+	border-bottom: 1px solid #FFF;
+}
+/* Fix menu dropdown width */
+.envato-kit-69-menu .elementor-nav-menu--dropdown{
+	width: 100% !important;
+}
+
+/** End Block Kit CSS: 72-3-34d2cc762876498c8f6be5405a48e6e2 **/
+
+
+
+/** Start Block Kit CSS: 143-3-7969bb877702491bc5ca272e536ada9d **/
+
+.envato-block__preview{overflow: visible;}
+/* Material Button Click Effect */
+.envato-kit-140-material-hit .menu-item a,
+.envato-kit-140-material-button .elementor-button{
+  background-position: center;
+  transition: background 0.8s;
+}
+.envato-kit-140-material-hit .menu-item a:hover,
+.envato-kit-140-material-button .elementor-button:hover{
+  background: radial-gradient(circle, transparent 1%, #fff 1%) center/15000%;
+}
+.envato-kit-140-material-hit .menu-item a:active,
+.envato-kit-140-material-button .elementor-button:active{
+  background-color: #FFF;
+  background-size: 100%;
+  transition: background 0s;
+}
+
+/* Field Shadow */
+.envato-kit-140-big-shadow-form .elementor-field-textual{
+	box-shadow: 0 20px 30px rgba(0,0,0, .05);
+}
+
+/* FAQ */
+.envato-kit-140-faq .elementor-accordion .elementor-accordion-item{
+	border-width: 0 0 1px !important;
+}
+
+/* Scrollable Columns */
+.envato-kit-140-scrollable{
+	 height: 100%;
+   overflow: auto;
+   overflow-x: hidden;
+}
+
+/* ImageBox: No Space */
+.envato-kit-140-imagebox-nospace:hover{
+	transform: scale(1.1);
+	transition: all 0.3s;
+}
+.envato-kit-140-imagebox-nospace figure{
+	line-height: 0;
+}
+
+.envato-kit-140-slide .elementor-slide-content{
+	background: #FFF;
+	margin-left: -60px;
+	padding: 1em;
+}
+.envato-kit-140-carousel .slick-active:not(.slick-current)  img{
+	padding: 20px !important;
+	transition: all .9s;
+}
+
+/** End Block Kit CSS: 143-3-7969bb877702491bc5ca272e536ada9d **/
+
+
+
+/** Start Block Kit CSS: 69-3-4f8cfb8a1a68ec007f2be7a02bdeadd9 **/
+
+.envato-kit-66-menu .e--pointer-framed .elementor-item:before{
+	border-radius:1px;
+}
+
+.envato-kit-66-subscription-form .elementor-form-fields-wrapper{
+	position:relative;
+}
+
+.envato-kit-66-subscription-form .elementor-form-fields-wrapper .elementor-field-type-submit{
+	position:static;
+}
+
+.envato-kit-66-subscription-form .elementor-form-fields-wrapper .elementor-field-type-submit button{
+	position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translate(0, -50%);
+		-moz-transform: translate(0, -50%);
+		-webmit-transform: translate(0, -50%);
+}
+
+.envato-kit-66-testi-slider .elementor-testimonial__footer{
+	margin-top: -60px !important;
+	z-index: 99;
+  position: relative;
+}
+
+.envato-kit-66-featured-slider .elementor-slides .slick-prev{
+	width:50px;
+	height:50px;
+	background-color:#ffffff !important;
+	transform:rotate(45deg);
+	-moz-transform:rotate(45deg);
+	-webkit-transform:rotate(45deg);
+	left:-25px !important;
+	-webkit-box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.32);
+	-moz-box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.32);
+	box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.32);
+}
+
+.envato-kit-66-featured-slider .elementor-slides .slick-prev:before{
+	display:block;
+	margin-top:0px;
+	margin-left:0px;
+	transform:rotate(-45deg);
+	-moz-transform:rotate(-45deg);
+	-webkit-transform:rotate(-45deg);
+}
+
+.envato-kit-66-featured-slider .elementor-slides .slick-next{
+	width:50px;
+	height:50px;
+	background-color:#ffffff !important;
+	transform:rotate(45deg);
+	-moz-transform:rotate(45deg);
+	-webkit-transform:rotate(45deg);
+	right:-25px !important;
+	-webkit-box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.32);
+	-moz-box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.32);
+	box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.32);
+}
+
+.envato-kit-66-featured-slider .elementor-slides .slick-next:before{
+	display:block;
+	margin-top:-5px;
+	margin-right:-5px;
+	transform:rotate(-45deg);
+	-moz-transform:rotate(-45deg);
+	-webkit-transform:rotate(-45deg);
+}
+
+.envato-kit-66-orangetext{
+	color:#f4511e;
+}
+
+.envato-kit-66-countdown .elementor-countdown-label{
+	display:inline-block !important;
+	border:2px solid rgba(255,255,255,0.2);
+	padding:9px 20px;
+}
+
+/** End Block Kit CSS: 69-3-4f8cfb8a1a68ec007f2be7a02bdeadd9 **/
+
+.container {
+	width: 100%;
+	margin: 0;
+}
+
+/* .e-con:before, .e-con>.elementor-background-slideshow:before, .e-con>.elementor-motion-effects-container>.elementor-motion-effects-layer:before, :is(.e-con,.e-con>.e-con-inner)>.elementor-background-video-container:before {
+	opacity: 1;
+} */
+
+.row [class*=span] {
+	padding:0;
+	
+}
+
+.row {
+	margin:0;
+}
+
+.adsbygoogle .adsbygoogle-noablate {
+	display: none;
+}
+		</style>
+		<style id="clengo-dynamic-css" title="dynamic-css" class="redux-options-output">.gt3_delimiter1{height:1em;}.gt3_delimiter2{height:1em;}.gt3_delimiter3{height:1em;}.gt3_delimiter4{height:1em;}.gt3_delimiter5{height:1em;}.gt3_delimiter6{height:1em;}</style><script type='text/javascript'>
+jQuery(document).ready(function(){
+
+});
+</script></head>
+<body class="error404 wp-custom-logo wp-theme-clengo font-awesome-4-shim  elementor-default elementor-kit-110">
+<!-- Google Tag Manager (noscript) -->
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T53NGMDS"
+
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- End Google Tag Manager (noscript) -->
+		<header data-elementor-type="header" data-elementor-id="13908" class="elementor elementor-13908 elementor-location-header" data-elementor-post-type="elementor_library">
+			<header class="elementor-element elementor-element-3d442760 e-con-full elementor-hidden-widescreen elementor-hidden-desktop elementor-hidden-laptop e-flex e-con e-parent" data-id="3d442760" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky&quot;:&quot;top&quot;,&quot;sticky_on&quot;:[&quot;widescreen&quot;,&quot;desktop&quot;,&quot;laptop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;sticky_offset&quot;:0,&quot;sticky_effects_offset&quot;:0,&quot;sticky_anchor_link_offset&quot;:0}">
+				<div class="elementor-element elementor-element-77f1c82 elementor-widget-mobile__width-initial elementor-widget elementor-widget-image" data-id="77f1c82" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+																<a href="https://wedeliverlaundry.com/">
+							<img loading="lazy" width="384" height="150" src="https://wedeliverlaundry.com/wp-content/uploads/2025/12/Vector.png" class="attachment-full size-full wp-image-13910" alt="" title="Vector" />								</a>
+															</div>
+				</div>
+		<div class="elementor-element elementor-element-131f3b9 e-con-full e-flex e-con e-child" data-id="131f3b9" data-element_type="container">
+				<div class="elementor-element elementor-element-d866947 elementor-align-left elementor-hidden-widescreen elementor-hidden-desktop elementor-hidden-laptop elementor-widget elementor-widget-button" data-id="d866947" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="/account/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Schedule Pickup</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				<div class="elementor-element elementor-element-89a15a3 elementor-hidden-widescreen elementor-hidden-desktop elementor-hidden-laptop elementor-view-default elementor-widget elementor-widget-icon" data-id="89a15a3" data-element_type="widget" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-icon-wrapper">
+			<a class="elementor-icon" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjE0ODg3IiwidG9nZ2xlIjpmYWxzZX0%3D">
+			<svg xmlns="http://www.w3.org/2000/svg" width="33" height="23" viewBox="0 0 33 23" fill="none"><path d="M27.1667 7.83333H5.83333M32.5 0.5H0.5M32.5 15.1667H0.5M27.1667 22.5H5.83333" stroke="#1227BE" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</a>
+		</div>
+						</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-d7965d1 elementor-nav-menu--stretch elementor-nav-menu__align-justify elementor-widget-mobile__width-auto elementor-hidden-mobile elementor-hidden-tablet elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="d7965d1" data-element_type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i aria-hidden=\&quot;true\&quot; class=\&quot;\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;&quot;},&quot;layout&quot;:&quot;horizontal&quot;,&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+								<nav aria-label="Menu" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-fade">
+				<ul id="menu-1-d7965d1" class="elementor-nav-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17016"><a href="https://wedeliverlaundry.com/laundry-services/" class="elementor-item">Services</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13906"><a href="https://wedeliverlaundry.com/service-areas/" class="elementor-item">Service Areas</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17008"><a href="https://wedeliverlaundry.com/price-plans/" class="elementor-item">Price &#038; Plans</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14955"><a href="https://wedeliverlaundry.com/our-story/" class="elementor-item">About Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14954"><a href="https://wedeliverlaundry.com/contact-us-2/" class="elementor-item">Contact</a></li>
+</ul>			</nav>
+					<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
+			<span class="elementor-menu-toggle__icon--open"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="23" viewBox="0 0 33 23" fill="none"><path d="M27.1667 7.83333H5.83333M32.5 0.5H0.5M32.5 15.1667H0.5M27.1667 22.5H5.83333" stroke="#1227BE" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><svg aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close e-font-icon-svg e-eicon-close" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M742 167L500 408 258 167C246 154 233 150 217 150 196 150 179 158 167 167 154 179 150 196 150 212 150 229 154 242 171 254L408 500 167 742C138 771 138 800 167 829 196 858 225 858 254 829L496 587 738 829C750 842 767 846 783 846 800 846 817 842 829 829 842 817 846 804 846 783 846 767 842 750 829 737L588 500 833 258C863 229 863 200 833 171 804 137 775 137 742 167Z"></path></svg>		</div>
+					<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
+				<ul id="menu-2-d7965d1" class="elementor-nav-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17016"><a href="https://wedeliverlaundry.com/laundry-services/" class="elementor-item" tabindex="-1">Services</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13906"><a href="https://wedeliverlaundry.com/service-areas/" class="elementor-item" tabindex="-1">Service Areas</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17008"><a href="https://wedeliverlaundry.com/price-plans/" class="elementor-item" tabindex="-1">Price &#038; Plans</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14955"><a href="https://wedeliverlaundry.com/our-story/" class="elementor-item" tabindex="-1">About Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14954"><a href="https://wedeliverlaundry.com/contact-us-2/" class="elementor-item" tabindex="-1">Contact</a></li>
+</ul>			</nav>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-138d9b9a e-con-full elementor-hidden-mobile elementor-hidden-tablet e-flex e-con e-child" data-id="138d9b9a" data-element_type="container">
+				<div class="elementor-element elementor-element-593f8c01 elementor-align-right elementor-widget elementor-widget-button" data-id="593f8c01" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="/account/?tab=login">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Sign In</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				<div class="elementor-element elementor-element-5281769c elementor-align-left elementor-widget elementor-widget-button" data-id="5281769c" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="/account/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Schedule Pick-up</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				</div>
+				</header>
+		<header class="elementor-element elementor-element-54f3c7b e-con-full elementor-hidden-tablet elementor-hidden-mobile e-flex e-con e-parent" data-id="54f3c7b" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky&quot;:&quot;top&quot;,&quot;sticky_on&quot;:[&quot;widescreen&quot;,&quot;desktop&quot;,&quot;laptop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;sticky_offset&quot;:0,&quot;sticky_effects_offset&quot;:0,&quot;sticky_anchor_link_offset&quot;:0}">
+				<div class="elementor-element elementor-element-ceae2ba elementor-widget-mobile__width-initial elementor-widget elementor-widget-image" data-id="ceae2ba" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+																<a href="https://wedeliverlaundry.com/">
+							<img loading="lazy" width="384" height="150" src="https://wedeliverlaundry.com/wp-content/uploads/2025/12/Vector.png" class="attachment-full size-full wp-image-13910" alt="" title="Vector" />								</a>
+															</div>
+				</div>
+				<div class="elementor-element elementor-element-0a8425b elementor-nav-menu--stretch elementor-nav-menu__align-justify elementor-widget-mobile__width-auto elementor-hidden-mobile elementor-hidden-tablet elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="0a8425b" data-element_type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i aria-hidden=\&quot;true\&quot; class=\&quot;\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;&quot;},&quot;layout&quot;:&quot;horizontal&quot;,&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+								<nav aria-label="Menu" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-fade">
+				<ul id="menu-1-0a8425b" class="elementor-nav-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17016"><a href="https://wedeliverlaundry.com/laundry-services/" class="elementor-item">Services</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13906"><a href="https://wedeliverlaundry.com/service-areas/" class="elementor-item">Service Areas</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17008"><a href="https://wedeliverlaundry.com/price-plans/" class="elementor-item">Price &#038; Plans</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14955"><a href="https://wedeliverlaundry.com/our-story/" class="elementor-item">About Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14954"><a href="https://wedeliverlaundry.com/contact-us-2/" class="elementor-item">Contact</a></li>
+</ul>			</nav>
+					<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
+			<span class="elementor-menu-toggle__icon--open"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="23" viewBox="0 0 33 23" fill="none"><path d="M27.1667 7.83333H5.83333M32.5 0.5H0.5M32.5 15.1667H0.5M27.1667 22.5H5.83333" stroke="#1227BE" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><svg aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close e-font-icon-svg e-eicon-close" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M742 167L500 408 258 167C246 154 233 150 217 150 196 150 179 158 167 167 154 179 150 196 150 212 150 229 154 242 171 254L408 500 167 742C138 771 138 800 167 829 196 858 225 858 254 829L496 587 738 829C750 842 767 846 783 846 800 846 817 842 829 829 842 817 846 804 846 783 846 767 842 750 829 737L588 500 833 258C863 229 863 200 833 171 804 137 775 137 742 167Z"></path></svg>		</div>
+					<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
+				<ul id="menu-2-0a8425b" class="elementor-nav-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17016"><a href="https://wedeliverlaundry.com/laundry-services/" class="elementor-item" tabindex="-1">Services</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13906"><a href="https://wedeliverlaundry.com/service-areas/" class="elementor-item" tabindex="-1">Service Areas</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17008"><a href="https://wedeliverlaundry.com/price-plans/" class="elementor-item" tabindex="-1">Price &#038; Plans</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14955"><a href="https://wedeliverlaundry.com/our-story/" class="elementor-item" tabindex="-1">About Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14954"><a href="https://wedeliverlaundry.com/contact-us-2/" class="elementor-item" tabindex="-1">Contact</a></li>
+</ul>			</nav>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-c16acf3 e-con-full elementor-hidden-mobile elementor-hidden-tablet e-flex e-con e-child" data-id="c16acf3" data-element_type="container">
+				<div class="elementor-element elementor-element-ba6fa6e elementor-align-right elementor-widget elementor-widget-button" data-id="ba6fa6e" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="/account/?tab=login">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Sign In</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				<div class="elementor-element elementor-element-775e061 elementor-align-left elementor-widget elementor-widget-button" data-id="775e061" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="/account/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Schedule Pick-up</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				</div>
+				</header>
+				</header>
+		<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />		</head>
+<body class="error404 wp-custom-logo wp-theme-clengo font-awesome-4-shim  elementor-default elementor-kit-110">
+	<div class="wrapper_404 "  >
+		<div class="container_vertical_wrapper">
+			<div class="container a-center">
+				<h3>Whoops!</h3>
+				<h1 class="number_404">404</h1>
+				<h2>Nothing Was Found!</h2>
+				<p>Either Something Get Wrong or the Page Doesn&#039;t Exist Anymore.</p>
+				<div class="gt3_404_search">
+					
+
+<form role="search" method="get" class="search_form gt3_search_form" action="https://wedeliverlaundry.com/">
+	<label for="search-form-699273d0e3a99">Search</label>
+    <input class="search_text" id="search-form-699273d0e3a99" type="text" name="s" placeholder="Search">
+    <input class="search_submit" type="submit" value="Search">
+</form>				</div>
+				<div class="gt3_module_button_list"><a href="https://wedeliverlaundry.com/">Take me home</a></div>
+			</div>
+		</div>
+	</div>
+		<footer data-elementor-type="footer" data-elementor-id="14003" class="elementor elementor-14003 elementor-location-footer" data-elementor-post-type="elementor_library">
+			<footer class="elementor-element elementor-element-25f10fb e-con-full e-flex e-con e-parent" data-id="25f10fb" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+		<div class="elementor-element elementor-element-1a4a97b e-con-full e-flex e-con e-child" data-id="1a4a97b" data-element_type="container">
+		<div class="elementor-element elementor-element-4b04e8e e-con-full e-grid e-con e-child" data-id="4b04e8e" data-element_type="container">
+		<div class="elementor-element elementor-element-79eab45 e-con-full e-flex e-con e-child" data-id="79eab45" data-element_type="container">
+				<div class="elementor-element elementor-element-f7646b8 elementor-widget elementor-widget-heading" data-id="f7646b8" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">About us</p>				</div>
+				</div>
+				<div class="elementor-element-custom_font_size elementor-element-custom_font_family elementor-element-custom_font_weight elementor-element-custom_color elementor-element elementor-element-8e73700 elementor-widget__width-initial elementor-widget elementor-widget-text-editor" data-id="8e73700" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>We Deliver Laundry is your go-to service for premium laundry pickup and delivery, fast, easy, and reliable. Schedule your pickup today!</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-c9c4c76 elementor-widget elementor-widget-heading" data-id="c9c4c76" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h4 class="elementor-heading-title elementor-size-default">contact us</h4>				</div>
+				</div>
+				<div class="elementor-element-custom_font_size elementor-element-custom_font_family elementor-element-custom_font_weight elementor-element elementor-element-3888e6f elementor-widget elementor-widget-text-editor" data-id="3888e6f" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<a style="color: #ffffff; font-size: 14px;" href="tel:8559685511">(855) 968-5511</a>
+
+&nbsp;
+								</div>
+				</div>
+				<div class="elementor-element-custom_font_size elementor-element-custom_font_family elementor-element-custom_font_weight elementor-element elementor-element-e5dfda2 elementor-widget elementor-widget-text-editor" data-id="e5dfda2" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p><a style="color: #ffffff; font-size: 14px;" href="/cdn-cgi/l/email-protection#761e131a1a1936011312131a1f0013041a17031812040f5815191b"><span class="__cf_email__" data-cfemail="f08384918284b0879594959c998695829c91859e948289de939f9d">[email&#160;protected]</span></a></p><a style="color: #ffffff; font-size: 14px;" href="/cdn-cgi/l/email-protection#cda5a8a1a1a28dbaa8a9a8a1a4bba8bfa1acb8a3a9bfb4e3aea2a0">
+</a><p><a style="color: #ffffff; font-size: 14px;" href="/cdn-cgi/l/email-protection#cfa7aaa3a3a08fb8aaabaaa3a6b9aabda3aebaa1abbdb6e1aca0a2"></a></p>								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-5954c90 e-con-full e-flex e-con e-child" data-id="5954c90" data-element_type="container">
+				<div class="elementor-element elementor-element-e6add0b elementor-widget elementor-widget-heading" data-id="e6add0b" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Explore</p>				</div>
+				</div>
+				<div class="elementor-element elementor-element-e5db64b elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="e5db64b" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/account/">
+
+											<span class="elementor-icon-list-text">Login</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/account/">
+
+											<span class="elementor-icon-list-text">Start Service</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+											<a href="/faqs/">
+
+											<span class="elementor-icon-list-text">FAQs</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/our-story/">
+
+											<span class="elementor-icon-list-text">About</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/contact-us-2/">
+
+											<span class="elementor-icon-list-text">Contact Us</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/privacy-policy-v2/">
+
+											<span class="elementor-icon-list-text">Privacy</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/terms/">
+
+											<span class="elementor-icon-list-text">Terms of Service</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/blog/">
+
+											<span class="elementor-icon-list-text">Blog</span>
+											</a>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-4840c69 e-con-full e-flex e-con e-child" data-id="4840c69" data-element_type="container">
+				<div class="elementor-element elementor-element-eee6028 elementor-widget elementor-widget-heading" data-id="eee6028" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">Servicing Areas</p>				</div>
+				</div>
+				<div class="elementor-element elementor-element-89e50c5 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="89e50c5" data-element_type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/new-york-city-pickup-delivery/">
+
+											<span class="elementor-icon-list-text">New York</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/new-jersey-laundry-pickup-delivery/">
+
+											<span class="elementor-icon-list-text">New Jersey</span>
+											</a>
+									</li>
+								<li class="elementor-icon-list-item">
+											<a href="https://wedeliverlaundry.com/service-areas/">
+
+											<span class="elementor-icon-list-text">Check Service Areas</span>
+											</a>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-c2afef4 e-con-full e-flex e-con e-child" data-id="c2afef4" data-element_type="container">
+				<div class="elementor-element elementor-element-7621127 elementor-widget elementor-widget-heading" data-id="7621127" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<p class="elementor-heading-title elementor-size-default">You do you, we do laundry</p>				</div>
+				</div>
+		<div class="elementor-element elementor-element-39269f9 e-con-full e-flex e-con e-child" data-id="39269f9" data-element_type="container">
+				<div class="elementor-element-custom_font_size elementor-element-custom_font_family elementor-element-custom_font_weight elementor-element-custom_color elementor-element elementor-element-2937193 elementor-widget__width-initial elementor-widget elementor-widget-text-editor" data-id="2937193" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>Trusted by 2,000+ <br />happy customers.</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-c428c15 elementor-align-left elementor-tablet-align-justify elementor-widget-tablet__width-inherit elementor-widget elementor-widget-button" data-id="c428c15" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-lg" href="https://wedeliverlaundry.com/account/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Schedule Pick-up</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-8f04dfd e-con-full e-flex e-con e-child" data-id="8f04dfd" data-element_type="container">
+		<a class="elementor-element elementor-element-5ef496a e-con-full e-grid e-con e-child" data-id="5ef496a" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" href="https://apps.apple.com/us/app/we-deliver-laundry-app/id6740860549" target="_blank" rel="nofollow">
+				<div class="elementor-element elementor-element-3412a00 elementor-widget elementor-widget-image" data-id="3412a00" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img fetchpriority="high" fetchpriority="high" width="256" height="256" src="https://wedeliverlaundry.com/wp-content/uploads/2025/12/747.png" class="attachment-large size-large wp-image-17745" alt="" srcset="https://wedeliverlaundry.com/wp-content/uploads/2025/12/747.png 256w, https://wedeliverlaundry.com/wp-content/uploads/2025/12/747-150x150.png 150w" sizes="(max-width: 256px) 100vw, 256px" title="747" />															</div>
+				</div>
+		<div class="elementor-element elementor-element-c72d5fd e-con-full e-flex e-con e-child" data-id="c72d5fd" data-element_type="container">
+				<div class="elementor-element-custom_font_size elementor-element elementor-element-881fce0 elementor-widget elementor-widget-text-editor" data-id="881fce0" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>download the app</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-ea27894 elementor-widget elementor-widget-heading" data-id="ea27894" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">App Store</h2>				</div>
+				</div>
+				</div>
+				</a>
+		<a class="elementor-element elementor-element-d59e980 e-con-full e-grid e-con e-child" data-id="d59e980" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" href="https://play.google.com/store/apps/details?id=com.cleancloudapp.wedeliverlaundry&#038;hl=en_US" target="_blank" rel="nofollow">
+				<div class="elementor-element elementor-element-a1fe666 elementor-widget elementor-widget-image" data-id="a1fe666" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img width="513" height="530" src="https://wedeliverlaundry.com/wp-content/uploads/2025/12/google-play-store-mobile-apps-logo-free-png-e1770416603420.png" class="attachment-large size-large wp-image-17751" alt="" srcset="https://wedeliverlaundry.com/wp-content/uploads/2025/12/google-play-store-mobile-apps-logo-free-png-e1770416603420.png 513w, https://wedeliverlaundry.com/wp-content/uploads/2025/12/google-play-store-mobile-apps-logo-free-png-e1770416603420-290x300.png 290w, https://wedeliverlaundry.com/wp-content/uploads/2025/12/google-play-store-mobile-apps-logo-free-png-e1770416603420-480x496.png 480w" sizes="(max-width: 513px) 100vw, 513px" title="google-play-store-mobile-apps-logo-free-png" />															</div>
+				</div>
+		<div class="elementor-element elementor-element-a8950ce e-con-full e-flex e-con e-child" data-id="a8950ce" data-element_type="container">
+				<div class="elementor-element-custom_font_size elementor-element elementor-element-0aa712f elementor-widget elementor-widget-text-editor" data-id="0aa712f" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>download the app</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-15e3f88 elementor-widget elementor-widget-heading" data-id="15e3f88" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Play Store</h2>				</div>
+				</div>
+				</div>
+				</a>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-8775321 e-con-full e-flex e-con e-child" data-id="8775321" data-element_type="container">
+		<div class="elementor-element elementor-element-76b3666 e-con-full e-flex e-con e-child" data-id="76b3666" data-element_type="container">
+				<div class="elementor-element elementor-element-b86cba9 elementor-widget elementor-widget-theme-site-logo elementor-widget-image" data-id="b86cba9" data-element_type="widget" data-widget_type="theme-site-logo.default">
+				<div class="elementor-widget-container">
+											<a href="https://wedeliverlaundry.com">
+			<img loading="lazy" loading="lazy" width="160" height="62" src="https://wedeliverlaundry.com/wp-content/uploads/2020/09/Vector-21.svg" class="attachment-full size-full wp-image-16917" alt="" title="Vector (21)" />				</a>
+											</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-e8b447d e-con-full e-flex e-con e-child" data-id="e8b447d" data-element_type="container">
+		<div class="elementor-element elementor-element-0fdc516 e-con-full e-flex e-con e-child" data-id="0fdc516" data-element_type="container">
+				<div class="elementor-element-custom_font_size elementor-element-custom_color elementor-element elementor-element-ba62e2b elementor-widget elementor-widget-text-editor" data-id="ba62e2b" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p style="text-align: center;">© Copyright 2026 wedeliverlaundry.com</p>								</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-fcf6b11 e-grid-align-mobile-center elementor-grid-3 elementor-widget__width-inherit elementor-shape-rounded e-grid-align-center elementor-widget elementor-widget-social-icons" data-id="fcf6b11" data-element_type="widget" data-widget_type="social-icons.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-social-icons-wrapper elementor-grid" role="list">
+							<span class="elementor-grid-item" role="listitem">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-5e3d796" href="https://www.instagram.com/wedeliverlaundry/" target="_blank">
+						<span class="elementor-screen-only">Instagram</span>
+						<svg aria-hidden="true" class="e-font-icon-svg e-fab-instagram" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg>					</a>
+				</span>
+							<span class="elementor-grid-item" role="listitem">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-facebook-f elementor-repeater-item-6fb5456" href="https://www.facebook.com/wedeliverlaundry/" target="_blank">
+						<span class="elementor-screen-only">Facebook-f</span>
+						<svg aria-hidden="true" class="e-font-icon-svg e-fab-facebook-f" viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path></svg>					</a>
+				</span>
+							<span class="elementor-grid-item" role="listitem">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-google elementor-repeater-item-a81dcdb" href="https://www.google.com/search?sxsrf=ALeKk030uEGrDLIe5B-OSw2OYtiW90PhQA:1597160436999&#038;q=we+deliver+laundry&#038;spell=1&#038;sa=X&#038;ved=2ahUKEwi5kPyjvpPrAhVflHIEHcumCuMQBSgAegQIDhAo&#038;biw=1440&#038;bih=789&#038;dpr=2" target="_blank">
+						<span class="elementor-screen-only">Google</span>
+						<svg aria-hidden="true" class="e-font-icon-svg e-fab-google" viewBox="0 0 488 512" xmlns="http://www.w3.org/2000/svg"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>					</a>
+				</span>
+					</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-fd6fb49 e-con-full e-flex e-con e-child" data-id="fd6fb49" data-element_type="container">
+				<div class="elementor-element-custom_font_size elementor-element-custom_color elementor-element elementor-element-8d53bd9 elementor-widget elementor-widget-text-editor" data-id="8d53bd9" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<h6 style="text-align: right;">Powered by <a href="https://www.studiogen.co/">StudioGen</a></h6>								</div>
+				</div>
+				</div>
+				</div>
+				</div>
+				</footer>
+				</footer>
+		
+
+		<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+			window.RS_MODULES = window.RS_MODULES || {};
+			window.RS_MODULES.modules = window.RS_MODULES.modules || {};
+			window.RS_MODULES.waiting = window.RS_MODULES.waiting || [];
+			window.RS_MODULES.defered = true;
+			window.RS_MODULES.moduleWaiting = window.RS_MODULES.moduleWaiting || {};
+			window.RS_MODULES.type = 'compiled';
+		</script>
+		<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/clengo\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<!-- HFCM by 99 Robots - Snippet # 6: cc ads -->
+<script>
+(function(){var params=new URL(document.location.toString()).searchParams;["utm_source","utm_term","utm_campaign","utm_medium"].some(function(m){return params.has(m)})&&window.localStorage.setItem("_cc_utm",JSON.stringify({source:params.get("utm_source"),term:params.get("utm_term"),medium:params.get("utm_medium"),campaign:params.get("utm_campaign")}));})()
+</script>
+<!-- /end HFCM by 99 Robots -->
+<script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/app/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:'ac347cbda94be3465e689ad4230cfc7'})})</script>		<div data-elementor-type="popup" data-elementor-id="14887" class="elementor elementor-14887 elementor-location-popup" data-elementor-settings="{&quot;entrance_animation_mobile&quot;:&quot;slideInDown&quot;,&quot;a11y_navigation&quot;:&quot;yes&quot;,&quot;timing&quot;:[]}" data-elementor-post-type="elementor_library">
+			<header class="elementor-element elementor-element-4a7f789 e-con-full e-flex e-con e-parent" data-id="4a7f789" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;sticky&quot;:&quot;top&quot;,&quot;sticky_on&quot;:[&quot;widescreen&quot;,&quot;desktop&quot;,&quot;laptop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;sticky_offset&quot;:0,&quot;sticky_effects_offset&quot;:0,&quot;sticky_anchor_link_offset&quot;:0}">
+				<div class="elementor-element elementor-element-6fdc071 elementor-widget-mobile__width-initial elementor-widget elementor-widget-image" data-id="6fdc071" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+																<a href="https://wedeliverlaundry.com/?page_id=13764">
+							<img loading="lazy" loading="lazy" width="384" height="150" src="https://wedeliverlaundry.com/wp-content/uploads/2025/12/Vector.png" class="attachment-full size-full wp-image-13910" alt="" title="Vector" />								</a>
+															</div>
+				</div>
+				<div class="elementor-element elementor-element-3218242 elementor-align-left elementor-hidden-widescreen elementor-hidden-desktop elementor-hidden-laptop elementor-widget elementor-widget-button" data-id="3218242" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="/account/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Schedule Pickup</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+		<div class="elementor-element elementor-element-c84b715 e-con-full elementor-hidden-mobile elementor-hidden-tablet e-flex e-con e-child" data-id="c84b715" data-element_type="container">
+				<div class="elementor-element elementor-element-98654c6 elementor-align-right elementor-widget elementor-widget-button" data-id="98654c6" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="/account/?tab=login">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Sign In</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				<div class="elementor-element elementor-element-4169642 elementor-align-left elementor-widget elementor-widget-button" data-id="4169642" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="/account/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Schedule Pick-up</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				</div>
+				</header>
+		<div class="elementor-element elementor-element-f1fac3f e-flex e-con-boxed e-con e-parent" data-id="f1fac3f" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-d1b13b6 e-con-full e-flex e-con e-child" data-id="d1b13b6" data-element_type="container" href="https://wedeliverlaundry.com/laundry-services/">
+				<div class="elementor-element-custom_font_size_mobile elementor-element-custom_font_family elementor-element-custom_font_weight elementor-element elementor-element-cb0e9a2 elementor-widget elementor-widget-text-editor" data-id="cb0e9a2" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>Services</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-8610c9d elementor-widget elementor-widget-image" data-id="8610c9d" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" loading="lazy" width="51" height="51" src="https://wedeliverlaundry.com/wp-content/uploads/2026/01/Vector-2.png" class="attachment-large size-large wp-image-14898" alt="" title="Vector (2)" />															</div>
+				</div>
+				</a>
+		<a class="elementor-element elementor-element-289349e e-con-full e-flex e-con e-child" data-id="289349e" data-element_type="container" href="https://wedeliverlaundry.com/service-areas/">
+				<div class="elementor-element-custom_font_size_mobile elementor-element-custom_font_family elementor-element-custom_font_weight elementor-element elementor-element-1774ba0 elementor-widget elementor-widget-text-editor" data-id="1774ba0" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>Service Areas</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-38ebe00 elementor-widget elementor-widget-image" data-id="38ebe00" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" loading="lazy" width="51" height="51" src="https://wedeliverlaundry.com/wp-content/uploads/2026/01/Vector-2.png" class="attachment-large size-large wp-image-14898" alt="" title="Vector (2)" />															</div>
+				</div>
+				</a>
+		<a class="elementor-element elementor-element-130293a e-con-full e-flex e-con e-child" data-id="130293a" data-element_type="container" href="https://wedeliverlaundry.com/price-plans/">
+				<div class="elementor-element-custom_font_size_mobile elementor-element-custom_font_family elementor-element-custom_font_weight elementor-element elementor-element-1fca2db elementor-widget elementor-widget-text-editor" data-id="1fca2db" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>Price &amp; Plans</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-ea3c0dc elementor-widget elementor-widget-image" data-id="ea3c0dc" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" loading="lazy" width="51" height="51" src="https://wedeliverlaundry.com/wp-content/uploads/2026/01/Vector-2.png" class="attachment-large size-large wp-image-14898" alt="" title="Vector (2)" />															</div>
+				</div>
+				</a>
+		<a class="elementor-element elementor-element-e3678c0 e-con-full e-flex e-con e-child" data-id="e3678c0" data-element_type="container" href="https://wedeliverlaundry.com/our-story/">
+				<div class="elementor-element-custom_font_size_mobile elementor-element-custom_font_family elementor-element-custom_font_weight elementor-element elementor-element-40fe045 elementor-widget elementor-widget-text-editor" data-id="40fe045" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>About Us</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-c4f952c elementor-widget elementor-widget-image" data-id="c4f952c" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" loading="lazy" width="51" height="51" src="https://wedeliverlaundry.com/wp-content/uploads/2026/01/Vector-2.png" class="attachment-large size-large wp-image-14898" alt="" title="Vector (2)" />															</div>
+				</div>
+				</a>
+		<a class="elementor-element elementor-element-227cc1b e-con-full e-flex e-con e-child" data-id="227cc1b" data-element_type="container" href="https://wedeliverlaundry.com/contact-us-2/">
+				<div class="elementor-element-custom_font_size_mobile elementor-element-custom_font_family elementor-element-custom_font_weight elementor-element elementor-element-f8746f2 elementor-widget elementor-widget-text-editor" data-id="f8746f2" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>Contact Us</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-71cd175 elementor-widget elementor-widget-image" data-id="71cd175" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" loading="lazy" width="51" height="51" src="https://wedeliverlaundry.com/wp-content/uploads/2026/01/Vector-2.png" class="attachment-large size-large wp-image-14898" alt="" title="Vector (2)" />															</div>
+				</div>
+				</a>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-868e4b4 e-flex e-con-boxed e-con e-parent" data-id="868e4b4" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-4fb9ae8 e-con-full e-flex e-con e-child" data-id="4fb9ae8" data-element_type="container">
+				<div class="elementor-element elementor-element-718ecdd elementor-mobile-align-justify elementor-widget-mobile__width-initial elementor-tablet-align-justify elementor-widget-tablet__width-initial elementor-widget elementor-widget-button" data-id="718ecdd" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="https://wedeliverlaundry.com/account/">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="15" height="17" viewBox="0 0 15 17" fill="none"><path d="M14.5 16.5V14.7222C14.5 13.7792 14.1313 12.8749 13.4749 12.2081C12.8185 11.5413 11.9283 11.1667 11 11.1667H4C3.07174 11.1667 2.1815 11.5413 1.52513 12.2081C0.868749 12.8749 0.5 13.7792 0.5 14.7222V16.5M11 4.05556C11 6.01923 9.433 7.61111 7.5 7.61111C5.567 7.61111 4 6.01923 4 4.05556C4 2.09188 5.567 0.5 7.5 0.5C9.433 0.5 11 2.09188 11 4.05556Z" stroke="#1227BE" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</span>
+									<span class="elementor-button-text">Login</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				<div class="elementor-element elementor-element-d918a74 elementor-mobile-align-justify elementor-widget-mobile__width-initial elementor-tablet-align-justify elementor-widget-tablet__width-initial elementor-widget elementor-widget-button" data-id="d918a74" data-element_type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="#">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M16.5 8.05558C16.5031 9.2288 16.229 10.3861 15.7 11.4334C15.0728 12.6882 14.1087 13.7437 12.9155 14.4816C11.7224 15.2195 10.3473 15.6106 8.94445 15.6111C7.77123 15.6142 6.61388 15.3401 5.56667 14.8111L0.5 16.5L2.18889 11.4334C1.65994 10.3861 1.38583 9.2288 1.38889 8.05558C1.38943 6.6527 1.78054 5.27767 2.51842 4.08451C3.25629 2.89136 4.31178 1.9272 5.56667 1.30003C6.61388 0.771075 7.77123 0.496966 8.94445 0.500025H9.38889C11.2416 0.60224 12.9916 1.38426 14.3037 2.69634C15.6158 4.00843 16.3978 5.75838 16.5 7.61114V8.05558Z" stroke="#050B39" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</span>
+									<span class="elementor-button-text">Text Us</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-6d12b08 e-con-full e-flex e-con e-child" data-id="6d12b08" data-element_type="container">
+				<div class="elementor-element elementor-element-3938dd8 elementor-view-default elementor-widget elementor-widget-icon" data-id="3938dd8" data-element_type="widget" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#F2F2F2"></circle></svg>			</div>
+		</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-7a74c96 elementor-view-default elementor-widget elementor-widget-icon" data-id="7a74c96" data-element_type="widget" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#F2F2F2"></circle></svg>			</div>
+		</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-c6c61e1 elementor-view-default elementor-widget elementor-widget-icon" data-id="c6c61e1" data-element_type="widget" data-widget_type="icon.default">
+				<div class="elementor-widget-container">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#F2F2F2"></circle></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+					</div>
+				</div>
+				</div>
+					<script>
+				const lazyloadRunObserver = () => {
+					const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );
+					const lazyloadBackgroundObserver = new IntersectionObserver( ( entries ) => {
+						entries.forEach( ( entry ) => {
+							if ( entry.isIntersecting ) {
+								let lazyloadBackground = entry.target;
+								if( lazyloadBackground ) {
+									lazyloadBackground.classList.add( 'e-lazyloaded' );
+								}
+								lazyloadBackgroundObserver.unobserve( entry.target );
+							}
+						});
+					}, { rootMargin: '200px 0px 200px 0px' } );
+					lazyloadBackgrounds.forEach( ( lazyloadBackground ) => {
+						lazyloadBackgroundObserver.observe( lazyloadBackground );
+					} );
+				};
+				const events = [
+					'DOMContentLoaded',
+					'elementor/lazyload/observe',
+				];
+				events.forEach( ( event ) => {
+					document.addEventListener( event, lazyloadRunObserver );
+				} );
+			</script>
+			<link rel='stylesheet' id='elementor-post-14887-css' href='https://wedeliverlaundry.com/wp-content/uploads/elementor/css/post-14887.css?ver=1771123819' type='text/css' media='all' />
+<link rel='stylesheet' id='e-animation-slideInDown-css' href='https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/lib/animations/styles/slideInDown.min.css?ver=3.34.4' type='text/css' media='all' />
+<link rel='stylesheet' id='e-popup-css' href='https://wedeliverlaundry.com/wp-content/plugins/elementor-pro/assets/css/conditionals/popup.min.css?ver=3.34.4' type='text/css' media='all' />
+<link rel='stylesheet' id='rs-plugin-settings-css' href='//wedeliverlaundry.com/wp-content/plugins/revslider/sr6/assets/css/rs6.css?ver=6.7.34' type='text/css' media='all' />
+<style id='rs-plugin-settings-inline-css' type='text/css'>
+#rs-demo-id {}
+</style>
+<script type="text/javascript" id="essential-blocks-blocks-localize-js-extra">
+/* <![CDATA[ */
+var eb_conditional_localize = [];
+var EssentialBlocksLocalize = {"eb_plugins_url":"https:\/\/wedeliverlaundry.com\/wp-content\/plugins\/essential-blocks\/","image_url":"https:\/\/wedeliverlaundry.com\/wp-content\/plugins\/essential-blocks\/assets\/images","eb_wp_version":"6.8","eb_version":"6.0.1","eb_admin_url":"https:\/\/wedeliverlaundry.com\/wp-admin\/","rest_rootURL":"https:\/\/wedeliverlaundry.com\/wp-json\/","ajax_url":"https:\/\/wedeliverlaundry.com\/wp-admin\/admin-ajax.php","nft_nonce":"d669f571d4","post_grid_pagination_nonce":"bf6cc9194f","placeholder_image":"https:\/\/wedeliverlaundry.com\/wp-content\/plugins\/essential-blocks\/assets\/images\/placeholder.png","is_pro_active":"false","upgrade_pro_url":"https:\/\/essential-blocks.com\/upgrade","responsiveBreakpoints":{"tablet":1024,"mobile":767},"wp_timezone":"+00:00","gmt_offset":"0"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/essential-blocks/assets/js/eb-blocks-localize.js?ver=31d6cfe0d16ae931b73c" id="essential-blocks-blocks-localize-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/gt3-themes-core/dist/js/core.js?ver=1749610028" id="gt3-core/core-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/gt3-themes-core/dist/js/widgets/column.js?ver=1749610028" id="gt3-core/widgets/column-js"></script>
+<script type="text/javascript" src="//wedeliverlaundry.com/wp-content/plugins/revslider/sr6/assets/js/rbtools.min.js?ver=6.7.29" defer async id="tp-tools-js"></script>
+<script type="text/javascript" src="//wedeliverlaundry.com/wp-content/plugins/revslider/sr6/assets/js/rs6.min.js?ver=6.7.34" defer async id="revmin-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.34.4" id="elementor-webpack-runtime-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.34.4" id="elementor-frontend-modules-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3" id="jquery-ui-core-js"></script>
+<script type="text/javascript" id="elementor-frontend-js-extra">
+/* <![CDATA[ */
+var EAELImageMaskingConfig = {"svg_dir_url":"https:\/\/wedeliverlaundry.com\/wp-content\/plugins\/essential-addons-for-elementor-lite\/assets\/front-end\/img\/image-masking\/svg-shapes\/"};
+/* ]]> */
+</script>
+<script type="text/javascript" id="elementor-frontend-js-before">
+/* <![CDATA[ */
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close","a11yCarouselPrevSlideMessage":"Previous slide","a11yCarouselNextSlideMessage":"Next slide","a11yCarouselFirstSlideMessage":"This is the first slide","a11yCarouselLastSlideMessage":"This is the last slide","a11yCarouselPaginationBulletMessage":"Go to slide"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":true},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":true}},"hasCustomBreakpoints":true},"version":"3.34.4","is_static":false,"experimentalFeatures":{"e_font_icon_svg":true,"additional_custom_breakpoints":true,"container":true,"theme_builder_v2":true,"landing-pages":true,"nested-elements":true,"home_screen":true,"global_classes_should_enforce_capabilities":true,"e_variables":true,"cloud-library":true,"e_opt_in_v4_page":true,"e_interactions":true,"e_editor_one":true,"import-export-customization":true,"e_pro_variables":true},"urls":{"assets":"https:\/\/wedeliverlaundry.com\/wp-content\/plugins\/elementor\/assets\/","ajaxurl":"https:\/\/wedeliverlaundry.com\/wp-admin\/admin-ajax.php","uploadUrl":"https:\/\/wedeliverlaundry.com\/wp-content\/uploads"},"nonces":{"floatingButtonsClickTracking":"984d824ce8"},"swiperClass":"swiper","settings":{"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet","viewport_laptop","viewport_widescreen"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":0,"title":"Page not found | We Deliver Laundry","excerpt":""}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.34.4" id="elementor-frontend-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js?ver=1.2.1" id="smartmenus-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js?ver=3.34.4" id="e-sticky-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/themes/clengo/js/jquery.cookie.js?ver=6.8.3" id="cookie-js"></script>
+<script type="text/javascript" id="gt3-theme-js-extra">
+/* <![CDATA[ */
+var gt3_gt3theme = {"ajaxurl":"https:\/\/wedeliverlaundry.com\/wp-admin\/admin-ajax.php","templateUrl":"https:\/\/wedeliverlaundry.com\/wp-content\/themes\/clengo"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/themes/clengo/js/theme.js?ver=1.1.7" id="gt3-theme-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/themes/clengo/js/jquery.event.swipe.js?ver=6.8.3" id="event-swipe-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/google-site-kit/dist/assets/js/googlesitekit-events-provider-wpforms-ed443a3a3d45126a22ce.js" id="googlesitekit-events-provider-wpforms-js" defer></script>
+<script type="text/javascript" id="eael-general-js-extra">
+/* <![CDATA[ */
+var localize = {"ajaxurl":"https:\/\/wedeliverlaundry.com\/wp-admin\/admin-ajax.php","nonce":"3f79061ad6","i18n":{"added":"Added ","compare":"Compare","loading":"Loading..."},"eael_translate_text":{"required_text":"is a required field","invalid_text":"Invalid","billing_text":"Billing","shipping_text":"Shipping","fg_mfp_counter_text":"of"},"page_permalink":"https:\/\/wedeliverlaundry.com\/how-to-line-dry-clothes-without-fading\/","cart_redirectition":"no","cart_page_url":"","el_breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":true},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":true}}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/essential-addons-for-elementor-lite/assets/front-end/js/view/general.min.js?ver=6.5.9" id="eael-general-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.34.4" id="elementor-pro-webpack-runtime-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-includes/js/dist/hooks.min.js?ver=4d63a3d491d11ffd8ac6" id="wp-hooks-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js"></script>
+<script type="text/javascript" id="wp-i18n-js-after">
+/* <![CDATA[ */
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+/* ]]> */
+</script>
+<script type="text/javascript" id="elementor-pro-frontend-js-before">
+/* <![CDATA[ */
+var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/wedeliverlaundry.com\/wp-admin\/admin-ajax.php","nonce":"7ceecfe29c","urls":{"assets":"https:\/\/wedeliverlaundry.com\/wp-content\/plugins\/elementor-pro\/assets\/","rest":"https:\/\/wedeliverlaundry.com\/wp-json\/"},"settings":{"lazy_load_background_images":true},"popup":{"hasPopUps":true},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"},"x-twitter":{"title":"X"},"threads":{"title":"Threads"}},"facebook_sdk":{"lang":"en","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/wedeliverlaundry.com\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.34.4" id="elementor-pro-frontend-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.34.4" id="pro-elements-handlers-js"></script>
+<script type="text/javascript" src="https://wedeliverlaundry.com/wp-content/plugins/gt3-themes-core/core/elementor/assets/js/core-frontend.js?ver=2.2.7" id="gt3-elementor-core-frontend-core-js"></script>
+<script id="gt3_custom_footer_js">jQuery(document).ready(function(){
+
+});</script>
+</body>
+</html>

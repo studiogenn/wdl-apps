@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+dist/
+.next/
+.expo/
+.turbo/
+*.tsbuildinfo
+.env
+.env.local
+.dev.vars
+.vercel/
+.playwright-mcp/
+.vercel

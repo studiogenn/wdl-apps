@@ -1,0 +1,6 @@
+name = "wdl-api-gateway"
+main = "src/index.ts"
+compatibility_date = "2025-03-27"
+
+[vars]
+CLEANCLOUD_API_BASE_URL = "https://cleancloud.com/api/v2"
