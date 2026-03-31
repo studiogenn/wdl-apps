@@ -33,14 +33,14 @@ export function EarlyAccessOptOut({ featureKey }: EarlyAccessOptOutProps) {
   }, [featureKey]);
 
   return (
-    <div className="border-b border-wdl-accent/30 bg-wdl-accent/10 px-6 py-3 text-center text-sm">
-      <span className="font-medium text-wdl-dark">
+    <div className="border-b border-fresh-lemon-200/30 bg-fresh-lemon-200/10 px-6 py-3 text-center text-sm">
+      <span className="font-body-medium text-detergent-700">
         You&apos;re using the new account experience.
       </span>
       <button
         onClick={handleOptOut}
         disabled={leaving}
-        className="ml-2 text-wdl-muted underline underline-offset-2 transition-colors hover:text-wdl-dark disabled:opacity-50"
+        className="ml-2 text-neutral-500 underline underline-offset-2 transition-colors hover:text-detergent-700 disabled:opacity-50"
       >
         {leaving ? "Switching..." : "Switch back"}
       </button>

@@ -20,7 +20,7 @@ export function BlogCard({ post }: { readonly post: PostMeta }) {
         </Link>
       )}
       <div className="flex flex-1 flex-col pt-4">
-        <h3 className="text-lg font-semibold leading-snug text-primary">
+        <h3 className="text-lg font-heading-medium leading-snug text-primary">
           <Link href={`/blog/${post.slug}`} className="hover:underline">
             {post.title}
           </Link>
@@ -33,7 +33,7 @@ export function BlogCard({ post }: { readonly post: PostMeta }) {
         </p>
         <Link
           href={`/blog/${post.slug}`}
-          className="mt-4 inline-block font-[family-name:var(--font-poppins)] text-sm font-semibold text-primary hover:underline"
+          className="mt-4 inline-block font-[family-name:var(--font-poppins)] text-sm font-body-medium text-primary hover:underline"
         >
           Read More &raquo;
         </Link>

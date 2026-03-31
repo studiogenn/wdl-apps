@@ -32,7 +32,7 @@ export default function WashFoldPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy leading-tight mb-4 uppercase">
+              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
                 Simple, Transparent Laundry Pricing
               </h2>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
@@ -62,13 +62,13 @@ export default function WashFoldPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
                 >
                   Schedule Pick-up
                 </Link>
                 <Link
                   href="#zipcode"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
                 >
                   Check Zip Code
                 </Link>
@@ -94,7 +94,7 @@ export default function WashFoldPage() {
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             How it Works
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             How We Calculate Your Price
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
@@ -104,7 +104,7 @@ export default function WashFoldPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-semibold px-4 py-1.5 rounded-full mb-5">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
                 Step 1
               </span>
               <div className="mb-5 rounded-xl overflow-hidden">
@@ -116,7 +116,7 @@ export default function WashFoldPage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
                 We Weigh Your Laundry
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -125,7 +125,7 @@ export default function WashFoldPage() {
               </p>
             </div>
             <div className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-semibold px-4 py-1.5 rounded-full mb-5">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
                 Step 2
               </span>
               <div className="mb-5 rounded-xl overflow-hidden">
@@ -137,7 +137,7 @@ export default function WashFoldPage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
                 Priced by the Pound
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -146,7 +146,7 @@ export default function WashFoldPage() {
               </p>
             </div>
             <div className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-semibold px-4 py-1.5 rounded-full mb-5">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
                 Step 3
               </span>
               <div className="mb-5 rounded-xl overflow-hidden">
@@ -158,7 +158,7 @@ export default function WashFoldPage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
                 Cleaned &amp; Delivered
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -174,7 +174,7 @@ export default function WashFoldPage() {
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px]">
           <div className="text-center mb-12">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
               Pick the Service That Fits Your Needs
             </h2>
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto">
@@ -186,10 +186,10 @@ export default function WashFoldPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Pay As You Go */}
             <div className="bg-white rounded-2xl p-8 flex flex-col">
-              <h3 className="text-lg font-semibold text-navy mb-1">Pay As You Go</h3>
+              <h3 className="text-lg font-heading-medium text-navy mb-1">Pay As You Go</h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-5">No commitment</p>
               <div className="mb-6">
-                <span className="text-[2.5rem] font-bold text-navy">$2.79</span>
+                <span className="text-[2.5rem] font-body-bold text-navy">$2.79</span>
                 <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">/lb</span>
               </div>
               <ul className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 space-y-3 mb-8 flex-1">
@@ -220,7 +220,7 @@ export default function WashFoldPage() {
               </ul>
               <Link
                 href="/account/"
-                className="font-[family-name:var(--font-inter)] block text-center px-6 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                className="font-[family-name:var(--font-inter)] block text-center px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
               >
                 Schedule Pick-up
               </Link>
@@ -228,10 +228,10 @@ export default function WashFoldPage() {
 
             {/* Biweekly Plan */}
             <div className="bg-white rounded-2xl p-8 flex flex-col">
-              <h3 className="text-lg font-semibold text-navy mb-1">Biweekly Plan</h3>
+              <h3 className="text-lg font-heading-medium text-navy mb-1">Biweekly Plan</h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-5">Every other week pickup</p>
               <div className="mb-6">
-                <span className="text-[2.5rem] font-bold text-navy">$2.15</span>
+                <span className="text-[2.5rem] font-body-bold text-navy">$2.15</span>
                 <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">/lb</span>
               </div>
               <ul className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 space-y-3 mb-8 flex-1">
@@ -262,7 +262,7 @@ export default function WashFoldPage() {
               </ul>
               <Link
                 href="/account/"
-                className="font-[family-name:var(--font-inter)] block text-center px-6 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                className="font-[family-name:var(--font-inter)] block text-center px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
               >
                 Schedule Pick-up
               </Link>
@@ -270,13 +270,13 @@ export default function WashFoldPage() {
 
             {/* Weekly Plan */}
             <div className="bg-white rounded-2xl p-8 flex flex-col border-2 border-primary relative">
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-semibold px-4 py-1.5 rounded-full">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full">
                 Best Value
               </span>
-              <h3 className="text-lg font-semibold text-navy mb-1">Weekly Plan</h3>
+              <h3 className="text-lg font-heading-medium text-navy mb-1">Weekly Plan</h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-5">Weekly pickup</p>
               <div className="mb-6">
-                <span className="text-[2.5rem] font-bold text-navy">$1.95</span>
+                <span className="text-[2.5rem] font-body-bold text-navy">$1.95</span>
                 <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">/lb</span>
               </div>
               <ul className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 space-y-3 mb-8 flex-1">
@@ -307,7 +307,7 @@ export default function WashFoldPage() {
               </ul>
               <Link
                 href="/account/"
-                className="font-[family-name:var(--font-inter)] block text-center px-6 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                className="font-[family-name:var(--font-inter)] block text-center px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
               >
                 Schedule Pick-up
               </Link>
@@ -322,7 +322,7 @@ export default function WashFoldPage() {
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             By The Numbers
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Trust Building Success Metrics
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
@@ -341,7 +341,7 @@ export default function WashFoldPage() {
                 className="bg-cream rounded-xl px-6 py-10 text-center"
               >
                 <div className="text-4xl mb-3">{stat.icon}</div>
-                <p className="text-[1.75rem] font-semibold text-navy mb-1">
+                <p className="text-[1.75rem] font-body-medium text-navy mb-1">
                   {stat.value}
                 </p>
                 <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">
@@ -357,7 +357,7 @@ export default function WashFoldPage() {
       <section id="zipcode" className="py-14 lg:py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-4 uppercase">
+            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
               Check if We Deliver to You
             </h2>
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
@@ -371,7 +371,7 @@ export default function WashFoldPage() {
       {/* FAQ */}
       <section className="py-16 lg:py-20" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-10 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
             Frequently Asked Questions
           </h2>
           <FAQAccordion />
@@ -416,7 +416,7 @@ function FAQAccordion() {
               onClick={() => setOpenIndex(isOpen ? null : index)}
               className="w-full flex items-center justify-between py-5 text-left group"
             >
-              <span className="font-[family-name:var(--font-poppins)] text-[15px] font-medium text-navy pr-6">
+              <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
                 {item.question}
               </span>
               <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">

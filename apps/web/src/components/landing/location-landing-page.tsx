@@ -31,7 +31,7 @@ export function LocationLandingPage({
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
                 {location}, {state}
               </p>
-              <h1 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy leading-tight mb-4 uppercase">
+              <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
                 {heroHeading}
               </h1>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
@@ -58,13 +58,13 @@ export function LocationLandingPage({
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
                 >
                   Schedule Pick-up
                 </Link>
                 <Link
                   href="/wash-fold/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
                 >
                   View Pricing
                 </Link>
@@ -90,7 +90,7 @@ export function LocationLandingPage({
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             How it Works
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Laundry Made Simple in {location}
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
@@ -123,7 +123,7 @@ export function LocationLandingPage({
               },
             ].map((s) => (
               <div key={s.step} className="text-center">
-                <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-semibold text-navy/50 mb-4">
+                <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/50 mb-4">
                   {s.step}
                 </span>
                 <div className="mb-5 rounded-xl overflow-hidden">
@@ -135,7 +135,7 @@ export function LocationLandingPage({
                     className="w-full h-auto object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-navy mb-2">
+                <h3 className="text-xl font-heading-medium text-navy mb-2">
                   {s.title}
                 </h3>
                 <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -150,7 +150,7 @@ export function LocationLandingPage({
       {/* Service Areas */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Areas We Serve in {location}
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
@@ -180,7 +180,7 @@ export function LocationLandingPage({
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             By The Numbers
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-12 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-12 uppercase">
             Why {location} Trusts Us
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -193,7 +193,7 @@ export function LocationLandingPage({
                 key={stat.label}
                 className="bg-cream rounded-xl px-6 py-10 text-center"
               >
-                <p className="text-[1.75rem] font-semibold text-navy mb-1">
+                <p className="text-[1.75rem] font-body-medium text-navy mb-1">
                   {stat.value}
                 </p>
                 <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">
@@ -215,7 +215,7 @@ export function LocationLandingPage({
       >
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-4 uppercase">
+            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
               Ready to Get Started?
             </h2>
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
@@ -224,7 +224,7 @@ export function LocationLandingPage({
             </p>
             <Link
               href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
             >
               Schedule Pick-up
             </Link>
@@ -235,7 +235,7 @@ export function LocationLandingPage({
       {/* FAQ */}
       <section className="py-16 lg:py-20">
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-10 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
             Frequently Asked Questions
           </h2>
           <div className="bg-white rounded-2xl p-6 shadow-sm">
@@ -266,7 +266,7 @@ function FAQItem({
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between py-5 text-left group"
       >
-        <span className="font-[family-name:var(--font-poppins)] text-[15px] font-medium text-navy pr-6">
+        <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
           {question}
         </span>
         <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">

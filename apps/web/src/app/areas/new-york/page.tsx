@@ -90,7 +90,7 @@ export default function NewYorkAreaPage() {
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
                 New York City, NY
               </p>
-              <h1 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy leading-tight mb-4 uppercase">
+              <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
                 Laundry Pickup & Delivery Across New York City
               </h1>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
@@ -117,13 +117,13 @@ export default function NewYorkAreaPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
                 >
                   Schedule Pick-up
                 </Link>
                 <Link
                   href="/wash-fold"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
                 >
                   View Pricing
                 </Link>
@@ -149,7 +149,7 @@ export default function NewYorkAreaPage() {
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             Built for NYC
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Why New Yorkers Choose Us
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-14">
@@ -175,7 +175,7 @@ export default function NewYorkAreaPage() {
               },
             ].map((item) => (
               <div key={item.title} className="bg-cream rounded-xl px-6 py-8">
-                <h3 className="text-lg font-semibold text-navy mb-3">
+                <h3 className="text-lg font-heading-medium text-navy mb-3">
                   {item.title}
                 </h3>
                 <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -193,7 +193,7 @@ export default function NewYorkAreaPage() {
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             Simple Pricing
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             How Much Does It Cost?
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
@@ -208,10 +208,10 @@ export default function NewYorkAreaPage() {
               { plan: "Weekly Plan", price: "$1.95", unit: "/lb", note: "Best value — weekly pickup" },
             ].map((tier) => (
               <div key={tier.plan} className="bg-white rounded-xl px-6 py-8 text-center shadow-sm">
-                <p className="font-[family-name:var(--font-poppins)] text-sm font-medium text-navy/50 mb-2">
+                <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy/50 mb-2">
                   {tier.plan}
                 </p>
-                <p className="text-[2rem] font-semibold text-navy mb-1">
+                <p className="text-[2rem] font-body-medium text-navy mb-1">
                   {tier.price}
                   <span className="text-base font-normal text-navy/50">{tier.unit}</span>
                 </p>
@@ -230,7 +230,7 @@ export default function NewYorkAreaPage() {
       {/* Areas We Serve */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             NYC Neighborhoods We Serve
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
@@ -279,7 +279,7 @@ export default function NewYorkAreaPage() {
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             How It Works
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Three Steps, Clean Laundry
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
@@ -312,13 +312,13 @@ export default function NewYorkAreaPage() {
               },
             ].map((s) => (
               <div key={s.step} className="text-center">
-                <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-semibold text-navy/50 mb-4">
+                <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/50 mb-4">
                   {s.step}
                 </span>
                 <div className="mb-5 rounded-xl overflow-hidden">
                   <Image src={s.image} alt={s.alt} width={1200} height={660} className="w-full h-auto object-cover" />
                 </div>
-                <h3 className="text-xl font-semibold text-navy mb-2">{s.title}</h3>
+                <h3 className="text-xl font-heading-medium text-navy mb-2">{s.title}</h3>
                 <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">{s.desc}</p>
               </div>
             ))}
@@ -329,7 +329,7 @@ export default function NewYorkAreaPage() {
       {/* FAQ */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-10 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
             NYC Laundry Service FAQ
           </h2>
           <AreaFAQ faqs={NY_FAQS} />
@@ -343,7 +343,7 @@ export default function NewYorkAreaPage() {
       >
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-4 uppercase">
+            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
               Stop Wasting Your Weekends
             </h2>
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
@@ -353,7 +353,7 @@ export default function NewYorkAreaPage() {
             </p>
             <Link
               href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
             >
               Schedule Pick-up
             </Link>
@@ -375,7 +375,7 @@ function NeighborhoodCard({
 }) {
   return (
     <div className="bg-cream rounded-xl px-6 py-6">
-      <h3 className="text-lg font-semibold text-navy mb-4">{borough}</h3>
+      <h3 className="text-lg font-heading-medium text-navy mb-4">{borough}</h3>
       <ul className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 space-y-1.5 mb-4">
         {areas.map((a) => (
           <li key={a}>{a}</li>
@@ -384,7 +384,7 @@ function NeighborhoodCard({
       {link && (
         <Link
           href={link}
-          className="font-[family-name:var(--font-poppins)] text-sm text-primary font-medium hover:underline"
+          className="font-[family-name:var(--font-poppins)] text-sm text-primary font-body-medium hover:underline"
         >
           View {borough} details
         </Link>

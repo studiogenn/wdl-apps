@@ -63,7 +63,7 @@ export function FAQ({ title, heading, introText, items, config }: FAQProps) {
   return (
     <section id="faq" className="py-16 lg:py-20">
       <div className="container-site max-w-[780px]">
-        <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-medium text-navy mb-10 uppercase">
+        <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-10 uppercase">
           {resolvedTitle}
         </h2>
         {resolvedIntroText ? (
@@ -84,7 +84,7 @@ export function FAQ({ title, heading, introText, items, config }: FAQProps) {
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="w-full flex items-center justify-between py-5 text-left group"
                 >
-                  <span className="font-[family-name:var(--font-poppins)] text-[15px] font-medium text-navy pr-6">
+                  <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
                     {item.question}
                   </span>
                   <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">

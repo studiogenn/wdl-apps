@@ -40,7 +40,7 @@ export function HowItWorks({ config }: { config?: HowItWorksConfig }) {
   return (
     <section className="py-16 lg:py-20">
       <div className="container-site max-w-[1100px]">
-        <p className="text-center text-sm uppercase tracking-[0.15em] font-[family-name:var(--font-poppins)] font-medium text-navy/50 mb-2">
+        <p className="text-center text-sm uppercase tracking-[0.15em] font-[family-name:var(--font-poppins)] font-body-medium text-navy/50 mb-2">
           {eyebrow}
         </p>
         <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-normal leading-[3.375rem] tracking-[0.84px] text-navy mb-3 uppercase">
@@ -53,7 +53,7 @@ export function HowItWorks({ config }: { config?: HowItWorksConfig }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {STEPS.map((step) => (
             <div key={step.step} className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-semibold px-4 py-1.5 rounded-full mb-5">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
                 {step.step}
               </span>
               <div className="mb-5 overflow-hidden rounded-xl">
@@ -65,7 +65,7 @@ export function HowItWorks({ config }: { config?: HowItWorksConfig }) {
                   className="w-full h-[200px] object-cover"
                 />
               </div>
-              <h3 className="text-xl lg:text-[1.5rem] font-medium text-navy mb-2">
+              <h3 className="text-xl lg:text-[1.5rem] font-heading-medium text-navy mb-2">
                 {step.title}
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">

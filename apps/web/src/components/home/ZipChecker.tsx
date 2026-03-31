@@ -40,7 +40,7 @@ export function ZipChecker() {
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
             <polyline points="22 4 12 14.01 9 11.01" />
           </svg>
-          <span className="font-[family-name:var(--font-poppins)] text-sm font-medium text-green-700">
+          <span className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-green-700">
             We deliver to {zip}!
           </span>
         </div>
@@ -49,7 +49,7 @@ export function ZipChecker() {
         </p>
         <Link
           href="/account/"
-          className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+          className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
         >
           Schedule Pick-up
         </Link>
@@ -75,7 +75,7 @@ export function ZipChecker() {
         <button
           type="submit"
           disabled={status === "loading" || zip.trim().length < 5}
-          className="font-[family-name:var(--font-inter)] px-8 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+          className="font-[family-name:var(--font-inter)] px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {status === "loading" ? "Checking..." : "Check Zip Code"}
         </button>
@@ -126,7 +126,7 @@ export function ZipChecker() {
               <button
                 type="submit"
                 disabled={notifyStatus === "sending"}
-                className="font-[family-name:var(--font-inter)] px-5 py-2.5 text-sm font-semibold text-white bg-amber-600 rounded-full hover:bg-amber-700 transition-colors disabled:opacity-50"
+                className="font-[family-name:var(--font-inter)] px-5 py-2.5 text-sm font-body-medium text-white bg-amber-600 rounded-full hover:bg-amber-700 transition-colors disabled:opacity-50"
               >
                 {notifyStatus === "sending" ? "..." : "Notify Me"}
               </button>

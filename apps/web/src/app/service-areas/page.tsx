@@ -27,7 +27,7 @@ export default function ServiceAreasPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy leading-tight mb-4 uppercase">
+              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
                 Our Laundry Service Areas
               </h2>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
@@ -58,13 +58,13 @@ export default function ServiceAreasPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-white bg-navy rounded-full hover:bg-navy/90 transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-navy rounded-full hover:bg-navy/90 transition-colors"
                 >
                   Schedule Pick-up
                 </Link>
                 <Link
                   href="#zipcode"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-navy border border-navy rounded-full hover:bg-navy hover:text-white transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy border border-navy rounded-full hover:bg-navy hover:text-white transition-colors"
                 >
                   Check Your Zip Code
                 </Link>
@@ -90,7 +90,7 @@ export default function ServiceAreasPage() {
           <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             Locations
           </p>
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Counties We Serve
           </h1>
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
@@ -136,7 +136,7 @@ export default function ServiceAreasPage() {
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             How it Works
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Pick-up and Drop-off Explained
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
@@ -146,7 +146,7 @@ export default function ServiceAreasPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-semibold text-navy/50 mb-4">
+              <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/50 mb-4">
                 Step 1
               </span>
               <div className="mb-5 rounded-xl overflow-hidden">
@@ -158,7 +158,7 @@ export default function ServiceAreasPage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
                 Schedule Pick-up
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -166,7 +166,7 @@ export default function ServiceAreasPage() {
               </p>
             </div>
             <div className="text-center">
-              <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-semibold text-navy/50 mb-4">
+              <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/50 mb-4">
                 Step 2
               </span>
               <div className="mb-5 rounded-xl overflow-hidden">
@@ -178,7 +178,7 @@ export default function ServiceAreasPage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
                 We Pick Up
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -187,7 +187,7 @@ export default function ServiceAreasPage() {
               </p>
             </div>
             <div className="text-center">
-              <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-semibold text-navy/50 mb-4">
+              <span className="inline-block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/50 mb-4">
                 Step 3
               </span>
               <div className="mb-5 rounded-xl overflow-hidden">
@@ -199,7 +199,7 @@ export default function ServiceAreasPage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
                 We Deliver
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -217,7 +217,7 @@ export default function ServiceAreasPage() {
           <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             Client Testimonials
           </p>
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             A Word From Our Customers
           </h1>
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
@@ -236,10 +236,10 @@ export default function ServiceAreasPage() {
             ].map((review) => (
               <div key={review.name} className="flex-shrink-0 w-[260px] bg-white rounded-xl border border-navy/10 p-5 flex flex-col gap-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 rounded-full bg-navy/10 flex items-center justify-center text-sm font-medium text-navy">
+                  <div className="w-9 h-9 rounded-full bg-navy/10 flex items-center justify-center text-sm font-body-medium text-navy">
                     {review.initial}
                   </div>
-                  <span className="text-sm font-medium text-navy">{review.name}</span>
+                  <span className="text-sm font-body-medium text-navy">{review.name}</span>
                 </div>
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
@@ -277,7 +277,7 @@ export default function ServiceAreasPage() {
       <section id="zipcode" className="bg-cream py-14 lg:py-20">
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-4 uppercase">
+            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
               Check if We Deliver to You
             </h2>
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
@@ -292,7 +292,7 @@ export default function ServiceAreasPage() {
       <section className="py-14 lg:py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-4 uppercase">
+            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
               Ready to Get Started?
             </h2>
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
@@ -302,7 +302,7 @@ export default function ServiceAreasPage() {
             </p>
             <Link
               href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
             >
               Schedule Pick-up
             </Link>
@@ -313,7 +313,7 @@ export default function ServiceAreasPage() {
       {/* FAQ */}
       <section className="py-16 lg:py-20">
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-10 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
             Frequently Asked Questions
           </h2>
           <div className="border-t border-navy/10">
@@ -335,7 +335,7 @@ function CountyDropdown({ label, areas }: { label: string; areas: string[] }) {
     <div className="flex-1 min-w-[280px]">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full bg-light-blue text-navy rounded-full px-6 py-5 flex items-center justify-between font-[family-name:var(--font-poppins)] text-lg font-semibold cursor-pointer"
+        className="w-full bg-light-blue text-navy rounded-full px-6 py-5 flex items-center justify-between font-[family-name:var(--font-poppins)] text-lg font-body-medium cursor-pointer"
       >
         {label}
         <svg
@@ -380,7 +380,7 @@ function FAQItem({
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between py-5 text-left group"
       >
-        <span className="font-[family-name:var(--font-poppins)] text-[15px] font-medium text-navy pr-6">
+        <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
           {question}
         </span>
         <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">

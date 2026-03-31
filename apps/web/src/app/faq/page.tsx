@@ -25,7 +25,7 @@ export default function FaqPage() {
       />
       <section className="px-4 py-16 sm:py-24">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-center text-3xl font-bold text-wdl-dark sm:text-4xl">
+          <h1 className="text-center text-3xl font-heading-bold text-detergent-700 sm:text-4xl">
             Frequently Asked Questions
           </h1>
 
@@ -34,13 +34,13 @@ export default function FaqPage() {
               <Accordion.Item
                 key={i}
                 value={`item-${i}`}
-                className="border-b border-gray-200"
+                className="border-b border-neutral-300"
               >
-                <Accordion.Trigger className="flex w-full items-center justify-between py-4 text-left text-lg font-medium text-wdl-dark hover:text-wdl-primary">
+                <Accordion.Trigger className="flex w-full items-center justify-between py-4 text-left text-lg font-body-medium text-detergent-700 hover:text-detergent-400">
                   {item.question}
-                  <span className="ml-4 text-wdl-primary">+</span>
+                  <span className="ml-4 text-detergent-400">+</span>
                 </Accordion.Trigger>
-                <Accordion.Content className="pb-4 text-gray-600">
+                <Accordion.Content className="pb-4 text-neutral-500">
                   {item.answer}
                 </Accordion.Content>
               </Accordion.Item>

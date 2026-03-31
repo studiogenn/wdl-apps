@@ -9,7 +9,7 @@ export function BlogRelated({
 }) {
   return (
     <div className="py-12">
-      <h2 className="mb-8 text-center text-2xl font-bold text-navy sm:text-3xl">
+      <h2 className="mb-8 text-center text-2xl font-heading-bold text-navy sm:text-3xl">
         Related Posts
       </h2>
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -29,7 +29,7 @@ export function BlogRelated({
               </Link>
             )}
             <div className="pt-4">
-              <p className="text-base font-semibold text-primary">
+              <p className="text-base font-body-medium text-primary">
                 <Link
                   href={`/blog/${post.slug}`}
                   className="hover:underline"
@@ -46,7 +46,7 @@ export function BlogRelated({
               </p>
               <Link
                 href={`/blog/${post.slug}`}
-                className="mt-3 inline-block font-[family-name:var(--font-poppins)] text-sm font-semibold text-primary hover:underline"
+                className="mt-3 inline-block font-[family-name:var(--font-poppins)] text-sm font-body-medium text-primary hover:underline"
               >
                 Read More &raquo;
               </Link>

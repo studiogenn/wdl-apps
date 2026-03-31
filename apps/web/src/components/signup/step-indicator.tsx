@@ -19,7 +19,7 @@ export function StepIndicator({ currentStep, totalSteps, labels }: StepIndicator
             <div key={step} className="flex items-center flex-1 last:flex-none">
               <div className="flex flex-col items-center">
                 <div
-                  className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-colors ${
+                  className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-body-medium transition-colors ${
                     isCompleted
                       ? "bg-primary text-white"
                       : isActive
@@ -36,7 +36,7 @@ export function StepIndicator({ currentStep, totalSteps, labels }: StepIndicator
                   )}
                 </div>
                 {labels?.[i] && (
-                  <span className={`mt-1.5 text-[11px] font-medium font-[family-name:var(--font-poppins)] ${
+                  <span className={`mt-1.5 text-[11px] font-body-medium font-[family-name:var(--font-poppins)] ${
                     isActive || isCompleted ? "text-navy" : "text-navy/40"
                   }`}>
                     {labels[i]}

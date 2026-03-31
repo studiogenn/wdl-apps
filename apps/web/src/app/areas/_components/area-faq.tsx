@@ -24,7 +24,7 @@ export function AreaFAQ({ faqs }: AreaFAQProps) {
               onClick={() => setOpenIndex(isOpen ? null : index)}
               className="w-full flex items-center justify-between py-5 text-left group"
             >
-              <span className="font-[family-name:var(--font-poppins)] text-[15px] font-medium text-navy pr-6">
+              <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
                 {faq.question}
               </span>
               <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">

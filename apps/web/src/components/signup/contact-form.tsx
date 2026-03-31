@@ -68,7 +68,7 @@ export function ContactForm({ initialAddress, onSubmit, onBack, loading, error }
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-navy mb-2">Your Info</h2>
+      <h2 className="text-2xl font-heading-medium text-navy mb-2">Your Info</h2>
       <p className="text-sm text-navy/60 font-[family-name:var(--font-poppins)] mb-6">
         Tell us where to pick up your laundry.
       </p>
@@ -76,7 +76,7 @@ export function ContactForm({ initialAddress, onSubmit, onBack, loading, error }
       <form onSubmit={handleSubmit} className="space-y-4">
         {fields.map(({ key, label, type, placeholder, autoComplete }) => (
           <div key={key}>
-            <label className="mb-1.5 block text-xs font-medium text-navy/70 font-[family-name:var(--font-poppins)]">
+            <label className="mb-1.5 block text-xs font-body-medium text-navy/70 font-[family-name:var(--font-poppins)]">
               {label}
             </label>
             <input
@@ -103,14 +103,14 @@ export function ContactForm({ initialAddress, onSubmit, onBack, loading, error }
           <button
             type="button"
             onClick={onBack}
-            className="flex-1 rounded-full border border-navy/15 px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-semibold text-navy hover:bg-navy/5 transition-colors"
+            className="flex-1 rounded-full border border-navy/15 px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-navy hover:bg-navy/5 transition-colors"
           >
             Back
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-semibold text-white hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Creating account..." : "Continue"}
           </button>

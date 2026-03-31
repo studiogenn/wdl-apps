@@ -32,7 +32,7 @@ export default function CommercialLaundryPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy leading-tight mb-4 uppercase">
+              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
                 Laundry Service Designed for Your Business
               </h2>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
@@ -62,13 +62,13 @@ export default function CommercialLaundryPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
                 >
                   Schedule Pick-up
                 </Link>
                 <Link
                   href="#contact"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
                 >
                   Check Zip Code
                 </Link>
@@ -94,7 +94,7 @@ export default function CommercialLaundryPage() {
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             How it Works
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Pick-up and Drop-off Explained
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
@@ -105,7 +105,7 @@ export default function CommercialLaundryPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-semibold px-4 py-1.5 rounded-full mb-5">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
                 Step 1
               </span>
               <div className="mb-5 rounded-xl overflow-hidden">
@@ -117,7 +117,7 @@ export default function CommercialLaundryPage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
                 Schedule a Pickup
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -127,7 +127,7 @@ export default function CommercialLaundryPage() {
               </p>
             </div>
             <div className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-semibold px-4 py-1.5 rounded-full mb-5">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
                 Step 2
               </span>
               <div className="mb-5 rounded-xl overflow-hidden">
@@ -139,7 +139,7 @@ export default function CommercialLaundryPage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
                 We Pick Up
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -149,7 +149,7 @@ export default function CommercialLaundryPage() {
               </p>
             </div>
             <div className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-semibold px-4 py-1.5 rounded-full mb-5">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
                 Step 3
               </span>
               <div className="mb-5 rounded-xl overflow-hidden">
@@ -161,7 +161,7 @@ export default function CommercialLaundryPage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
                 We Deliver
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -176,7 +176,7 @@ export default function CommercialLaundryPage() {
       {/* Contact Form */}
       <section id="contact" className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[700px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-8 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-8 uppercase">
             Contact Us
           </h2>
           <div className="bg-white rounded-2xl p-8 lg:p-10">
@@ -201,7 +201,7 @@ export default function CommercialLaundryPage() {
       {/* Industries We Serve */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px] text-center">
-          <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-4 uppercase">
+          <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
             Industries We Serve
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
@@ -272,7 +272,7 @@ export default function CommercialLaundryPage() {
                 className="bg-cream rounded-xl p-6"
               >
                 <div className="mb-3">{industry.icon}</div>
-                <h3 className="text-base font-semibold text-navy mb-1">
+                <h3 className="text-base font-heading-medium text-navy mb-1">
                   {industry.title}
                 </h3>
                 <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70">
@@ -290,7 +290,7 @@ export default function CommercialLaundryPage() {
           <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             Client Testimonials
           </p>
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             A Word From Our Customers
           </h1>
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
@@ -326,10 +326,10 @@ export default function CommercialLaundryPage() {
                 className="flex-shrink-0 w-[260px] bg-white rounded-xl border border-navy/10 p-5 text-left"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="bg-navy/10 w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold text-navy">
+                  <div className="bg-navy/10 w-9 h-9 rounded-full flex items-center justify-center text-sm font-body-medium text-navy">
                     {review.name.charAt(0).toUpperCase()}
                   </div>
-                  <span className="font-[family-name:var(--font-poppins)] text-sm font-medium text-navy">
+                  <span className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
                     {review.name}
                   </span>
                 </div>
@@ -360,7 +360,7 @@ export default function CommercialLaundryPage() {
           <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             By The Numbers
           </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Trust Building Success Metrics
           </h2>
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
@@ -379,7 +379,7 @@ export default function CommercialLaundryPage() {
                 className="bg-cream rounded-xl px-6 py-10 text-center"
               >
                 <div className="text-4xl mb-3">{stat.icon}</div>
-                <p className="text-[1.75rem] font-semibold text-navy mb-1">
+                <p className="text-[1.75rem] font-body-medium text-navy mb-1">
                   {stat.value}
                 </p>
                 <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">
@@ -400,7 +400,7 @@ export default function CommercialLaundryPage() {
         }}
       >
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-10 uppercase">
+          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
             Frequently Asked Questions
           </h2>
           <FAQAccordion />
@@ -450,7 +450,7 @@ function ContactForm() {
   if (status === "success") {
     return (
       <div className="bg-white rounded-2xl p-8 lg:p-10 text-center">
-        <h3 className="text-xl font-semibold text-navy mb-3">Thank You!</h3>
+        <h3 className="text-xl font-heading-medium text-navy mb-3">Thank You!</h3>
         <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70">
           We&apos;ve received your message and will get back to you shortly.
         </p>
@@ -516,7 +516,7 @@ function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="font-[family-name:var(--font-inter)] w-full px-8 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors disabled:opacity-50"
+        className="font-[family-name:var(--font-inter)] w-full px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors disabled:opacity-50"
       >
         {status === "submitting" ? "Submitting..." : "Contact Our Team"}
       </button>
@@ -566,7 +566,7 @@ function FAQAccordion() {
               onClick={() => setOpenIndex(isOpen ? null : index)}
               className="w-full flex items-center justify-between py-5 text-left group"
             >
-              <span className="font-[family-name:var(--font-poppins)] text-[15px] font-medium text-navy pr-6">
+              <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
                 {item.question}
               </span>
               <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">

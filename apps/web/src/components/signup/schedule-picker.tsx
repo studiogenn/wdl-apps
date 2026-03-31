@@ -97,7 +97,7 @@ export function SchedulePicker({ routeID, onSubmit, onBack, loading, error }: Sc
   if (loadingDates) {
     return (
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold text-navy mb-2">Schedule Pickup</h2>
+        <h2 className="text-2xl font-heading-medium text-navy mb-2">Schedule Pickup</h2>
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
             <div key={i} className="h-14 animate-pulse rounded-xl bg-navy/5" />
@@ -109,7 +109,7 @@ export function SchedulePicker({ routeID, onSubmit, onBack, loading, error }: Sc
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-navy mb-2">Schedule Pickup</h2>
+      <h2 className="text-2xl font-heading-medium text-navy mb-2">Schedule Pickup</h2>
       <p className="text-sm text-navy/60 font-[family-name:var(--font-poppins)] mb-6">
         Choose a day and time for your first pickup.
       </p>
@@ -120,7 +120,7 @@ export function SchedulePicker({ routeID, onSubmit, onBack, loading, error }: Sc
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="mb-2 block text-xs font-medium text-navy/70 font-[family-name:var(--font-poppins)]">
+          <label className="mb-2 block text-xs font-body-medium text-navy/70 font-[family-name:var(--font-poppins)]">
             Available Dates
           </label>
           <div className="grid grid-cols-2 gap-2">
@@ -131,7 +131,7 @@ export function SchedulePicker({ routeID, onSubmit, onBack, loading, error }: Sc
                 onClick={() => setSelectedDate(entry.date)}
                 className={`rounded-xl border px-4 py-3 text-left text-sm font-[family-name:var(--font-poppins)] transition-colors ${
                   selectedDate === entry.date
-                    ? "border-primary bg-primary/5 text-primary font-medium"
+                    ? "border-primary bg-primary/5 text-primary font-body-medium"
                     : "border-navy/10 text-navy hover:border-navy/25"
                 }`}
               >
@@ -148,7 +148,7 @@ export function SchedulePicker({ routeID, onSubmit, onBack, loading, error }: Sc
 
         {selectedDate && (
           <div>
-            <label className="mb-2 block text-xs font-medium text-navy/70 font-[family-name:var(--font-poppins)]">
+            <label className="mb-2 block text-xs font-body-medium text-navy/70 font-[family-name:var(--font-poppins)]">
               Time Slot
             </label>
             {loadingSlots ? (
@@ -166,7 +166,7 @@ export function SchedulePicker({ routeID, onSubmit, onBack, loading, error }: Sc
                     onClick={() => setSelectedSlot(slot)}
                     className={`rounded-lg border px-3 py-2.5 text-center text-sm font-[family-name:var(--font-poppins)] transition-colors ${
                       selectedSlot === slot
-                        ? "border-primary bg-primary/5 text-primary font-medium"
+                        ? "border-primary bg-primary/5 text-primary font-body-medium"
                         : "border-navy/10 text-navy hover:border-navy/25"
                     }`}
                   >
@@ -190,14 +190,14 @@ export function SchedulePicker({ routeID, onSubmit, onBack, loading, error }: Sc
           <button
             type="button"
             onClick={onBack}
-            className="flex-1 rounded-full border border-navy/15 px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-semibold text-navy hover:bg-navy/5 transition-colors"
+            className="flex-1 rounded-full border border-navy/15 px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-navy hover:bg-navy/5 transition-colors"
           >
             Back
           </button>
           <button
             type="submit"
             disabled={!selectedDate || !selectedSlot || loading}
-            className="flex-1 rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-semibold text-white hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Scheduling..." : "Schedule Pickup"}
           </button>

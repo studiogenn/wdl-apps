@@ -68,13 +68,13 @@ export function Hero({
             <div className="flex flex-wrap gap-3">
               <Link
                 href={resolvedCtaLink}
-                className="font-[family-name:var(--font-inter)] px-7 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                className="font-[family-name:var(--font-inter)] px-7 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
               >
                 {resolvedCtaText}
               </Link>
               <Link
                 href={resolvedSecondaryCtaLink}
-                className="font-[family-name:var(--font-inter)] px-7 py-3 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
+                className="font-[family-name:var(--font-inter)] px-7 py-3 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
               >
                 {resolvedSecondaryCtaText}
               </Link>

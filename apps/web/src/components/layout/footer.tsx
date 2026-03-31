@@ -25,13 +25,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* About */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">About us</h4>
+            <h4 className="text-lg font-heading-medium mb-4">About us</h4>
             <p className="font-[family-name:var(--font-poppins)] text-sm text-white/70 leading-relaxed mb-6">
               We Deliver Laundry is your go-to service for premium laundry
               pickup and delivery, fast, easy, and reliable. Schedule your
               pickup today!
             </p>
-            <h4 className="text-lg font-semibold mb-3">Contact us</h4>
+            <h4 className="text-lg font-heading-medium mb-3">Contact us</h4>
             <p className="font-[family-name:var(--font-poppins)] text-sm text-white/70 mb-1">
               <a href="tel:8559685511" className="hover:text-white transition-colors">
                 (855) 968-5511
@@ -65,7 +65,7 @@ export function Footer() {
 
           {/* Servicing Areas */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Servicing Areas</h4>
+            <h4 className="text-lg font-heading-medium mb-4">Servicing Areas</h4>
             <ul className="space-y-2">
               {SERVICING_AREAS.map((link) => (
                 <li key={link.label}>
@@ -82,7 +82,7 @@ export function Footer() {
 
           {/* Explore */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Explore</h4>
+            <h4 className="text-lg font-heading-medium mb-4">Explore</h4>
             <ul className="space-y-2">
               {EXPLORE_LINKS.map((link) => (
                 <li key={link.label}>
@@ -99,7 +99,7 @@ export function Footer() {
 
           {/* CTA + App */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">
+            <h4 className="text-lg font-heading-medium mb-4">
               You do you, we do laundry
             </h4>
             <p className="font-[family-name:var(--font-poppins)] text-sm text-white/70 mb-4">
@@ -109,7 +109,7 @@ export function Footer() {
             </p>
             <Link
               href="/account/"
-              className="inline-block font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors mb-6"
+              className="inline-block font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors mb-6"
             >
               Schedule Pick-up
             </Link>
@@ -123,7 +123,7 @@ export function Footer() {
                 </svg>
                 <div>
                   <p className="text-[10px] text-white/60">download the app</p>
-                  <p className="text-xs font-semibold">App Store</p>
+                  <p className="text-xs font-body-medium">App Store</p>
                 </div>
               </a>
               <a
@@ -135,7 +135,7 @@ export function Footer() {
                 </svg>
                 <div>
                   <p className="text-[10px] text-white/60">download the app</p>
-                  <p className="text-xs font-semibold">Play Store</p>
+                  <p className="text-xs font-body-medium">Play Store</p>
                 </div>
               </a>
             </div>

@@ -277,7 +277,7 @@ export default function GuidedSignupPage() {
             error={state.error}
           />
           <div className="mt-6 rounded-xl border border-navy/10 bg-navy/[0.02] p-4">
-            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-navy/40 font-[family-name:var(--font-poppins)]">
+            <h3 className="mb-2 text-xs font-body-medium uppercase tracking-wider text-navy/40 font-[family-name:var(--font-poppins)]">
               What to expect
             </h3>
             <ul className="space-y-2 text-xs text-navy/60 font-[family-name:var(--font-poppins)]">

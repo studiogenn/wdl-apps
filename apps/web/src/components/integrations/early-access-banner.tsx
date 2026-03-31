@@ -34,12 +34,12 @@ export function EarlyAccessBanner({ featureKey, label }: EarlyAccessBannerProps)
   }, [featureKey]);
 
   return (
-    <div className="border-b border-wdl-accent/30 bg-wdl-accent/10 px-6 py-3 text-center text-sm">
-      <span className="text-wdl-muted">{label}</span>
+    <div className="border-b border-fresh-lemon-200/30 bg-fresh-lemon-200/10 px-6 py-3 text-center text-sm">
+      <span className="text-neutral-500">{label}</span>
       <button
         onClick={handleOptIn}
         disabled={enrolling}
-        className="ml-2 font-medium text-wdl-dark underline underline-offset-2 transition-colors hover:text-wdl-primary disabled:opacity-50"
+        className="ml-2 font-body-medium text-detergent-700 underline underline-offset-2 transition-colors hover:text-detergent-400 disabled:opacity-50"
       >
         {enrolling ? "Switching..." : "Try it now"}
       </button>

@@ -90,7 +90,7 @@ export function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
 
   return (
     <div>
-      <h2 className="mb-2 text-2xl font-semibold text-navy">Welcome Back</h2>
+      <h2 className="mb-2 text-2xl font-heading-medium text-navy">Welcome Back</h2>
       <p className="mb-6 font-[family-name:var(--font-poppins)] text-sm text-navy/60">
         Sign in to schedule a pickup or manage your account.
       </p>
@@ -99,7 +99,7 @@ export function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
         <div>
           <label
             htmlFor="login-email"
-            className="mb-1 block font-[family-name:var(--font-poppins)] text-xs font-medium text-navy/70"
+            className="mb-1 block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70"
           >
             Email
           </label>
@@ -116,7 +116,7 @@ export function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
         <div>
           <label
             htmlFor="login-password"
-            className="mb-1 block font-[family-name:var(--font-poppins)] text-xs font-medium text-navy/70"
+            className="mb-1 block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70"
           >
             Password
           </label>
@@ -143,7 +143,7 @@ export function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
         <button
           type="submit"
           disabled={loading || !email.trim() || !password}
-          className="w-full rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-semibold text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-full rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>
@@ -162,7 +162,7 @@ export function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
         <button
           type="button"
           onClick={onSwitchToSignup}
-          className="font-[family-name:var(--font-poppins)] text-xs font-medium text-primary underline underline-offset-2 hover:text-primary-hover"
+          className="font-[family-name:var(--font-poppins)] text-xs font-body-medium text-primary underline underline-offset-2 hover:text-primary-hover"
         >
           Create an account
         </button>

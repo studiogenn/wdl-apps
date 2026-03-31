@@ -93,7 +93,7 @@ export default function HowToOrderPage() {
       {/* Hero */}
       <section className="bg-light-blue py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <h1 className="text-[2rem] lg:text-[2.625rem] font-medium text-navy mb-4 uppercase">
+          <h1 className="text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-4 uppercase">
             How To Schedule A Pickup
           </h1>
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-2xl mx-auto">
@@ -115,10 +115,10 @@ export default function HowToOrderPage() {
                 className="bg-light-blue rounded-2xl p-8 lg:p-10 flex flex-col lg:flex-row items-start gap-8"
               >
                 <div className="flex-1">
-                  <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-semibold px-4 py-1.5 rounded-full mb-4">
+                  <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-4">
                     Step {index + 1}
                   </span>
-                  <h3 className="text-xl lg:text-[1.5rem] font-medium text-navy mb-3">
+                  <h3 className="text-xl lg:text-[1.5rem] font-heading-medium text-navy mb-3">
                     {step.title}
                   </h3>
                   <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -135,7 +135,7 @@ export default function HowToOrderPage() {
           <div className="text-center mt-14">
             <Link
               href="/account/"
-              className="font-[family-name:var(--font-inter)] px-8 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+              className="font-[family-name:var(--font-inter)] px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
             >
               Get Started Now
             </Link>

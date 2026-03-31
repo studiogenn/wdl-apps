@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }: Props) {
       <div className="bg-navy">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 py-12 sm:flex-row sm:py-16">
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-white sm:text-4xl">
+            <h1 className="text-3xl font-heading-bold text-white sm:text-4xl">
               {post.title}
             </h1>
           </div>

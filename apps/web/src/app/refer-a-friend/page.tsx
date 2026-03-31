@@ -10,7 +10,7 @@ export default function ReferAFriendPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <h1 className="text-[2rem] lg:text-[2.5rem] font-semibold text-primary leading-tight mb-4 uppercase">
+              <h1 className="text-[2rem] lg:text-[2.5rem] font-heading-medium text-primary leading-tight mb-4 uppercase">
                 Refer A Friend
               </h1>
               <p className="font-[family-name:var(--font-poppins)] text-navy text-[15px] leading-relaxed mb-3">
@@ -21,25 +21,25 @@ export default function ReferAFriendPage() {
                 <strong>$20 off</strong>, and so will you.
               </p>
 
-              <h2 className="text-[1.5rem] font-semibold text-primary mt-10 mb-6">
+              <h2 className="text-[1.5rem] font-heading-medium text-primary mt-10 mb-6">
                 How it works:
               </h2>
 
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
-                  <h2 className="text-[2rem] font-bold text-primary leading-none">1</h2>
+                  <h2 className="text-[2rem] font-heading-bold text-primary leading-none">1</h2>
                   <p className="font-[family-name:var(--font-poppins)] text-navy text-[15px] pt-1">
                     <strong>Get your referral link.</strong> Just enter your email.
                   </p>
                 </div>
                 <div className="flex items-start gap-4">
-                  <h2 className="text-[2rem] font-bold text-primary leading-none">2</h2>
+                  <h2 className="text-[2rem] font-heading-bold text-primary leading-none">2</h2>
                   <p className="font-[family-name:var(--font-poppins)] text-navy text-[15px] pt-1">
                     <strong>Share it</strong> with your crew.
                   </p>
                 </div>
                 <div className="flex items-start gap-4">
-                  <h2 className="text-[2rem] font-bold text-primary leading-none">3</h2>
+                  <h2 className="text-[2rem] font-heading-bold text-primary leading-none">3</h2>
                   <p className="font-[family-name:var(--font-poppins)] text-navy text-[15px] pt-1">
                     <strong>Everyone saves $20</strong> and smells amazing.
                   </p>

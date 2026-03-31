@@ -15,10 +15,10 @@ export function ByTheNumbers({ config }: { config?: ByTheNumbersConfig }) {
   return (
     <section className="bg-cream py-16 lg:py-20">
       <div className="container-site max-w-[1100px]">
-        <p className="text-center text-sm uppercase tracking-[0.15em] font-[family-name:var(--font-poppins)] font-medium text-navy/50 mb-2">
+        <p className="text-center text-sm uppercase tracking-[0.15em] font-[family-name:var(--font-poppins)] font-body-medium text-navy/50 mb-2">
           {eyebrow}
         </p>
-        <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-medium text-navy mb-3 uppercase">
+        <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-3 uppercase">
           {heading}
         </h2>
         <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
@@ -59,7 +59,7 @@ function StatCard({
   return (
     <div className="bg-light-blue rounded-xl px-6 py-8 text-center">
       <div className="flex justify-center mb-3 text-primary">{icon}</div>
-      <p className="font-[family-name:var(--font-poppins)] text-xl font-medium text-navy mb-0.5">
+      <p className="font-[family-name:var(--font-poppins)] text-xl font-body-medium text-navy mb-0.5">
         {value}
       </p>
       <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">

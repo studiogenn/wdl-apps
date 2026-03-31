@@ -65,7 +65,7 @@ export function ServiceSelector({ onSelect, onBack }: ServiceSelectorProps) {
   if (loading) {
     return (
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold text-navy mb-2">Choose a Service</h2>
+        <h2 className="text-2xl font-heading-medium text-navy mb-2">Choose a Service</h2>
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
             <div key={i} className="h-24 animate-pulse rounded-xl bg-navy/5" />
@@ -77,7 +77,7 @@ export function ServiceSelector({ onSelect, onBack }: ServiceSelectorProps) {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-navy mb-2">Choose a Service</h2>
+      <h2 className="text-2xl font-heading-medium text-navy mb-2">Choose a Service</h2>
       <p className="text-sm text-navy/60 font-[family-name:var(--font-poppins)] mb-4">
         Select the service that works best for you.
       </p>
@@ -86,7 +86,7 @@ export function ServiceSelector({ onSelect, onBack }: ServiceSelectorProps) {
         {TRUST_SIGNALS.map((signal) => (
           <span
             key={signal}
-            className="rounded-full bg-highlight px-3 py-1 text-[11px] font-medium text-navy/70 font-[family-name:var(--font-poppins)]"
+            className="rounded-full bg-highlight px-3 py-1 text-[11px] font-body-medium text-navy/70 font-[family-name:var(--font-poppins)]"
           >
             {signal}
           </span>
@@ -109,7 +109,7 @@ export function ServiceSelector({ onSelect, onBack }: ServiceSelectorProps) {
               <ServiceIcon name={getServiceIcon(product.name)} />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-medium text-navy">{product.name}</p>
+              <p className="text-sm font-body-medium text-navy">{product.name}</p>
               <p className="text-xs text-navy/50 font-[family-name:var(--font-poppins)]">
                 Starting at ${(product.price / 100).toFixed(2)}
               </p>
@@ -124,7 +124,7 @@ export function ServiceSelector({ onSelect, onBack }: ServiceSelectorProps) {
       <button
         type="button"
         onClick={onBack}
-        className="w-full rounded-full border border-navy/15 px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-semibold text-navy hover:bg-navy/5 transition-colors"
+        className="w-full rounded-full border border-navy/15 px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-navy hover:bg-navy/5 transition-colors"
       >
         Back
       </button>

@@ -33,7 +33,7 @@ export function Header() {
             <Link
               key={item.label}
               href={item.href}
-              className="font-[family-name:var(--font-poppins)] text-navy text-[14px] font-medium hover:text-primary transition-colors"
+              className="font-[family-name:var(--font-poppins)] text-navy text-[14px] font-body-medium hover:text-primary transition-colors"
             >
               {item.label}
             </Link>
@@ -99,7 +99,7 @@ export function Header() {
             <Link
               key={item.label}
               href={item.href}
-              className="block py-3 text-[14px] text-navy font-medium border-b border-navy/5"
+              className="block py-3 text-[14px] text-navy font-body-medium border-b border-navy/5"
               onClick={() => setMobileOpen(false)}
             >
               {item.label}

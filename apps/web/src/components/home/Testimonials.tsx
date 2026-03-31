@@ -93,11 +93,11 @@ function ReviewCard({ review }: { review: (typeof REVIEWS)[number] }) {
     <div className="flex-shrink-0 w-[260px] bg-white rounded-xl border border-navy/10 p-5 flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-full bg-navy/10 flex items-center justify-center text-sm font-medium text-navy">
+          <div className="w-9 h-9 rounded-full bg-navy/10 flex items-center justify-center text-sm font-body-medium text-navy">
             {review.initial}
           </div>
           <div>
-            <p className="font-[family-name:var(--font-poppins)] text-sm font-medium text-navy leading-tight">
+            <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy leading-tight">
               {review.name}
             </p>
             <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/40">
@@ -155,7 +155,7 @@ export function Testimonials({ config }: { config?: TestimonialsConfig }) {
         <p className="font-[family-name:var(--font-poppins)] text-center text-navy/50 text-xs uppercase tracking-[0.2em] mb-2">
           {eyebrow}
         </p>
-        <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-medium text-navy mb-3 uppercase">
+        <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-3 uppercase">
           {heading}
         </h2>
         <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">

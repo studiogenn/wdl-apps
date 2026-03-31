@@ -134,7 +134,7 @@ export default function OurStoryPage() {
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
                 Our Story
               </p>
-              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy leading-tight mb-4 uppercase">
+              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
                 Built to Make Laundry Effortless
               </h2>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-7">
@@ -147,13 +147,13 @@ export default function OurStoryPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
                 >
                   Schedule Pick-up
                 </Link>
                 <Link
                   href="#zipcode"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
                 >
                   Check Your Zip Code
                 </Link>
@@ -179,7 +179,7 @@ export default function OurStoryPage() {
           <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             Locations
           </p>
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-3 uppercase">
+          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
             Counties We Serve
           </h1>
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-1">
@@ -294,30 +294,30 @@ export default function OurStoryPage() {
           <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
             Our Values
           </p>
-          <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-8 uppercase">
+          <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-8 uppercase">
             What We Stand For
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-xl p-7 text-center">
-              <h3 className="text-lg font-semibold text-navy mb-2">Reliability</h3>
+              <h3 className="text-lg font-heading-medium text-navy mb-2">Reliability</h3>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px]">
                 On-time pickups and deliveries you can count on, every single time.
               </p>
             </div>
             <div className="bg-white rounded-xl p-7 text-center">
-              <h3 className="text-lg font-semibold text-navy mb-2">Quality</h3>
+              <h3 className="text-lg font-heading-medium text-navy mb-2">Quality</h3>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px]">
                 Professionally cleaned, carefully folded, and ready to wear within 24 hours.
               </p>
             </div>
             <div className="bg-white rounded-xl p-7 text-center">
-              <h3 className="text-lg font-semibold text-navy mb-2">Transparency</h3>
+              <h3 className="text-lg font-heading-medium text-navy mb-2">Transparency</h3>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px]">
                 Simple per-pound pricing with no hidden fees, no subscriptions required.
               </p>
             </div>
             <div className="bg-white rounded-xl p-7 text-center">
-              <h3 className="text-lg font-semibold text-navy mb-2">Care</h3>
+              <h3 className="text-lg font-heading-medium text-navy mb-2">Care</h3>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px]">
                 Your clothes handled with the same care you&apos;d give them yourself.
               </p>
@@ -329,7 +329,7 @@ export default function OurStoryPage() {
       {/* Choose Service */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px] text-center">
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-4 uppercase">
+          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
             Choose the Laundry Service That Fits Your Needs
           </h1>
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-8">
@@ -340,25 +340,25 @@ export default function OurStoryPage() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-light-blue rounded-xl p-8">
-              <h3 className="text-lg font-semibold text-navy mb-2">Wash &amp; Fold</h3>
+              <h3 className="text-lg font-heading-medium text-navy mb-2">Wash &amp; Fold</h3>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] mb-5">
                 Professional wash, dry &amp; fold with 24-hour turnaround. Starting at $1.95/lb.
               </p>
               <Link
                 href="/wash-fold"
-                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
+                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
               >
                 Learn More
               </Link>
             </div>
             <div className="bg-light-blue rounded-xl p-8">
-              <h3 className="text-lg font-semibold text-navy mb-2">Commercial Laundry</h3>
+              <h3 className="text-lg font-heading-medium text-navy mb-2">Commercial Laundry</h3>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] mb-5">
                 Dependable high-volume laundry for businesses of all sizes.
               </p>
               <Link
                 href="/commercial-laundry"
-                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
+                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
               >
                 Learn More
               </Link>
@@ -378,7 +378,7 @@ export default function OurStoryPage() {
       >
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-semibold text-navy mb-4 uppercase">
+            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
               Check if We Deliver to You
             </h2>
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">

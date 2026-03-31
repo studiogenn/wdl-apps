@@ -14,7 +14,7 @@ export default async function BlogPage() {
   return (
     <section className="px-4 py-16 sm:py-24">
       <div className="mx-auto max-w-6xl">
-        <h2 className="text-center text-3xl font-bold text-primary sm:text-4xl">
+        <h2 className="text-center text-3xl font-heading-bold text-primary sm:text-4xl">
           We Deliver Laundry - Laundry Blog
         </h2>
 

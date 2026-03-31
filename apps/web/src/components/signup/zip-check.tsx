@@ -52,7 +52,7 @@ export function ZipCheck({ onSuccess }: ZipCheckProps) {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-navy mb-2">Check Your Area</h2>
+      <h2 className="text-2xl font-heading-medium text-navy mb-2">Check Your Area</h2>
       <p className="text-sm text-navy/60 font-[family-name:var(--font-poppins)] mb-6">
         Enter your zip code to see if we deliver to you.
       </p>
@@ -76,7 +76,7 @@ export function ZipCheck({ onSuccess }: ZipCheckProps) {
         <button
           type="submit"
           disabled={loading || !zip.trim()}
-          className="w-full rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-semibold text-white hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Checking..." : "Check Availability"}
         </button>
@@ -84,7 +84,7 @@ export function ZipCheck({ onSuccess }: ZipCheckProps) {
 
       {notInArea && (
         <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
-          <p className="text-sm font-medium text-amber-800 mb-2">
+          <p className="text-sm font-body-medium text-amber-800 mb-2">
             We don&apos;t serve your area yet.
           </p>
           <p className="text-xs text-amber-700 font-[family-name:var(--font-poppins)]">
@@ -101,7 +101,7 @@ export function ZipCheck({ onSuccess }: ZipCheckProps) {
             />
             <button
               type="submit"
-              className="rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-700 transition-colors"
+              className="rounded-lg bg-amber-600 px-4 py-2 text-xs font-body-medium text-white hover:bg-amber-700 transition-colors"
             >
               Notify Me
             </button>

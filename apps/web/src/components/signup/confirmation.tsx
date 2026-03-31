@@ -35,7 +35,7 @@ export function Confirmation({
         </div>
       </div>
 
-      <h2 className="text-2xl font-semibold text-navy mb-2">
+      <h2 className="text-2xl font-heading-medium text-navy mb-2">
         You&apos;re all set, {firstName}!
       </h2>
       <p className="text-sm text-navy/60 font-[family-name:var(--font-poppins)] mb-6">
@@ -44,26 +44,26 @@ export function Confirmation({
 
       {(pickupDate || pickupTime || serviceName) && (
         <div className="mb-6 rounded-xl border border-navy/10 bg-navy/[0.02] p-4 text-left">
-          <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-navy/40 font-[family-name:var(--font-poppins)]">
+          <h3 className="mb-2 text-xs font-heading-medium uppercase tracking-wider text-navy/40 font-[family-name:var(--font-poppins)]">
             Pickup Summary
           </h3>
           <dl className="space-y-1.5 text-sm font-[family-name:var(--font-poppins)]">
             {serviceName && (
               <div className="flex justify-between">
                 <dt className="text-navy/60">Service</dt>
-                <dd className="font-medium text-navy">{serviceName}</dd>
+                <dd className="font-body-medium text-navy">{serviceName}</dd>
               </div>
             )}
             {pickupDate && (
               <div className="flex justify-between">
                 <dt className="text-navy/60">Date</dt>
-                <dd className="font-medium text-navy">{pickupDate}</dd>
+                <dd className="font-body-medium text-navy">{pickupDate}</dd>
               </div>
             )}
             {pickupTime && (
               <div className="flex justify-between">
                 <dt className="text-navy/60">Time</dt>
-                <dd className="font-medium text-navy">{pickupTime}</dd>
+                <dd className="font-body-medium text-navy">{pickupTime}</dd>
               </div>
             )}
           </dl>
@@ -71,11 +71,11 @@ export function Confirmation({
       )}
 
       <div className="mb-6 text-left">
-        <h3 className="mb-3 text-sm font-semibold text-navy">What happens next</h3>
+        <h3 className="mb-3 text-sm font-heading-medium text-navy">What happens next</h3>
         <ol className="space-y-3">
           {NEXT_STEPS.map(({ step, text }) => (
             <li key={step} className="flex items-start gap-3">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-body-medium text-primary">
                 {step}
               </span>
               <span className="text-sm text-navy/70 font-[family-name:var(--font-poppins)]">
@@ -88,7 +88,7 @@ export function Confirmation({
 
       {showUpsell && (
         <div className="mb-6 rounded-xl border border-highlight bg-highlight/30 p-4 text-left">
-          <p className="text-sm font-medium text-navy mb-1">
+          <p className="text-sm font-body-medium text-navy mb-1">
             Save with weekly pickups
           </p>
           <p className="text-xs text-navy/60 font-[family-name:var(--font-poppins)]">
@@ -99,7 +99,7 @@ export function Confirmation({
 
       <Link
         href="/"
-        className="inline-block w-full rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+        className="inline-block w-full rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white hover:bg-primary-hover transition-colors"
       >
         Back to Home
       </Link>

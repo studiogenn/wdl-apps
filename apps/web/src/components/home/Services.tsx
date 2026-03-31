@@ -40,7 +40,7 @@ export function Services({
         <div className="relative bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow mb-6 lg:mb-8">
           {/* Most Popular badge */}
           <div className="absolute -top-3 left-6 sm:left-8">
-            <span className="inline-block bg-highlight text-navy text-xs font-semibold tracking-wide uppercase px-4 py-1.5 rounded-full shadow-sm font-[family-name:var(--font-inter)]">
+            <span className="inline-block bg-highlight text-navy text-xs font-body-medium tracking-wide uppercase px-4 py-1.5 rounded-full shadow-sm font-[family-name:var(--font-inter)]">
               Most Popular
             </span>
           </div>
@@ -51,7 +51,7 @@ export function Services({
               <div className="flex-1">
                 <div className="flex items-start gap-4 sm:gap-5 mb-4">
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-[1.5rem] sm:text-[1.75rem] lg:text-[2rem] font-medium text-navy mb-2">
+                    <h3 className="text-[1.5rem] sm:text-[1.75rem] lg:text-[2rem] font-heading-medium text-navy mb-2">
                       Wash &amp; Fold
                     </h3>
                     <p className="font-[family-name:var(--font-poppins)] text-sm sm:text-[15px] text-navy/70 leading-relaxed">
@@ -93,14 +93,14 @@ export function Services({
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Link
                     href="/account/"
-                    className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center px-7 py-3 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                    className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center px-7 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
                   >
                     Schedule A Pickup
                   </Link>
                   {resolvedShowPricing ? (
                     <Link
                       href="/wash-fold"
-                      className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center px-7 py-3 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
+                      className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center px-7 py-3 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
                     >
                       View Pricing &amp; Details
                     </Link>
@@ -112,7 +112,7 @@ export function Services({
               {resolvedShowPricing ? (
                 <div className="lg:w-[320px] shrink-0">
                   <div className="bg-cream/60 rounded-xl p-5 sm:p-6">
-                    <p className="font-[family-name:var(--font-poppins)] text-xs font-semibold uppercase tracking-wider text-navy/50 mb-4">
+                    <p className="font-[family-name:var(--font-poppins)] text-xs font-body-medium uppercase tracking-wider text-navy/50 mb-4">
                       Pricing
                     </p>
                     <div className="space-y-3">
@@ -137,7 +137,7 @@ export function Services({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
           {/* Add-On Services */}
           <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-6 sm:p-7 flex flex-col">
-            <h3 className="text-lg font-medium text-navy mb-2">
+            <h3 className="text-lg font-heading-medium text-navy mb-2">
               Add-On Services
             </h3>
             <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/60 leading-relaxed mb-4">
@@ -155,7 +155,7 @@ export function Services({
 
             <Link
               href="/wash-fold"
-              className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center w-full px-5 py-2.5 text-xs font-semibold text-primary border border-primary/40 rounded-full hover:bg-primary hover:text-white transition-colors mt-auto"
+              className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center w-full px-5 py-2.5 text-xs font-body-medium text-primary border border-primary/40 rounded-full hover:bg-primary hover:text-white transition-colors mt-auto"
             >
               View Full Price List
             </Link>
@@ -163,7 +163,7 @@ export function Services({
 
           {/* Specialty Wash & Fold */}
           <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-6 sm:p-7 flex flex-col">
-            <h3 className="text-lg font-medium text-navy mb-2">
+            <h3 className="text-lg font-heading-medium text-navy mb-2">
               Specialty Wash &amp; Fold
             </h3>
             <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/60 leading-relaxed mb-4 flex-1">
@@ -182,7 +182,7 @@ export function Services({
 
             <Link
               href="/wash-fold"
-              className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center w-full px-5 py-2.5 text-xs font-semibold text-primary border border-primary/40 rounded-full hover:bg-primary hover:text-white transition-colors mt-auto"
+              className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center w-full px-5 py-2.5 text-xs font-body-medium text-primary border border-primary/40 rounded-full hover:bg-primary hover:text-white transition-colors mt-auto"
             >
               View Full Price List
             </Link>
@@ -190,7 +190,7 @@ export function Services({
 
           {/* Dry Cleaning */}
           <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-6 sm:p-7 flex flex-col">
-            <h3 className="text-lg font-medium text-navy mb-2">
+            <h3 className="text-lg font-heading-medium text-navy mb-2">
               Dry Cleaning
             </h3>
             <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/60 leading-relaxed mb-4">
@@ -207,7 +207,7 @@ export function Services({
 
             <Link
               href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center w-full px-5 py-2.5 text-xs font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors mt-auto"
+              className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center w-full px-5 py-2.5 text-xs font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors mt-auto"
             >
               Schedule A Pickup
             </Link>
@@ -235,7 +235,7 @@ function PricingRow({
         {label}
       </span>
       <span
-        className={`font-[family-name:var(--font-poppins)] text-sm font-semibold whitespace-nowrap ${
+        className={`font-[family-name:var(--font-poppins)] text-sm font-body-medium whitespace-nowrap ${
           highlight ? "text-primary" : "text-navy"
         }`}
       >
@@ -260,7 +260,7 @@ function AddonRow({
         {label}
       </span>
       <span
-        className={`font-[family-name:var(--font-poppins)] text-xs font-semibold whitespace-nowrap ${
+        className={`font-[family-name:var(--font-poppins)] text-xs font-body-medium whitespace-nowrap ${
           highlight ? "text-primary" : "text-navy/80"
         }`}
       >

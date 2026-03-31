@@ -79,7 +79,7 @@ export function TrustedBrands({ config }: { config?: TrustedBrandsConfig }) {
 
   return (
     <section className="bg-primary py-8">
-      <p className="text-center text-white/80 text-xs uppercase tracking-[0.2em] font-[family-name:var(--font-poppins)] font-medium mb-6">
+      <p className="text-center text-white/80 text-xs uppercase tracking-[0.2em] font-[family-name:var(--font-poppins)] font-body-medium mb-6">
         {heading}
       </p>
       <div className="overflow-hidden w-full">

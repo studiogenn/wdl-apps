@@ -26,7 +26,7 @@ export default function LaundryServicesPage() {
       {/* Hero */}
       <section className="bg-light-blue py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <h1 className="text-[2rem] lg:text-[2.625rem] font-medium text-navy mb-3 uppercase">
+          <h1 className="text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-3 uppercase">
             Laundry Made Simple
           </h1>
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-2xl mx-auto">
@@ -94,13 +94,13 @@ export default function LaundryServicesPage() {
       {/* Explore Services */}
       <section className="bg-light-blue py-16 lg:py-20">
         <div className="container-site max-w-[1100px]">
-          <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-medium text-navy mb-14 uppercase">
+          <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-14 uppercase">
             Explore Our Laundry Services
           </h2>
 
           <div className="bg-white rounded-2xl p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-10 mb-8">
             <div className="flex-1">
-              <h3 className="text-[1.5rem] lg:text-[1.75rem] font-medium text-navy mb-2">
+              <h3 className="text-[1.5rem] lg:text-[1.75rem] font-heading-medium text-navy mb-2">
                 Wash &amp; Fold Services
               </h3>
               <p className="text-lg text-navy/50 mb-3">
@@ -113,13 +113,13 @@ export default function LaundryServicesPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
                 >
                   Schedule Pick-up
                 </Link>
                 <Link
                   href="/wash-fold"
-                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
                 >
                   Learn More
                 </Link>
@@ -138,7 +138,7 @@ export default function LaundryServicesPage() {
 
           <div className="bg-white rounded-2xl p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <h3 className="text-[1.5rem] lg:text-[1.75rem] font-medium text-navy mb-2">
+              <h3 className="text-[1.5rem] lg:text-[1.75rem] font-heading-medium text-navy mb-2">
                 Commercial Laundry Services
               </h3>
               <p className="text-lg text-navy/50 mb-3">
@@ -151,13 +151,13 @@ export default function LaundryServicesPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/commercial-laundry/#get-a-quote"
-                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
                 >
                   Request a Quote
                 </Link>
                 <Link
                   href="/commercial-laundry"
-                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
                 >
                   Learn More
                 </Link>
@@ -180,7 +180,7 @@ export default function LaundryServicesPage() {
       <section className="bg-light-blue py-14">
         <div className="container-site max-w-[1100px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-14 text-center max-w-[750px] mx-auto">
-            <h2 className="text-[1.75rem] lg:text-[2.625rem] font-medium text-black mb-3">
+            <h2 className="text-[1.75rem] lg:text-[2.625rem] font-heading-medium text-black mb-3">
               Ready to Get Started?
             </h2>
             <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 max-w-md mx-auto mb-7 leading-relaxed">
@@ -191,13 +191,13 @@ export default function LaundryServicesPage() {
             <div className="flex flex-wrap justify-center gap-3">
               <Link
                 href="/account/"
-                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
               >
                 Schedule Pick-up
               </Link>
               <Link
                 href="/wash-fold"
-                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
+                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
               >
                 View Pricing
               </Link>
@@ -238,7 +238,7 @@ function ServiceCard({
     <div className="bg-light-blue rounded-2xl p-7 lg:p-9">
       <div className="flex flex-row items-start gap-5 mb-4">
         <div className="min-w-0 flex-1">
-          <h3 className="text-[1.5rem] lg:text-[1.75rem] font-medium text-navy mb-2">
+          <h3 className="text-[1.5rem] lg:text-[1.75rem] font-heading-medium text-navy mb-2">
             {title}
           </h3>
           <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
@@ -261,7 +261,7 @@ function ServiceCard({
           <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/70">
             {stat1Label}
           </span>
-          <span className="font-[family-name:var(--font-poppins)] text-sm font-semibold text-navy">
+          <span className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
             {stat1Value}
           </span>
         </div>
@@ -269,7 +269,7 @@ function ServiceCard({
           <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/70">
             {stat2Label}
           </span>
-          <span className="font-[family-name:var(--font-poppins)] text-sm font-semibold text-navy">
+          <span className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
             {stat2Value}
           </span>
         </div>
@@ -277,13 +277,13 @@ function ServiceCard({
       <div className="flex flex-wrap gap-3">
         <Link
           href={primaryHref}
-          className="font-[family-name:var(--font-inter)] px-5 py-2.5 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
+          className="font-[family-name:var(--font-inter)] px-5 py-2.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
         >
           {primaryLabel}
         </Link>
         <Link
           href={secondaryHref}
-          className="font-[family-name:var(--font-inter)] px-5 py-2.5 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
+          className="font-[family-name:var(--font-inter)] px-5 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
         >
           {secondaryLabel}
         </Link>

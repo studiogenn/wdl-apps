@@ -15,7 +15,7 @@ export function PromoInput({ value, onChange }: PromoInputProps) {
       <button
         type="button"
         onClick={() => setExpanded(true)}
-        className="text-xs text-primary font-medium font-[family-name:var(--font-poppins)] hover:underline"
+        className="text-xs text-primary font-body-medium font-[family-name:var(--font-poppins)] hover:underline"
       >
         Have a promo code?
       </button>
@@ -24,7 +24,7 @@ export function PromoInput({ value, onChange }: PromoInputProps) {
 
   return (
     <div>
-      <label className="mb-1.5 block text-xs font-medium text-navy/70 font-[family-name:var(--font-poppins)]">
+      <label className="mb-1.5 block text-xs font-body-medium text-navy/70 font-[family-name:var(--font-poppins)]">
         Promo Code (optional)
       </label>
       <input

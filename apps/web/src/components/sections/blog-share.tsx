@@ -67,7 +67,7 @@ export function BlogShare({
 
   return (
     <div className="border-t border-navy/10 py-6 text-center">
-      <h3 className="mb-4 text-lg font-bold text-navy">Click to Share</h3>
+      <h3 className="mb-4 text-lg font-heading-bold text-navy">Click to Share</h3>
       <div className="flex justify-center gap-3">
         {SHARE_PLATFORMS.map((platform) => (
           <a
