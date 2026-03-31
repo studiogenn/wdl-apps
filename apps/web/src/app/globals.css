@@ -1,0 +1,87 @@
+@import "tailwindcss";
+@config "../../../tailwind.config.ts";
+
+@plugin "@tailwindcss/typography";
+
+@theme inline {
+  /* Brand tokens loaded via @config from @wdl/tokens */
+  /* Semantic aliases for backward compat during migration */
+  --color-primary: var(--color-detergent-400);
+  --color-primary-hover: var(--color-detergent-500);
+  --color-navy: var(--color-detergent-700);
+  --color-cream: var(--color-seabreeze-300);
+  --color-light-blue: var(--color-detergent-100);
+  --color-highlight: var(--color-fresh-lemon-100);
+  --color-divider: var(--color-neutral-400);
+  --color-footer-bg: var(--color-detergent-700);
+
+  /* Fonts */
+  --font-heading: var(--font-zilla-slab);
+  --font-body: var(--font-dm-sans);
+}
+
+:root {
+  --header-height: 3.25rem;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 3.75rem;
+  }
+}
+
+body {
+  color: var(--color-detergent-700);
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Zilla Slab", serif !important;
+}
+
+.container-site {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container-site {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-site {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-site {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container-site {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
