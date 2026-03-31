@@ -261,7 +261,7 @@ export default async function LocationLandingPage({
           <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#111] uppercase tracking-[0.3px] leading-[1.1] mb-7 text-center">
             Simple.<br />Per-pound.
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {/* Weekly */}
             <div className="relative bg-white border-2 border-[#1227be] rounded-[10px] p-7">
               <div className="absolute -top-px right-5 bg-[#1227be] text-white font-[family-name:var(--font-poppins)] text-[9px] font-bold uppercase tracking-[1.2px] px-3.5 py-1.5 rounded-b-lg">
@@ -291,6 +291,28 @@ export default async function LocationLandingPage({
                     {perk}
                   </div>
                 ))}
+              </div>
+            </div>
+            {/* Subscription Plan */}
+            <div className="bg-white border-[1.5px] border-[#e4e2d4] rounded-[10px] p-7">
+              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-[#666] mb-2.5">Subscription Plan</p>
+              <p className="text-[48px] font-bold text-[#333] leading-none">$30.99</p>
+              <p className="font-[family-name:var(--font-poppins)] text-[13px] text-[#888] mt-1.5 mb-5">starting per bag · personalized weekly or biweekly service</p>
+              <div className="flex flex-col gap-2.5">
+                {["Customized to your laundry needs", "Weekly or biweekly pickup options", "Lower price per bag vs pay-as-you-go", "Free pickup & delivery", "24-hour turnaround", "Cancel or adjust anytime"].map((perk) => (
+                  <div key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[12px] text-[#555]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#888] shrink-0" />
+                    {perk}
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5">
+                <Link
+                  href="/subscription"
+                  className="block text-center bg-[#1227be] text-white font-bold text-[11px] uppercase tracking-[1.4px] py-3 px-6 rounded-[4px] hover:scale-105 transition-transform duration-300"
+                >
+                  Get My Plan
+                </Link>
               </div>
             </div>
           </div>
