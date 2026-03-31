@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
 import { ZipChecker } from "@/components/home/ZipChecker";
+import { FAQAccordion } from "@/components/shared/faq-accordion";
+import { ButtonLink } from "@/components/shared/button-link";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const dryCleaningSchema = {
   "@context": "https://schema.org",
@@ -32,9 +33,7 @@ export default function DryCleaningPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
-                Professional Dry Cleaning, Picked Up &amp; Delivered
-              </h2>
+              <SectionHeader heading="Professional Dry Cleaning, Picked Up &amp; Delivered" align="left" headingClassName="mb-4 leading-tight" />
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
                 Expert care for your delicate garments — suits, dresses, coats,
                 and more. Free pickup and delivery with 3-day turnaround.
@@ -60,18 +59,12 @@ export default function DryCleaningPage() {
                 </li>
               </ul>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-                >
+                <ButtonLink href="/account/">
                   Schedule Pick-up
-                </Link>
-                <Link
-                  href="#zipcode"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
-                >
+                </ButtonLink>
+                <ButtonLink href="#zipcode" variant="outline">
                   Check Zip Code
-                </Link>
+                </ButtonLink>
               </div>
             </div>
             <div className="w-full lg:w-[440px] shrink-0">
@@ -91,12 +84,7 @@ export default function DryCleaningPage() {
       {/* How We Work */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            How it Works
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Dry Cleaning Pickup &amp; Delivery, Explained
-          </h2>
+          <SectionHeader eyebrow="How it Works" heading="Dry Cleaning Pickup &amp; Delivery, Explained" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
             We handle everything from pickup to delivery so you never have to
             visit the dry cleaner again.
@@ -174,9 +162,7 @@ export default function DryCleaningPage() {
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px]">
           <div className="text-center mb-12">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-              Simple, Transparent Dry Cleaning Pricing
-            </h2>
+            <SectionHeader heading="Simple, Transparent Dry Cleaning Pricing" align="left" headingClassName="mb-3" />
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto">
               Professional dry cleaning priced per item. $50 minimum order. Free
               pickup &amp; delivery.
@@ -203,12 +189,9 @@ export default function DryCleaningPage() {
           </div>
 
           <div className="text-center mt-8">
-            <Link
-              href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-block px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-            >
+            <ButtonLink href="/account/">
               Schedule Pick-up
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </section>
@@ -216,12 +199,7 @@ export default function DryCleaningPage() {
       {/* By The Numbers */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            By The Numbers
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Trust Building Success Metrics
-          </h2>
+          <SectionHeader eyebrow="By The Numbers" heading="Trust Building Success Metrics" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
             We don&apos;t love bragging, but the numbers don&apos;t lie —
             thousands of happy customers and more clean clothes than we can
@@ -279,9 +257,7 @@ export default function DryCleaningPage() {
       <section id="zipcode" className="py-14 lg:py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
-              Check if We Deliver to You
-            </h2>
+            <SectionHeader heading="Check if We Deliver to You" headingClassName="mb-4" />
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
               Enter your zip code to see if we offer dry cleaning pickup and delivery in your area.
             </p>
@@ -293,10 +269,8 @@ export default function DryCleaningPage() {
       {/* FAQ */}
       <section className="py-16 lg:py-20" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
-            Frequently Asked Questions
-          </h2>
-          <FAQAccordion />
+          <SectionHeader heading="Frequently Asked Questions" />
+          <FAQAccordion items={DRY_CLEANING_FAQ} />
         </div>
       </section>
     </>
@@ -334,46 +308,3 @@ const DRY_CLEANING_FAQ = [
       "Yes! You can schedule both services in the same pickup.",
   },
 ];
-
-function FAQAccordion() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm space-y-0">
-      {DRY_CLEANING_FAQ.map((item, index) => {
-        const isOpen = openIndex === index;
-        return (
-          <div key={index} className="border-b border-navy/10 last:border-b-0">
-            <button
-              onClick={() => setOpenIndex(isOpen ? null : index)}
-              className="w-full flex items-center justify-between py-5 text-left group"
-            >
-              <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
-                {item.question}
-              </span>
-              <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">
-                {isOpen ? (
-                  <svg width="14" height="2" viewBox="0 0 14 2" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="0" y1="1" x2="14" y2="1" />
-                  </svg>
-                ) : (
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="7" y1="0" x2="7" y2="14" />
-                    <line x1="0" y1="7" x2="14" y2="7" />
-                  </svg>
-                )}
-              </span>
-            </button>
-            {isOpen && (
-              <div className="pb-5">
-                <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 leading-relaxed">
-                  {item.answer}
-                </p>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}

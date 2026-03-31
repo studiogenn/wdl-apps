@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { CtaConfig } from "@/lib/section-defaults";
+import { ButtonLink } from "@/components/shared/button-link";
 
 const DEFAULTS = {
   heading: "Ready to Get Started?",
@@ -30,18 +30,12 @@ export function CTABanner({ config }: { config?: CtaConfig }) {
             {subheading}
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              href={ctaLink}
-              className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-            >
+            <ButtonLink href={ctaLink}>
               {ctaText}
-            </Link>
-            <Link
-              href={secondaryCtaLink}
-              className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-            >
+            </ButtonLink>
+            <ButtonLink href={secondaryCtaLink} variant="outline">
               {secondaryCtaText}
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </div>

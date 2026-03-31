@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import type { FaqConfig } from "@/lib/section-defaults";
+import { FAQAccordion } from "@/components/shared/faq-accordion";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const DEFAULT_FAQ_ITEMS = [
   {
@@ -54,7 +55,6 @@ export interface FAQProps extends FaqConfig {
 }
 
 export function FAQ({ title, heading, introText, items, config }: FAQProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const resolvedTitle =
     title ?? heading ?? config?.title ?? config?.heading ?? "Frequently Asked Questions";
   const resolvedIntroText = introText ?? config?.introText;
@@ -63,54 +63,14 @@ export function FAQ({ title, heading, introText, items, config }: FAQProps) {
   return (
     <section id="faq" className="py-16 lg:py-20">
       <div className="container-site max-w-[780px]">
-        <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-10 uppercase">
-          {resolvedTitle}
-        </h2>
+        <SectionHeader heading={resolvedTitle} size="lg" />
         {resolvedIntroText ? (
           <p className="font-[family-name:var(--font-poppins)] text-center text-sm text-navy/60 leading-relaxed mb-10">
             {resolvedIntroText}
           </p>
         ) : null}
 
-        <div className="space-y-0">
-          {resolvedItems.map((item, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={index}
-                className="border-b border-navy/10"
-              >
-                <button
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full flex items-center justify-between py-5 text-left group"
-                >
-                  <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
-                    {item.question}
-                  </span>
-                  <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">
-                    {isOpen ? (
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2">
-                        <line x1="0" y1="7" x2="14" y2="7" />
-                      </svg>
-                    ) : (
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2">
-                        <line x1="7" y1="0" x2="7" y2="14" />
-                        <line x1="0" y1="7" x2="14" y2="7" />
-                      </svg>
-                    )}
-                  </span>
-                </button>
-                {isOpen && (
-                  <div className="pb-5">
-                    <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 leading-relaxed">
-                      {item.answer}
-                    </p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+        <FAQAccordion items={resolvedItems} card={false} />
       </div>
     </section>
   );

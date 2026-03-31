@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { ButtonLink } from "@/components/shared/button-link";
 
 export function BlogCta() {
   return (
@@ -11,12 +11,9 @@ export function BlogCta() {
           We Pickup, Wash, Fold &amp; Deliver
         </h3>
       </div>
-      <Link
-        href="/account"
-        className="shrink-0 rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white transition-colors hover:bg-primary-hover"
-      >
+      <ButtonLink href="/account" className="shrink-0">
         Try it Now!
-      </Link>
+      </ButtonLink>
     </div>
   );
 }

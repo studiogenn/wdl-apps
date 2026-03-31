@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { z } from "zod";
 import { identifyCustomer, trackEvent } from "@/lib/tracking";
+import { Button } from "@/components/shared/button";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -140,13 +141,13 @@ export function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
           </p>
         )}
 
-        <button
+        <Button
           type="submit"
           disabled={loading || !email.trim() || !password}
-          className="w-full rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-full disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? "Signing in..." : "Sign In"}
-        </button>
+        </Button>
       </form>
 
       <div className="mt-4 flex items-center justify-between">

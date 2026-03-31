@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { getSeoMetadata } from "@/lib/seo";
 import { SchemaRenderer } from "@/components/seo/schema-renderer";
 import { getServiceSchema } from "@/lib/schema";
+import { ButtonLink } from "@/components/shared/button-link";
+import { SectionHeader } from "@/components/shared/section-header";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSeoMetadata("/laundry-services");
@@ -26,9 +27,7 @@ export default function LaundryServicesPage() {
       {/* Hero */}
       <section className="bg-light-blue py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <h1 className="text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-3 uppercase">
-            Laundry Made Simple
-          </h1>
+          <SectionHeader heading="Laundry Made Simple" headingAs="h1" size="lg" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-2xl mx-auto">
             Easy scheduling, fast turnaround, and clean clothes delivered back,
             without the headache.
@@ -94,9 +93,7 @@ export default function LaundryServicesPage() {
       {/* Explore Services */}
       <section className="bg-light-blue py-16 lg:py-20">
         <div className="container-site max-w-[1100px]">
-          <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-14 uppercase">
-            Explore Our Laundry Services
-          </h2>
+          <SectionHeader heading="Explore Our Laundry Services" size="lg" headingClassName="mb-14" />
 
           <div className="bg-white rounded-2xl p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-10 mb-8">
             <div className="flex-1">
@@ -111,18 +108,12 @@ export default function LaundryServicesPage() {
                 ready within 24 hours.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-                >
+                <ButtonLink href="/account/">
                   Schedule Pick-up
-                </Link>
-                <Link
-                  href="/wash-fold"
-                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-                >
+                </ButtonLink>
+                <ButtonLink href="/wash-fold" variant="outline">
                   Learn More
-                </Link>
+                </ButtonLink>
               </div>
             </div>
             <div className="w-full lg:w-[350px] shrink-0 rounded-xl overflow-hidden">
@@ -149,18 +140,12 @@ export default function LaundryServicesPage() {
                 consistent, high-volume service.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/commercial-laundry/#get-a-quote"
-                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-                >
+                <ButtonLink href="/commercial-laundry/#get-a-quote">
                   Request a Quote
-                </Link>
-                <Link
-                  href="/commercial-laundry"
-                  className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-                >
+                </ButtonLink>
+                <ButtonLink href="/commercial-laundry" variant="outline">
                   Learn More
-                </Link>
+                </ButtonLink>
               </div>
             </div>
             <div className="w-full lg:w-[350px] shrink-0 rounded-xl overflow-hidden">
@@ -189,18 +174,12 @@ export default function LaundryServicesPage() {
               over it.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <Link
-                href="/account/"
-                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-              >
+              <ButtonLink href="/account/">
                 Schedule Pick-up
-              </Link>
-              <Link
-                href="/wash-fold"
-                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-              >
+              </ButtonLink>
+              <ButtonLink href="/wash-fold" variant="outline">
                 View Pricing
-              </Link>
+              </ButtonLink>
             </div>
           </div>
         </div>
@@ -275,18 +254,12 @@ function ServiceCard({
         </div>
       </div>
       <div className="flex flex-wrap gap-3">
-        <Link
-          href={primaryHref}
-          className="font-[family-name:var(--font-inter)] px-5 py-2.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-        >
+        <ButtonLink href={primaryHref} size="sm">
           {primaryLabel}
-        </Link>
-        <Link
-          href={secondaryHref}
-          className="font-[family-name:var(--font-inter)] px-5 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-        >
+        </ButtonLink>
+        <ButtonLink href={secondaryHref} variant="outline" size="sm">
           {secondaryLabel}
-        </Link>
+        </ButtonLink>
       </div>
     </div>
   );

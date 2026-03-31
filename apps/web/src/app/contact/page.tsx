@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { trackContactFormSubmit, identifyWithEmail } from "@/lib/tracking";
+import { StatCard } from "@/components/shared/stat-card";
+import { Button } from "@/components/shared/button";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const contactSchema = {
   "@context": "https://schema.org",
@@ -26,9 +29,7 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="bg-cream py-12 lg:py-16">
         <div className="container-site max-w-[900px] text-center">
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
-            If you still have any questions, our team is ready to help.
-          </h1>
+          <SectionHeader heading="If you still have any questions, our team is ready to help." headingAs="h1" headingClassName="mb-4 leading-tight" />
           <p className="font-body text-navy/70 text-[15px] max-w-xl mx-auto">
             Have a question or need help getting started? Our team is happy to
             walk you through your options and make sure everything runs smoothly.
@@ -82,9 +83,7 @@ export default function ContactPage() {
       {/* Contact Form */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[700px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
-            Contact Us
-          </h2>
+          <SectionHeader heading="Contact Us" />
           <ContactForm />
         </div>
       </section>
@@ -92,35 +91,14 @@ export default function ContactPage() {
       {/* By The Numbers */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-body text-sm text-navy/50 mb-2">
-            By The Numbers
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Trust Building Success Metrics
-          </h2>
-          <p className="font-body text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
-            We don&apos;t love bragging, but the numbers don&apos;t lie — quick
-            delivery, thousands of happy customers, and more clean laundry than
-            we can count.
-          </p>
+          <SectionHeader eyebrow="By The Numbers" heading="Trust Building Success Metrics" description="We don&apos;t love bragging, but the numbers don&apos;t lie — quick delivery, thousands of happy customers, and more clean laundry than we can count." headingClassName="mb-3" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: "⏰", value: "24 Hour", label: "Delivery Guarantee" },
-              { icon: "😊", value: "9,000+", label: "Happy Customers" },
-              { icon: "👕", value: "1,000,000+", label: "Lbs of Laundry Cleaned" },
+              { icon: <span className="text-4xl">⏰</span>, value: "24 Hour", label: "Delivery Guarantee" },
+              { icon: <span className="text-4xl">😊</span>, value: "9,000+", label: "Happy Customers" },
+              { icon: <span className="text-4xl">👕</span>, value: "1,000,000+", label: "Lbs of Laundry Cleaned" },
             ].map((stat) => (
-              <div
-                key={stat.label}
-                className="bg-light-blue rounded-xl px-6 py-10 text-center"
-              >
-                <div className="text-4xl mb-3">{stat.icon}</div>
-                <p className="text-[1.75rem] font-body-medium text-navy mb-1">
-                  {stat.value}
-                </p>
-                <p className="font-body text-sm text-navy/60">
-                  {stat.label}
-                </p>
-              </div>
+              <StatCard key={stat.label} icon={stat.icon} value={stat.value} label={stat.label} className="py-10" />
             ))}
           </div>
         </div>
@@ -232,13 +210,13 @@ function ContactForm() {
           condition of purchase.
         </span>
       </label>
-      <button
+      <Button
         type="submit"
         disabled={status === "submitting"}
-        className="font-[family-name:var(--font-inter)] w-full px-8 py-3.5 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors disabled:opacity-50"
+        className="w-full disabled:opacity-50"
       >
         {status === "submitting" ? "Submitting..." : "Contact Our Team"}
-      </button>
+      </Button>
       {status === "error" && (
         <p className="text-red-500 text-sm text-center">Something went wrong. Please try again.</p>
       )}

@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { getFaqSchema, getServiceSchema } from "@/lib/schema";
 import { AreaFAQ } from "../_components/area-faq";
+import { ButtonLink } from "@/components/shared/button-link";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const NY_FAQS = [
   {
@@ -87,12 +89,7 @@ export default function NewYorkAreaPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-                New York City, NY
-              </p>
-              <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
-                Laundry Pickup & Delivery Across New York City
-              </h1>
+              <SectionHeader eyebrow="New York City, NY" heading="Laundry Pickup & Delivery Across New York City" headingAs="h1" align="left" headingClassName="mb-4 leading-tight" />
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
                 New Yorkers don&apos;t have time to sit in a laundromat — and you
                 shouldn&apos;t have to. We Deliver Laundry picks up your dirty
@@ -115,18 +112,12 @@ export default function NewYorkAreaPage() {
                 ))}
               </ul>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-                >
+                <ButtonLink href="/account/">
                   Schedule Pick-up
-                </Link>
-                <Link
-                  href="/wash-fold"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
-                >
+                </ButtonLink>
+                <ButtonLink href="/wash-fold" variant="outline">
                   View Pricing
-                </Link>
+                </ButtonLink>
               </div>
             </div>
             <div className="w-full lg:w-[440px] shrink-0">
@@ -146,12 +137,7 @@ export default function NewYorkAreaPage() {
       {/* Why NYC Residents Choose Us */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            Built for NYC
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Why New Yorkers Choose Us
-          </h2>
+          <SectionHeader eyebrow="Built for NYC" heading="Why New Yorkers Choose Us" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-14">
             Between small apartments with no in-unit laundry, crowded
             laundromats, and long work hours, doing laundry in NYC is a chore
@@ -190,12 +176,7 @@ export default function NewYorkAreaPage() {
       {/* Pricing */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            Simple Pricing
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            How Much Does It Cost?
-          </h2>
+          <SectionHeader eyebrow="Simple Pricing" heading="How Much Does It Cost?" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
             We charge by the pound. No delivery fees, no hidden charges, no
             tipping required. Your price depends on how often you use us.
@@ -230,9 +211,7 @@ export default function NewYorkAreaPage() {
       {/* Areas We Serve */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            NYC Neighborhoods We Serve
-          </h2>
+          <SectionHeader heading="NYC Neighborhoods We Serve" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
             We cover Manhattan end to end, plus growing coverage in Brooklyn and
             Queens. Not sure if we reach you?{" "}
@@ -276,12 +255,7 @@ export default function NewYorkAreaPage() {
       {/* How It Works */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            How It Works
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Three Steps, Clean Laundry
-          </h2>
+          <SectionHeader eyebrow="How It Works" heading="Three Steps, Clean Laundry" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
             Schedule online, hand off your bag, and get everything back washed,
             folded, and ready to put away — within 24 hours.
@@ -329,9 +303,7 @@ export default function NewYorkAreaPage() {
       {/* FAQ */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
-            NYC Laundry Service FAQ
-          </h2>
+          <SectionHeader heading="NYC Laundry Service FAQ" />
           <AreaFAQ faqs={NY_FAQS} />
         </div>
       </section>
@@ -343,20 +315,15 @@ export default function NewYorkAreaPage() {
       >
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
-              Stop Wasting Your Weekends
-            </h2>
+            <SectionHeader heading="Stop Wasting Your Weekends" headingClassName="mb-4" />
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
               Thousands of New Yorkers already use We Deliver Laundry to get
               their time back. Schedule your first pickup and see why they
               never went back to the laundromat.
             </p>
-            <Link
-              href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-            >
+            <ButtonLink href="/account/">
               Schedule Pick-up
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </section>

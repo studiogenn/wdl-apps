@@ -1,9 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { trackContactFormSubmit, identifyWithEmail } from "@/lib/tracking";
+import { FAQAccordion } from "@/components/shared/faq-accordion";
+import { ButtonLink } from "@/components/shared/button-link";
+import { Button } from "@/components/shared/button";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const commercialSchema = {
   "@context": "https://schema.org",
@@ -32,9 +35,7 @@ export default function CommercialLaundryPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
-                Laundry Service Designed for Your Business
-              </h2>
+              <SectionHeader heading="Laundry Service Designed for Your Business" align="left" headingClassName="mb-4 leading-tight" />
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
                 Reliable, professional laundry service that saves time, cuts
                 costs, and keeps your business running smoothly.
@@ -60,18 +61,12 @@ export default function CommercialLaundryPage() {
                 </li>
               </ul>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-                >
+                <ButtonLink href="/account/">
                   Schedule Pick-up
-                </Link>
-                <Link
-                  href="#contact"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
-                >
+                </ButtonLink>
+                <ButtonLink href="#contact" variant="outline">
                   Check Zip Code
-                </Link>
+                </ButtonLink>
               </div>
             </div>
             <div className="w-full lg:w-[440px] shrink-0">
@@ -91,12 +86,7 @@ export default function CommercialLaundryPage() {
       {/* How It Works */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            How it Works
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Pick-up and Drop-off Explained
-          </h2>
+          <SectionHeader eyebrow="How it Works" heading="Pick-up and Drop-off Explained" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
             Our commercial laundry service is built around consistency and
             timing—scheduled pickups, clear communication, and reliable
@@ -176,9 +166,7 @@ export default function CommercialLaundryPage() {
       {/* Contact Form */}
       <section id="contact" className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[700px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-8 uppercase">
-            Contact Us
-          </h2>
+          <SectionHeader heading="Contact Us" headingClassName="mb-8" />
           <div className="bg-white rounded-2xl p-8 lg:p-10">
             <div className="flex items-center gap-3 mb-8">
               <svg className="w-10 h-10 text-primary shrink-0" viewBox="0 0 24 24" fill="currentColor">
@@ -201,9 +189,7 @@ export default function CommercialLaundryPage() {
       {/* Industries We Serve */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px] text-center">
-          <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
-            Industries We Serve
-          </h2>
+          <SectionHeader heading="Industries We Serve" align="left" headingClassName="mb-4" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
             From hospitality to fitness and everything in between, we support
             businesses with dependable commercial laundry that fits their pace
@@ -287,12 +273,7 @@ export default function CommercialLaundryPage() {
       {/* Testimonials */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            Client Testimonials
-          </p>
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            A Word From Our Customers
-          </h1>
+          <SectionHeader eyebrow="Client Testimonials" heading="A Word From Our Customers" headingAs="h1" align="left" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
             Straight from customers who rely on We Deliver Laundry every week
             for fast, reliable laundry pickup and delivery across New York City
@@ -357,12 +338,7 @@ export default function CommercialLaundryPage() {
       {/* By The Numbers */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            By The Numbers
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Trust Building Success Metrics
-          </h2>
+          <SectionHeader eyebrow="By The Numbers" heading="Trust Building Success Metrics" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
             We don&apos;t love bragging, but the numbers don&apos;t lie — quick
             delivery, thousands of happy customers, and more clean laundry than
@@ -400,10 +376,8 @@ export default function CommercialLaundryPage() {
         }}
       >
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
-            Frequently Asked Questions
-          </h2>
-          <FAQAccordion />
+          <SectionHeader heading="Frequently Asked Questions" />
+          <FAQAccordion items={COMMERCIAL_FAQ} />
         </div>
       </section>
     </>
@@ -513,13 +487,13 @@ function ContactForm() {
           or STOP to opt out.
         </span>
       </label>
-      <button
+      <Button
         type="submit"
         disabled={status === "submitting"}
-        className="font-[family-name:var(--font-inter)] w-full px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors disabled:opacity-50"
+        className="w-full disabled:opacity-50"
       >
         {status === "submitting" ? "Submitting..." : "Contact Our Team"}
-      </button>
+      </Button>
       {status === "error" && (
         <p className="text-red-500 text-sm text-center">Something went wrong. Please try again.</p>
       )}
@@ -550,62 +524,3 @@ const COMMERCIAL_FAQ = [
   },
 ];
 
-function FAQAccordion() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm space-y-0">
-      {COMMERCIAL_FAQ.map((item, index) => {
-        const isOpen = openIndex === index;
-        return (
-          <div
-            key={index}
-            className="border-b border-navy/10 last:border-b-0"
-          >
-            <button
-              onClick={() => setOpenIndex(isOpen ? null : index)}
-              className="w-full flex items-center justify-between py-5 text-left group"
-            >
-              <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
-                {item.question}
-              </span>
-              <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">
-                {isOpen ? (
-                  <svg
-                    width="14"
-                    height="2"
-                    viewBox="0 0 14 2"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <line x1="0" y1="1" x2="14" y2="1" />
-                  </svg>
-                ) : (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <line x1="7" y1="0" x2="7" y2="14" />
-                    <line x1="0" y1="7" x2="14" y2="7" />
-                  </svg>
-                )}
-              </span>
-            </button>
-            {isOpen && (
-              <div className="pb-5">
-                <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 leading-relaxed">
-                  {item.answer}
-                </p>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}

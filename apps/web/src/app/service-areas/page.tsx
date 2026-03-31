@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ZipChecker } from "@/components/home/ZipChecker";
+import { ButtonLink } from "@/components/shared/button-link";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const serviceAreasSchema = {
   "@context": "https://schema.org",
@@ -27,9 +29,7 @@ export default function ServiceAreasPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
-                Our Laundry Service Areas
-              </h2>
+              <SectionHeader heading="Our Laundry Service Areas" align="left" headingClassName="mb-4 leading-tight" />
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
                 We offer fast, reliable laundry pickup and delivery across New
                 York City and New Jersey, with convenient scheduling and 24-hour
@@ -87,12 +87,7 @@ export default function ServiceAreasPage() {
       {/* Counties We Serve */}
       <section className="py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            Locations
-          </p>
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Counties We Serve
-          </h1>
+          <SectionHeader eyebrow="Locations" heading="Counties We Serve" headingAs="h1" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
             We provide laundry pickup and delivery in select counties across New
             York and New Jersey, with service areas optimized for reliable,
@@ -133,12 +128,7 @@ export default function ServiceAreasPage() {
       {/* How It Works */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            How it Works
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Pick-up and Drop-off Explained
-          </h2>
+          <SectionHeader eyebrow="How it Works" heading="Pick-up and Drop-off Explained" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
             No complicated steps here — just easy scheduling, smooth pickup,
             professional cleaning, and fast delivery back to your door.
@@ -214,12 +204,7 @@ export default function ServiceAreasPage() {
       {/* Client Testimonials */}
       <section className="py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            Client Testimonials
-          </p>
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            A Word From Our Customers
-          </h1>
+          <SectionHeader eyebrow="Client Testimonials" heading="A Word From Our Customers" headingAs="h1" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
             Straight from customers who rely on We Deliver Laundry every week
             for fast, reliable laundry pickup and delivery across New York City
@@ -277,9 +262,7 @@ export default function ServiceAreasPage() {
       <section id="zipcode" className="bg-cream py-14 lg:py-20">
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
-              Check if We Deliver to You
-            </h2>
+            <SectionHeader heading="Check if We Deliver to You" headingClassName="mb-4" />
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
               Enter your zip code to see if we offer pickup and delivery in your area.
             </p>
@@ -292,20 +275,15 @@ export default function ServiceAreasPage() {
       <section className="py-14 lg:py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
-              Ready to Get Started?
-            </h2>
+            <SectionHeader heading="Ready to Get Started?" headingClassName="mb-4" />
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
               From easy scheduling to reliable 24-hour delivery, we&apos;ve built
               a laundry service that fits into your life instead of taking it
               over.
             </p>
-            <Link
-              href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-            >
+            <ButtonLink href="/account/">
               Schedule Pick-up
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </section>
@@ -313,9 +291,7 @@ export default function ServiceAreasPage() {
       {/* FAQ */}
       <section className="py-16 lg:py-20">
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
-            Frequently Asked Questions
-          </h2>
+          <SectionHeader heading="Frequently Asked Questions" />
           <div className="border-t border-navy/10">
             <FAQItem
               question="How can I check if you service my area?"

@@ -1,4 +1,6 @@
 import type { ByTheNumbersConfig } from "@/lib/section-defaults";
+import { StatCard } from "@/components/shared/stat-card";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const DEFAULTS = {
   heading: "Proven Laundry Pickup & Delivery You Can Trust",
@@ -15,15 +17,7 @@ export function ByTheNumbers({ config }: { config?: ByTheNumbersConfig }) {
   return (
     <section className="bg-cream py-16 lg:py-20">
       <div className="container-site max-w-[1100px]">
-        <p className="text-center text-sm uppercase tracking-[0.15em] font-[family-name:var(--font-poppins)] font-body-medium text-navy/50 mb-2">
-          {eyebrow}
-        </p>
-        <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-3 uppercase">
-          {heading}
-        </h2>
-        <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
-          {subheading}
-        </p>
+        <SectionHeader eyebrow={eyebrow} heading={heading} description={subheading} size="lg" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <StatCard
@@ -44,28 +38,6 @@ export function ByTheNumbers({ config }: { config?: ByTheNumbersConfig }) {
         </div>
       </div>
     </section>
-  );
-}
-
-function StatCard({
-  icon,
-  value,
-  label,
-}: {
-  icon: React.ReactNode;
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="bg-light-blue rounded-xl px-6 py-8 text-center">
-      <div className="flex justify-center mb-3 text-primary">{icon}</div>
-      <p className="font-[family-name:var(--font-poppins)] text-xl font-body-medium text-navy mb-0.5">
-        {value}
-      </p>
-      <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">
-        {label}
-      </p>
-    </div>
   );
 }
 

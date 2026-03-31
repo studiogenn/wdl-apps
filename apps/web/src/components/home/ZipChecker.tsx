@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { trackSignupZipChecked } from "@/lib/tracking";
+import { ButtonLink } from "@/components/shared/button-link";
+import { Button } from "@/components/shared/button";
 
 type Status = "idle" | "loading" | "served" | "not_served" | "error";
 
@@ -47,12 +48,9 @@ export function ZipChecker() {
         <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 mb-4">
           Schedule your first pickup today.
         </p>
-        <Link
-          href="/account/"
-          className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-        >
+        <ButtonLink href="/account/">
           Schedule Pick-up
-        </Link>
+        </ButtonLink>
       </div>
     );
   }
@@ -72,13 +70,13 @@ export function ZipChecker() {
           }}
           className="font-[family-name:var(--font-poppins)] flex-1 px-5 py-3 text-sm border border-navy/20 rounded-full focus:outline-none focus:border-primary"
         />
-        <button
+        <Button
           type="submit"
           disabled={status === "loading" || zip.trim().length < 5}
-          className="font-[family-name:var(--font-inter)] px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+          className="whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {status === "loading" ? "Checking..." : "Check Zip Code"}
-        </button>
+        </Button>
       </form>
 
       {status === "not_served" && (

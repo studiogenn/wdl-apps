@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { ButtonLink } from "@/components/shared/button-link";
 
 type ConfirmationProps = {
   readonly customerName?: string;
@@ -97,12 +97,9 @@ export function Confirmation({
         </div>
       )}
 
-      <Link
-        href="/"
-        className="inline-block w-full rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white hover:bg-primary-hover transition-colors"
-      >
+      <ButtonLink href="/" className="w-full">
         Back to Home
-      </Link>
+      </ButtonLink>
     </div>
   );
 }

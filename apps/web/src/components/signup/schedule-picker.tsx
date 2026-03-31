@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fromCleanCloudTimestamp } from "@/lib/cleancloud/dates";
+import { Button } from "@/components/shared/button";
 
 type DateEntry = {
   readonly date: number;
@@ -194,13 +195,13 @@ export function SchedulePicker({ routeID, onSubmit, onBack, loading, error }: Sc
           >
             Back
           </button>
-          <button
+          <Button
             type="submit"
             disabled={!selectedDate || !selectedSlot || loading}
-            className="flex-1 rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Scheduling..." : "Schedule Pickup"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

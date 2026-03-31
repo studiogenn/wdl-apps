@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { ServicesConfig } from "@/lib/section-defaults";
+import { ButtonLink } from "@/components/shared/button-link";
 
 const DEFAULTS = {
   heading: "Laundry Services for Every Need in NYC & New Jersey",
@@ -91,19 +91,13 @@ export function Services({
                 </ul>
 
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Link
-                    href="/account/"
-                    className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center px-7 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-                  >
+                  <ButtonLink href="/account/">
                     Schedule A Pickup
-                  </Link>
+                  </ButtonLink>
                   {resolvedShowPricing ? (
-                    <Link
-                      href="/wash-fold"
-                      className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center px-7 py-3 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-                    >
+                    <ButtonLink href="/wash-fold" variant="outline">
                       View Pricing &amp; Details
-                    </Link>
+                    </ButtonLink>
                   ) : null}
                 </div>
               </div>
@@ -153,12 +147,9 @@ export function Services({
               </div>
             ) : null}
 
-            <Link
-              href="/wash-fold"
-              className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center w-full px-5 py-2.5 text-xs font-body-medium text-primary border border-primary/40 rounded-full hover:bg-primary hover:text-white transition-colors mt-auto"
-            >
+            <ButtonLink href="/wash-fold" variant="outline" size="sm" className="w-full mt-auto">
               View Full Price List
-            </Link>
+            </ButtonLink>
           </div>
 
           {/* Specialty Wash & Fold */}
@@ -180,12 +171,9 @@ export function Services({
               </div>
             ) : null}
 
-            <Link
-              href="/wash-fold"
-              className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center w-full px-5 py-2.5 text-xs font-body-medium text-primary border border-primary/40 rounded-full hover:bg-primary hover:text-white transition-colors mt-auto"
-            >
+            <ButtonLink href="/wash-fold" variant="outline" size="sm" className="w-full mt-auto">
               View Full Price List
-            </Link>
+            </ButtonLink>
           </div>
 
           {/* Dry Cleaning */}
@@ -205,12 +193,9 @@ export function Services({
               </div>
             ) : null}
 
-            <Link
-              href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center w-full px-5 py-2.5 text-xs font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors mt-auto"
-            >
+            <ButtonLink href="/account/" size="sm" className="w-full mt-auto">
               Schedule A Pickup
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </div>

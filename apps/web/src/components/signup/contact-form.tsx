@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { z } from "zod";
+import { Button } from "@/components/shared/button";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -107,13 +108,13 @@ export function ContactForm({ initialAddress, onSubmit, onBack, loading, error }
           >
             Back
           </button>
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="flex-1 rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Creating account..." : "Continue"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

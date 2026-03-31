@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { ButtonLink } from "@/components/shared/button-link";
 
 const NAV_ITEMS = [
   { label: "Wash & Fold", href: "/wash-fold" },
@@ -41,12 +42,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/account/?tab=login"
-            className="font-[family-name:var(--font-inter)] px-5 py-2.5 text-[14px] font-normal text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-          >
+          <ButtonLink href="/account/?tab=login" variant="outline" size="sm">
             Sign In
-          </Link>
+          </ButtonLink>
         </div>
       </div>
 
@@ -63,12 +61,9 @@ export function Header() {
         </Link>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/account/"
-            className="font-[family-name:var(--font-inter)] px-4 py-2 text-[12px] font-normal text-white bg-primary rounded-full"
-          >
+          <ButtonLink href="/account/" size="sm">
             Schedule Pickup
-          </Link>
+          </ButtonLink>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-2 text-navy"
@@ -106,18 +101,12 @@ export function Header() {
             </Link>
           ))}
           <div className="mt-4 flex flex-col gap-2">
-            <Link
-              href="/account/?tab=login"
-              className="text-center py-2.5 text-[14px] font-normal text-primary border border-primary rounded-full"
-            >
+            <ButtonLink href="/account/?tab=login" variant="outline" size="sm" className="text-center">
               Sign In
-            </Link>
-            <Link
-              href="/account/"
-              className="text-center py-2.5 text-[14px] font-normal text-white bg-primary rounded-full"
-            >
+            </ButtonLink>
+            <ButtonLink href="/account/" size="sm" className="text-center">
               Schedule Pick-up
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       )}

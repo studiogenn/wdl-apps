@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { getFaqSchema, getServiceSchema } from "@/lib/schema";
 import { AreaFAQ } from "../_components/area-faq";
+import { ButtonLink } from "@/components/shared/button-link";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const NJ_FAQS = [
   {
@@ -87,12 +89,7 @@ export default function NewJerseyAreaPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-                New Jersey
-              </p>
-              <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
-                Laundry Pickup & Delivery Across New Jersey
-              </h1>
+              <SectionHeader eyebrow="New Jersey" heading="Laundry Pickup & Delivery Across New Jersey" headingAs="h1" align="left" headingClassName="mb-4 leading-tight" />
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
                 Whether you&apos;re in a Jersey City high-rise, a Montclair
                 colonial, or a Morristown townhouse — we pick up your laundry,
@@ -115,18 +112,12 @@ export default function NewJerseyAreaPage() {
                 ))}
               </ul>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-                >
+                <ButtonLink href="/account/">
                   Schedule Pick-up
-                </Link>
-                <Link
-                  href="/wash-fold"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
-                >
+                </ButtonLink>
+                <ButtonLink href="/wash-fold" variant="outline">
                   View Pricing
-                </Link>
+                </ButtonLink>
               </div>
             </div>
             <div className="w-full lg:w-[440px] shrink-0">
@@ -146,12 +137,7 @@ export default function NewJerseyAreaPage() {
       {/* Why NJ Residents Choose Us */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            Built for New Jersey
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Why New Jersey Residents Choose Us
-          </h2>
+          <SectionHeader eyebrow="Built for New Jersey" heading="Why New Jersey Residents Choose Us" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-14">
             Between commuting into the city and running a household, the last
             thing you need is another errand. We handle the laundry so you can
@@ -189,12 +175,7 @@ export default function NewJerseyAreaPage() {
       {/* Pricing */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            Simple Pricing
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            How Much Does It Cost?
-          </h2>
+          <SectionHeader eyebrow="Simple Pricing" heading="How Much Does It Cost?" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
             We charge by the pound. No delivery fees, no hidden charges, no
             tipping required. Your price depends on how often you use us.
@@ -229,9 +210,7 @@ export default function NewJerseyAreaPage() {
       {/* Counties We Serve */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            New Jersey Counties We Serve
-          </h2>
+          <SectionHeader heading="New Jersey Counties We Serve" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
             Coverage across six counties and growing. Not sure if we reach you?{" "}
             <Link href="/service-areas" className="text-primary underline">
@@ -276,12 +255,7 @@ export default function NewJerseyAreaPage() {
       {/* How It Works */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            How It Works
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Three Steps, Clean Laundry
-          </h2>
+          <SectionHeader eyebrow="How It Works" heading="Three Steps, Clean Laundry" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
             Schedule online, leave your bag out, and get everything back washed,
             folded, and ready to put away — within 24 hours.
@@ -329,9 +303,7 @@ export default function NewJerseyAreaPage() {
       {/* FAQ */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
-            New Jersey Laundry Service FAQ
-          </h2>
+          <SectionHeader heading="New Jersey Laundry Service FAQ" />
           <AreaFAQ faqs={NJ_FAQS} />
         </div>
       </section>
@@ -343,20 +315,15 @@ export default function NewJerseyAreaPage() {
       >
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
-              Reclaim Your Weekends
-            </h2>
+            <SectionHeader heading="Reclaim Your Weekends" headingClassName="mb-4" />
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
               Families and professionals across New Jersey already use We
               Deliver Laundry to take laundry off their plate. Schedule your
               first pickup and see why they never went back.
             </p>
-            <Link
-              href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-            >
+            <ButtonLink href="/account/">
               Schedule Pick-up
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </section>

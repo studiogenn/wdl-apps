@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { z } from "zod";
 import { trackSignupZipChecked } from "@/lib/tracking";
+import { Button } from "@/components/shared/button";
 
 const zipSchema = z.string().regex(/^\d{5}(-\d{4})?$/, "Please enter a valid 5-digit zip code");
 
@@ -73,13 +74,13 @@ export function ZipCheck({ onSuccess }: ZipCheckProps) {
           )}
         </div>
 
-        <button
+        <Button
           type="submit"
           disabled={loading || !zip.trim()}
-          className="w-full rounded-full bg-primary px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-body-medium text-white hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Checking..." : "Check Availability"}
-        </button>
+        </Button>
       </form>
 
       {notInArea && (

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { HeroConfig } from "@/lib/section-defaults";
+import { ButtonLink } from "@/components/shared/button-link";
 
 const DEFAULTS = {
   heading: "Laundry Pickup & Delivery in NYC & New Jersey",
@@ -66,18 +66,12 @@ export function Hero({
               ))}
             </ul>
             <div className="flex flex-wrap gap-3">
-              <Link
-                href={resolvedCtaLink}
-                className="font-[family-name:var(--font-inter)] px-7 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-              >
+              <ButtonLink href={resolvedCtaLink}>
                 {resolvedCtaText}
-              </Link>
-              <Link
-                href={resolvedSecondaryCtaLink}
-                className="font-[family-name:var(--font-inter)] px-7 py-3 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-              >
+              </ButtonLink>
+              <ButtonLink href={resolvedSecondaryCtaLink} variant="outline">
                 {resolvedSecondaryCtaText}
-              </Link>
+              </ButtonLink>
             </div>
           </div>
           <div className="flex-1 flex justify-end">

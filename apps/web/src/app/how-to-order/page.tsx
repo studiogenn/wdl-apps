@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { type ReactNode } from "react";
+import { ButtonLink } from "@/components/shared/button-link";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const SVG_PROPS = {
   width: 64,
@@ -93,9 +94,7 @@ export default function HowToOrderPage() {
       {/* Hero */}
       <section className="bg-light-blue py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <h1 className="text-[2rem] lg:text-[2.625rem] font-heading-medium text-navy mb-4 uppercase">
-            How To Schedule A Pickup
-          </h1>
+          <SectionHeader heading="How To Schedule A Pickup" headingAs="h1" size="lg" headingClassName="mb-4" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-2xl mx-auto">
             We strive for a better and easier user experience for all our
             clients. We have prepared the following guide to explain how to log
@@ -133,12 +132,9 @@ export default function HowToOrderPage() {
           </div>
 
           <div className="text-center mt-14">
-            <Link
-              href="/account/"
-              className="font-[family-name:var(--font-inter)] px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-            >
+            <ButtonLink href="/account/">
               Get Started Now
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </section>

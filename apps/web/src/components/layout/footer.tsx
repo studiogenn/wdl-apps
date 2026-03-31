@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ButtonLink } from "@/components/shared/button-link";
 
 const SERVICING_AREAS = [
   { label: "New York", href: "/areas/new-york" },
@@ -107,12 +108,9 @@ export function Footer() {
               <br />
               happy customers.
             </p>
-            <Link
-              href="/account/"
-              className="inline-block font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors mb-6"
-            >
+            <ButtonLink href="/account/" className="mb-6">
               Schedule Pick-up
-            </Link>
+            </ButtonLink>
             <div className="flex gap-3 mt-2">
               <a
                 href="https://apps.apple.com/app/we-deliver-laundry/id1234567890"

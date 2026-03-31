@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ZipChecker } from "@/components/home/ZipChecker";
+import { ButtonLink } from "@/components/shared/button-link";
+import { SectionHeader } from "@/components/shared/section-header";
 
 export default function OurStoryPage() {
   return (
@@ -131,12 +133,7 @@ export default function OurStoryPage() {
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-                Our Story
-              </p>
-              <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
-                Built to Make Laundry Effortless
-              </h2>
+              <SectionHeader eyebrow="Our Story" heading="Built to Make Laundry Effortless" align="left" headingClassName="mb-4 leading-tight" />
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-7">
                 We Deliver Laundry started with a simple idea: take laundry off
                 people&apos;s plates without making it complicated. From easy
@@ -145,18 +142,12 @@ export default function OurStoryPage() {
                 time, every time.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-                >
+                <ButtonLink href="/account/">
                   Schedule Pick-up
-                </Link>
-                <Link
-                  href="#zipcode"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
-                >
+                </ButtonLink>
+                <ButtonLink href="#zipcode" variant="outline">
                   Check Your Zip Code
-                </Link>
+                </ButtonLink>
               </div>
             </div>
             <div className="w-full lg:w-[440px] shrink-0">
@@ -176,12 +167,7 @@ export default function OurStoryPage() {
       {/* Counties We Serve */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px] text-center">
-          <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            Locations
-          </p>
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Counties We Serve
-          </h1>
+          <SectionHeader eyebrow="Locations" heading="Counties We Serve" headingAs="h1" align="left" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-1">
             We provide laundry pickup and delivery in select counties across New
             York and New Jersey, with service areas optimized for reliable,
@@ -291,12 +277,7 @@ export default function OurStoryPage() {
       {/* Why Choose Us */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            Our Values
-          </p>
-          <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-8 uppercase">
-            What We Stand For
-          </h2>
+          <SectionHeader eyebrow="Our Values" heading="What We Stand For" align="left" headingClassName="mb-8" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-xl p-7 text-center">
               <h3 className="text-lg font-heading-medium text-navy mb-2">Reliability</h3>
@@ -329,9 +310,7 @@ export default function OurStoryPage() {
       {/* Choose Service */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px] text-center">
-          <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
-            Choose the Laundry Service That Fits Your Needs
-          </h1>
+          <SectionHeader heading="Choose the Laundry Service That Fits Your Needs" headingAs="h1" align="left" headingClassName="mb-4" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-8">
             From wash &amp; fold to commercial laundry, we&apos;ve got the dirty
             work covered.
@@ -344,24 +323,18 @@ export default function OurStoryPage() {
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] mb-5">
                 Professional wash, dry &amp; fold with 24-hour turnaround. Starting at $1.95/lb.
               </p>
-              <Link
-                href="/wash-fold"
-                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-              >
+              <ButtonLink href="/wash-fold" variant="outline">
                 Learn More
-              </Link>
+              </ButtonLink>
             </div>
             <div className="bg-light-blue rounded-xl p-8">
               <h3 className="text-lg font-heading-medium text-navy mb-2">Commercial Laundry</h3>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] mb-5">
                 Dependable high-volume laundry for businesses of all sizes.
               </p>
-              <Link
-                href="/commercial-laundry"
-                className="font-[family-name:var(--font-inter)] px-6 py-2.5 text-sm font-body-medium text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors"
-              >
+              <ButtonLink href="/commercial-laundry" variant="outline">
                 Learn More
-              </Link>
+              </ButtonLink>
             </div>
           </div>
         </div>
@@ -378,9 +351,7 @@ export default function OurStoryPage() {
       >
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
-              Check if We Deliver to You
-            </h2>
+            <SectionHeader heading="Check if We Deliver to You" align="left" headingClassName="mb-4" />
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
               We currently offer pickup and delivery across select counties in
               New York and New Jersey, with reliable service areas designed to

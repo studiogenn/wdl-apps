@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { HowItWorksConfig } from "@/lib/section-defaults";
+import { SectionHeader } from "@/components/shared/section-header";
 
 const STEPS = [
   {
@@ -40,15 +41,7 @@ export function HowItWorks({ config }: { config?: HowItWorksConfig }) {
   return (
     <section className="py-16 lg:py-20">
       <div className="container-site max-w-[1100px]">
-        <p className="text-center text-sm uppercase tracking-[0.15em] font-[family-name:var(--font-poppins)] font-body-medium text-navy/50 mb-2">
-          {eyebrow}
-        </p>
-        <h2 className="text-center text-[2rem] lg:text-[2.625rem] font-normal leading-[3.375rem] tracking-[0.84px] text-navy mb-3 uppercase">
-          {heading}
-        </h2>
-        <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-14">
-          {subheading}
-        </p>
+        <SectionHeader eyebrow={eyebrow} heading={heading} description={subheading} size="lg" headingClassName="font-normal leading-[3.375rem] tracking-[0.84px]" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {STEPS.map((step) => (

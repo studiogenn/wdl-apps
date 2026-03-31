@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+import { FAQAccordion } from "@/components/shared/faq-accordion";
+import { StatCard } from "@/components/shared/stat-card";
+import { ButtonLink } from "@/components/shared/button-link";
+import { SectionHeader } from "@/components/shared/section-header";
 
 interface LocationLandingPageProps {
   location: string;
@@ -31,9 +33,7 @@ export function LocationLandingPage({
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
                 {location}, {state}
               </p>
-              <h1 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy leading-tight mb-4 uppercase">
-                {heroHeading}
-              </h1>
+              <SectionHeader heading={heroHeading} headingAs="h1" align="left" headingClassName="mb-4 leading-tight" />
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-5">
                 {heroSubheading}
               </p>
@@ -56,18 +56,12 @@ export function LocationLandingPage({
                 ))}
               </ul>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-                >
+                <ButtonLink href="/account/">
                   Schedule Pick-up
-                </Link>
-                <Link
-                  href="/wash-fold/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy bg-white border border-navy/20 rounded-full hover:bg-navy hover:text-white transition-colors"
-                >
+                </ButtonLink>
+                <ButtonLink href="/wash-fold/" variant="outline">
                   View Pricing
-                </Link>
+                </ButtonLink>
               </div>
             </div>
             <div className="w-full lg:w-[440px] shrink-0">
@@ -87,16 +81,7 @@ export function LocationLandingPage({
       {/* How It Works */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            How it Works
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Laundry Made Simple in {location}
-          </h2>
-          <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
-            No complicated steps — just easy scheduling, smooth pickup,
-            professional cleaning, and fast delivery back to your door.
-          </p>
+          <SectionHeader eyebrow="How it Works" heading={`Laundry Made Simple in ${location}`} headingClassName="mb-3" description="No complicated steps — just easy scheduling, smooth pickup, professional cleaning, and fast delivery back to your door." />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -150,9 +135,7 @@ export function LocationLandingPage({
       {/* Service Areas */}
       <section className="bg-cream py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-3 uppercase">
-            Areas We Serve in {location}
-          </h2>
+          <SectionHeader heading={`Areas We Serve in ${location}`} align="left" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
             Fast, reliable laundry pickup and delivery across {location} and
             surrounding neighborhoods.
@@ -177,29 +160,14 @@ export function LocationLandingPage({
       {/* By The Numbers */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
-          <p className="text-center font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-2">
-            By The Numbers
-          </p>
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-12 uppercase">
-            Why {location} Trusts Us
-          </h2>
+          <SectionHeader eyebrow="By The Numbers" heading={`Why ${location} Trusts Us`} headingClassName="mb-12" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { value: "24 Hour", label: "Delivery Guarantee" },
               { value: "9,000+", label: "Happy Customers" },
               { value: "1,000,000+", label: "Lbs of Laundry Cleaned" },
             ].map((stat) => (
-              <div
-                key={stat.label}
-                className="bg-cream rounded-xl px-6 py-10 text-center"
-              >
-                <p className="text-[1.75rem] font-body-medium text-navy mb-1">
-                  {stat.value}
-                </p>
-                <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">
-                  {stat.label}
-                </p>
-              </div>
+              <StatCard key={stat.label} value={stat.value} label={stat.label} className="bg-cream py-10" />
             ))}
           </div>
         </div>
@@ -215,19 +183,14 @@ export function LocationLandingPage({
       >
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
-            <h2 className="text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-4 uppercase">
-              Ready to Get Started?
-            </h2>
+            <SectionHeader heading="Ready to Get Started?" headingClassName="mb-4" />
             <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-md mx-auto mb-8 leading-relaxed">
               Join hundreds of {location} residents who&apos;ve reclaimed their
               weekends with our professional laundry pickup and delivery service.
             </p>
-            <Link
-              href="/account/"
-              className="font-[family-name:var(--font-inter)] inline-block px-8 py-3 text-sm font-body-medium text-white bg-primary rounded-full hover:bg-primary-hover transition-colors"
-            >
+            <ButtonLink href="/account/">
               Schedule Pick-up
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </section>
@@ -235,74 +198,11 @@ export function LocationLandingPage({
       {/* FAQ */}
       <section className="py-16 lg:py-20">
         <div className="container-site max-w-[780px]">
-          <h2 className="text-center text-[1.75rem] lg:text-[2.25rem] font-heading-medium text-navy mb-10 uppercase">
-            Frequently Asked Questions
-          </h2>
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
-            {faqs.map((faq, index) => (
-              <FAQItem key={index} question={faq.question} answer={faq.answer} isLast={index === faqs.length - 1} />
-            ))}
-          </div>
+          <SectionHeader heading="Frequently Asked Questions" />
+          <FAQAccordion items={faqs} />
         </div>
       </section>
     </>
   );
 }
 
-function FAQItem({
-  question,
-  answer,
-  isLast,
-}: {
-  question: string;
-  answer: string;
-  isLast: boolean;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className={isLast ? "" : "border-b border-navy/10"}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-5 text-left group"
-      >
-        <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
-          {question}
-        </span>
-        <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">
-          {isOpen ? (
-            <svg
-              width="14"
-              height="2"
-              viewBox="0 0 14 2"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <line x1="0" y1="1" x2="14" y2="1" />
-            </svg>
-          ) : (
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <line x1="7" y1="0" x2="7" y2="14" />
-              <line x1="0" y1="7" x2="14" y2="7" />
-            </svg>
-          )}
-        </span>
-      </button>
-      {isOpen && (
-        <div className="pb-5">
-          <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 leading-relaxed">
-            {answer}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
