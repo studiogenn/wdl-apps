@@ -396,12 +396,7 @@ export default async function CommercialLandingPage({
               </ul>
             </div>
             <div className="w-full lg:w-[480px] shrink-0">
-              <ContactForm
-                ctaText="Send My Quote Request"
-                calendarCtaText="Or schedule a call"
-                vertical={data.slug}
-                location="nyc-nj"
-              />
+              <ContactForm />
             </div>
           </div>
         </div>

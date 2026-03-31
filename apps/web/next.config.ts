@@ -63,7 +63,7 @@ const nextConfig: NextConfig = {
       { source: "/who-we-are", destination: "/our-story", permanent: true },
       { source: "/locations", destination: "/service-areas", permanent: true },
       { source: "/locations/:slug", destination: "/service-areas", permanent: true },
-      { source: "/commercial", destination: "/commercial-laundry", permanent: true },
+      { source: "/commercial", destination: "/commercial-laundry", permanent: false },
       { source: "/how-it-works", destination: "/#how-it-works", permanent: true },
       { source: "/affiliates", destination: "/refer-a-friend", permanent: true },
       // Legacy WordPress redirects
