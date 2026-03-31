@@ -95,3 +95,18 @@ h1, h2, h3, h4, h5, h6 {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(18, 39, 190, 0.4); }
+  50% { box-shadow: 0 0 20px 6px rgba(18, 39, 190, 0.25); }
+}
+
+@keyframes shimmer-btn {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+
+@theme inline {
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-shimmer-btn: shimmer-btn 3s ease-in-out infinite;
+}
