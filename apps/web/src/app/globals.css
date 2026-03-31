@@ -32,13 +32,13 @@
 
 body {
   color: var(--color-detergent-700);
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Zilla Slab", serif !important;
+  font-family: var(--font-zilla-slab), "Zilla Slab", serif !important;
 }
 
 .container-site {

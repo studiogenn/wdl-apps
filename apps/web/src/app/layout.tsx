@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { JsonType } from "posthog-js";
-import { Zilla_Slab, Poppins, Inter } from "next/font/google";
+import { Zilla_Slab, DM_Sans } from "next/font/google";
 import { headers } from "next/headers";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -17,17 +17,10 @@ const zillaSlab = Zilla_Slab({
   display: "swap",
 });
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "700"],
   display: "swap",
 });
 
@@ -75,7 +68,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${zillaSlab.variable} ${poppins.variable} ${inter.variable}`}
+      className={`${zillaSlab.variable} ${dmSans.variable}`}
     >
       <body>
         <PostHogProvider
