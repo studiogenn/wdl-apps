@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { stripe } from "@/lib/stripe";
-import { db, schema } from "@/lib/db";
+import { getStripe } from "@/lib/stripe";
+import { getDb, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import {
   authenticateRequest,
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     }
 
     // Find or create Stripe customer
-    const existing = await db.query.customers.findFirst({
+    const existing = await getDb().query.customers.findFirst({
       where: eq(schema.customers.firebaseUid, auth.uid),
     });
 
@@ -38,18 +38,18 @@ export async function POST(request: Request) {
     if (existing) {
       stripeCustomerId = existing.stripeCustomerId;
     } else {
-      const customer = await stripe.customers.create({
+      const customer = await getStripe().customers.create({
         metadata: { firebaseUid: auth.uid },
         ...(auth.phone ? { phone: auth.phone } : {}),
       });
-      await db.insert(schema.customers).values({
+      await getDb().insert(schema.customers).values({
         firebaseUid: auth.uid,
         stripeCustomerId: customer.id,
       });
       stripeCustomerId = customer.id;
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       customer: stripeCustomerId,
       mode: "subscription",
       line_items: [{ price: parsed.data.priceId, quantity: 1 }],

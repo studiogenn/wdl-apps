@@ -1,6 +1,13 @@
 import { drizzle } from "drizzle-orm/postgres-js";
-import { sql } from "./connection";
+import { getsql } from "./connection";
 import * as schema from "./schema";
 
-export const db = drizzle(sql, { schema });
+let _db: ReturnType<typeof drizzle<typeof schema>> | null = null;
+
+export function getDb() {
+  if (_db) return _db;
+  _db = drizzle(getsql(), { schema });
+  return _db;
+}
+
 export { schema };

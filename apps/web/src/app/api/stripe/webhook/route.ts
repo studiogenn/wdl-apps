@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
-import { db, schema } from "@/lib/db";
+import { getStripe } from "@/lib/stripe";
+import { getDb, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
 
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
+    event = getStripe().webhooks.constructEvent(
       body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   }
 
   // Idempotency: skip if already processed
-  const existing = await db.query.subscriptionEvents.findFirst({
+  const existing = await getDb().query.subscriptionEvents.findFirst({
     where: eq(schema.subscriptionEvents.stripeEventId, event.id),
   });
   if (existing) {
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         const session = event.data.object as Stripe.Checkout.Session;
         if (session.mode !== "subscription" || !session.subscription) break;
 
-        const subscription = await stripe.subscriptions.retrieve(
+        const subscription = await getStripe().subscriptions.retrieve(
           session.subscription as string,
           { expand: ["latest_invoice"] }
         );
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
 
         const invoice = subscription.latest_invoice as Stripe.Invoice | null;
 
-        await db.insert(schema.subscriptions).values({
+        await getDb().insert(schema.subscriptions).values({
           customerId,
           stripeSubscriptionId: subscription.id,
           stripePriceId: subscription.items.data[0].price.id,
@@ -75,8 +75,8 @@ export async function POST(request: Request) {
         const subId = getSubscriptionId(invoice);
         if (!subId) break;
 
-        const subscription = await stripe.subscriptions.retrieve(subId);
-        await db
+        const subscription = await getStripe().subscriptions.retrieve(subId);
+        await getDb()
           .update(schema.subscriptions)
           .set({
             status: subscription.status,
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
 
       case "customer.subscription.updated": {
         const subscription = event.data.object as Stripe.Subscription;
-        await db
+        await getDb()
           .update(schema.subscriptions)
           .set({
             status: subscription.status,
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
 
       case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription;
-        await db
+        await getDb()
           .update(schema.subscriptions)
           .set({
             status: "canceled",
@@ -122,7 +122,7 @@ export async function POST(request: Request) {
     }
 
     // Log the event
-    await db.insert(schema.subscriptionEvents).values({
+    await getDb().insert(schema.subscriptionEvents).values({
       stripeEventId: event.id,
       eventType: event.type,
       payload: JSON.parse(JSON.stringify(event.data.object)),
@@ -150,7 +150,7 @@ function getSubscriptionId(invoice: Stripe.Invoice): string | null {
 async function findCustomerByStripeId(
   stripeCustomerId: string
 ): Promise<string | null> {
-  const customer = await db.query.customers.findFirst({
+  const customer = await getDb().query.customers.findFirst({
     where: eq(schema.customers.stripeCustomerId, stripeCustomerId),
   });
   return customer?.id ?? null;

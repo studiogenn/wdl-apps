@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { stripe } from "@/lib/stripe";
-import { db, schema } from "@/lib/db";
+import { getStripe } from "@/lib/stripe";
+import { getDb, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import {
   authenticateRequest,
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const customer = await db.query.customers.findFirst({
+    const customer = await getDb().query.customers.findFirst({
       where: eq(schema.customers.firebaseUid, auth.uid),
     });
 
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const session = await stripe.billingPortal.sessions.create({
+    const session = await getStripe().billingPortal.sessions.create({
       customer: customer.stripeCustomerId,
       return_url: parsed.data.returnUrl,
     });
