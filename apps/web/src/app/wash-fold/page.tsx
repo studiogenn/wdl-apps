@@ -2,9 +2,7 @@
 
 import Image from "next/image";
 import { ZipChecker } from "@/components/home/ZipChecker";
-import { FAQAccordion } from "@/components/shared/faq-accordion";
-import { ButtonLink } from "@/components/shared/button-link";
-import { SectionHeader } from "@/components/shared/section-header";
+import { FAQAccordion, ButtonLink, SectionHeader } from "@/components/shared";
 
 const washFoldSchema = {
   "@context": "https://schema.org",

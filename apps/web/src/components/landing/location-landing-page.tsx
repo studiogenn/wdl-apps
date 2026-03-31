@@ -1,10 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FAQAccordion } from "@/components/shared/faq-accordion";
-import { StatCard } from "@/components/shared/stat-card";
-import { ButtonLink } from "@/components/shared/button-link";
-import { SectionHeader } from "@/components/shared/section-header";
+import { FAQAccordion, StatCard, ButtonLink, SectionHeader } from "@/components/shared";
 
 interface LocationLandingPageProps {
   location: string;

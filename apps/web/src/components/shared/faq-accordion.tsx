@@ -2,6 +2,17 @@
 
 import { useState } from "react";
 
+/**
+ * Expandable FAQ accordion. Pass an array of question/answer items.
+ * Renders inside a white card by default — set `card={false}` for bare layout.
+ *
+ * @example
+ * // With card wrapper (default)
+ * <FAQAccordion items={[{ question: "How much?", answer: "$1.95/lb" }]} />
+ *
+ * // Without card wrapper (e.g. inside an existing container)
+ * <FAQAccordion items={faqItems} card={false} />
+ */
 export interface FAQItem {
   readonly question: string;
   readonly answer: string;

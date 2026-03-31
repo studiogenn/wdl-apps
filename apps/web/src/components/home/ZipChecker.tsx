@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { trackSignupZipChecked } from "@/lib/tracking";
-import { ButtonLink } from "@/components/shared/button-link";
-import { Button } from "@/components/shared/button";
+import { ButtonLink, Button } from "@/components/shared";
 
 type Status = "idle" | "loading" | "served" | "not_served" | "error";
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ButtonLink } from "@/components/shared/button-link";
+import { ButtonLink } from "@/components/shared";
 
 const SERVICING_AREAS = [
   { label: "New York", href: "/areas/new-york" },

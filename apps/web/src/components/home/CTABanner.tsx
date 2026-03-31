@@ -1,5 +1,5 @@
 import type { CtaConfig } from "@/lib/section-defaults";
-import { ButtonLink } from "@/components/shared/button-link";
+import { ButtonLink } from "@/components/shared";
 
 const DEFAULTS = {
   heading: "Ready to Get Started?",

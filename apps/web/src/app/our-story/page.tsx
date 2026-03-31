@@ -3,8 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ZipChecker } from "@/components/home/ZipChecker";
-import { ButtonLink } from "@/components/shared/button-link";
-import { SectionHeader } from "@/components/shared/section-header";
+import { ButtonLink, SectionHeader } from "@/components/shared";
 
 export default function OurStoryPage() {
   return (

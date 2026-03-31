@@ -1,8 +1,7 @@
 "use client";
 
 import type { FaqConfig } from "@/lib/section-defaults";
-import { FAQAccordion } from "@/components/shared/faq-accordion";
-import { SectionHeader } from "@/components/shared/section-header";
+import { FAQAccordion, SectionHeader } from "@/components/shared";
 
 const DEFAULT_FAQ_ITEMS = [
   {

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { z } from "zod";
 import { identifyCustomer, trackEvent } from "@/lib/tracking";
-import { Button } from "@/components/shared/button";
+import { Button } from "@/components/shared";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email"),

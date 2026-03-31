@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { HeroConfig } from "@/lib/section-defaults";
-import { ButtonLink } from "@/components/shared/button-link";
+import { ButtonLink } from "@/components/shared";
 
 const DEFAULTS = {
   heading: "Laundry Pickup & Delivery in NYC & New Jersey",

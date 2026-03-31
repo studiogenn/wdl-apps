@@ -1,6 +1,5 @@
 import { type ReactNode } from "react";
-import { ButtonLink } from "@/components/shared/button-link";
-import { SectionHeader } from "@/components/shared/section-header";
+import { ButtonLink, SectionHeader } from "@/components/shared";
 
 const SVG_PROPS = {
   width: 64,

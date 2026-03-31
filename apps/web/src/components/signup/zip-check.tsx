@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { z } from "zod";
 import { trackSignupZipChecked } from "@/lib/tracking";
-import { Button } from "@/components/shared/button";
+import { Button } from "@/components/shared";
 
 const zipSchema = z.string().regex(/^\d{5}(-\d{4})?$/, "Please enter a valid 5-digit zip code");
 

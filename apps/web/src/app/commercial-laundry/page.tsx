@@ -3,10 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { trackContactFormSubmit, identifyWithEmail } from "@/lib/tracking";
-import { FAQAccordion } from "@/components/shared/faq-accordion";
-import { ButtonLink } from "@/components/shared/button-link";
-import { Button } from "@/components/shared/button";
-import { SectionHeader } from "@/components/shared/section-header";
+import { FAQAccordion, ButtonLink, Button, SectionHeader } from "@/components/shared";
 
 const commercialSchema = {
   "@context": "https://schema.org",

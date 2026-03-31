@@ -1,6 +1,15 @@
 import { type ButtonHTMLAttributes, forwardRef } from "react";
 import { buttonVariants, type ButtonVariant, type ButtonSize } from "./button-variants";
 
+/**
+ * A styled `<button>` element. Use for form submissions and interactive actions.
+ * For navigation links styled as buttons, use `<ButtonLink>` instead.
+ *
+ * @example
+ * <Button type="submit">Submit</Button>
+ * <Button variant="outline" onClick={handleClick}>Cancel</Button>
+ * <Button className="w-full" disabled={isLoading}>Save</Button>
+ */
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   readonly variant?: ButtonVariant;
   readonly size?: ButtonSize;

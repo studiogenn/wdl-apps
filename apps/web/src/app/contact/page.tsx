@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { trackContactFormSubmit, identifyWithEmail } from "@/lib/tracking";
-import { StatCard } from "@/components/shared/stat-card";
-import { Button } from "@/components/shared/button";
-import { SectionHeader } from "@/components/shared/section-header";
+import { StatCard, Button, SectionHeader } from "@/components/shared";
 
 const contactSchema = {
   "@context": "https://schema.org",

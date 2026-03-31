@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { HowItWorksConfig } from "@/lib/section-defaults";
-import { SectionHeader } from "@/components/shared/section-header";
+import { SectionHeader } from "@/components/shared";
 
 const STEPS = [
   {

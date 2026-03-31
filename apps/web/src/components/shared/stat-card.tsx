@@ -1,5 +1,13 @@
 import { cn } from "@/lib/cn";
 
+/**
+ * Metric display card with optional icon, large value, and label.
+ * Default background is `bg-light-blue` — override via `className`.
+ *
+ * @example
+ * <StatCard icon={<ClockIcon />} value="24 Hour" label="Delivery Guarantee" />
+ * <StatCard value="9,000+" label="Happy Customers" className="bg-cream py-10" />
+ */
 interface StatCardProps {
   readonly icon?: React.ReactNode;
   readonly value: string;

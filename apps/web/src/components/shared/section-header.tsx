@@ -1,5 +1,24 @@
 import { cn } from "@/lib/cn";
 
+/**
+ * Page section heading block: optional eyebrow, heading, and description.
+ * Defaults to centered h2. Handles responsive font sizes automatically.
+ *
+ * @example
+ * // Simple heading
+ * <SectionHeader heading="Our Services" />
+ *
+ * // Full combo with eyebrow and description
+ * <SectionHeader
+ *   eyebrow="How it Works"
+ *   heading="Laundry Pickup & Delivery"
+ *   description="Schedule a pickup and get your clothes back in 24 hours."
+ *   size="lg"
+ * />
+ *
+ * // Left-aligned h1 with custom bottom margin
+ * <SectionHeader heading="Contact Us" headingAs="h1" align="left" headingClassName="mb-4" />
+ */
 interface SectionHeaderProps {
   readonly heading: string;
   readonly eyebrow?: string;

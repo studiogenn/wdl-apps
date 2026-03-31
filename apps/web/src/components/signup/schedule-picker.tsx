@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fromCleanCloudTimestamp } from "@/lib/cleancloud/dates";
-import { Button } from "@/components/shared/button";
+import { Button } from "@/components/shared";
 
 type DateEntry = {
   readonly date: number;

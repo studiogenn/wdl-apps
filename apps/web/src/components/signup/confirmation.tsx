@@ -1,6 +1,6 @@
 "use client";
 
-import { ButtonLink } from "@/components/shared/button-link";
+import { ButtonLink } from "@/components/shared";
 
 type ConfirmationProps = {
   readonly customerName?: string;

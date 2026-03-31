@@ -3,8 +3,7 @@ import Image from "next/image";
 import { getSeoMetadata } from "@/lib/seo";
 import { SchemaRenderer } from "@/components/seo/schema-renderer";
 import { getServiceSchema } from "@/lib/schema";
-import { ButtonLink } from "@/components/shared/button-link";
-import { SectionHeader } from "@/components/shared/section-header";
+import { ButtonLink, SectionHeader } from "@/components/shared";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSeoMetadata("/laundry-services");

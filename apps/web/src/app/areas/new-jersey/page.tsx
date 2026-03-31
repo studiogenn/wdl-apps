@@ -3,8 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getFaqSchema, getServiceSchema } from "@/lib/schema";
 import { AreaFAQ } from "../_components/area-faq";
-import { ButtonLink } from "@/components/shared/button-link";
-import { SectionHeader } from "@/components/shared/section-header";
+import { ButtonLink, SectionHeader } from "@/components/shared";
 
 const NJ_FAQS = [
   {

@@ -1,4 +1,4 @@
-import { ButtonLink } from "@/components/shared/button-link";
+import { ButtonLink } from "@/components/shared";
 
 export function BlogCta() {
   return (

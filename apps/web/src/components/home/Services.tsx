@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { ServicesConfig } from "@/lib/section-defaults";
-import { ButtonLink } from "@/components/shared/button-link";
+import { ButtonLink } from "@/components/shared";
 
 const DEFAULTS = {
   heading: "Laundry Services for Every Need in NYC & New Jersey",

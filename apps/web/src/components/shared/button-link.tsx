@@ -1,6 +1,15 @@
 import Link from "next/link";
 import { buttonVariants, type ButtonVariant, type ButtonSize } from "./button-variants";
 
+/**
+ * A Next.js `<Link>` styled as a button. Use for navigation CTAs.
+ * For form submit buttons, use `<Button>` instead.
+ *
+ * @example
+ * <ButtonLink href="/account">Schedule Pick-up</ButtonLink>
+ * <ButtonLink href="/wash-fold" variant="outline">View Pricing</ButtonLink>
+ * <ButtonLink href="/contact" size="sm" className="mt-4">Contact Us</ButtonLink>
+ */
 interface ButtonLinkProps {
   readonly href: string;
   readonly variant?: ButtonVariant;

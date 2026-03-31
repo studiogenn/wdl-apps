@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { z } from "zod";
-import { Button } from "@/components/shared/button";
+import { Button } from "@/components/shared";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),

@@ -1,4 +1,4 @@
-import { FAQAccordion } from "@/components/shared/faq-accordion";
+import { FAQAccordion } from "@/components/shared";
 
 interface AreaFAQProps {
   readonly faqs: ReadonlyArray<{

@@ -1,6 +1,5 @@
 import type { ByTheNumbersConfig } from "@/lib/section-defaults";
-import { StatCard } from "@/components/shared/stat-card";
-import { SectionHeader } from "@/components/shared/section-header";
+import { StatCard, SectionHeader } from "@/components/shared";
 
 const DEFAULTS = {
   heading: "Proven Laundry Pickup & Delivery You Can Trust",
