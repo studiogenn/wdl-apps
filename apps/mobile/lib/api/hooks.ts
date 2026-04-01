@@ -1,5 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "./client";
+import type { RouteResult, DateEntry, Product, OrderResult } from "@wdl/api";
+
+export type { RouteResult, DateEntry, Product, OrderResult };
 
 async function fetchApi<T>(
   path: string,
@@ -12,29 +15,6 @@ async function fetchApi<T>(
   }
   return result.data as T;
 }
-
-// --- Types ---
-
-export type RouteResult = {
-  readonly routeID: number;
-  readonly routeName?: string;
-};
-
-export type DateEntry = {
-  readonly date: number;
-  readonly slots?: string;
-  readonly remaining?: number;
-};
-
-export type Product = {
-  readonly productID: number;
-  readonly name: string;
-  readonly price: number;
-};
-
-export type OrderResult = {
-  readonly orderID: number;
-};
 
 // --- Scheduling ---
 

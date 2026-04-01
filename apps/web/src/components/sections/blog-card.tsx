@@ -26,7 +26,7 @@ export function BlogCard({ post }: { readonly post: PostMeta }) {
           </Link>
         </h3>
         <p className="mt-1 font-[family-name:var(--font-poppins)] text-xs text-navy/50">
-          {post.author} // {formatDate(post.date)}
+          {post.author} {"//"} {formatDate(post.date)}
         </p>
         <p className="mt-3 flex-1 font-[family-name:var(--font-poppins)] text-sm leading-relaxed text-navy/70">
           {post.excerpt}

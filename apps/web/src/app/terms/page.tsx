@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { COMPANY } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ export default function TermsPage() {
           <strong>
             By creating an account, placing an order, or otherwise using our
             Services, you agree to be bound by these Terms and our{" "}
-            <a href="/privacy">Privacy Policy</a>. If you do not agree, do not
+            <Link href="/privacy">Privacy Policy</Link>. If you do not agree, do not
             use our Services.
           </strong>
         </p>
@@ -338,7 +339,7 @@ export default function TermsPage() {
         </p>
         <p>
           Personal information collected via SMS is governed by our{" "}
-          <a href="/privacy">Privacy Policy</a>.
+          <Link href="/privacy">Privacy Policy</Link>.
         </p>
         <p>
           Opting out of SMS may affect your ability to receive certain service
@@ -530,7 +531,7 @@ export default function TermsPage() {
           </li>
           <li>
             This agreement, together with the{" "}
-            <a href="/privacy">Privacy Policy</a>, constitutes the entire
+            <Link href="/privacy">Privacy Policy</Link>, constitutes the entire
             agreement between you and WDL
           </li>
         </ul>

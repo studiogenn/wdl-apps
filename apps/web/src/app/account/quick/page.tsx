@@ -92,9 +92,12 @@ export default function QuickSignupPage() {
 
   // Track abandonment on unmount
   const stepRef = useRef(state.currentStep);
-  stepRef.current = state.currentStep;
   const completedRef = useRef(false);
-  if (state.currentStep === TOTAL_STEPS) completedRef.current = true;
+
+  useEffect(() => {
+    stepRef.current = state.currentStep;
+    if (state.currentStep === TOTAL_STEPS) completedRef.current = true;
+  }, [state.currentStep]);
 
   useEffect(() => {
     return () => {
@@ -173,6 +176,7 @@ export default function QuickSignupPage() {
     dispatch({ type: "GO_BACK" });
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleLoginSuccess = useCallback((_customerID: number) => {
     trackSignupStepCompleted(VARIANT, "login");
     window.location.href = "/account/manage";

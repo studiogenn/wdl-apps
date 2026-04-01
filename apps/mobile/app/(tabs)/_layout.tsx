@@ -1,26 +1,28 @@
 import { Tabs } from "expo-router";
-import { Platform, Text } from "react-native";
-
-function TabIcon({ label, focused }: { label: string; focused: boolean }) {
-  return (
-    <Text
-      className={`font-body-medium text-subtext-xs tracking-cta uppercase ${focused ? "text-detergent-400" : "text-neutral-400"}`}
-    >
-      {label}
-    </Text>
-  );
-}
+import { Platform } from "react-native";
+import { colors } from "@wdl/tokens";
+import {
+  HomeIcon,
+  CalendarIcon,
+  OrdersIcon,
+  AccountIcon,
+} from "@/components/icons/TabIcons";
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#1227BE",
-        tabBarInactiveTintColor: "#B4B5B6",
-        tabBarShowLabel: false,
+        tabBarActiveTintColor: colors.detergent[400],
+        tabBarInactiveTintColor: colors.neutral[400],
+        tabBarLabelStyle: {
+          fontFamily: "DMSans-Medium",
+          fontSize: 10,
+          letterSpacing: 0.6,
+          textTransform: "uppercase",
+        },
         tabBarStyle: {
-          backgroundColor: "#FEFEFC",
-          borderTopColor: "#D9DADA",
+          backgroundColor: colors.seabreeze[100],
+          borderTopColor: colors.neutral[300],
           borderTopWidth: 0.5,
           ...(Platform.OS === "ios" && { height: 88 }),
         },
@@ -30,25 +32,29 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon label="Home" focused={focused} />,
+          title: "Home",
+          tabBarIcon: ({ color }) => <HomeIcon color={color} />,
         }}
       />
       <Tabs.Screen
         name="schedule"
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon label="Schedule" focused={focused} />,
+          title: "Schedule",
+          tabBarIcon: ({ color }) => <CalendarIcon color={color} />,
         }}
       />
       <Tabs.Screen
         name="orders"
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon label="Orders" focused={focused} />,
+          title: "Orders",
+          tabBarIcon: ({ color }) => <OrdersIcon color={color} />,
         }}
       />
       <Tabs.Screen
         name="account"
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon label="Account" focused={focused} />,
+          title: "Account",
+          tabBarIcon: ({ color }) => <AccountIcon color={color} />,
         }}
       />
     </Tabs>

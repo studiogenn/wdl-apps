@@ -110,9 +110,12 @@ export default function GuidedSignupPage() {
 
   // Track abandonment on unmount
   const stepRef = useRef(state.currentStep);
-  stepRef.current = state.currentStep;
   const completedRef = useRef(false);
-  if (state.currentStep === TOTAL_STEPS) completedRef.current = true;
+
+  useEffect(() => {
+    stepRef.current = state.currentStep;
+    if (state.currentStep === TOTAL_STEPS) completedRef.current = true;
+  }, [state.currentStep]);
 
   useEffect(() => {
     return () => {
@@ -127,6 +130,7 @@ export default function GuidedSignupPage() {
     dispatch({ type: "ZIP_CHECKED", routeID, zip });
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleLoginSuccess = useCallback((_customerID: number) => {
     trackSignupStepCompleted(VARIANT, "login");
     window.location.href = "/account/manage";
@@ -214,7 +218,7 @@ export default function GuidedSignupPage() {
     } catch {
       dispatch({ type: "SET_ERROR", error: "Unable to schedule pickup. Please try again." });
     }
-  }, [state.customerID, state.selectedProduct]);
+  }, [state.customerID, state.selectedProduct, state.promoCode]);
 
   const handleBack = useCallback(() => {
     dispatch({ type: "GO_BACK" });

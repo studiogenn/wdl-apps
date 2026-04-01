@@ -495,6 +495,7 @@ export default function EditorClient() {
 
   useEffect(() => {
     if (!token) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Intentional early-exit for missing token on mount
       setPhase({
         status: 'error',
         message:

@@ -31,7 +31,6 @@ export async function SchemaRenderer({
           key={i}
           type="application/ld+json"
           // Safe: JSON.stringify produces escaped output. Data is from trusted CMS or hardcoded defaults, not user input.
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}

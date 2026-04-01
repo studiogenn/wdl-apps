@@ -1,12 +1,5 @@
 import { create } from "zustand";
-
-type User = {
-  readonly id: string;
-  readonly email: string;
-  readonly name: string;
-  readonly phone?: string;
-  readonly cleancloudCustomerId?: number;
-};
+import type { User } from "@wdl/api";
 
 type AuthState = {
   readonly user: User | null;

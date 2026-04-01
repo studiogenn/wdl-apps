@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { trackContactFormSubmit, identifyWithEmail } from "@/lib/tracking";
 import { StatCard, Button, SectionHeader } from "@/components/shared";
@@ -219,13 +220,13 @@ function ContactForm() {
         <p className="text-red-500 text-sm text-center">Something went wrong. Please try again.</p>
       )}
       <p className="text-center font-body text-xs text-navy/50 mt-4">
-        <a href="/privacy" className="underline hover:text-navy">
+        <Link href="/privacy" className="underline hover:text-navy">
           Privacy Policy
-        </a>
+        </Link>
         {" | "}
-        <a href="/terms" className="underline hover:text-navy">
+        <Link href="/terms" className="underline hover:text-navy">
           Terms & Conditions
-        </a>
+        </Link>
       </p>
     </form>
   );

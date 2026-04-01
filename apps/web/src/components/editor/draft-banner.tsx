@@ -31,6 +31,7 @@ export async function DraftBanner() {
       }}
     >
       <span>You are viewing a draft preview.</span>
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- API route triggers side effect; Link would prefetch */}
       <a
         href="/api/draft/disable"
         style={{

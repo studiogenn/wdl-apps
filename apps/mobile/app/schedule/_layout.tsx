@@ -1,16 +1,17 @@
 import { Stack } from "expo-router";
+import { colors } from "@wdl/tokens";
 
 export default function ScheduleLayout() {
   return (
     <Stack
       screenOptions={{
         headerShown: true,
-        headerTintColor: "#1227BE",
+        headerTintColor: colors.detergent[400],
         headerBackTitle: "Back",
-        headerStyle: { backgroundColor: "#F7F5E6" },
+        headerStyle: { backgroundColor: colors.seabreeze[300] },
         headerTitleStyle: {
           fontFamily: "ZillaSlab-Medium",
-          color: "#050B39",
+          color: colors.detergent[700],
           fontSize: 18,
         },
         headerShadowVisible: false,

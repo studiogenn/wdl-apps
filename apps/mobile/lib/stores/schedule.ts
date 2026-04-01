@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import type { PlanType } from "@wdl/api";
 
 type ScheduleState = {
   readonly address: string;
@@ -10,7 +11,7 @@ type ScheduleState = {
     readonly quantity: number;
   }[];
   readonly orderNotes: string;
-  readonly planType: "one-time" | "weekly" | null;
+  readonly planType: PlanType | null;
 };
 
 type ScheduleActions = {
@@ -20,7 +21,7 @@ type ScheduleActions = {
   readonly setSelectedSlot: (slot: string) => void;
   readonly toggleProduct: (productID: number) => void;
   readonly setOrderNotes: (notes: string) => void;
-  readonly setPlanType: (type: "one-time" | "weekly") => void;
+  readonly setPlanType: (type: PlanType) => void;
   readonly reset: () => void;
 };
 

@@ -1,4 +1,5 @@
 import { getSessionToken } from "@/lib/auth/client";
+import type { ApiResponse } from "@wdl/api";
 
 const BFF_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:3000";
 
@@ -6,12 +7,6 @@ type RequestOptions = {
   readonly method?: "GET" | "POST" | "PUT" | "DELETE";
   readonly body?: Record<string, unknown>;
   readonly authenticated?: boolean;
-};
-
-type ApiResponse<T> = {
-  readonly success: boolean;
-  readonly data?: T;
-  readonly error?: string;
 };
 
 export async function apiRequest<T>(
