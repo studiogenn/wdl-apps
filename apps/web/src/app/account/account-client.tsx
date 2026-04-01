@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useFeatureFlagEnabled } from "posthog-js/react";
 import { FLAG_KEYS } from "@/lib/feature-flags";
@@ -15,27 +15,48 @@ type User = {
   readonly email: string;
 };
 
-type Props = {
-  readonly user: User | null;
-};
-
-export function AccountPageClient({ user }: Props) {
+export function AccountPageClient() {
   const searchParams = useSearchParams();
   const flagEnabled = useFeatureFlagEnabled(FLAG_KEYS.NEW_ACCOUNT);
   const urlOverride = searchParams.get("flag") === "new-account";
   const newAccountEnabled = flagEnabled || urlOverride;
   const [tab, setTab] = useState<"login" | "signup">("login");
+  const [user, setUser] = useState<User | null>(null);
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (!newAccountEnabled) {
+      setChecked(true);
+      return;
+    }
+
+    import("@/lib/auth-client").then(({ authClient }) =>
+      authClient.getSession()
+    ).then(({ data: session }) => {
+      if (session?.user) {
+        const u = session.user as Record<string, unknown>;
+        setUser({
+          id: u.id as string,
+          name: u.name as string,
+          email: u.email as string,
+        });
+      }
+      setChecked(true);
+    }).catch(() => {
+      setChecked(true);
+    });
+  }, [newAccountEnabled]);
+
+  if (!checked) return null;
 
   if (!newAccountEnabled) {
     return <CleanCloudBooking />;
   }
 
-  // Flag on + authenticated → show dashboard
   if (user) {
     return <Dashboard user={user} />;
   }
 
-  // Flag on + unauthenticated → show Better Auth login/signup
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-6">
       <div className="w-full max-w-md rounded-2xl border border-navy/10 bg-white p-8">
