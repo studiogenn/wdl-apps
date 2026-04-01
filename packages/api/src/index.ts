@@ -5,5 +5,7 @@ export type {
   Product,
   OrderResult,
   CreateOrderParams,
+  Order,
+  OrderStatus,
 } from "./cleancloud";
 export type { PlanType, Frequency } from "./constants";
