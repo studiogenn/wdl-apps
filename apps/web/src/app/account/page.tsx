@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { AccountPageClient } from "./account-client";
@@ -24,5 +25,9 @@ export default async function AccountPage() {
       }
     : null;
 
-  return <AccountPageClient user={user} />;
+  return (
+    <Suspense>
+      <AccountPageClient user={user} />
+    </Suspense>
+  );
 }
