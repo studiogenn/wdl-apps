@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Testimonials } from "@/components/home/Testimonials";
 import { ContactForm } from "./contact-form";
 import { getCommercialPage, getAllCommercialSlugs } from "./data";
 
@@ -44,6 +43,13 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
+function StarIcon() {
+  return (
+    <svg className="w-4 h-4 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+    </svg>
+  );
+}
 
 function SectionLabel({ children, color = "blue" }: { children: React.ReactNode; color?: "blue" | "white" }) {
   return (
@@ -202,9 +208,9 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 2. STATS BAR ──────────────────────────────────────────────── */}
-      <section className="bg-white border-b border-[#edebd9] py-8" data-reveal>
+      <section className="bg-white border-b border-[#edebd9] py-8">
         <div className="container-site max-w-[1100px]">
-          <div className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-0 sm:divide-x sm:divide-[#edebd9]" data-reveal-stagger>
+          <div className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-0 sm:divide-x sm:divide-[#edebd9]">
             {[
               { value: "24hr", label: "Turnaround" },
               { value: "$1.95", label: "Per lb (weekly)" },
@@ -224,7 +230,7 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 3. INTRO + PAIN POINTS ────────────────────────────────────── */}
-      <section className="bg-[#f7f5e6] py-[60px]" data-reveal>
+      <section className="bg-[#f7f5e6] py-[60px]">
         <div className="container-site max-w-[1100px]">
           <SectionLabel>About this service</SectionLabel>
           <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-6 uppercase">
@@ -233,7 +239,7 @@ export default async function CommercialLandingPage({
           <p className="font-[family-name:var(--font-poppins)] text-[15px] leading-[25.5px] text-[#666] max-w-3xl mb-10">
             {data.introParagraph}
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6" data-reveal-stagger>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {data.painPoints.map((point) => (
               <div
                 key={point}
@@ -252,13 +258,13 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 4. HOW IT WORKS ───────────────────────────────────────────── */}
-      <section className="bg-white py-[60px]" data-reveal>
+      <section className="bg-white py-[60px]">
         <div className="container-site max-w-[1100px]">
           <SectionLabel>How it works</SectionLabel>
           <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-10 uppercase">
             Simple. Reliable. Every Week.
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" data-reveal-stagger>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { number: "01", title: "Schedule your pickup", description: "Tell us your volume and preferred days. We build a recurring pickup route around your business." },
               { number: "02", title: "We pick up", description: "Our driver arrives on schedule and collects everything — linens, towels, uniforms, whatever you need washed." },
@@ -282,15 +288,14 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 5. PRICING CTA ────────────────────────────────────────────── */}
-      <section className="bg-[#f7f5e6] py-[60px]" data-reveal>
+      <section className="bg-[#f7f5e6] py-[60px]">
         <div className="container-site max-w-[1100px]">
           <SectionLabel>Pricing</SectionLabel>
           <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-6 uppercase">
             Volume Pricing. Always Fair.
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl items-stretch">
-            {/* Commercial Pricing */}
-            <div className="relative flex flex-col bg-white border-2 border-[#1227be] rounded-2xl p-8">
+          <div className="max-w-2xl">
+            <div className="relative bg-white border-2 border-[#1227be] rounded-2xl p-8">
               <span className="absolute -top-3 right-6 rounded-full bg-[#f9ebaa] px-3 py-1 text-[11px] font-bold text-[#1227be]">
                 Weekly Plan
               </span>
@@ -301,7 +306,7 @@ export default async function CommercialLandingPage({
               <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#666] leading-relaxed mb-6">
                 {data.pricingCTA}
               </p>
-              <div className="flex flex-wrap gap-3 mt-auto">
+              <div className="flex flex-wrap gap-3">
                 <Link
                   href="#contact"
                   className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-[#111] bg-[#f9ebaa] rounded-full hover:bg-[#f5e8a0] transition-colors"
@@ -316,36 +321,39 @@ export default async function CommercialLandingPage({
                 </a>
               </div>
             </div>
-
-            {/* Subscription Plan */}
-            <div className="flex flex-col bg-white border-[1.5px] border-[#e4e2d4] rounded-2xl p-8">
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-[#666] mb-2.5">Subscription Plan</p>
-              <p className="text-[48px] font-bold text-[#333] leading-none mb-4"><span className="font-[family-name:var(--font-poppins)] text-[14px] font-semibold uppercase tracking-[1px] text-[#1227be] mr-1 align-baseline">From</span>$30.99</p>
-              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#666] leading-relaxed mb-6">starting per bag · personalized weekly or biweekly service</p>
-              <div className="flex flex-col gap-2.5 mb-6">
-                {["Customized to your laundry needs", "Weekly or biweekly pickup options", "Lower price per bag vs pay-as-you-go", "Free pickup & delivery", "24-hour turnaround", "Cancel or adjust anytime"].map((perk) => (
-                  <div key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[13px] text-[#555]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#888] shrink-0" />
-                    {perk}
-                  </div>
-                ))}
-              </div>
-              <Link
-                href="/pricing"
-                className="block text-center bg-[#1227be] text-white font-bold text-[11px] uppercase tracking-[1.4px] py-3 px-6 rounded-[4px] hover:scale-105 transition-transform duration-300 mt-auto"
-              >
-                Get My Plan
-              </Link>
-            </div>
           </div>
         </div>
       </section>
 
       {/* ── 6. TESTIMONIAL ────────────────────────────────────────────── */}
-      <Testimonials />
+      <section className="bg-white py-[60px]">
+        <div className="container-site max-w-[1100px]">
+          <SectionLabel>What our clients say</SectionLabel>
+          <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-10 uppercase">
+            Real Businesses. Real Results.
+          </h2>
+          <div className="max-w-2xl">
+            <div className="bg-white border-t-[3px] border-[#1227be] rounded-[10px] p-8 border border-[#edebd9]">
+              <div className="flex gap-0.5 mb-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <StarIcon key={i} />
+                ))}
+              </div>
+              <p className="font-[family-name:var(--font-poppins)] text-[15px] text-[#666] leading-[25.5px] mb-6">
+                &ldquo;{data.reviewQuote}&rdquo;
+              </p>
+              <div className="border-t border-[#edebd9] pt-4">
+                <p className="font-[family-name:var(--font-poppins)] text-[13px] font-bold text-[#111]">
+                  {data.reviewAuthor}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── 7. FAQ ────────────────────────────────────────────────────── */}
-      <section className="bg-[#f7f5e6] py-[60px]" data-reveal>
+      <section className="bg-[#f7f5e6] py-[60px]">
         <div className="container-site max-w-[1100px]">
           <SectionLabel>FAQ</SectionLabel>
           <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-10 uppercase">
@@ -363,7 +371,7 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 8. CONTACT FORM ───────────────────────────────────────────── */}
-      <section id="contact" className="bg-[#1227be] py-[60px] lg:py-[80px]" data-reveal>
+      <section id="contact" className="bg-[#1227be] py-[60px] lg:py-[80px]">
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row gap-12">
             <div className="flex-1">
@@ -395,7 +403,7 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 9. COVERAGE ───────────────────────────────────────────────── */}
-      <section className="bg-[#1227be] py-[60px] border-t border-white/10" data-reveal>
+      <section className="bg-[#1227be] py-[60px] border-t border-white/10">
         <div className="container-site max-w-[1100px]">
           <SectionLabel color="white">Service area</SectionLabel>
           <h2 className="text-[28px] lg:text-[42px] font-bold text-white leading-[1.1] mb-4 uppercase">
@@ -422,7 +430,7 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 10. FINAL CTA ─────────────────────────────────────────────── */}
-      <section className="bg-[#f7f5e6] py-[80px]" data-reveal="scale">
+      <section className="bg-[#f7f5e6] py-[80px]">
         <div className="container-site max-w-[1100px] text-center">
           <h2 className="text-[28px] lg:text-[42px] font-bold text-[#111] leading-[1.1] mb-4 uppercase">
             {data.finalHeadline}
@@ -434,7 +442,7 @@ export default async function CommercialLandingPage({
             href="#contact"
             className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center rounded-full bg-[#f9ebaa] px-8 py-3.5 text-[13px] font-bold uppercase tracking-[1px] text-[#111] hover:bg-[#f5e8a0] transition-colors"
           >
-            Get My {data.vertical.split(" ")[0]} Quote
+            Schedule Your First Pickup
           </Link>
         </div>
       </section>
