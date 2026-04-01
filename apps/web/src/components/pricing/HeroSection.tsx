@@ -79,15 +79,15 @@ export function HeroSection({ onNavigate, onStartQuiz }: HeroSectionProps) {
       </section>
 
       {/* Features card */}
-      <div className="mx-auto max-w-[500px] px-4 py-10">
-        <div className="rounded-2xl border-[1.5px] border-[#e8e5d0] bg-white px-8 py-7">
-          <div className="mb-5 text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">
+      <div className="mx-auto max-w-[500px] px-4 pt-6">
+        <div className="rounded-2xl border-[1.5px] border-[#e8e5d0] bg-white p-5">
+          <div className="mb-3.5 text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">
             Everything included in every order
           </div>
           {features.map((feature, i) => (
             <div
               key={feature}
-              className={`flex items-center gap-3 py-2.5 text-sm text-[#333] ${
+              className={`flex items-center gap-2.5 py-1.5 text-sm text-[#333] ${
                 i < features.length - 1 ? "border-b border-cream" : ""
               }`}
             >

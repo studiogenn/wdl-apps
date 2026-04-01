@@ -281,6 +281,66 @@ export default async function CommercialLandingPage({
         </div>
       </section>
 
+      {/* ── 5. PRICING CTA ────────────────────────────────────────────── */}
+      <section className="bg-[#f7f5e6] py-[60px]" data-reveal>
+        <div className="container-site max-w-[1100px]">
+          <SectionLabel>Pricing</SectionLabel>
+          <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-6 uppercase">
+            Volume Pricing. Always Fair.
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl items-stretch">
+            {/* Commercial Pricing */}
+            <div className="relative flex flex-col bg-white border-2 border-[#1227be] rounded-2xl p-8">
+              <span className="absolute -top-3 right-6 rounded-full bg-[#f9ebaa] px-3 py-1 text-[11px] font-bold text-[#1227be]">
+                Weekly Plan
+              </span>
+              <div className="flex items-baseline gap-1 mb-4">
+                <span className="text-[48px] font-bold text-[#111] leading-none">$1.95</span>
+                <span className="font-[family-name:var(--font-poppins)] text-[15px] text-[#666]">/lb</span>
+              </div>
+              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#666] leading-relaxed mb-6">
+                {data.pricingCTA}
+              </p>
+              <div className="flex flex-wrap gap-3 mt-auto">
+                <Link
+                  href="#contact"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-[#111] bg-[#f9ebaa] rounded-full hover:bg-[#f5e8a0] transition-colors"
+                >
+                  Get a Custom Quote
+                </Link>
+                <a
+                  href={`tel:${phone}`}
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-[#1227be] border border-[#1227be]/20 rounded-full hover:bg-[#1227be]/5 transition-colors"
+                >
+                  Call 855.968.5511
+                </a>
+              </div>
+            </div>
+
+            {/* Subscription Plan */}
+            <div className="flex flex-col bg-white border-[1.5px] border-[#e4e2d4] rounded-2xl p-8">
+              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-[#666] mb-2.5">Subscription Plan</p>
+              <p className="text-[48px] font-bold text-[#333] leading-none mb-4"><span className="font-[family-name:var(--font-poppins)] text-[14px] font-semibold uppercase tracking-[1px] text-[#1227be] mr-1 align-baseline">From</span>$30.99</p>
+              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#666] leading-relaxed mb-6">starting per bag · personalized weekly or biweekly service</p>
+              <div className="flex flex-col gap-2.5 mb-6">
+                {["Customized to your laundry needs", "Weekly or biweekly pickup options", "Lower price per bag vs pay-as-you-go", "Free pickup & delivery", "24-hour turnaround", "Cancel or adjust anytime"].map((perk) => (
+                  <div key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[13px] text-[#555]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#888] shrink-0" />
+                    {perk}
+                  </div>
+                ))}
+              </div>
+              <Link
+                href="/pricing"
+                className="block text-center bg-[#1227be] text-white font-bold text-[11px] uppercase tracking-[1.4px] py-3 px-6 rounded-[4px] hover:scale-105 transition-transform duration-300 mt-auto"
+              >
+                Get My Plan
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 6. TESTIMONIAL ────────────────────────────────────────────── */}
       <Testimonials />
 
