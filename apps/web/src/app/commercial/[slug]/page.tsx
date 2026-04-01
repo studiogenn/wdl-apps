@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ButtonLink } from "@/components/shared";
 import { ContactForm } from "./contact-form";
 import { getCommercialPage, getAllCommercialSlugs } from "./data";
 
@@ -289,38 +290,21 @@ export default async function CommercialLandingPage({
 
       {/* ── 5. PRICING CTA ────────────────────────────────────────────── */}
       <section className="bg-cream py-[60px]">
-        <div className="container-site max-w-[1100px]">
+        <div className="container-site max-w-[1100px] text-center">
           <SectionLabel>Pricing</SectionLabel>
           <h2 className="text-[28px] lg:text-[40px] font-bold text-navy leading-[44px] tracking-[0.3px] mb-6 uppercase">
-            Volume Pricing. Always Fair.
+            Custom Pricing for Your Business
           </h2>
-          <div className="max-w-2xl">
-            <div className="relative bg-white border-2 border-primary rounded-2xl p-8">
-              <span className="absolute -top-3 right-6 rounded-full bg-highlight px-3 py-1 text-[11px] font-bold text-primary">
-                Weekly Plan
-              </span>
-              <div className="flex items-baseline gap-1 mb-4">
-                <span className="text-[48px] font-bold text-navy leading-none">$1.95</span>
-                <span className="font-[family-name:var(--font-poppins)] text-[15px] text-navy/60">/lb</span>
-              </div>
-              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-navy/60 leading-relaxed mb-6">
-                {data.pricingCTA}
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="#contact"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-navy bg-highlight rounded-full hover:bg-highlight/90 transition-colors"
-                >
-                  Get a Custom Quote
-                </Link>
-                <a
-                  href={`tel:${phone}`}
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-primary border border-primary/20 rounded-full hover:bg-primary/5 transition-colors"
-                >
-                  Call 855.968.5511
-                </a>
-              </div>
-            </div>
+          <p className="font-[family-name:var(--font-poppins)] text-[15px] text-navy/60 leading-relaxed max-w-xl mx-auto mb-8">
+            {data.pricingCTA}
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <ButtonLink href="#contact">
+              Get a Custom Quote
+            </ButtonLink>
+            <ButtonLink href={`tel:${phone}`} variant="outline">
+              Call 855.968.5511
+            </ButtonLink>
           </div>
         </div>
       </section>
