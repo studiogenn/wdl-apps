@@ -3,7 +3,6 @@
 import posthog from "posthog-js";
 import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react";
 import { useEffect } from "react";
-import { authClient } from "@/lib/auth-client";
 
 type PostHogProviderProps = {
   readonly children: React.ReactNode;
@@ -23,7 +22,9 @@ function PostHogIdentify() {
   useEffect(() => {
     if (!ph) return;
 
-    authClient.getSession().then(({ data: session }) => {
+    import("@/lib/auth-client").then(({ authClient }) =>
+      authClient.getSession()
+    ).then(({ data: session }: { data: { user?: Record<string, unknown> } | null }) => {
       if (!session?.user) return;
 
       const user = session.user as Record<string, unknown>;
