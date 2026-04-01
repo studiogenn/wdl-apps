@@ -9,13 +9,16 @@
     "./colors": "./src/colors.ts",
     "./typography": "./src/typography.ts",
     "./spacing": "./src/spacing.ts",
-    "./tailwind-preset": "./src/tailwind-preset.ts"
+    "./tailwind-preset": "./src/tailwind-preset.ts",
+    "./theme.css": "./dist/theme.css"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsx scripts/generate-css.ts",
+    "generate-css": "tsx scripts/generate-css.ts",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
+    "tsx": "^4.21.0",
     "typescript": "~5.9.2"
   }
 }
