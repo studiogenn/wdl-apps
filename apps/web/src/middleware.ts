@@ -57,8 +57,14 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   let response: NextResponse;
 
-  // Signup flow A/B test: rewrite /account to the assigned variant
-  if (pathname === "/account") {
+  const newAccountEnabled = flags[FLAG_KEYS.NEW_ACCOUNT] === true;
+
+  if (newAccountEnabled && (pathname === "/account" || pathname === "/account/manage")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/account/dashboard";
+    response = NextResponse.rewrite(url);
+  } else if (pathname === "/account") {
+    // Signup flow A/B test: rewrite /account to the assigned variant
     const variant = flags[FLAG_KEYS.SIGNUP_FLOW];
 
     if (variant === "quick") {

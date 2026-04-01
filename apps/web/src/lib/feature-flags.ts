@@ -2,6 +2,7 @@ export const FLAG_KEYS = {
   HERO_CONTENT: "hero-content",
   HOMEPAGE_VARIANT: "homepage-variant",
   SIGNUP_FLOW: "signup-flow",
+  NEW_ACCOUNT: "new-account-pages",
 } as const;
 
 export type SignupFlowVariant = "embed" | "quick" | "guided";
