@@ -1,10 +1,25 @@
 "use client";
 
 import Image from "next/image";
-
-import { useState } from "react";
+import Link from "next/link";
 import { ZipChecker } from "@/components/home/ZipChecker";
-import { ButtonLink, SectionHeader } from "@/components/shared";
+import { ButtonLink, SectionHeader, FAQAccordion } from "@/components/shared";
+
+const NJ_REGIONS = [
+  { name: "Bergen County", slug: "bergen-county" },
+  { name: "Essex County", slug: "essex-county" },
+  { name: "Hudson County", slug: "hudson-county" },
+  { name: "Morris County", slug: "morris-county" },
+  { name: "Union County", slug: "union-county" },
+  { name: "Passaic County", slug: "passaic-county" },
+  { name: "Middlesex County", slug: "middlesex-county" },
+] as const;
+
+const NY_REGIONS = [
+  { name: "Manhattan", slug: "manhattan" },
+  { name: "Queens", slug: "queens" },
+  { name: "Long Island", slug: "long-island" },
+] as const;
 
 const serviceAreasSchema = {
   "@context": "https://schema.org",
@@ -73,43 +88,58 @@ export default function ServiceAreasPage() {
         </div>
       </section>
 
-      {/* Counties We Serve */}
+      {/* Regions We Serve */}
       <section className="py-16 lg:py-20">
         <div className="container-site max-w-[1100px] text-center">
-          <SectionHeader eyebrow="Locations" heading="Counties We Serve" headingAs="h1" headingClassName="mb-3" />
+          <SectionHeader eyebrow="Locations" heading="Regions We Serve" headingAs="h1" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] max-w-xl mx-auto mb-10">
-            We provide laundry pickup and delivery in select counties across New
-            York and New Jersey, with service areas optimized for reliable,
-            on-time pickups.
+            We provide laundry pickup and delivery across New York and
+            New Jersey. Click a region to see the neighborhoods we cover.
           </p>
 
-          <div className="flex flex-col md:flex-row gap-4 max-w-[700px] mx-auto">
-            <CountyDropdown
-              label="New Jersey"
-              areas={[
-                "Bergen", "Essex", "Hudson", "Morris", "Union", "Passaic",
-              ]}
-            />
-            <CountyDropdown
-              label="New York"
-              areas={[
-                "Alphabet City", "Battery Park City", "Bowery", "Carnegie Hill",
-                "Central Harlem", "Chelsea", "Chinatown", "Civic Center",
-                "Columbus Circle", "East Harlem", "East Village",
-                "Financial District", "Flatiron District", "Gramercy Park",
-                "Greenwich Village", "Hamilton Heights", "Harlem",
-                "Hell\u2019s Kitchen", "Hudson Square", "Inwood", "Kips Bay",
-                "Lenox Hill", "Lincoln Square", "Little Italy",
-                "Lower East Side", "Manhattan Valley", "Marble Hill",
-                "Meatpacking District", "Midtown", "Midtown East",
-                "Midtown West", "Morningside Heights", "Murray Hill", "NoHo",
-                "Nolita", "Roosevelt Island", "SoHo", "South Harlem",
-                "South Street Seaport", "Stuyvesant Town", "Sugar Hill",
-                "Theater District", "Tribeca", "Two Bridges",
-                "Upper East Side", "Upper West Side", "Washington Heights",
-                "West Village", "Yorkville",
-              ]}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[800px] mx-auto text-left">
+            <div>
+              <h3 className="font-[family-name:var(--font-poppins)] text-sm font-bold uppercase tracking-[2px] text-navy/40 mb-4">
+                New Jersey
+              </h3>
+              <div className="flex flex-col gap-2">
+                {NJ_REGIONS.map((r) => (
+                  <Link
+                    key={r.slug}
+                    href={`/service-areas/${r.slug}`}
+                    className="flex items-center justify-between bg-white rounded-xl border border-navy/10 px-5 py-3.5 hover:border-primary/30 transition-colors group"
+                  >
+                    <span className="font-[family-name:var(--font-poppins)] text-[15px] text-navy group-hover:text-primary transition-colors">
+                      {r.name}
+                    </span>
+                    <svg className="w-4 h-4 text-navy/30 group-hover:text-primary transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="font-[family-name:var(--font-poppins)] text-sm font-bold uppercase tracking-[2px] text-navy/40 mb-4">
+                New York
+              </h3>
+              <div className="flex flex-col gap-2">
+                {NY_REGIONS.map((r) => (
+                  <Link
+                    key={r.slug}
+                    href={`/service-areas/${r.slug}`}
+                    className="flex items-center justify-between bg-white rounded-xl border border-navy/10 px-5 py-3.5 hover:border-primary/30 transition-colors group"
+                  >
+                    <span className="font-[family-name:var(--font-poppins)] text-[15px] text-navy group-hover:text-primary transition-colors">
+                      {r.name}
+                    </span>
+                    <svg className="w-4 h-4 text-navy/30 group-hover:text-primary transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -280,94 +310,18 @@ export default function ServiceAreasPage() {
       {/* FAQ */}
       <section className="py-16 lg:py-20">
         <div className="container-site max-w-[780px]">
-          <SectionHeader heading="Frequently Asked Questions" />
-          <div className="border-t border-navy/10">
-            <FAQItem
-              question="How can I check if you service my area?"
-              answer={'You may check by clicking on "Check Your Zip Code" above and entering your zip code. You can also browse our service area lists for New York and New Jersey.'}
-            />
-          </div>
+          <SectionHeader heading="Frequently Asked Questions" headingClassName="mb-8" />
+          <FAQAccordion
+            items={[
+              {
+                question: "How can I check if you service my area?",
+                answer: "You may check by clicking on \"Check Your Zip Code\" above and entering your zip code. You can also browse our service area lists for New York and New Jersey.",
+              },
+            ]}
+          />
         </div>
       </section>
     </>
   );
 }
 
-function CountyDropdown({ label, areas }: { label: string; areas: string[] }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="flex-1 min-w-[280px]">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full bg-light-blue text-navy rounded-full px-6 py-5 flex items-center justify-between font-[family-name:var(--font-poppins)] text-lg font-body-medium cursor-pointer"
-      >
-        {label}
-        <svg
-          className={`w-5 h-5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </button>
-      {open && (
-        <div className="mt-3 bg-white rounded-2xl px-6 py-4 shadow-lg">
-          <ul className="columns-2 gap-8 font-[family-name:var(--font-poppins)] text-[15px] text-navy font-light tracking-[-0.03em]">
-            {areas.map((area) => (
-              <li key={area} className="py-2.5 border-b border-navy/10 break-inside-avoid">
-                {area}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function FAQItem({
-  question,
-  answer,
-}: {
-  question: string;
-  answer: string;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="border-b border-navy/10">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-5 text-left group"
-      >
-        <span className="font-[family-name:var(--font-poppins)] text-[15px] font-body-medium text-navy pr-6">
-          {question}
-        </span>
-        <span className="shrink-0 w-6 h-6 flex items-center justify-center text-navy/40 group-hover:text-navy transition-colors">
-          {isOpen ? (
-            <svg width="14" height="2" viewBox="0 0 14 2" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="0" y1="1" x2="14" y2="1" />
-            </svg>
-          ) : (
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="7" y1="0" x2="7" y2="14" />
-              <line x1="0" y1="7" x2="14" y2="7" />
-            </svg>
-          )}
-        </span>
-      </button>
-      {isOpen && (
-        <div className="pb-5">
-          <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 leading-relaxed">
-            {answer}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
