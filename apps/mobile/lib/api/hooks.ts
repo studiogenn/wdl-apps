@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "./client";
-import type { RouteResult, DateEntry, Product, OrderResult } from "@wdl/api";
+import type { RouteResult, DateEntry, Product, OrderResult, Order } from "@wdl/api";
 
-export type { RouteResult, DateEntry, Product, OrderResult };
+export type { RouteResult, DateEntry, Product, OrderResult, Order };
 
 async function fetchApi<T>(
   path: string,
@@ -102,7 +102,7 @@ export function useOrders() {
   return useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetchApi<{ readonly orders: readonly Record<string, unknown>[] }>(
+      fetchApi<{ readonly orders: readonly Order[] }>(
         "/api/mobile/orders/list",
         "POST"
       ),
