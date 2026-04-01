@@ -4,9 +4,46 @@
 @plugin "@tailwindcss/typography";
 
 @theme inline {
-  /* Semantic aliases (backward compat — migrate away from these) */
+  /* ── Brand colors (from @wdl/tokens) ── */
+  --color-detergent-100: #E7E9F8;
+  --color-detergent-200: #CFD3F2;
+  --color-detergent-300: #5967D1;
+  --color-detergent-400: #1227BE;
+  --color-detergent-500: #0E1F98;
+  --color-detergent-600: #070F4C;
+  --color-detergent-700: #050B39;
+
+  --color-fresh-lemon-100: #FAF1C3;
+  --color-fresh-lemon-200: #F9EBAA;
+  --color-fresh-lemon-300: #C7BC88;
+
+  --color-seabreeze-100: #FEFEFC;
+  --color-seabreeze-200: #F9F8ED;
+  --color-seabreeze-300: #F7F5E6;
+
+  --color-neutral-100: #FFFFFF;
+  --color-neutral-200: #F2F2F2;
+  --color-neutral-300: #D9DADA;
+  --color-neutral-400: #B4B5B6;
+  --color-neutral-500: #838585;
+
+  --color-destructive-100: #E16A70;
+  --color-destructive-200: #AF2C33;
+  --color-destructive-300: #6B0C11;
+
+  /* ── Semantic colors ── */
   --color-primary: #1227BE;
+  --color-primary-dark: #0E1F98;
   --color-primary-hover: #0E1F98;
+  --color-background: #F7F5E6;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #E7E9F8;
+  --color-text: #050B39;
+  --color-text-muted: #838585;
+  --color-accent: #F9EBAA;
+  --color-border: #D9DADA;
+
+  /* Legacy aliases */
   --color-navy: #050B39;
   --color-cream: #F7F5E6;
   --color-light-blue: #E7E9F8;
@@ -25,9 +62,33 @@
   --color-wdl-muted: #6B7280;
   --color-wdl-light: #f0f4ff;
 
-  /* Fonts */
+  /* ── Fonts ── */
   --font-heading: var(--font-zilla-slab);
   --font-body: var(--font-dm-sans);
+
+  /* ── Border radius ── */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-btn: 22.5px;
+  --radius-card: 32px;
+  --radius-card-lg: 56px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* ── Spacing ── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
 }
 
 :root {
