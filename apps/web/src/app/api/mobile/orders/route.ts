@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 
 const orderSchema = z.object({
   pickupDate: z.number().positive().optional(),
@@ -49,24 +49,23 @@ export async function POST(request: Request) {
       );
     }
 
-    const params: Record<string, unknown> = {
+    const result = await cleancloudProxy<OrderResponse>("/orders", {
       customerID: auth.cleancloudCustomerId,
       ...parsed.data,
-    };
-
-    const data = await cleancloudRequest<OrderResponse>("addOrder", params);
-
-    return NextResponse.json({
-      success: true,
-      data: { orderID: data.orderID },
     });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
+
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
+        { success: false, error: getReadableError(result.error ?? "") },
         { status: 422 }
       );
     }
+
+    return NextResponse.json({
+      success: true,
+      data: { orderID: result.data!.orderID },
+    });
+  } catch {
     return NextResponse.json(
       { success: false, error: "Failed to create order" },
       { status: 500 }

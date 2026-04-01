@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 
 const orderSchema = z.object({
   customerID: z.number().int().positive("Customer ID is required"),
@@ -36,33 +36,20 @@ export async function POST(request: Request) {
       );
     }
 
-    const params: Record<string, unknown> = {
-      customerID: parsed.data.customerID,
-      finalTotal: parsed.data.finalTotal ?? 0,
-    };
+    const result = await cleancloudProxy<OrderResponse>("/orders", parsed.data);
 
-    if (parsed.data.pickupDate) params.pickupDate = parsed.data.pickupDate;
-    if (parsed.data.pickupStart) params.pickupStart = parsed.data.pickupStart;
-    if (parsed.data.pickupEnd) params.pickupEnd = parsed.data.pickupEnd;
-    if (parsed.data.deliveryDate) params.deliveryDate = parsed.data.deliveryDate;
-    if (parsed.data.deliveryStart) params.deliveryStart = parsed.data.deliveryStart;
-    if (parsed.data.deliveryEnd) params.deliveryEnd = parsed.data.deliveryEnd;
-    if (parsed.data.products) params.products = parsed.data.products;
-    if (parsed.data.orderNotes) params.orderNotes = parsed.data.orderNotes;
-
-    const data = await cleancloudRequest<OrderResponse>("addOrder", params);
-
-    return NextResponse.json({
-      success: true,
-      data: { orderID: data.orderID },
-    });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
+        { success: false, error: getReadableError(result.error ?? "") },
         { status: 422 }
       );
     }
+
+    return NextResponse.json({
+      success: true,
+      data: { orderID: result.data!.orderID },
+    });
+  } catch {
     return NextResponse.json(
       { success: false, error: "Unable to create order. Please try again." },
       { status: 500 }

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 
 type Product = {
   readonly productID: number;
@@ -28,29 +28,34 @@ export async function POST() {
       });
     }
 
-    const data = await cleancloudRequest<ProductsResponse>("getProducts", {});
+    const result = await cleancloudProxy<ProductsResponse>("/products");
 
-    const products = data.products ?? [];
+    if (!result.success) {
+      if (cachedProducts) {
+        return NextResponse.json({
+          success: true,
+          data: { products: cachedProducts.data },
+        });
+      }
+      return NextResponse.json(
+        { success: false, error: getReadableError(result.error ?? "") },
+        { status: 422 }
+      );
+    }
+
+    const products = result.data?.products ?? [];
     cachedProducts = { data: products, expiresAt: now + CACHE_TTL_MS };
 
     return NextResponse.json({
       success: true,
       data: { products },
     });
-  } catch (error) {
-    // Serve stale cache if available
+  } catch {
     if (cachedProducts) {
       return NextResponse.json({
         success: true,
         data: { products: cachedProducts.data },
       });
-    }
-
-    if (error instanceof CleanCloudApiError) {
-      return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
-        { status: 422 }
-      );
     }
     return NextResponse.json(
       { success: false, error: "Unable to load services. Please try again." },

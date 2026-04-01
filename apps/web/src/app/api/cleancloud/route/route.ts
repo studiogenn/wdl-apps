@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 
 const routeSchema = z.object({
   zip: z.string().min(5).max(10).optional(),
@@ -31,29 +31,20 @@ export async function POST(request: Request) {
       );
     }
 
-    const params: Record<string, unknown> = {};
-    if (parsed.data.lat && parsed.data.lng) {
-      params.lat = parsed.data.lat;
-      params.lng = parsed.data.lng;
-    } else if (parsed.data.address) {
-      params.customerAddress = parsed.data.address;
-    } else if (parsed.data.zip) {
-      params.customerAddress = parsed.data.zip;
-    }
+    const result = await cleancloudProxy<RouteResponse>("/route", parsed.data);
 
-    const data = await cleancloudRequest<RouteResponse>("getRoute", params);
-
-    return NextResponse.json({
-      success: true,
-      data: { routeID: data.routeID, routeName: data.routeName },
-    });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
+        { success: false, error: getReadableError(result.error ?? "") },
         { status: 422 }
       );
     }
+
+    return NextResponse.json({
+      success: true,
+      data: { routeID: result.data!.routeID, routeName: result.data!.routeName },
+    });
+  } catch {
     return NextResponse.json(
       { success: false, error: "Unable to check service area. Please try again." },
       { status: 500 }

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 
 const datesSchema = z.object({
   routeID: z.number().int().positive("Route ID is required"),
@@ -31,21 +31,22 @@ export async function POST(request: Request) {
       );
     }
 
-    const data = await cleancloudRequest<DatesResponse>("getDates", {
+    const result = await cleancloudProxy<DatesResponse>("/scheduling/dates", {
       routeID: parsed.data.routeID,
     });
 
-    return NextResponse.json({
-      success: true,
-      data: { dates: data.dates ?? [] },
-    });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
+        { success: false, error: getReadableError(result.error ?? "") },
         { status: 422 }
       );
     }
+
+    return NextResponse.json({
+      success: true,
+      data: { dates: result.data?.dates ?? [] },
+    });
+  } catch {
     return NextResponse.json(
       { success: false, error: "Unable to load available dates. Please try again." },
       { status: 500 }

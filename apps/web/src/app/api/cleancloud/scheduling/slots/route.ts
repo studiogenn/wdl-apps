@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 
 const slotsSchema = z.object({
   routeID: z.number().int().positive("Route ID is required"),
@@ -25,26 +25,27 @@ export async function POST(request: Request) {
       );
     }
 
-    const data = await cleancloudRequest<SlotsResponse>("getSlots", {
+    const result = await cleancloudProxy<SlotsResponse>("/scheduling/slots", {
       routeID: parsed.data.routeID,
       day: parsed.data.day,
     });
 
-    const slots = data.slots
-      ? data.slots.split(",").map((s) => s.trim()).filter(Boolean)
+    if (!result.success) {
+      return NextResponse.json(
+        { success: false, error: getReadableError(result.error ?? "") },
+        { status: 422 }
+      );
+    }
+
+    const slots = result.data?.slots
+      ? result.data.slots.split(",").map((s) => s.trim()).filter(Boolean)
       : [];
 
     return NextResponse.json({
       success: true,
       data: { slots },
     });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
-      return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
-        { status: 422 }
-      );
-    }
+  } catch {
     return NextResponse.json(
       { success: false, error: "Unable to load time slots. Please try again." },
       { status: 500 }

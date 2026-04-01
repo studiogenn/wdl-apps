@@ -1,39 +1,31 @@
-import { CLEANCLOUD_CONFIG } from "./config";
-import { CleanCloudApiError, CleanCloudHttpError } from "./errors";
-import { waitForRateLimit } from "./rate-limiter";
-
-type CleanCloudResponse = {
-  readonly Success?: string;
-  readonly Error?: string;
-  readonly [key: string]: unknown;
+type ProxyResponse<T = Record<string, unknown>> = {
+  readonly success: boolean;
+  readonly data?: T;
+  readonly error?: string;
 };
 
-export async function cleancloudRequest<T extends Record<string, unknown>>(
-  endpoint: string,
-  params: Record<string, unknown>
-): Promise<T> {
-  await waitForRateLimit();
+const BEHEMOTH_URL = process.env.BEHEMOTH_API_URL ?? "";
+const PROXY_KEY = process.env.CLEANCLOUD_PROXY_API_KEY ?? "";
 
-  const body = {
-    api_token: CLEANCLOUD_CONFIG.apiToken,
-    ...params,
-  };
+export async function cleancloudProxy<T = Record<string, unknown>>(
+  path: string,
+  params: Record<string, unknown> = {}
+): Promise<ProxyResponse<T>> {
+  if (!BEHEMOTH_URL) throw new Error("BEHEMOTH_API_URL not configured");
+  if (!PROXY_KEY) throw new Error("CLEANCLOUD_PROXY_API_KEY not configured");
 
-  const response = await fetch(`${CLEANCLOUD_CONFIG.baseUrl}/${endpoint}`, {
+  const response = await fetch(`${BEHEMOTH_URL}/public/cleancloud${path}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-Key": PROXY_KEY,
+    },
+    body: JSON.stringify(params),
   });
 
   if (!response.ok) {
-    throw new CleanCloudHttpError(response.status, response.statusText);
+    throw new Error(`Proxy error: HTTP ${response.status}`);
   }
 
-  const data = (await response.json()) as CleanCloudResponse;
-
-  if (data.Error) {
-    throw new CleanCloudApiError(data.Error);
-  }
-
-  return data as unknown as T;
+  return response.json() as Promise<ProxyResponse<T>>;
 }

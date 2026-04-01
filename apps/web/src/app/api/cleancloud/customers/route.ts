@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 import { auth } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { user as userTable } from "@/lib/db/schema";
@@ -49,7 +49,6 @@ async function harvestSignupCredentials(
       return signUpResult.headers;
     }
   } catch {
-    // Account may already exist — try sign-in instead
     try {
       const signInResult = await auth.api.signInEmail({
         body: { email, password },
@@ -95,37 +94,34 @@ export async function POST(request: Request) {
       );
     }
 
-    const params: Record<string, unknown> = {
-      customerName: parsed.data.name,
-      customerEmail: parsed.data.email,
-      customerTel: parsed.data.phone,
-      customerAddress: parsed.data.address,
-      makeLatLng: 1,
-      findRoute: 1,
-    };
+    const result = await cleancloudProxy<CustomerResponse>("/customers", {
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      address: parsed.data.address,
+      ...(parsed.data.password && { password: parsed.data.password }),
+      ...(parsed.data.promoCode && { promoCode: parsed.data.promoCode }),
+    });
 
-    if (parsed.data.password) {
-      params.customerPassword = parsed.data.password;
+    if (!result.success) {
+      return NextResponse.json(
+        { success: false, error: getReadableError(result.error ?? "") },
+        { status: 422 }
+      );
     }
-    if (parsed.data.promoCode) {
-      params.promoCode = parsed.data.promoCode;
-    }
-
-    const data = await cleancloudRequest<CustomerResponse>("addCustomer", params);
 
     const response = NextResponse.json({
       success: true,
-      data: { customerID: data.customerID },
+      data: { customerID: result.data!.customerID },
     });
 
-    // Harvest credentials if password was provided
     if (parsed.data.password) {
       const authHeaders = await harvestSignupCredentials(
         parsed.data.name,
         parsed.data.email,
         parsed.data.password,
         parsed.data.phone,
-        data.customerID,
+        result.data!.customerID,
         request.headers
       );
 
@@ -135,13 +131,7 @@ export async function POST(request: Request) {
     }
 
     return response;
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
-      return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
-        { status: 422 }
-      );
-    }
+  } catch {
     return NextResponse.json(
       { success: false, error: "Unable to create account. Please try again." },
       { status: 500 }

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 import { getDb, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
 
@@ -33,26 +33,25 @@ export async function POST(request: Request) {
       );
     }
 
-    const params: Record<string, unknown> = {
-      customerName: parsed.data.name,
-      customerEmail: parsed.data.email,
-      customerTel: parsed.data.phone,
-      customerAddress: parsed.data.address,
-      makeLatLng: 1,
-      findRoute: 1,
-    };
+    const result = await cleancloudProxy<CustomerResponse>("/customers", {
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      address: parsed.data.address,
+      ...(parsed.data.promoCode && { promoCode: parsed.data.promoCode }),
+    });
 
-    if (parsed.data.promoCode) {
-      params.promoCode = parsed.data.promoCode;
+    if (!result.success) {
+      return NextResponse.json(
+        { success: false, error: getReadableError(result.error ?? "") },
+        { status: 422 }
+      );
     }
 
-    const data = await cleancloudRequest<CustomerResponse>("addCustomer", params);
-
-    // Store CleanCloud customer ID on the Better Auth user record
     await getDb()
       .update(schema.user)
       .set({
-        cleancloudCustomerId: data.customerID,
+        cleancloudCustomerId: result.data!.customerID,
         phone: parsed.data.phone,
         updatedAt: new Date(),
       })
@@ -60,15 +59,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      data: { customerID: data.customerID },
+      data: { customerID: result.data!.customerID },
     });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
-      return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
-        { status: 422 }
-      );
-    }
+  } catch {
     return NextResponse.json(
       { success: false, error: "Failed to create account" },
       { status: 500 }

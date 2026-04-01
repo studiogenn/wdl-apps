@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 import { auth } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { user as userTable } from "@/lib/db/schema";
@@ -24,7 +24,6 @@ async function harvestCredentials(
   requestHeaders: Headers
 ): Promise<Headers | null> {
   try {
-    // Try signing in first (account already exists)
     const signInResult = await auth.api.signInEmail({
       body: { email, password },
       headers: requestHeaders,
@@ -33,7 +32,6 @@ async function harvestCredentials(
     });
 
     if (signInResult?.response) {
-      // Update cleancloudCustomerId if missing
       const db = getDb();
       await db
         .update(userTable)
@@ -43,7 +41,6 @@ async function harvestCredentials(
       return signInResult.headers;
     }
   } catch {
-    // Sign-in failed — account doesn't exist yet, create it
     try {
       const signUpResult = await auth.api.signUpEmail({
         body: {
@@ -68,7 +65,6 @@ async function harvestCredentials(
         return signUpResult.headers;
       }
     } catch {
-      // Signup also failed (e.g. email already exists with different password).
       // Don't block the CleanCloud login — just skip harvesting.
     }
   }
@@ -97,21 +93,27 @@ export async function POST(request: Request) {
       );
     }
 
-    const data = await cleancloudRequest<LoginResponse>("loginCustomer", {
-      customerEmail: parsed.data.email,
-      customerPassword: parsed.data.password,
+    const result = await cleancloudProxy<LoginResponse>("/customers/login", {
+      email: parsed.data.email,
+      password: parsed.data.password,
     });
+
+    if (!result.success) {
+      return NextResponse.json(
+        { success: false, error: getReadableError(result.error ?? "") },
+        { status: 422 }
+      );
+    }
 
     const response = NextResponse.json({
       success: true,
-      data: { customerID: data.cid },
+      data: { customerID: result.data!.cid },
     });
 
-    // Harvest credentials in the background — don't block the response
     const authHeaders = await harvestCredentials(
       parsed.data.email,
       parsed.data.password,
-      data.cid,
+      result.data!.cid,
       request.headers
     );
 
@@ -120,13 +122,7 @@ export async function POST(request: Request) {
     }
 
     return response;
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
-      return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
-        { status: 422 }
-      );
-    }
+  } catch {
     return NextResponse.json(
       { success: false, error: "Unable to log in. Please try again." },
       { status: 500 }

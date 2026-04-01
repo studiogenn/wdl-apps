@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 
 type OrdersResponse = {
   readonly orders?: readonly Record<string, unknown>[];
@@ -20,21 +20,22 @@ export async function POST(request: Request) {
   }
 
   try {
-    const data = await cleancloudRequest<OrdersResponse>("getOrders", {
+    const result = await cleancloudProxy<OrdersResponse>("/orders/list", {
       customerID: auth.cleancloudCustomerId,
     });
 
-    return NextResponse.json({
-      success: true,
-      data: { orders: data.orders ?? [] },
-    });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
+        { success: false, error: getReadableError(result.error ?? "") },
         { status: 422 }
       );
     }
+
+    return NextResponse.json({
+      success: true,
+      data: { orders: result.data?.orders ?? [] },
+    });
+  } catch {
     return NextResponse.json(
       { success: false, error: "Failed to fetch orders" },
       { status: 500 }

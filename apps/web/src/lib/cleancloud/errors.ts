@@ -1,23 +1,3 @@
-export class CleanCloudHttpError extends Error {
-  readonly status: number;
-
-  constructor(status: number, statusText: string) {
-    super(`CleanCloud HTTP ${status}: ${statusText}`);
-    this.name = "CleanCloudHttpError";
-    this.status = status;
-  }
-}
-
-export class CleanCloudApiError extends Error {
-  readonly apiMessage: string;
-
-  constructor(apiMessage: string) {
-    super(`CleanCloud API error: ${apiMessage}`);
-    this.name = "CleanCloudApiError";
-    this.apiMessage = apiMessage;
-  }
-}
-
 const KNOWN_ERRORS: ReadonlyArray<readonly [string, string]> = [
   ["Invalid API Token", "Service temporarily unavailable. Please try again."],
   ["Customer already exists", "An account with this email already exists. Please log in instead."],

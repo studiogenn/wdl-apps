@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 
 const addCardSchema = z.object({
   token: z.string().min(1),
@@ -22,18 +22,19 @@ export async function GET(request: Request) {
   }
 
   try {
-    const data = await cleancloudRequest<Record<string, unknown>>("getCards", {
+    const result = await cleancloudProxy("/cards", {
       customerID: auth.cleancloudCustomerId,
     });
 
-    return NextResponse.json({ success: true, data });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
+        { success: false, error: getReadableError(result.error ?? "") },
         { status: 422 }
       );
     }
+
+    return NextResponse.json({ success: true, data: result.data });
+  } catch {
     return NextResponse.json(
       { success: false, error: "Failed to fetch cards" },
       { status: 500 }
@@ -63,20 +64,21 @@ export async function POST(request: Request) {
       );
     }
 
-    const data = await cleancloudRequest<Record<string, unknown>>("addCard", {
+    const result = await cleancloudProxy("/cards/add", {
       customerID: auth.cleancloudCustomerId,
-      cardToken: parsed.data.token,
+      token: parsed.data.token,
       type: parsed.data.type,
     });
 
-    return NextResponse.json({ success: true, data });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
+        { success: false, error: getReadableError(result.error ?? "") },
         { status: 422 }
       );
     }
+
+    return NextResponse.json({ success: true, data: result.data });
+  } catch {
     return NextResponse.json(
       { success: false, error: "Failed to add card" },
       { status: 500 }

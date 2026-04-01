@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { cleancloudRequest } from "@/lib/cleancloud/client";
-import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getReadableError } from "@/lib/cleancloud/errors";
 
 const passwordSchema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -19,18 +19,19 @@ export async function POST(request: Request) {
       );
     }
 
-    await cleancloudRequest("passwordCustomer", {
-      customerEmail: parsed.data.email,
+    const result = await cleancloudProxy("/customers/password", {
+      email: parsed.data.email,
     });
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    if (error instanceof CleanCloudApiError) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: getReadableError(error.apiMessage) },
+        { success: false, error: getReadableError(result.error ?? "") },
         { status: 422 }
       );
     }
+
+    return NextResponse.json({ success: true });
+  } catch {
     return NextResponse.json(
       { success: false, error: "Unable to send reset email. Please try again." },
       { status: 500 }
