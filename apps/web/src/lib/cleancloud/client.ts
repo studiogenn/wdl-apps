@@ -4,7 +4,7 @@ type ProxyResponse<T = Record<string, unknown>> = {
   readonly error?: string;
 };
 
-const BEHEMOTH_URL = process.env.BEHEMOTH_API_URL ?? "";
+const BEHEMOTH_URL = process.env.BEHEMOUTH_API_URL ?? "";
 const PROXY_KEY = process.env.CLEANCLOUD_PROXY_API_KEY ?? "";
 
 export async function cleancloudProxy<T = Record<string, unknown>>(
