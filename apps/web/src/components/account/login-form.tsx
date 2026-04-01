@@ -26,13 +26,31 @@ export function LoginForm({ onSwitchToSignup }: LoginFormProps) {
       password,
     });
 
-    if (authError) {
-      setError(authError.message ?? "Invalid email or password.");
-      setLoading(false);
+    if (!authError) {
+      router.refresh();
       return;
     }
 
-    router.refresh();
+    // Better Auth failed — try CleanCloud login (which creates the Better Auth account)
+    try {
+      const res = await fetch("/api/cleancloud/customers/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), password }),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        router.refresh();
+        return;
+      }
+
+      setError(data.error ?? "Invalid email or password.");
+    } catch {
+      setError("Unable to sign in. Please try again.");
+    }
+
+    setLoading(false);
   }
 
   return (
