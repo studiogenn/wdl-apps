@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import type { JsonType } from "posthog-js";
 import { Zilla_Slab, DM_Sans } from "next/font/google";
-import { headers } from "next/headers";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { DraftBanner } from "@/components/editor/draft-banner";
@@ -48,24 +46,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const headersList = await headers();
-  const visitorId = headersList.get("x-wdl-visitor-id") || undefined;
-  const abVariant = headersList.get("x-wdl-ab-variant") || undefined;
-  const flagsRaw = headersList.get("x-wdl-flags");
-  const payloadsRaw = headersList.get("x-wdl-flag-payloads");
-
-  const bootstrapFlags = flagsRaw
-    ? (JSON.parse(decodeURIComponent(flagsRaw)) as Record<string, string | boolean>)
-    : undefined;
-  const bootstrapPayloads = payloadsRaw
-    ? (JSON.parse(decodeURIComponent(payloadsRaw)) as Record<string, JsonType>)
-    : undefined;
-
   return (
     <html
       lang="en"
@@ -93,12 +78,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        <PostHogProvider
-          visitorId={visitorId}
-          abVariant={abVariant}
-          bootstrapFlags={bootstrapFlags}
-          bootstrapPayloads={bootstrapPayloads}
-        >
+        <PostHogProvider>
           <Header />
           <ScrollReveal />
           <main>{children}</main>
