@@ -5,9 +5,6 @@ const INGEST_URL = process.env.BEHEMOUTH_API_URL
   : "https://arkad.studio/webhooks/ingest/website";
 const INGEST_API_KEY = process.env.INGEST_API_KEY || "";
 
-const GHL_WEBHOOK_URL =
-  "https://services.leadconnectorhq.com/hooks/kYL3p6cPkbGZcnO5aLCt/webhook-trigger/4c8a4ee6-8558-4f75-bf12-bddab1749869";
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -48,24 +45,6 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
-
-    // Send commercial leads to GHL webhook (fire and forget)
-    if (body.form_type === "commercial_inquiry") {
-      fetch(GHL_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          first_name,
-          last_name,
-          email,
-          phone: body.phone || "",
-          location: body.location || "",
-          message: body.message || "",
-          source: "commercial-laundry-page",
-        }),
-      }).catch((err) => console.error("GHL webhook error:", err));
-    }
-
     return NextResponse.json({ status: "submitted", event_id: data.event_id });
   } catch (error) {
     console.error("Contact form error:", error);

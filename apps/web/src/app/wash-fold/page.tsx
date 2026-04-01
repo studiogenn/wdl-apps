@@ -79,8 +79,85 @@ export default function WashFoldPage() {
         </div>
       </section>
 
-      {/* Pick the Service */}
+      {/* How We Calculate */}
       <section className="py-16 lg:py-20 bg-white" data-reveal>
+        <div className="container-site max-w-[1100px]">
+          <SectionHeader eyebrow="How it Works" heading="How We Calculate Your Price" headingClassName="mb-3" />
+          <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
+            We keep pricing simple and transparent. Your final cost is based on
+            the total weight of your laundry — no estimates, no guesswork.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8" data-reveal-stagger>
+            <div className="text-center">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
+                Step 1
+              </span>
+              <div className="mb-5 rounded-xl overflow-hidden">
+                <Image
+                  src="/images/step-1-weigh.png"
+                  alt="Digital scale weighing laundry for accurate pricing"
+                  width={940}
+                  height={517}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
+                We Weigh Your Laundry
+              </h3>
+              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
+                Once your laundry arrives, we weigh the full order to calculate
+                the total weight.
+              </p>
+            </div>
+            <div className="text-center">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
+                Step 2
+              </span>
+              <div className="mb-5 rounded-xl overflow-hidden">
+                <Image
+                  src="/images/step-2-priced.png"
+                  alt="Transparent per-pound pricing calculation"
+                  width={940}
+                  height={517}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
+                Priced by the Pound
+              </h3>
+              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
+                Pricing is calculated using your selected plan rate per pound,
+                so you only pay for what you send.
+              </p>
+            </div>
+            <div className="text-center">
+              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
+                Step 3
+              </span>
+              <div className="mb-5 rounded-xl overflow-hidden">
+                <Image
+                  src="/images/step-3-cleaned.png"
+                  alt="Clean folded laundry ready for delivery"
+                  width={940}
+                  height={517}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-heading-medium text-navy mb-2">
+                Cleaned &amp; Delivered
+              </h3>
+              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
+                Your clothes are professionally washed, folded, and delivered
+                back to you within 24 hours.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pick the Service */}
+      <section className="bg-cream py-16 lg:py-20" data-reveal>
         <div className="container-site max-w-[1100px]">
           <div className="text-center mb-12">
             <SectionHeader heading="Pick the Service That Fits Your Needs" align="left" headingClassName="mb-3" />
@@ -209,83 +286,6 @@ export default function WashFoldPage() {
               <ButtonLink href="/account/" className="block w-full text-center">
                 Schedule Pick-up
               </ButtonLink>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How We Calculate */}
-      <section className="bg-cream py-16 lg:py-20" data-reveal>
-        <div className="container-site max-w-[1100px]">
-          <SectionHeader eyebrow="How it Works" heading="How We Calculate Your Price" headingClassName="mb-3" />
-          <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
-            We keep pricing simple and transparent. Your final cost is based on
-            the total weight of your laundry — no estimates, no guesswork.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8" data-reveal-stagger>
-            <div className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
-                Step 1
-              </span>
-              <div className="mb-5 rounded-xl overflow-hidden">
-                <Image
-                  src="/images/step-1-weigh.png"
-                  alt="Digital scale weighing laundry for accurate pricing"
-                  width={940}
-                  height={517}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-heading-medium text-navy mb-2">
-                We Weigh Your Laundry
-              </h3>
-              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
-                Once your laundry arrives, we weigh the full order to calculate
-                the total weight.
-              </p>
-            </div>
-            <div className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
-                Step 2
-              </span>
-              <div className="mb-5 rounded-xl overflow-hidden">
-                <Image
-                  src="/images/step-2-priced.png"
-                  alt="Transparent per-pound pricing calculation"
-                  width={940}
-                  height={517}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-heading-medium text-navy mb-2">
-                Priced by the Pound
-              </h3>
-              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
-                Pricing is calculated using your selected plan rate per pound,
-                so you only pay for what you send.
-              </p>
-            </div>
-            <div className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
-                Step 3
-              </span>
-              <div className="mb-5 rounded-xl overflow-hidden">
-                <Image
-                  src="/images/step-3-cleaned.png"
-                  alt="Clean folded laundry ready for delivery"
-                  width={940}
-                  height={517}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-heading-medium text-navy mb-2">
-                Cleaned &amp; Delivered
-              </h3>
-              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
-                Your clothes are professionally washed, folded, and delivered
-                back to you within 24 hours.
-              </p>
             </div>
           </div>
         </div>

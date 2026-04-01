@@ -1,6 +1,7 @@
 import { cn } from "@/lib/cn";
 import {
   BAG_PRICE,
+  STUDENT_BAG,
   BEDDING_PRICE,
   freqOptions,
   careUpgrades,
@@ -64,7 +65,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate }: Subscriptio
 
   /* ---- Computed values ---- */
   const freqObj = freqOptions.find((f) => f.value === s.freq)!;
-  const bagPrice = BAG_PRICE;
+  const bagPrice = s.isStudent ? STUDENT_BAG : BAG_PRICE;
   const monthlyBags = s.bags * freqObj.pickups;
   const monthlyBase = bagPrice * monthlyBags;
   const beddingPickups = s.beddingFreq === "monthly" ? 1 : 2;
@@ -176,6 +177,24 @@ export function SubscriptionBuilder({ state, onChange, onNavigate }: Subscriptio
         </div>
         <p className="mt-1.5 mb-4 text-center text-[11px] text-[#6b7db3]">Most popular: every week at $1.95/lb</p>
 
+        {/* Student toggle */}
+        <button
+          onClick={() => update({ isStudent: !s.isStudent })}
+          className={cn(
+            "mb-4 flex w-full items-center gap-3 rounded-[14px] border-[1.5px] bg-white px-4 py-3.5 text-left transition-all",
+            s.isStudent ? "border-primary bg-[#f0f3ff]" : "border-[#e8e5d0]",
+          )}
+        >
+          <span className="text-[22px]">🎓</span>
+          <div className="flex-1">
+            <div className={cn("text-[13px] font-semibold", s.isStudent ? "text-primary" : "text-[#0a1580]")}>
+              Student discount — $24.99/bag
+            </div>
+            <div className="mt-0.5 text-xs text-[#6b7db3]">.edu email verified at signup</div>
+          </div>
+          <RadioDot checked={s.isStudent} />
+        </button>
+
         <div className="my-5 h-px bg-[#e8e5d0]" />
 
         {/* Care preferences */}
@@ -265,7 +284,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate }: Subscriptio
         {/* Summary */}
         <SummaryCard
           planLabel="Your plan"
-          planName={`${s.bags} bag${s.bags > 1 ? "s" : ""} · ${freqObj.label.toLowerCase()}`}
+          planName={`${s.bags} bag${s.bags > 1 ? "s" : ""} · ${freqObj.label.toLowerCase()}${s.isStudent ? " · student 🎓" : ""}`}
           priceLabel="per pickup"
           priceBig={fmt(perPickup)}
           priceNote={`${fmt(monthlyTotal)}/month`}
