@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DynamicSectionRenderer } from "@/components/seo/dynamic-section-renderer";
 import { SchemaRenderer } from "@/components/seo/schema-renderer";
+import { GhlPopup } from "@/components/ghl-popup";
 import { getSeoMetadata } from "@/lib/seo";
 import { getLocalBusinessSchema, getFaqSchema, HOME_FAQ } from "@/lib/schema";
 
@@ -18,6 +19,7 @@ export default async function Home() {
         defaultSchemas={[getLocalBusinessSchema(), getFaqSchema(HOME_FAQ)]}
       />
       <DynamicSectionRenderer path="/" />
+      <GhlPopup />
     </>
   );
 }
