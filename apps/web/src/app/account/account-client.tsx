@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useFeatureFlagEnabled } from "posthog-js/react";
 import { FLAG_KEYS } from "@/lib/feature-flags";
@@ -15,39 +15,16 @@ type User = {
   readonly email: string;
 };
 
-export function AccountPageClient() {
+type Props = {
+  readonly user: User | null;
+};
+
+export function AccountPageClient({ user }: Props) {
   const searchParams = useSearchParams();
   const flagEnabled = useFeatureFlagEnabled(FLAG_KEYS.NEW_ACCOUNT);
   const urlOverride = searchParams.get("flag") === "new-account";
   const newAccountEnabled = flagEnabled || urlOverride;
   const [tab, setTab] = useState<"login" | "signup">("login");
-  const [user, setUser] = useState<User | null>(null);
-  const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    if (!newAccountEnabled) {
-      setChecked(true);
-      return;
-    }
-
-    import("@/lib/auth-client").then(({ authClient }) =>
-      authClient.getSession()
-    ).then(({ data: session }) => {
-      if (session?.user) {
-        const u = session.user as Record<string, unknown>;
-        setUser({
-          id: u.id as string,
-          name: u.name as string,
-          email: u.email as string,
-        });
-      }
-      setChecked(true);
-    }).catch(() => {
-      setChecked(true);
-    });
-  }, [newAccountEnabled]);
-
-  if (!checked) return null;
 
   if (!newAccountEnabled) {
     return <CleanCloudBooking />;
