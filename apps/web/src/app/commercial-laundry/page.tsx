@@ -58,8 +58,8 @@ export default function CommercialLaundryPage() {
                 </li>
               </ul>
               <div className="flex flex-wrap gap-3">
-                <ButtonLink href="/account/">
-                  Schedule Pick-up
+                <ButtonLink href="#contact">
+                  Request a Quote
                 </ButtonLink>
                 <ButtonLink href="#contact" variant="outline">
                   Check Zip Code

@@ -8,6 +8,7 @@ import { DraftBanner } from "@/components/editor/draft-banner";
 import { PostHogProvider } from "@/components/analytics/posthog-provider";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { FacebookPixel } from "@/components/analytics/facebook-pixel";
+import { ScrollReveal } from "@/components/shared/scroll-reveal";
 import "./globals.css";
 
 const zillaSlab = Zilla_Slab({
@@ -99,6 +100,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           bootstrapPayloads={bootstrapPayloads}
         >
           <Header />
+          <ScrollReveal />
           <main>{children}</main>
           <Footer />
           <DraftBanner />

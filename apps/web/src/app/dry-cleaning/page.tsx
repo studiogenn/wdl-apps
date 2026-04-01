@@ -80,7 +80,7 @@ export default function DryCleaningPage() {
       </section>
 
       {/* How We Work */}
-      <section className="py-16 lg:py-20 bg-white">
+      <section className="py-16 lg:py-20 bg-white" data-reveal>
         <div className="container-site max-w-[1100px]">
           <SectionHeader eyebrow="How it Works" heading="Dry Cleaning Pickup &amp; Delivery, Explained" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
@@ -157,7 +157,7 @@ export default function DryCleaningPage() {
       </section>
 
       {/* Pricing */}
-      <section className="bg-cream py-16 lg:py-20">
+      <section className="bg-cream py-16 lg:py-20" data-reveal>
         <div className="container-site max-w-[1100px]">
           <div className="text-center mb-12">
             <SectionHeader heading="Simple, Transparent Dry Cleaning Pricing" align="left" headingClassName="mb-3" />
@@ -195,7 +195,7 @@ export default function DryCleaningPage() {
       </section>
 
       {/* By The Numbers */}
-      <section className="py-16 lg:py-20 bg-white">
+      <section className="py-16 lg:py-20 bg-white" data-reveal>
         <div className="container-site max-w-[1100px]">
           <SectionHeader eyebrow="By The Numbers" heading="Trust Building Success Metrics" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
@@ -203,7 +203,7 @@ export default function DryCleaningPage() {
             thousands of happy customers and more clean clothes than we can
             count.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8" data-reveal-stagger>
             <div className="bg-cream rounded-xl px-6 py-10 text-center">
               <div className="flex justify-center mb-3">
                 <svg className="w-10 h-10 text-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -252,7 +252,7 @@ export default function DryCleaningPage() {
       </section>
 
       {/* Check Zip Code */}
-      <section id="zipcode" className="py-14 lg:py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
+      <section id="zipcode" className="py-14 lg:py-20 relative overflow-hidden" data-reveal="scale" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
             <SectionHeader heading="Check if We Deliver to You" headingClassName="mb-4" />
@@ -265,7 +265,7 @@ export default function DryCleaningPage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-16 lg:py-20" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
+      <section className="py-16 lg:py-20" data-reveal style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[780px]">
           <SectionHeader heading="Frequently Asked Questions" />
           <FAQAccordion items={DRY_CLEANING_FAQ} />

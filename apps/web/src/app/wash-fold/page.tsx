@@ -80,7 +80,7 @@ export default function WashFoldPage() {
       </section>
 
       {/* How We Calculate */}
-      <section className="py-16 lg:py-20 bg-white">
+      <section className="py-16 lg:py-20 bg-white" data-reveal>
         <div className="container-site max-w-[1100px]">
           <SectionHeader eyebrow="How it Works" heading="How We Calculate Your Price" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-xl mx-auto mb-14">
@@ -88,7 +88,7 @@ export default function WashFoldPage() {
             the total weight of your laundry — no estimates, no guesswork.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8" data-reveal-stagger>
             <div className="text-center">
               <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
                 Step 1
@@ -157,7 +157,7 @@ export default function WashFoldPage() {
       </section>
 
       {/* Pick the Service */}
-      <section className="bg-cream py-16 lg:py-20">
+      <section className="bg-cream py-16 lg:py-20" data-reveal>
         <div className="container-site max-w-[1100px]">
           <div className="text-center mb-12">
             <SectionHeader heading="Pick the Service That Fits Your Needs" align="left" headingClassName="mb-3" />
@@ -292,7 +292,7 @@ export default function WashFoldPage() {
       </section>
 
       {/* By The Numbers */}
-      <section className="py-16 lg:py-20 bg-white">
+      <section className="py-16 lg:py-20 bg-white" data-reveal>
         <div className="container-site max-w-[1100px]">
           <SectionHeader eyebrow="By The Numbers" heading="Trust Building Success Metrics" headingClassName="mb-3" />
           <p className="font-[family-name:var(--font-poppins)] text-center text-navy/70 text-[15px] max-w-2xl mx-auto mb-12">
@@ -300,7 +300,7 @@ export default function WashFoldPage() {
             delivery, thousands of happy customers, and more clean laundry than
             we can count.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8" data-reveal-stagger>
             {[
               { icon: "⏰", value: "24 Hour", label: "Delivery Guarantee" },
               { icon: "😊", value: "9,000+", label: "Happy Customers" },
@@ -324,7 +324,7 @@ export default function WashFoldPage() {
       </section>
 
       {/* Check Zip Code */}
-      <section id="zipcode" className="py-14 lg:py-20 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
+      <section id="zipcode" className="py-14 lg:py-20 relative overflow-hidden" data-reveal="scale" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[700px]">
           <div className="bg-white rounded-2xl px-8 py-12 lg:px-14 lg:py-16 text-center shadow-sm">
             <SectionHeader heading="Check if We Deliver to You" headingClassName="mb-4" />
@@ -337,7 +337,7 @@ export default function WashFoldPage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-16 lg:py-20" style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
+      <section className="py-16 lg:py-20" data-reveal style={{ background: "linear-gradient(135deg, #E7E9F8 0%, #d4d8f5 50%, #E7E9F8 100%)" }}>
         <div className="container-site max-w-[780px]">
           <SectionHeader heading="Frequently Asked Questions" />
           <FAQAccordion items={WASH_FOLD_FAQ} />

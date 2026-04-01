@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Testimonials } from "@/components/home/Testimonials";
 import { getLocationPage, getAllLocationSlugs } from "./data";
 import { LocationForm } from "./location-form";
 
@@ -229,13 +230,13 @@ export default async function LocationLandingPage({
       </div>
 
       {/* ── HOW IT WORKS ───────────────────────────────────────────────── */}
-      <section id="how-it-works" className="bg-white py-[60px]">
+      <section id="how-it-works" className="bg-white py-[60px]" data-reveal>
         <div className="container-site max-w-[1200px]">
           <span className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[2.5px] block mb-2">How it works</span>
           <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#111] uppercase tracking-[0.3px] leading-[1.1] mb-7">
             Three steps.<br />Zero hassle.
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0" data-reveal-stagger>
             {[
               { n: "01", title: "Schedule your pickup", body: `Book online or via the app. We pick up right from your building in ${data.location} — at your door, on your schedule.` },
               { n: "02", title: "We handle everything", body: "Professional wash, dry & fold. Gentle detergents — no harsh chemicals. Every item treated with care." },
@@ -255,13 +256,13 @@ export default async function LocationLandingPage({
       </section>
 
       {/* ── PRICING ────────────────────────────────────────────────────── */}
-      <section id="pricing" className="bg-[#f7f5e6] py-[60px]">
+      <section id="pricing" className="bg-[#f7f5e6] py-[60px]" data-reveal>
         <div className="container-site max-w-[1200px]">
           <span className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[2.5px] block mb-2 text-center">Pricing</span>
           <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#111] uppercase tracking-[0.3px] leading-[1.1] mb-7 text-center">
             Simple.<br />Per-pound.
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto" data-reveal-stagger>
             {/* Weekly */}
             <div className="relative bg-white border-2 border-[#1227be] rounded-[10px] p-7">
               <div className="absolute -top-px right-5 bg-[#1227be] text-white font-[family-name:var(--font-poppins)] text-[9px] font-bold uppercase tracking-[1.2px] px-3.5 py-1.5 rounded-b-lg">
@@ -296,7 +297,7 @@ export default async function LocationLandingPage({
             {/* Subscription Plan */}
             <div className="bg-white border-[1.5px] border-[#e4e2d4] rounded-[10px] p-7">
               <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-[#666] mb-2.5">Subscription Plan</p>
-              <p className="text-[48px] font-bold text-[#333] leading-none">$30.99</p>
+              <p className="text-[48px] font-bold text-[#333] leading-none"><span className="font-[family-name:var(--font-poppins)] text-[14px] font-semibold uppercase tracking-[1px] text-[#1227be] mr-1 align-baseline">From</span>$30.99</p>
               <p className="font-[family-name:var(--font-poppins)] text-[13px] text-[#888] mt-1.5 mb-5">starting per bag · personalized weekly or biweekly service</p>
               <div className="flex flex-col gap-2.5">
                 {["Customized to your laundry needs", "Weekly or biweekly pickup options", "Lower price per bag vs pay-as-you-go", "Free pickup & delivery", "24-hour turnaround", "Cancel or adjust anytime"].map((perk) => (
@@ -308,7 +309,7 @@ export default async function LocationLandingPage({
               </div>
               <div className="mt-5">
                 <Link
-                  href="/subscription"
+                  href="/pricing"
                   className="block text-center bg-[#1227be] text-white font-bold text-[11px] uppercase tracking-[1.4px] py-3 px-6 rounded-[4px] hover:scale-105 transition-transform duration-300"
                 >
                   Get My Plan
@@ -329,46 +330,10 @@ export default async function LocationLandingPage({
       </section>
 
       {/* ── REVIEWS ────────────────────────────────────────────────────── */}
-      <section className="bg-white py-[60px]">
-        <div className="container-site max-w-[1200px]">
-          <span className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[2.5px] block mb-2">What people say</span>
-          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#111] uppercase tracking-[0.3px] leading-[1.1] mb-7">
-            Real people.<br />Real results.
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <article className="bg-white border border-[#e4e2d4] rounded-[10px] p-6 flex flex-col">
-              <div className="flex gap-0.5 mb-2.5">{Array.from({ length: 5 }).map((_, i) => <StarSvg key={i} />)}</div>
-              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#333] leading-[1.7] italic mb-3.5 flex-1">
-                &ldquo;{data.reviewQuote}&rdquo;
-              </p>
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[0.8px]">
-                — {data.reviewAuthor}
-              </p>
-            </article>
-            <article className="bg-white border border-[#e4e2d4] rounded-[10px] p-6 flex flex-col">
-              <div className="flex gap-0.5 mb-2.5">{Array.from({ length: 5 }).map((_, i) => <StarSvg key={i} />)}</div>
-              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#333] leading-[1.7] italic mb-3.5 flex-1">
-                &ldquo;The weekly plan is a game changer. Same time every week, always on time, always perfect folds. My whole building has signed up.&rdquo;
-              </p>
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[0.8px]">
-                — Happy Customer, {data.location}
-              </p>
-            </article>
-            <article className="bg-white border border-[#e4e2d4] rounded-[10px] p-6 flex flex-col">
-              <div className="flex gap-0.5 mb-2.5">{Array.from({ length: 5 }).map((_, i) => <StarSvg key={i} />)}</div>
-              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#333] leading-[1.7] italic mb-3.5 flex-1">
-                &ldquo;I was spending every Sunday at the laundromat. Now I schedule a pickup and it comes back perfectly folded the next day. Best decision I&apos;ve made all year.&rdquo;
-              </p>
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[0.8px]">
-                — Weekly Subscriber, {data.state}
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
+      <Testimonials />
 
       {/* ── ZONE / SERVICE AREA ────────────────────────────────────────── */}
-      <section className="bg-[#1227be]">
+      <section className="bg-[#1227be]" data-reveal>
         <div className="container-site max-w-[1200px] py-[70px] lg:py-[80px]">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             <div>
@@ -402,7 +367,7 @@ export default async function LocationLandingPage({
       </section>
 
       {/* ── FINAL CTA ──────────────────────────────────────────────────── */}
-      <section className="bg-white py-[90px]">
+      <section className="bg-white py-[90px]" data-reveal="scale">
         <div className="container-site max-w-[1200px] text-center">
           <h2 className="text-[36px] md:text-[44px] lg:text-[56px] font-bold text-[#1227be] uppercase tracking-[0.3px] leading-[1.08] mb-3.5">
             {data.finalHeadline}
