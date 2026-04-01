@@ -97,7 +97,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_280px]">
           {/* Main Content */}
           <div className="prose prose-lg max-w-none prose-headings:text-navy prose-a:text-primary">
-            {post.content ? (
+            {post.content && !post.contentHtml ? (
               <MDXRemote source={post.content} />
             ) : post.contentHtml ? (
               <div

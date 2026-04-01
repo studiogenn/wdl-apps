@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useFeatureFlagEnabled } from "posthog-js/react";
 import { FLAG_KEYS } from "@/lib/feature-flags";
 import { CleanCloudBooking } from "@/components/integrations/cleancloud-booking";
@@ -19,10 +20,12 @@ type Props = {
 };
 
 export function AccountPageClient({ user }: Props) {
-  const newAccountEnabled = useFeatureFlagEnabled(FLAG_KEYS.NEW_ACCOUNT);
+  const searchParams = useSearchParams();
+  const flagEnabled = useFeatureFlagEnabled(FLAG_KEYS.NEW_ACCOUNT);
+  const urlOverride = searchParams.get("flag") === "new-account";
+  const newAccountEnabled = flagEnabled || urlOverride;
   const [tab, setTab] = useState<"login" | "signup">("login");
 
-  // Flag off or still loading → show CleanCloud iframe
   if (!newAccountEnabled) {
     return <CleanCloudBooking />;
   }
