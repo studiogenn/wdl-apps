@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocationPage, getAllLocationSlugs } from "./data";
 import { LocationForm } from "./location-form";
+import { ButtonLink } from "@/components/shared";
 
 // ─── SSG ────────────────────────────────────────────────────────────────────
 export function generateStaticParams() {
@@ -38,20 +39,20 @@ export async function generateMetadata({
 function CheckSvg() {
   return (
     <svg className="w-3 h-3 shrink-0" viewBox="0 0 12 12" fill="none">
-      <polyline points="2,6 5,9 10,3" stroke="#F9EBAA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <polyline points="2,6 5,9 10,3" stroke="var(--color-highlight)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
 function StarSvg() {
-  return <span className="text-[13px] text-[#E0A800]">★</span>;
+  return <span className="text-[13px] text-amber-500">★</span>;
 }
 
 function PinSvg() {
   return (
     <svg className="w-3 h-3 shrink-0" viewBox="0 0 16 16" fill="none">
-      <path d="M8 1.5A4.5 4.5 0 0 1 12.5 6c0 3.2-4.5 8.5-4.5 8.5S3.5 9.2 3.5 6A4.5 4.5 0 0 1 8 1.5z" stroke="#F9EBAA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="8" cy="6" r="1.4" fill="#F9EBAA" />
+      <path d="M8 1.5A4.5 4.5 0 0 1 12.5 6c0 3.2-4.5 8.5-4.5 8.5S3.5 9.2 3.5 6A4.5 4.5 0 0 1 8 1.5z" stroke="var(--color-highlight)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="8" cy="6" r="1.4" fill="var(--color-highlight)" />
     </svg>
   );
 }
@@ -92,11 +93,11 @@ export default async function LocationLandingPage({
       />
 
       {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section className="relative bg-[#1227be] overflow-hidden">
+      <section className="relative bg-primary overflow-hidden">
         {/* BG decorations */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-[100px] -right-[120px] w-[500px] h-[500px] rounded-full bg-[#A2D5E6]/[0.09]" />
-          <div className="absolute -bottom-[140px] -left-[80px] w-[400px] h-[400px] rounded-full bg-[#F9EBAA]/[0.05]" />
+          <div className="absolute -top-[100px] -right-[120px] w-[500px] h-[500px] rounded-full bg-light-blue/[0.09]" />
+          <div className="absolute -bottom-[140px] -left-[80px] w-[400px] h-[400px] rounded-full bg-highlight/[0.05]" />
         </div>
         {/* Watermark */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -113,8 +114,8 @@ export default async function LocationLandingPage({
             <div>
               {/* Eyebrow */}
               <div className="flex items-center gap-2 mb-3.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#F9EBAA]" />
-                <span className="font-[family-name:var(--font-poppins)] text-[10px] font-semibold uppercase tracking-[2.5px] text-[#A2D5E6]">
+                <span className="w-1.5 h-1.5 rounded-full bg-highlight" />
+                <span className="font-[family-name:var(--font-poppins)] text-[10px] font-semibold uppercase tracking-[2.5px] text-light-blue">
                   Serving {data.location}, {data.state === "NYC" ? "NY" : data.state}
                 </span>
               </div>
@@ -132,12 +133,12 @@ export default async function LocationLandingPage({
                 {data.h1.includes("—") ? (
                   <>
                     {data.h1.split("—")[0]}—<br />
-                    <span className="text-[#F9EBAA]">{data.h1.split("—")[1]}</span>
+                    <span className="text-highlight">{data.h1.split("—")[1]}</span>
                   </>
                 ) : data.h1.includes(".") && data.h1.split(".").length > 2 ? (
                   <>
                     {data.h1.split(".").slice(0, -2).join(".") + "."}<br />
-                    <span className="text-[#F9EBAA]">{data.h1.split(".").slice(-2).join(".").trim()}</span>
+                    <span className="text-highlight">{data.h1.split(".").slice(-2).join(".").trim()}</span>
                   </>
                 ) : (
                   <>{data.h1}</>
@@ -161,9 +162,9 @@ export default async function LocationLandingPage({
 
               {/* Mobile CTA */}
               <div className="md:hidden">
-                <Link href={scheduleUrl} className="block w-full bg-[#F9EBAA] text-[#1227be] text-center font-bold text-[14px] uppercase tracking-[1.8px] py-[17px] rounded-[4px] mb-2.5">
+                <ButtonLink href={scheduleUrl} className="block w-full bg-highlight text-primary text-center font-bold text-[14px] uppercase tracking-[1.8px] py-[17px] rounded-[4px] mb-2.5 hover:bg-highlight">
                   Schedule My First Pickup
-                </Link>
+                </ButtonLink>
                 <a href="#how-it-works" className="block w-full text-center border border-white/[0.22] text-white/65 text-[14px] py-[13px] rounded-[4px] mb-3">
                   See how it works →
                 </a>
@@ -176,7 +177,7 @@ export default async function LocationLandingPage({
             {/* Right — Hero card (desktop) */}
             <div className="hidden md:flex items-center justify-center">
               <div className="w-full max-w-[400px] bg-white/[0.07] border border-white/[0.14] rounded-2xl p-7 backdrop-blur-sm">
-                <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[2px] text-[#A2D5E6] mb-4">
+                <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[2px] text-light-blue mb-4">
                   How it works
                 </p>
                 <div className="flex flex-col gap-3.5 mb-5">
@@ -187,7 +188,7 @@ export default async function LocationLandingPage({
                     { n: "4", bold: "Back in 24 hours", text: "Delivered to your door." },
                   ].map((s) => (
                     <div key={s.n} className="flex items-start gap-3">
-                      <span className="w-[26px] h-[26px] rounded-full bg-[#F9EBAA] text-[#1227be] text-[12px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="w-[26px] h-[26px] rounded-full bg-highlight text-primary text-[12px] font-bold flex items-center justify-center shrink-0 mt-0.5">
                         {s.n}
                       </span>
                       <p className="font-[family-name:var(--font-poppins)] text-[13px] text-white/80 leading-[1.5]">
@@ -197,12 +198,12 @@ export default async function LocationLandingPage({
                     </div>
                   ))}
                 </div>
-                <Link
+                <ButtonLink
                   href={scheduleUrl}
-                  className="block w-full bg-[#F9EBAA] text-[#1227be] text-center font-bold text-[13px] uppercase tracking-[1.5px] py-[15px] rounded-[4px]"
+                  className="block w-full bg-highlight text-primary text-center font-bold text-[13px] uppercase tracking-[1.5px] py-[15px] rounded-[4px] hover:bg-highlight"
                 >
                   Schedule My First Pickup
-                </Link>
+                </ButtonLink>
                 <p className="font-[family-name:var(--font-poppins)] text-[10px] text-white/35 text-center mt-2.5">
                   Starting at $1.95/lb · Free pickup &amp; delivery
                 </p>
@@ -213,26 +214,26 @@ export default async function LocationLandingPage({
       </section>
 
       {/* ── PROOF BAR ──────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-[#edebd9] py-4">
+      <div className="bg-white border-b border-navy/10 py-4">
         <div className="container-site max-w-[1200px] flex items-center gap-5 flex-wrap">
           <div className="flex items-center gap-0.5">
             {Array.from({ length: 5 }).map((_, i) => <StarSvg key={i} />)}
           </div>
-          <span className="font-[family-name:var(--font-poppins)] text-[12px] text-[#666] font-medium">4.9 · 200+ happy customers</span>
-          <div className="hidden sm:block w-px h-[22px] bg-[#edebd9]" />
-          <span className="font-[family-name:var(--font-poppins)] text-[12px] text-[#666] font-medium">24-hour turnaround</span>
-          <div className="hidden sm:block w-px h-[22px] bg-[#edebd9]" />
-          <span className="font-[family-name:var(--font-poppins)] text-[12px] text-[#666] font-medium">Free pickup &amp; delivery</span>
-          <div className="hidden sm:block w-px h-[22px] bg-[#edebd9]" />
-          <span className="font-[family-name:var(--font-poppins)] text-[12px] text-[#666] font-medium">100% local NYC &amp; NJ</span>
+          <span className="font-[family-name:var(--font-poppins)] text-[12px] text-navy/60 font-medium">4.9 · 200+ happy customers</span>
+          <div className="hidden sm:block w-px h-[22px] bg-navy/10" />
+          <span className="font-[family-name:var(--font-poppins)] text-[12px] text-navy/60 font-medium">24-hour turnaround</span>
+          <div className="hidden sm:block w-px h-[22px] bg-navy/10" />
+          <span className="font-[family-name:var(--font-poppins)] text-[12px] text-navy/60 font-medium">Free pickup &amp; delivery</span>
+          <div className="hidden sm:block w-px h-[22px] bg-navy/10" />
+          <span className="font-[family-name:var(--font-poppins)] text-[12px] text-navy/60 font-medium">100% local NYC &amp; NJ</span>
         </div>
       </div>
 
       {/* ── HOW IT WORKS ───────────────────────────────────────────────── */}
       <section id="how-it-works" className="bg-white py-[60px]">
         <div className="container-site max-w-[1200px]">
-          <span className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[2.5px] block mb-2">How it works</span>
-          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#111] uppercase tracking-[0.3px] leading-[1.1] mb-7">
+          <span className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-primary uppercase tracking-[2.5px] block mb-2">How it works</span>
+          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-navy uppercase tracking-[0.3px] leading-[1.1] mb-7">
             Three steps.<br />Zero hassle.
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
@@ -242,12 +243,12 @@ export default async function LocationLandingPage({
               { n: "03", title: "Delivered back in 24 hours", body: `Perfectly folded, back at your ${data.location} door the next day. Repeat weekly and save 28%.` },
               { n: "04", title: "Sit back & relax", body: "Seriously. That's it. Your laundry is done. Your time is yours again." },
             ].map((step, i) => (
-              <div key={step.n} className={`py-7 lg:py-0 lg:pr-10 ${i < 3 ? "border-b lg:border-b-0 lg:border-r border-[#edebd9] lg:mr-10" : ""}`}>
-                <div className="text-[36px] font-bold leading-none mb-3" style={{ color: "transparent", WebkitTextStroke: "1.5px #1227be" }}>
+              <div key={step.n} className={`py-7 lg:py-0 lg:pr-10 ${i < 3 ? "border-b lg:border-b-0 lg:border-r border-navy/10 lg:mr-10" : ""}`}>
+                <div className="text-[36px] font-bold leading-none mb-3" style={{ color: "transparent", WebkitTextStroke: "1.5px var(--color-primary)" }}>
                   {step.n}
                 </div>
-                <h3 className="font-[family-name:var(--font-poppins)] text-[15px] font-bold text-[#111] mb-1.5">{step.title}</h3>
-                <p className="font-[family-name:var(--font-poppins)] text-[13px] text-[#666] leading-[1.6]">{step.body}</p>
+                <h3 className="font-[family-name:var(--font-poppins)] text-[15px] font-bold text-navy mb-1.5">{step.title}</h3>
+                <p className="font-[family-name:var(--font-poppins)] text-[13px] text-navy/60 leading-[1.6]">{step.body}</p>
               </div>
             ))}
           </div>
@@ -255,75 +256,75 @@ export default async function LocationLandingPage({
       </section>
 
       {/* ── PRICING ────────────────────────────────────────────────────── */}
-      <section id="pricing" className="bg-[#f7f5e6] py-[60px]">
+      <section id="pricing" className="bg-cream py-[60px]">
         <div className="container-site max-w-[1200px]">
-          <span className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[2.5px] block mb-2 text-center">Pricing</span>
-          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#111] uppercase tracking-[0.3px] leading-[1.1] mb-7 text-center">
+          <span className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-primary uppercase tracking-[2.5px] block mb-2 text-center">Pricing</span>
+          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-navy uppercase tracking-[0.3px] leading-[1.1] mb-7 text-center">
             Simple.<br />Per-pound.
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {/* Weekly */}
-            <div className="relative bg-white border-2 border-[#1227be] rounded-[10px] p-7">
-              <div className="absolute -top-px right-5 bg-[#1227be] text-white font-[family-name:var(--font-poppins)] text-[9px] font-bold uppercase tracking-[1.2px] px-3.5 py-1.5 rounded-b-lg">
+            <div className="relative bg-white border-2 border-primary rounded-[10px] p-7">
+              <div className="absolute -top-px right-5 bg-primary text-white font-[family-name:var(--font-poppins)] text-[9px] font-bold uppercase tracking-[1.2px] px-3.5 py-1.5 rounded-b-lg">
                 Most popular
               </div>
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-[#999] mb-2.5">Weekly Plan</p>
-              <p className="text-[48px] font-bold text-[#1227be] leading-none">$1.95</p>
-              <p className="font-[family-name:var(--font-poppins)] text-[13px] text-[#999] mt-1.5 mb-5">per pound · recurring weekly pickup</p>
+              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-navy/50 mb-2.5">Weekly Plan</p>
+              <p className="text-[48px] font-bold text-primary leading-none">$1.95</p>
+              <p className="font-[family-name:var(--font-poppins)] text-[13px] text-navy/50 mt-1.5 mb-5">per pound · recurring weekly pickup</p>
               <div className="flex flex-col gap-2.5">
                 {["Free pickup & delivery", "Priority scheduling", "Consistent weekly driver", "Save 28% vs pay-as-you-go", "Cancel anytime"].map((perk) => (
-                  <div key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[12px] text-[#555]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#1227be] shrink-0" />
+                  <div key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[12px] text-navy/60">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
                     {perk}
                   </div>
                 ))}
               </div>
             </div>
             {/* Pay as you go */}
-            <div className="bg-white border-[1.5px] border-[#e4e2d4] rounded-[10px] p-7">
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-[#666] mb-2.5">Pay as you go</p>
-              <p className="text-[48px] font-bold text-[#333] leading-none">$2.70</p>
-              <p className="font-[family-name:var(--font-poppins)] text-[13px] text-[#888] mt-1.5 mb-5">per pound · no commitment required</p>
+            <div className="bg-white border-[1.5px] border-navy/10 rounded-[10px] p-7">
+              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-navy/60 mb-2.5">Pay as you go</p>
+              <p className="text-[48px] font-bold text-navy leading-none">$2.70</p>
+              <p className="font-[family-name:var(--font-poppins)] text-[13px] text-navy/50 mt-1.5 mb-5">per pound · no commitment required</p>
               <div className="flex flex-col gap-2.5">
                 {["Free pickup & delivery", "Schedule anytime", "No subscription required", "Same 24-hr turnaround"].map((perk) => (
-                  <div key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[12px] text-[#555]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#888] shrink-0" />
+                  <div key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[12px] text-navy/60">
+                    <span className="w-1.5 h-1.5 rounded-full bg-navy/50 shrink-0" />
                     {perk}
                   </div>
                 ))}
               </div>
             </div>
             {/* Subscription Plan */}
-            <div className="bg-white border-[1.5px] border-[#e4e2d4] rounded-[10px] p-7">
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-[#666] mb-2.5">Subscription Plan</p>
-              <p className="text-[48px] font-bold text-[#333] leading-none">$30.99</p>
-              <p className="font-[family-name:var(--font-poppins)] text-[13px] text-[#888] mt-1.5 mb-5">starting per bag · personalized weekly or biweekly service</p>
+            <div className="bg-white border-[1.5px] border-navy/10 rounded-[10px] p-7">
+              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[1.8px] text-navy/60 mb-2.5">Subscription Plan</p>
+              <p className="text-[48px] font-bold text-navy leading-none">$30.99</p>
+              <p className="font-[family-name:var(--font-poppins)] text-[13px] text-navy/50 mt-1.5 mb-5">starting per bag · personalized weekly or biweekly service</p>
               <div className="flex flex-col gap-2.5">
                 {["Customized to your laundry needs", "Weekly or biweekly pickup options", "Lower price per bag vs pay-as-you-go", "Free pickup & delivery", "24-hour turnaround", "Cancel or adjust anytime"].map((perk) => (
-                  <div key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[12px] text-[#555]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#888] shrink-0" />
+                  <div key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[12px] text-navy/60">
+                    <span className="w-1.5 h-1.5 rounded-full bg-navy/50 shrink-0" />
                     {perk}
                   </div>
                 ))}
               </div>
               <div className="mt-5">
-                <Link
+                <ButtonLink
                   href="/subscription"
-                  className="block text-center bg-[#1227be] text-white font-bold text-[11px] uppercase tracking-[1.4px] py-3 px-6 rounded-[4px] hover:scale-105 transition-transform duration-300"
+                  className="block text-center font-bold text-[11px] uppercase tracking-[1.4px] py-3 px-6 rounded-[4px] hover:scale-105 transition-transform duration-300"
                 >
                   Get My Plan
-                </Link>
+                </ButtonLink>
               </div>
             </div>
           </div>
           <div className="text-center mt-8">
-            <Link
+            <ButtonLink
               href={scheduleUrl}
-              className="group relative inline-block overflow-hidden bg-[#1227be] text-white font-bold text-[13px] uppercase tracking-[1.6px] py-4 px-10 rounded-[4px] animate-pulse-glow hover:scale-105 transition-transform duration-300"
+              className="group relative inline-block overflow-hidden font-bold text-[13px] uppercase tracking-[1.6px] py-4 px-10 rounded-[4px] animate-pulse-glow hover:scale-105 transition-transform duration-300"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer-btn" />
               <span className="relative">Schedule My Pickup →</span>
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </section>
@@ -331,35 +332,35 @@ export default async function LocationLandingPage({
       {/* ── REVIEWS ────────────────────────────────────────────────────── */}
       <section className="bg-white py-[60px]">
         <div className="container-site max-w-[1200px]">
-          <span className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[2.5px] block mb-2">What people say</span>
-          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-[#111] uppercase tracking-[0.3px] leading-[1.1] mb-7">
+          <span className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-primary uppercase tracking-[2.5px] block mb-2">What people say</span>
+          <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-bold text-navy uppercase tracking-[0.3px] leading-[1.1] mb-7">
             Real people.<br />Real results.
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <article className="bg-white border border-[#e4e2d4] rounded-[10px] p-6 flex flex-col">
+            <article className="bg-white border border-navy/10 rounded-[10px] p-6 flex flex-col">
               <div className="flex gap-0.5 mb-2.5">{Array.from({ length: 5 }).map((_, i) => <StarSvg key={i} />)}</div>
-              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#333] leading-[1.7] italic mb-3.5 flex-1">
+              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-navy leading-[1.7] italic mb-3.5 flex-1">
                 &ldquo;{data.reviewQuote}&rdquo;
               </p>
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[0.8px]">
+              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-primary uppercase tracking-[0.8px]">
                 — {data.reviewAuthor}
               </p>
             </article>
-            <article className="bg-white border border-[#e4e2d4] rounded-[10px] p-6 flex flex-col">
+            <article className="bg-white border border-navy/10 rounded-[10px] p-6 flex flex-col">
               <div className="flex gap-0.5 mb-2.5">{Array.from({ length: 5 }).map((_, i) => <StarSvg key={i} />)}</div>
-              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#333] leading-[1.7] italic mb-3.5 flex-1">
+              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-navy leading-[1.7] italic mb-3.5 flex-1">
                 &ldquo;The weekly plan is a game changer. Same time every week, always on time, always perfect folds. My whole building has signed up.&rdquo;
               </p>
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[0.8px]">
+              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-primary uppercase tracking-[0.8px]">
                 — Happy Customer, {data.location}
               </p>
             </article>
-            <article className="bg-white border border-[#e4e2d4] rounded-[10px] p-6 flex flex-col">
+            <article className="bg-white border border-navy/10 rounded-[10px] p-6 flex flex-col">
               <div className="flex gap-0.5 mb-2.5">{Array.from({ length: 5 }).map((_, i) => <StarSvg key={i} />)}</div>
-              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#333] leading-[1.7] italic mb-3.5 flex-1">
+              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-navy leading-[1.7] italic mb-3.5 flex-1">
                 &ldquo;I was spending every Sunday at the laundromat. Now I schedule a pickup and it comes back perfectly folded the next day. Best decision I&apos;ve made all year.&rdquo;
               </p>
-              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-[#1227be] uppercase tracking-[0.8px]">
+              <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold text-primary uppercase tracking-[0.8px]">
                 — Weekly Subscriber, {data.state}
               </p>
             </article>
@@ -368,7 +369,7 @@ export default async function LocationLandingPage({
       </section>
 
       {/* ── ZONE / SERVICE AREA ────────────────────────────────────────── */}
-      <section className="bg-[#1227be]">
+      <section className="bg-primary">
         <div className="container-site max-w-[1200px] py-[70px] lg:py-[80px]">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             <div>
@@ -385,7 +386,7 @@ export default async function LocationLandingPage({
                     key={n}
                     className={`font-[family-name:var(--font-poppins)] text-[12px] rounded-[14px] px-3.5 py-1.5 ${
                       i === 0
-                        ? "bg-[#F9EBAA] text-[#1227be] font-bold border border-[#F9EBAA]"
+                        ? "bg-highlight text-primary font-bold border border-highlight"
                         : "bg-white/10 border border-white/[0.18] text-white/70"
                     }`}
                   >
@@ -404,22 +405,22 @@ export default async function LocationLandingPage({
       {/* ── FINAL CTA ──────────────────────────────────────────────────── */}
       <section className="bg-white py-[90px]">
         <div className="container-site max-w-[1200px] text-center">
-          <h2 className="text-[36px] md:text-[44px] lg:text-[56px] font-bold text-[#1227be] uppercase tracking-[0.3px] leading-[1.08] mb-3.5">
+          <h2 className="text-[36px] md:text-[44px] lg:text-[56px] font-bold text-primary uppercase tracking-[0.3px] leading-[1.08] mb-3.5">
             {data.finalHeadline}
           </h2>
-          <p className="font-[family-name:var(--font-poppins)] text-[15px] md:text-[17px] text-[#666] leading-[1.7] max-w-[560px] mx-auto mb-9">
+          <p className="font-[family-name:var(--font-poppins)] text-[15px] md:text-[17px] text-navy/60 leading-[1.7] max-w-[560px] mx-auto mb-9">
             {data.finalSub}
           </p>
-          <Link
+          <ButtonLink
             href={scheduleUrl}
-            className="inline-block bg-[#1227be] text-white font-bold text-[14px] uppercase tracking-[2px] py-[18px] px-[44px] rounded-[4px] mb-6"
+            className="inline-block font-bold text-[14px] uppercase tracking-[2px] py-[18px] px-[44px] rounded-[4px] mb-6"
           >
             Schedule My First Pickup
-          </Link>
+          </ButtonLink>
           <div className="flex justify-center flex-wrap gap-5">
             {["No commitment", "Free pickup", "24-hr turnaround", "100% local"].map((t) => (
-              <span key={t} className="flex items-center gap-1.5 font-[family-name:var(--font-poppins)] text-[11px] text-[#bbb]">
-                <span className="w-[3px] h-[3px] rounded-full bg-[#1227be]/35" />
+              <span key={t} className="flex items-center gap-1.5 font-[family-name:var(--font-poppins)] text-[11px] text-navy/40">
+                <span className="w-[3px] h-[3px] rounded-full bg-primary/35" />
                 {t}
               </span>
             ))}

@@ -55,18 +55,8 @@ export default function ServiceAreasPage() {
                 </li>
               </ul>
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/account/"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-white bg-navy rounded-full hover:bg-navy/90 transition-colors"
-                >
-                  Schedule Pick-up
-                </Link>
-                <Link
-                  href="#zipcode"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-body-medium text-navy border border-navy rounded-full hover:bg-navy hover:text-white transition-colors"
-                >
-                  Check Your Zip Code
-                </Link>
+                <ButtonLink href="/account/">Schedule Pick-up</ButtonLink>
+                <ButtonLink href="#zipcode" variant="outline">Check Your Zip Code</ButtonLink>
               </div>
             </div>
             <div className="w-full lg:w-[440px] shrink-0">

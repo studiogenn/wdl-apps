@@ -55,7 +55,7 @@ function SectionLabel({ children, color = "blue" }: { children: React.ReactNode;
   return (
     <p
       className={`font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[2.5px] mb-3 ${
-        color === "white" ? "text-white/45" : "text-[#1227be]"
+        color === "white" ? "text-white/45" : "text-primary"
       }`}
     >
       {children}
@@ -103,7 +103,7 @@ export default async function CommercialLandingPage({
       />
 
       {/* ── 1. HERO ─────────────────────────────────────────────────────── */}
-      <section className="relative bg-[#1227be] overflow-hidden py-16 lg:py-24">
+      <section className="relative bg-primary overflow-hidden py-16 lg:py-24">
         {/* Decorative circles */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full border border-white/[0.08]" />
@@ -125,7 +125,7 @@ export default async function CommercialLandingPage({
             {/* Left column */}
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-4">
-                <span className="w-2 h-2 rounded-full bg-[#f9ebaa]" />
+                <span className="w-2 h-2 rounded-full bg-highlight" />
                 <p className="font-[family-name:var(--font-poppins)] text-[10px] font-bold uppercase tracking-[2.5px] text-white/60">
                   Commercial Laundry · NYC &amp; New Jersey
                 </p>
@@ -158,7 +158,7 @@ export default async function CommercialLandingPage({
                     key={point}
                     className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/10 px-3.5 py-1.5"
                   >
-                    <CheckIcon className="w-3 h-3 text-[#f9ebaa]" />
+                    <CheckIcon className="w-3 h-3 text-highlight" />
                     <span className="font-[family-name:var(--font-poppins)] text-[12px] text-white/70">
                       {point}
                     </span>
@@ -169,7 +169,7 @@ export default async function CommercialLandingPage({
 
             {/* Right column — Get a Quote card */}
             <div className="w-full lg:w-[340px] shrink-0">
-              <div className="rounded-2xl bg-[#0e1f9a] border border-white/10 p-6">
+              <div className="rounded-2xl bg-primary border border-white/10 p-6">
                 <p className="font-[family-name:var(--font-poppins)] text-[11px] font-bold uppercase tracking-[2px] text-white/70 mb-5">
                   Get a Quote
                 </p>
@@ -193,7 +193,7 @@ export default async function CommercialLandingPage({
 
                 <Link
                   href="#contact"
-                  className="font-[family-name:var(--font-inter)] block w-full rounded-full bg-[#f9ebaa] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[1px] text-[#111] hover:bg-[#f5e8a0] transition-colors"
+                  className="font-[family-name:var(--font-inter)] block w-full rounded-full bg-highlight px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[1px] text-navy hover:bg-highlight/90 transition-colors"
                 >
                   Get My {data.vertical.split(" ")[0]} Quote
                 </Link>
@@ -208,19 +208,19 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 2. STATS BAR ──────────────────────────────────────────────── */}
-      <section className="bg-white border-b border-[#edebd9] py-8">
+      <section className="bg-white border-b border-navy/10 py-8">
         <div className="container-site max-w-[1100px]">
-          <div className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-0 sm:divide-x sm:divide-[#edebd9]">
+          <div className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-0 sm:divide-x sm:divide-navy/10">
             {[
               { value: "24hr", label: "Turnaround" },
               { value: "$1.95", label: "Per lb (weekly)" },
               { value: "Free", label: "Pickup & Delivery" },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col items-center px-12 sm:px-16">
-                <span className="text-[36px] font-bold text-[#1227be] leading-none">
+                <span className="text-[36px] font-bold text-primary leading-none">
                   {stat.value}
                 </span>
-                <span className="font-[family-name:var(--font-poppins)] text-[10px] uppercase tracking-[1.2px] text-[#999] mt-2">
+                <span className="font-[family-name:var(--font-poppins)] text-[10px] uppercase tracking-[1.2px] text-navy/60 mt-2">
                   {stat.label}
                 </span>
               </div>
@@ -230,24 +230,24 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 3. INTRO + PAIN POINTS ────────────────────────────────────── */}
-      <section className="bg-[#f7f5e6] py-[60px]">
+      <section className="bg-cream py-[60px]">
         <div className="container-site max-w-[1100px]">
           <SectionLabel>About this service</SectionLabel>
-          <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-6 uppercase">
+          <h2 className="text-[28px] lg:text-[40px] font-bold text-navy leading-[44px] tracking-[0.3px] mb-6 uppercase">
             {data.vertical}
           </h2>
-          <p className="font-[family-name:var(--font-poppins)] text-[15px] leading-[25.5px] text-[#666] max-w-3xl mb-10">
+          <p className="font-[family-name:var(--font-poppins)] text-[15px] leading-[25.5px] text-navy/60 max-w-3xl mb-10">
             {data.introParagraph}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {data.painPoints.map((point) => (
               <div
                 key={point}
-                className="bg-white border-t-[3px] border-[#1227be] rounded-[10px] px-6 pt-[27px] pb-6"
+                className="bg-white border-t-[3px] border-primary rounded-[10px] px-6 pt-[27px] pb-6"
               >
                 <div className="flex items-start gap-3">
-                  <CheckIcon className="w-4 h-4 text-[#1227be] shrink-0 mt-0.5" />
-                  <p className="font-[family-name:var(--font-poppins)] text-[14px] font-bold text-[#111] leading-[22px]">
+                  <CheckIcon className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                  <p className="font-[family-name:var(--font-poppins)] text-[14px] font-bold text-navy leading-[22px]">
                     {point}
                   </p>
                 </div>
@@ -261,7 +261,7 @@ export default async function CommercialLandingPage({
       <section className="bg-white py-[60px]">
         <div className="container-site max-w-[1100px]">
           <SectionLabel>How it works</SectionLabel>
-          <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-10 uppercase">
+          <h2 className="text-[28px] lg:text-[40px] font-bold text-navy leading-[44px] tracking-[0.3px] mb-10 uppercase">
             Simple. Reliable. Every Week.
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -271,14 +271,14 @@ export default async function CommercialLandingPage({
               { number: "03", title: "Professionally washed", description: "Every item cleaned without harsh chemicals, dried, and folded to a consistent commercial standard." },
               { number: "04", title: "Delivered back in 24hr", description: "Clean, folded, and ready for your next day of business. Same quality, every single time." },
             ].map((step) => (
-              <div key={step.number} className="border-r border-[#edebd9] last:border-r-0 pr-6 last:pr-0">
-                <span className="text-[36px] font-bold text-[#1227be]/10 leading-none">
+              <div key={step.number} className="border-r border-navy/10 last:border-r-0 pr-6 last:pr-0">
+                <span className="text-[36px] font-bold text-primary/10 leading-none">
                   {step.number}
                 </span>
-                <h3 className="font-[family-name:var(--font-poppins)] text-[15px] font-bold text-[#111] mt-3 mb-2 leading-snug">
+                <h3 className="font-[family-name:var(--font-poppins)] text-[15px] font-bold text-navy mt-3 mb-2 leading-snug">
                   {step.title}
                 </h3>
-                <p className="font-[family-name:var(--font-poppins)] text-[13px] text-[#666] leading-[21px]">
+                <p className="font-[family-name:var(--font-poppins)] text-[13px] text-navy/60 leading-[21px]">
                   {step.description}
                 </p>
               </div>
@@ -288,34 +288,34 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 5. PRICING CTA ────────────────────────────────────────────── */}
-      <section className="bg-[#f7f5e6] py-[60px]">
+      <section className="bg-cream py-[60px]">
         <div className="container-site max-w-[1100px]">
           <SectionLabel>Pricing</SectionLabel>
-          <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-6 uppercase">
+          <h2 className="text-[28px] lg:text-[40px] font-bold text-navy leading-[44px] tracking-[0.3px] mb-6 uppercase">
             Volume Pricing. Always Fair.
           </h2>
           <div className="max-w-2xl">
-            <div className="relative bg-white border-2 border-[#1227be] rounded-2xl p-8">
-              <span className="absolute -top-3 right-6 rounded-full bg-[#f9ebaa] px-3 py-1 text-[11px] font-bold text-[#1227be]">
+            <div className="relative bg-white border-2 border-primary rounded-2xl p-8">
+              <span className="absolute -top-3 right-6 rounded-full bg-highlight px-3 py-1 text-[11px] font-bold text-primary">
                 Weekly Plan
               </span>
               <div className="flex items-baseline gap-1 mb-4">
-                <span className="text-[48px] font-bold text-[#111] leading-none">$1.95</span>
-                <span className="font-[family-name:var(--font-poppins)] text-[15px] text-[#666]">/lb</span>
+                <span className="text-[48px] font-bold text-navy leading-none">$1.95</span>
+                <span className="font-[family-name:var(--font-poppins)] text-[15px] text-navy/60">/lb</span>
               </div>
-              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-[#666] leading-relaxed mb-6">
+              <p className="font-[family-name:var(--font-poppins)] text-[14px] text-navy/60 leading-relaxed mb-6">
                 {data.pricingCTA}
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="#contact"
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-[#111] bg-[#f9ebaa] rounded-full hover:bg-[#f5e8a0] transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-navy bg-highlight rounded-full hover:bg-highlight/90 transition-colors"
                 >
                   Get a Custom Quote
                 </Link>
                 <a
                   href={`tel:${phone}`}
-                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-[#1227be] border border-[#1227be]/20 rounded-full hover:bg-[#1227be]/5 transition-colors"
+                  className="font-[family-name:var(--font-inter)] px-6 py-3 text-sm font-semibold text-primary border border-primary/20 rounded-full hover:bg-primary/5 transition-colors"
                 >
                   Call 855.968.5511
                 </a>
@@ -329,21 +329,21 @@ export default async function CommercialLandingPage({
       <section className="bg-white py-[60px]">
         <div className="container-site max-w-[1100px]">
           <SectionLabel>What our clients say</SectionLabel>
-          <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-10 uppercase">
+          <h2 className="text-[28px] lg:text-[40px] font-bold text-navy leading-[44px] tracking-[0.3px] mb-10 uppercase">
             Real Businesses. Real Results.
           </h2>
           <div className="max-w-2xl">
-            <div className="bg-white border-t-[3px] border-[#1227be] rounded-[10px] p-8 border border-[#edebd9]">
+            <div className="bg-white border-t-[3px] border-primary rounded-[10px] p-8 border border-navy/10">
               <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <StarIcon key={i} />
                 ))}
               </div>
-              <p className="font-[family-name:var(--font-poppins)] text-[15px] text-[#666] leading-[25.5px] mb-6">
+              <p className="font-[family-name:var(--font-poppins)] text-[15px] text-navy/60 leading-[25.5px] mb-6">
                 &ldquo;{data.reviewQuote}&rdquo;
               </p>
-              <div className="border-t border-[#edebd9] pt-4">
-                <p className="font-[family-name:var(--font-poppins)] text-[13px] font-bold text-[#111]">
+              <div className="border-t border-navy/10 pt-4">
+                <p className="font-[family-name:var(--font-poppins)] text-[13px] font-bold text-navy">
                   {data.reviewAuthor}
                 </p>
               </div>
@@ -353,17 +353,17 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 7. FAQ ────────────────────────────────────────────────────── */}
-      <section className="bg-[#f7f5e6] py-[60px]">
+      <section className="bg-cream py-[60px]">
         <div className="container-site max-w-[1100px]">
           <SectionLabel>FAQ</SectionLabel>
-          <h2 className="text-[28px] lg:text-[40px] font-bold text-[#111] leading-[44px] tracking-[0.3px] mb-10 uppercase">
+          <h2 className="text-[28px] lg:text-[40px] font-bold text-navy leading-[44px] tracking-[0.3px] mb-10 uppercase">
             Frequently Asked
           </h2>
           <div className="max-w-2xl bg-white rounded-2xl p-8">
-            <h3 className="font-[family-name:var(--font-poppins)] text-[15px] font-bold text-[#111] mb-3">
+            <h3 className="font-[family-name:var(--font-poppins)] text-[15px] font-bold text-navy mb-3">
               {data.localFAQ_question}
             </h3>
-            <p className="font-[family-name:var(--font-poppins)] text-[13px] text-[#666] leading-[21px]">
+            <p className="font-[family-name:var(--font-poppins)] text-[13px] text-navy/60 leading-[21px]">
               {data.localFAQ_answer}
             </p>
           </div>
@@ -371,7 +371,7 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 8. CONTACT FORM ───────────────────────────────────────────── */}
-      <section id="contact" className="bg-[#1227be] py-[60px] lg:py-[80px]">
+      <section id="contact" className="bg-primary py-[60px] lg:py-[80px]">
         <div className="container-site max-w-[1100px]">
           <div className="flex flex-col lg:flex-row gap-12">
             <div className="flex-1">
@@ -389,7 +389,7 @@ export default async function CommercialLandingPage({
                   "Custom plan for your volume",
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-[13px] text-white/70">
-                    <CheckIcon className="w-4 h-4 text-[#f9ebaa] shrink-0" />
+                    <CheckIcon className="w-4 h-4 text-highlight shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -403,7 +403,7 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 9. COVERAGE ───────────────────────────────────────────────── */}
-      <section className="bg-[#1227be] py-[60px] border-t border-white/10">
+      <section className="bg-primary py-[60px] border-t border-white/10">
         <div className="container-site max-w-[1100px]">
           <SectionLabel color="white">Service area</SectionLabel>
           <h2 className="text-[28px] lg:text-[42px] font-bold text-white leading-[1.1] mb-4 uppercase">
@@ -418,7 +418,7 @@ export default async function CommercialLandingPage({
                 key={area}
                 className={`font-[family-name:var(--font-poppins)] rounded-[14px] px-4 py-1.5 text-[12px] font-bold ${
                   i === 0
-                    ? "bg-[#f9ebaa] text-[#1227be]"
+                    ? "bg-highlight text-primary"
                     : "bg-white/10 border border-white/[0.18] text-white/70"
                 }`}
               >
@@ -430,17 +430,17 @@ export default async function CommercialLandingPage({
       </section>
 
       {/* ── 10. FINAL CTA ─────────────────────────────────────────────── */}
-      <section className="bg-[#f7f5e6] py-[80px]">
+      <section className="bg-cream py-[80px]">
         <div className="container-site max-w-[1100px] text-center">
-          <h2 className="text-[28px] lg:text-[42px] font-bold text-[#111] leading-[1.1] mb-4 uppercase">
+          <h2 className="text-[28px] lg:text-[42px] font-bold text-navy leading-[1.1] mb-4 uppercase">
             {data.finalHeadline}
           </h2>
-          <p className="font-[family-name:var(--font-poppins)] text-[15px] text-[#666] leading-[25.5px] max-w-lg mx-auto mb-8">
+          <p className="font-[family-name:var(--font-poppins)] text-[15px] text-navy/60 leading-[25.5px] max-w-lg mx-auto mb-8">
             {data.finalSub}
           </p>
           <Link
             href="#contact"
-            className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center rounded-full bg-[#f9ebaa] px-8 py-3.5 text-[13px] font-bold uppercase tracking-[1px] text-[#111] hover:bg-[#f5e8a0] transition-colors"
+            className="font-[family-name:var(--font-inter)] inline-flex items-center justify-center rounded-full bg-highlight px-8 py-3.5 text-[13px] font-bold uppercase tracking-[1px] text-navy hover:bg-highlight/90 transition-colors"
           >
             Schedule Your First Pickup
           </Link>

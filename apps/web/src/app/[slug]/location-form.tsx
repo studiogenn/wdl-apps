@@ -54,8 +54,8 @@ export function LocationForm({
   if (status === "success") {
     return (
       <div className="bg-white rounded-2xl p-8 text-center">
-        <h3 className="text-xl font-semibold text-[#111] mb-3">Thank You!</h3>
-        <p className="font-[family-name:var(--font-poppins)] text-sm text-[#666]">
+        <h3 className="text-xl font-semibold text-navy mb-3">Thank You!</h3>
+        <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">
           We&apos;ll be in touch within 24 hours to schedule your first pickup.
         </p>
       </div>
@@ -75,14 +75,14 @@ export function LocationForm({
           name="first_name"
           placeholder="First Name"
           required
-          className="w-full border border-[#1227be]/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-[#111] placeholder:text-[#999] outline-none focus:border-[#1227be] transition-colors"
+          className="w-full border border-primary/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-navy placeholder:text-navy/50 outline-none focus:border-primary transition-colors"
         />
         <input
           type="text"
           name="last_name"
           placeholder="Last Name"
           required
-          className="w-full border border-[#1227be]/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-[#111] placeholder:text-[#999] outline-none focus:border-[#1227be] transition-colors"
+          className="w-full border border-primary/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-navy placeholder:text-navy/50 outline-none focus:border-primary transition-colors"
         />
       </div>
       <input
@@ -90,30 +90,30 @@ export function LocationForm({
         name="email"
         placeholder="Email"
         required
-        className="w-full border border-[#1227be]/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-[#111] placeholder:text-[#999] outline-none focus:border-[#1227be] transition-colors"
+        className="w-full border border-primary/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-navy placeholder:text-navy/50 outline-none focus:border-primary transition-colors"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <input
           type="tel"
           name="phone"
           placeholder="Phone Number"
-          className="w-full border border-[#1227be]/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-[#111] placeholder:text-[#999] outline-none focus:border-[#1227be] transition-colors"
+          className="w-full border border-primary/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-navy placeholder:text-navy/50 outline-none focus:border-primary transition-colors"
         />
         <input
           type="text"
           name="zip_code"
           placeholder="Zip Code"
-          className="w-full border border-[#1227be]/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-[#111] placeholder:text-[#999] outline-none focus:border-[#1227be] transition-colors"
+          className="w-full border border-primary/10 rounded-lg px-4 py-3 font-[family-name:var(--font-poppins)] text-[14px] text-navy placeholder:text-navy/50 outline-none focus:border-primary transition-colors"
         />
       </div>
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full bg-[#F9EBAA] text-[#1227be] font-bold text-[13px] uppercase tracking-[1.5px] py-4 rounded-full hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="w-full bg-highlight text-primary font-bold text-[13px] uppercase tracking-[1.5px] py-4 rounded-full hover:opacity-90 transition-opacity disabled:opacity-50"
       >
         {status === "submitting" ? "Submitting..." : "Schedule My First Pickup"}
       </button>
-      <p className="font-[family-name:var(--font-poppins)] text-[10px] text-[#999] text-center">
+      <p className="font-[family-name:var(--font-poppins)] text-[10px] text-navy/50 text-center">
         Free pickup · $1.95/lb weekly plan · No commitment required
       </p>
       {status === "error" && (
