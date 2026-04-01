@@ -40,56 +40,158 @@ export async function POST(request: Request) {
 
   try {
     switch (event.type) {
+      // ── Checkout ──
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
-        if (session.mode !== "subscription" || !session.subscription) break;
 
-        const subscription = await getStripe().subscriptions.retrieve(
-          session.subscription as string,
-          { expand: ["latest_invoice"] }
-        );
-        const customerId = await findCustomerByStripeId(
-          subscription.customer as string
-        );
+        if (session.mode === "subscription" && session.subscription) {
+          const subscription = await getStripe().subscriptions.retrieve(
+            session.subscription as string,
+            { expand: ["latest_invoice"] }
+          );
+          const customerId = await findCustomerByStripeId(
+            subscription.customer as string
+          );
+          if (!customerId) break;
+
+          const invoice = subscription.latest_invoice as Stripe.Invoice | null;
+
+          await getDb().insert(schema.subscriptions).values({
+            customerId,
+            stripeSubscriptionId: subscription.id,
+            stripePriceId: subscription.items.data[0].price.id,
+            status: subscription.status,
+            currentPeriodStart: new Date(
+              (invoice?.period_start ?? subscription.start_date) * 1000
+            ),
+            currentPeriodEnd: new Date(
+              (invoice?.period_end ?? subscription.start_date) * 1000
+            ),
+          });
+        }
+
+        if (session.mode === "payment" && session.payment_intent) {
+          const pi = await getStripe().paymentIntents.retrieve(
+            session.payment_intent as string
+          );
+          const customerId = await findCustomerByStripeId(
+            pi.customer as string
+          );
+          if (!customerId) break;
+
+          await getDb()
+            .insert(schema.payments)
+            .values({
+              customerId,
+              stripePaymentIntentId: pi.id,
+              amount: pi.amount,
+              currency: pi.currency,
+              status: pi.status,
+              description: pi.description ?? null,
+              metadata: pi.metadata ? JSON.parse(JSON.stringify(pi.metadata)) : null,
+            })
+            .onConflictDoUpdate({
+              target: schema.payments.stripePaymentIntentId,
+              set: { status: pi.status, updatedAt: new Date() },
+            });
+        }
+        break;
+      }
+
+      // ── Payment Intents ──
+      case "payment_intent.succeeded":
+      case "payment_intent.payment_failed": {
+        const pi = event.data.object as Stripe.PaymentIntent;
+        if (!pi.customer) break;
+        const customerId = await findCustomerByStripeId(pi.customer as string);
         if (!customerId) break;
 
-        const invoice = subscription.latest_invoice as Stripe.Invoice | null;
-
-        await getDb().insert(schema.subscriptions).values({
-          customerId,
-          stripeSubscriptionId: subscription.id,
-          stripePriceId: subscription.items.data[0].price.id,
-          status: subscription.status,
-          currentPeriodStart: new Date(
-            (invoice?.period_start ?? subscription.start_date) * 1000
-          ),
-          currentPeriodEnd: new Date(
-            (invoice?.period_end ?? subscription.start_date) * 1000
-          ),
-        });
-        break;
-      }
-
-      case "invoice.paid": {
-        const invoice = event.data.object as Stripe.Invoice;
-        const subId = getSubscriptionId(invoice);
-        if (!subId) break;
-
-        const subscription = await getStripe().subscriptions.retrieve(subId);
         await getDb()
-          .update(schema.subscriptions)
-          .set({
-            status: subscription.status,
-            currentPeriodStart: new Date(invoice.period_start * 1000),
-            currentPeriodEnd: new Date(invoice.period_end * 1000),
-            updatedAt: new Date(),
+          .insert(schema.payments)
+          .values({
+            customerId,
+            stripePaymentIntentId: pi.id,
+            amount: pi.amount,
+            currency: pi.currency,
+            status: pi.status,
+            description: pi.description ?? null,
+            metadata: pi.metadata ? JSON.parse(JSON.stringify(pi.metadata)) : null,
           })
-          .where(
-            eq(schema.subscriptions.stripeSubscriptionId, subscription.id)
-          );
+          .onConflictDoUpdate({
+            target: schema.payments.stripePaymentIntentId,
+            set: { status: pi.status, updatedAt: new Date() },
+          });
         break;
       }
 
+      // ── Refunds ──
+      case "charge.refunded": {
+        const charge = event.data.object as Stripe.Charge;
+        const piId = typeof charge.payment_intent === "string"
+          ? charge.payment_intent
+          : charge.payment_intent?.id;
+        if (!piId) break;
+
+        await getDb()
+          .update(schema.payments)
+          .set({ status: "refunded", updatedAt: new Date() })
+          .where(eq(schema.payments.stripePaymentIntentId, piId));
+        break;
+      }
+
+      // ── Invoices ──
+      case "invoice.created":
+      case "invoice.paid":
+      case "invoice.payment_failed": {
+        const invoice = event.data.object as Stripe.Invoice;
+        if (!invoice.customer) break;
+        const customerId = await findCustomerByStripeId(invoice.customer as string);
+        if (!customerId) break;
+
+        const subId = getSubscriptionId(invoice);
+
+        await getDb()
+          .insert(schema.invoices)
+          .values({
+            customerId,
+            stripeInvoiceId: invoice.id,
+            stripeSubscriptionId: subId,
+            amountDue: invoice.amount_due,
+            amountPaid: invoice.amount_paid,
+            currency: invoice.currency,
+            status: invoice.status ?? "draft",
+            invoiceUrl: invoice.hosted_invoice_url ?? null,
+            invoicePdf: invoice.invoice_pdf ?? null,
+          })
+          .onConflictDoUpdate({
+            target: schema.invoices.stripeInvoiceId,
+            set: {
+              amountPaid: invoice.amount_paid,
+              status: invoice.status ?? "draft",
+              invoiceUrl: invoice.hosted_invoice_url ?? null,
+              invoicePdf: invoice.invoice_pdf ?? null,
+            },
+          });
+
+        // Also update subscription period on invoice.paid
+        if (event.type === "invoice.paid" && subId) {
+          const subscription = await getStripe().subscriptions.retrieve(subId);
+          await getDb()
+            .update(schema.subscriptions)
+            .set({
+              status: subscription.status,
+              currentPeriodStart: new Date(invoice.period_start * 1000),
+              currentPeriodEnd: new Date(invoice.period_end * 1000),
+              updatedAt: new Date(),
+            })
+            .where(
+              eq(schema.subscriptions.stripeSubscriptionId, subscription.id)
+            );
+        }
+        break;
+      }
+
+      // ── Subscriptions ──
       case "customer.subscription.updated": {
         const subscription = event.data.object as Stripe.Subscription;
         await getDb()

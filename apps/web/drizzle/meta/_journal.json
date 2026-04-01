@@ -15,6 +15,13 @@
       "when": 1775018496884,
       "tag": "0001_large_firebird",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1775072778349,
+      "tag": "0002_lonely_jimmy_woo",
+      "breakpoints": true
     }
   ]
 }

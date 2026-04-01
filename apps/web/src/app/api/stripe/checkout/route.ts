@@ -12,6 +12,8 @@ const checkoutSchema = z.object({
   priceId: z.string().min(1),
   successUrl: z.string().url(),
   cancelUrl: z.string().url(),
+  mode: z.enum(["subscription", "payment"]).default("subscription"),
+  quantity: z.number().int().positive().default(1),
 });
 
 export async function POST(request: Request) {
@@ -49,12 +51,15 @@ export async function POST(request: Request) {
       stripeCustomerId = customer.id;
     }
 
+    const { mode, priceId, quantity, successUrl, cancelUrl } = parsed.data;
+
     const session = await getStripe().checkout.sessions.create({
       customer: stripeCustomerId,
-      mode: "subscription",
-      line_items: [{ price: parsed.data.priceId, quantity: 1 }],
-      success_url: parsed.data.successUrl,
-      cancel_url: parsed.data.cancelUrl,
+      mode,
+      line_items: [{ price: priceId, quantity }],
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+      ...(mode === "payment" ? { invoice_creation: { enabled: true } } : {}),
     });
 
     return NextResponse.json({ success: true, data: { url: session.url } });

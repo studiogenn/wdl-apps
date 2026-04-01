@@ -120,3 +120,34 @@ export const subscriptionEvents = stripeWdl.table("subscription_events", {
   payload: jsonb("payload").notNull(),
   processedAt: timestamp("processed_at", { withTimezone: true }).defaultNow().notNull(),
 });
+
+export const payments = stripeWdl.table("payments", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  customerId: uuid("customer_id")
+    .notNull()
+    .references(() => customers.id),
+  stripePaymentIntentId: text("stripe_payment_intent_id").notNull().unique(),
+  amount: integer("amount").notNull(),
+  currency: text("currency").notNull().default("usd"),
+  status: text("status").notNull(),
+  description: text("description"),
+  metadata: jsonb("metadata"),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const invoices = stripeWdl.table("invoices", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  customerId: uuid("customer_id")
+    .notNull()
+    .references(() => customers.id),
+  stripeInvoiceId: text("stripe_invoice_id").notNull().unique(),
+  stripeSubscriptionId: text("stripe_subscription_id"),
+  amountDue: integer("amount_due").notNull(),
+  amountPaid: integer("amount_paid").notNull().default(0),
+  currency: text("currency").notNull().default("usd"),
+  status: text("status").notNull(),
+  invoiceUrl: text("invoice_url"),
+  invoicePdf: text("invoice_pdf"),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
