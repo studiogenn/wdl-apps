@@ -1,0 +1,67 @@
+# WDL Apps
+
+Monorepo for We Deliver Laundry — website and mobile app (Expo / React Native).
+
+## Structure
+
+| Path | What | Stack |
+|------|------|-------|
+| `apps/web` | Marketing site + API backend | Next.js 16, Vercel, Tailwind 4 |
+| `apps/mobile` | Customer mobile app | Expo 55, React Native, NativeWind |
+| `packages/tokens` | Shared design tokens (colors, typography, spacing) | Tailwind preset |
+| `packages/api` | Shared API types (WIP) | TypeScript |
+| `packages/ui` | Shared UI components (WIP) | React |
+
+## Auth
+
+Better Auth with email/password. Server config at `apps/web/src/lib/auth.ts`, client at `apps/web/src/lib/auth-client.ts` (web) and `apps/mobile/lib/auth/client.ts` (mobile). Sessions stored in Postgres. Mobile uses `expo-secure-store` for token persistence.
+
+## Database
+
+PostgreSQL via Drizzle ORM. Connection managed through the `wfog/behemoth` infrastructure repo. Schema at `apps/web/src/lib/db/schema.ts`. Connection goes through PgBouncer in transaction mode (`prepare: false` required). Migrations in `apps/web/drizzle/`.
+
+Never create tables manually — always use Drizzle migrations (`pnpm drizzle-kit generate`, `pnpm drizzle-kit push`).
+
+## CleanCloud
+
+CleanCloud is the current POS system for orders, customers, routing, and scheduling. API wrapper at `apps/web/src/lib/cleancloud/client.ts`. All CleanCloud API calls go through Next.js API routes at `apps/web/src/app/api/cleancloud/`. The mobile app calls these routes, not CleanCloud directly.
+
+Goal: migrate off CleanCloud entirely. Customer auth already owned. CleanCloud customer IDs stored on the Better Auth user record (`cleancloudCustomerId` field).
+
+## Feature Flags
+
+PostHog feature flags. Keys defined in `apps/web/src/lib/feature-flags.ts`. Evaluated server-side in middleware and bootstrapped to client. PostHog proxied through `/ingest/*` to avoid ad blockers.
+
+Active flags:
+- `new-account-pages` — gates new account dashboard vs CleanCloud iframe on `/account`
+
+## Styling
+
+CSS global variables and Tailwind work together. The source of truth for brand tokens is `packages/tokens` — both apps consume it via Tailwind config.
+
+On web (`apps/web/src/app/globals.css`), Tailwind 4's `@theme inline` block defines CSS custom properties that map to the token values. These variables are available in both Tailwind classes and raw CSS:
+
+- Colors: `--color-primary`, `--color-navy`, `--color-cream`, etc. Use Tailwind classes (`text-primary`, `bg-navy`) when possible; use `var(--color-*)` in raw CSS or inline styles when Tailwind classes aren't practical.
+- Fonts: `--font-heading` (Zilla Slab), `--font-body` (DM Sans). Tailwind classes: `font-heading`, `font-body`.
+- Layout: `--header-height` (responsive, used for offset calculations).
+
+On mobile (`apps/mobile/global.css`), NativeWind consumes the `@wdl/tokens` preset via `tailwind.config.js`. No CSS custom properties — use Tailwind classes only.
+
+When adding new design tokens, add them to `packages/tokens/src/` first, then expose via the Tailwind preset. For web-only CSS variables, add to the `@theme inline` block in `globals.css`.
+
+## Env Vars (Required)
+
+- `DATABASE_URL` — Postgres connection string
+- `BETTER_AUTH_SECRET` — auth signing secret
+- `BETTER_AUTH_URL` — base URL (e.g. `https://wedeliverlaundry.com`)
+- `NEXT_PUBLIC_POSTHOG_KEY` — PostHog project API key
+- `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` — Stripe keys
+- `EXPO_PUBLIC_API_URL` — mobile app's API base URL
+
+## Conventions
+
+- Immutable data patterns — never mutate, always return new objects
+- Use `@wdl/tokens` for all colors, typography, spacing — don't hardcode brand values
+- API responses use `{ success: boolean, data?: T, error?: string }` envelope
+- Web fonts: Zilla Slab (headings), DM Sans (body)
+- Mobile runs in Expo Go — no native modules allowed
