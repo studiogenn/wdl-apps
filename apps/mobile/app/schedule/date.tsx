@@ -1,47 +1,31 @@
 import { View, Text, Pressable, ScrollView, ActivityIndicator } from "react-native";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { getDates } from "@/lib/api/cleancloud";
+import { useDates } from "@/lib/api/hooks";
 import { useScheduleStore } from "@/lib/stores/schedule";
 
 function formatDate(timestamp: number): string {
   const d = new Date(timestamp * 1000);
-  return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+  return d.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
 }
 
 export default function DateScreen() {
-  const { routeID, selectedDate, setAvailableDates, setSelectedDate, availableDates } = useScheduleStore();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!routeID) return;
-
-    (async () => {
-      const result = await getDates(routeID);
-      if (result.success && result.data) {
-        setAvailableDates(result.data.dates);
-      } else {
-        setError(result.error ?? "Failed to load dates");
-      }
-      setLoading(false);
-    })();
-  }, [routeID]);
+  const { routeID, selectedDate, setSelectedDate } = useScheduleStore();
+  const { data: dates, isLoading, error } = useDates(routeID);
 
   return (
     <View className="flex-1 bg-seabreeze-300 px-6 pt-6">
-      <Text
-        className="font-heading tracking-headline mb-2 text-2xl uppercase text-detergent-700"
-      >
+      <Text className="font-heading tracking-headline mb-2 text-2xl uppercase text-detergent-700">
         Select a Date
       </Text>
-      <Text
-        className="font-body-light tracking-tight mb-6 text-sm text-neutral-500"
-      >
+      <Text className="font-body-light tracking-tight mb-6 text-sm text-neutral-500">
         Choose when we should pick up
       </Text>
 
-      {loading && (
+      {isLoading && (
         <View className="mt-12 items-center">
           <ActivityIndicator size="large" color="#1227BE" />
           <Text className="font-body-light mt-4 text-neutral-500">
@@ -53,15 +37,15 @@ export default function DateScreen() {
       {error && (
         <View className="mt-8 rounded-card bg-destructive-100/20 p-6">
           <Text className="font-body-medium text-destructive-200">
-            {error}
+            {error.message}
           </Text>
         </View>
       )}
 
-      {!loading && !error && (
+      {dates && (
         <ScrollView showsVerticalScrollIndicator={false}>
           <View className="gap-3 pb-8">
-            {availableDates.map((entry) => {
+            {dates.map((entry) => {
               const isSelected = selectedDate === entry.date;
               return (
                 <Pressable
@@ -75,9 +59,7 @@ export default function DateScreen() {
                     {formatDate(entry.date)}
                   </Text>
                   {entry.remaining != null && (
-                    <Text
-                      className="font-body-light tracking-tight mt-1 text-sm text-neutral-500"
-                    >
+                    <Text className="font-body-light tracking-tight mt-1 text-sm text-neutral-500">
                       {entry.remaining} spots remaining
                     </Text>
                   )}
@@ -94,9 +76,7 @@ export default function DateScreen() {
             className="rounded-btn bg-detergent-400 py-4 active:bg-detergent-500"
             onPress={() => router.push("/schedule/slot")}
           >
-            <Text
-              className="font-heading-medium tracking-cta text-center text-lg uppercase text-white"
-            >
+            <Text className="font-heading-medium tracking-cta text-center text-lg uppercase text-white">
               Continue
             </Text>
           </Pressable>

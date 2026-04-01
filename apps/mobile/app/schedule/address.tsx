@@ -1,42 +1,40 @@
 import { View, Text, TextInput, Pressable, Alert, ActivityIndicator } from "react-native";
 import { router } from "expo-router";
 import { useState } from "react";
-import { getRoute } from "@/lib/api/cleancloud";
+import { useRouteLookup } from "@/lib/api/hooks";
 import { useScheduleStore } from "@/lib/stores/schedule";
 
 export default function AddressScreen() {
   const [address, setAddress] = useState(useScheduleStore.getState().address);
-  const [loading, setLoading] = useState(false);
   const store = useScheduleStore();
+  const routeLookup = useRouteLookup();
 
   const handleContinue = async () => {
     if (!address.trim()) return;
-    setLoading(true);
 
-    const result = await getRoute({ address: address.trim() });
-
-    if (!result.success || !result.data) {
-      Alert.alert("Not in Service Area", result.error ?? "We couldn't find a route for this address. Please try a different address.");
-      setLoading(false);
-      return;
+    try {
+      const result = await routeLookup.mutateAsync({ address: address.trim() });
+      store.setAddress(address.trim());
+      store.setRouteID(result.routeID);
+      router.push("/schedule/date");
+    } catch (err) {
+      Alert.alert(
+        "Not in Service Area",
+        err instanceof Error
+          ? err.message
+          : "We couldn't find a route for this address."
+      );
     }
-
-    store.setAddress(address.trim());
-    store.setRouteID(result.data.routeID);
-    setLoading(false);
-    router.push("/schedule/date");
   };
+
+  const loading = routeLookup.isPending;
 
   return (
     <View className="flex-1 bg-seabreeze-300 px-6 pt-6">
-      <Text
-        className="font-heading tracking-headline mb-2 text-2xl uppercase text-detergent-700"
-      >
+      <Text className="font-heading tracking-headline mb-2 text-2xl uppercase text-detergent-700">
         Pickup Address
       </Text>
-      <Text
-        className="font-body-light tracking-tight mb-6 text-sm text-neutral-500"
-      >
+      <Text className="font-body-light tracking-tight mb-6 text-sm text-neutral-500">
         Enter where we should pick up your laundry
       </Text>
 

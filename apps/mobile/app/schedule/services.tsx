@@ -1,43 +1,26 @@
 import { View, Text, Pressable, ScrollView, ActivityIndicator } from "react-native";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { getProducts } from "@/lib/api/cleancloud";
+import { useProducts } from "@/lib/api/hooks";
 import { useScheduleStore } from "@/lib/stores/schedule";
 
 export default function ServicesScreen() {
-  const { products, selectedProducts, setProducts, toggleProduct } = useScheduleStore();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { selectedProducts, toggleProduct } = useScheduleStore();
+  const { data: products, isLoading, error } = useProducts();
 
-  useEffect(() => {
-    (async () => {
-      const result = await getProducts();
-      if (result.success && result.data) {
-        setProducts(result.data.products);
-      } else {
-        setError(result.error ?? "Failed to load services");
-      }
-      setLoading(false);
-    })();
-  }, []);
-
-  const isSelected = (id: number) => selectedProducts.some((p) => p.productID === id);
+  const isSelected = (id: number) =>
+    selectedProducts.some((p) => p.productID === id);
   const hasSelection = selectedProducts.length > 0;
 
   return (
     <View className="flex-1 bg-seabreeze-300 px-6 pt-6">
-      <Text
-        className="font-heading tracking-headline mb-2 text-2xl uppercase text-detergent-700"
-      >
+      <Text className="font-heading tracking-headline mb-2 text-2xl uppercase text-detergent-700">
         Services
       </Text>
-      <Text
-        className="font-body-light tracking-tight mb-6 text-sm text-neutral-500"
-      >
+      <Text className="font-body-light tracking-tight mb-6 text-sm text-neutral-500">
         Select the services you need
       </Text>
 
-      {loading && (
+      {isLoading && (
         <View className="mt-12 items-center">
           <ActivityIndicator size="large" color="#1227BE" />
           <Text className="font-body-light mt-4 text-neutral-500">
@@ -49,12 +32,12 @@ export default function ServicesScreen() {
       {error && (
         <View className="mt-8 rounded-card bg-destructive-100/20 p-6">
           <Text className="font-body-medium text-destructive-200">
-            {error}
+            {error.message}
           </Text>
         </View>
       )}
 
-      {!loading && !error && (
+      {products && (
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
           <View className="gap-3 pb-8">
             {products.map((product) => {
@@ -73,9 +56,7 @@ export default function ServicesScreen() {
                         {product.name}
                       </Text>
                     </View>
-                    <Text
-                      className="font-body-medium text-lg text-detergent-700"
-                    >
+                    <Text className="font-body-medium text-lg text-detergent-700">
                       ${product.price.toFixed(2)}
                     </Text>
                   </View>
@@ -92,9 +73,7 @@ export default function ServicesScreen() {
             className="rounded-btn bg-detergent-400 py-4 active:bg-detergent-500"
             onPress={() => router.push("/schedule/preferences")}
           >
-            <Text
-              className="font-heading-medium tracking-cta text-center text-lg uppercase text-white"
-            >
+            <Text className="font-heading-medium tracking-cta text-center text-lg uppercase text-white">
               Continue
             </Text>
           </Pressable>

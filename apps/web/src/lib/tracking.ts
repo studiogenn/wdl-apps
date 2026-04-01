@@ -1,14 +1,9 @@
 import posthog from "posthog-js";
 
 export const TRACKING_EVENTS = {
-  SCHEDULE_PICKUP_CLICK: "schedule_pickup_click",
   CONTACT_FORM_SUBMIT: "contact_form_submit",
   BOOKING_FORM_SUBMITTED: "booking_form_submitted",
-  CTA_CLICK: "cta_click",
-  PHONE_CLICK: "phone_click",
   SECTION_VIEWED: "section_viewed",
-  PRICING_PLAN_CLICKED: "pricing_plan_clicked",
-  NAV_LINK_CLICKED: "nav_link_clicked",
   SIGNUP_FLOW_STARTED: "signup_flow_started",
   SIGNUP_STEP_COMPLETED: "signup_step_completed",
   SIGNUP_ZIP_CHECKED: "signup_zip_checked",
@@ -34,20 +29,8 @@ export function trackEvent(
   }
 }
 
-export function trackSchedulePickupClick(source: string): void {
-  trackEvent(TRACKING_EVENTS.SCHEDULE_PICKUP_CLICK, { source });
-}
-
-export function trackCtaClick(ctaText: string, source: string): void {
-  trackEvent(TRACKING_EVENTS.CTA_CLICK, { cta_text: ctaText, source });
-}
-
 export function trackContactFormSubmit(): void {
   trackEvent(TRACKING_EVENTS.CONTACT_FORM_SUBMIT);
-}
-
-export function trackPhoneClick(source: string): void {
-  trackEvent(TRACKING_EVENTS.PHONE_CLICK, { source });
 }
 
 export function trackBookingFormSubmitted(source: string): void {
@@ -56,14 +39,6 @@ export function trackBookingFormSubmitted(source: string): void {
 
 export function trackSectionViewed(section: string): void {
   trackEvent(TRACKING_EVENTS.SECTION_VIEWED, { section });
-}
-
-export function trackPricingPlanClicked(plan: string): void {
-  trackEvent(TRACKING_EVENTS.PRICING_PLAN_CLICKED, { plan });
-}
-
-export function trackNavLinkClicked(label: string, href: string): void {
-  trackEvent(TRACKING_EVENTS.NAV_LINK_CLICKED, { label, href });
 }
 
 export function trackSignupFlowStarted(variant: string): void {
@@ -87,10 +62,11 @@ export function trackSignupAbandoned(variant: string, lastStep: string): void {
 }
 
 // ─── Identity Stitching ───────────────────────────────────────────────
-// Mirrors old site's identity priority: cleancloud_id > email
-// Links anonymous ab_visitor_id to a real person in PostHog.
+// Canonical distinct_id = Better Auth user.id.
+// CleanCloud customer ID is aliased so historical events follow.
 
 type CustomerIdentity = {
+  readonly userId?: string;
   readonly customerId: number;
   readonly email: string;
   readonly name?: string;
@@ -99,6 +75,7 @@ type CustomerIdentity = {
 
 export function identifyCustomer(identity: CustomerIdentity): void {
   try {
+    const distinctId = identity.userId ?? identity.email;
     const personProps: Record<string, string | number> = {
       cleancloud_id: identity.customerId,
       email: identity.email,
@@ -106,9 +83,8 @@ export function identifyCustomer(identity: CustomerIdentity): void {
     if (identity.name) personProps.name = identity.name;
     if (identity.phone) personProps.phone = identity.phone;
 
-    posthog.identify(String(identity.customerId), personProps, {
-      first_seen: new Date().toISOString(),
-    });
+    posthog.identify(distinctId, personProps);
+    posthog.alias(String(identity.customerId), distinctId);
   } catch {
     // PostHog not initialized
   }
