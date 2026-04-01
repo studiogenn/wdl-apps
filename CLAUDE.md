@@ -58,6 +58,8 @@ When adding new design tokens, add them to `packages/tokens/src/` first, then ex
 - `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` — Stripe keys
 - `EXPO_PUBLIC_API_URL` — mobile app's API base URL
 
+**NEVER hardcode env vars, API keys, or webhook URLs in source code.** All secrets and external URLs go in `.env` locally and in the Vercel dashboard for deployments. Use `process.env.VAR_NAME` to read them. Only `NEXT_PUBLIC_*` vars are available client-side — server secrets (`DATABASE_URL`, `STRIPE_SECRET_KEY`, etc.) must never be exposed to the browser.
+
 ## Conventions
 
 - Immutable data patterns — never mutate, always return new objects
