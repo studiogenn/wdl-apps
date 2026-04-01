@@ -12,17 +12,23 @@ export const metadata: Metadata = {
 };
 
 export default async function AccountPage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  let user: { id: string; name: string; email: string } | null = null;
 
-  const user = session?.user
-    ? {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (session?.user) {
+      user = {
         id: session.user.id,
         name: session.user.name,
         email: session.user.email,
-      }
-    : null;
+      };
+    }
+  } catch {
+    // No session or auth unavailable — continue as unauthenticated
+  }
 
   return <AccountPageClient user={user} />;
 }
