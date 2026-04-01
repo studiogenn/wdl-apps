@@ -62,6 +62,10 @@ When adding new design tokens, add them to `packages/tokens/src/` first, then ex
 
 - Immutable data patterns — never mutate, always return new objects
 - Use `@wdl/tokens` for all colors, typography, spacing — don't hardcode brand values
+- **NEVER hardcode hex colors in components.** Use Tailwind token classes (`bg-primary`, `text-navy`, `border-cream`, etc.) defined in `globals.css`. If a color isn't in the token system, add it to `packages/tokens` and `globals.css` first.
+- **ALWAYS use shared components** from `@/components/shared` (`ButtonLink`, `Button`, `SectionHeader`, etc.) for UI elements. Never create one-off styled `<Link>` or `<button>` elements with inline classes when a shared component exists.
+- **No third-party scripts or iframes without review.** Never inject external JS (GoHighLevel, GTM, chat widgets, etc.) directly into components. All analytics/tracking scripts go through the existing pattern in `@/components/analytics/` using `next/script`. Never use `dangerouslySetInnerHTML` for script injection.
+- **Build must pass before pushing.** Run `pnpm build` in `apps/web` and confirm zero errors before pushing to main. Broken builds block the entire team.
 - API responses use `{ success: boolean, data?: T, error?: string }` envelope
 - Web fonts: Zilla Slab (headings), DM Sans (body)
 - Mobile runs in Expo Go — no native modules allowed
