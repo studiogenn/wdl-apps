@@ -13,7 +13,7 @@ export default function SubscribeSuccessPage() {
         <p className="mb-6 font-[family-name:var(--font-poppins)] text-sm text-navy/60">
           Head to your dashboard to schedule your first pickup or manage your billing.
         </p>
-        <ButtonLink href="/account/dashboard">
+        <ButtonLink href="/account">
           Go to Dashboard
         </ButtonLink>
       </div>

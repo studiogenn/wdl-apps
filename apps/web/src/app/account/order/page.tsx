@@ -18,7 +18,7 @@ export default async function OrderPage() {
   });
 
   if (!session?.user) {
-    redirect("/account/dashboard");
+    redirect("/account");
   }
 
   return <OrderForm />;

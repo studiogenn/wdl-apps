@@ -19,7 +19,7 @@ export default async function SubscribePage() {
   });
 
   if (!session?.user) {
-    redirect("/account/dashboard");
+    redirect("/account");
   }
 
   return (

@@ -65,7 +65,7 @@ export function Dashboard({ user }: DashboardProps) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          returnUrl: `${window.location.origin}/account/dashboard`,
+          returnUrl: `${window.location.origin}/account`,
         }),
       });
 
