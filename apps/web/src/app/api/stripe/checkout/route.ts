@@ -3,13 +3,13 @@ import { z } from "zod";
 import { getStripe } from "@/lib/stripe";
 import { getDb, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
+import { STRIPE_IDS } from "@/lib/stripe-config";
 import {
   authenticateRequest,
   isErrorResponse,
 } from "@/lib/auth/middleware";
 
 const checkoutSchema = z.object({
-  priceId: z.string().min(1),
   successUrl: z.string().url(),
   cancelUrl: z.string().url(),
   mode: z.enum(["subscription", "payment"]).default("subscription"),
@@ -19,6 +19,14 @@ const checkoutSchema = z.object({
 export async function POST(request: Request) {
   const auth = await authenticateRequest(request);
   if (isErrorResponse(auth)) return auth;
+
+  const { basePriceId, overagePriceId } = STRIPE_IDS.subscription;
+  if (!basePriceId || !overagePriceId) {
+    return NextResponse.json(
+      { success: false, error: "Stripe prices not configured" },
+      { status: 503 }
+    );
+  }
 
   try {
     const body = await request.json();
@@ -30,7 +38,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Find or create Stripe customer
     const existing = await getDb().query.customers.findFirst({
       where: eq(schema.customers.authUserId, auth.uid),
     });
@@ -51,15 +58,15 @@ export async function POST(request: Request) {
       stripeCustomerId = customer.id;
     }
 
-    const { mode, priceId, quantity, successUrl, cancelUrl } = parsed.data;
-
     const session = await getStripe().checkout.sessions.create({
       customer: stripeCustomerId,
-      mode,
-      line_items: [{ price: priceId, quantity }],
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      ...(mode === "payment" ? { invoice_creation: { enabled: true } } : {}),
+      mode: "subscription",
+      line_items: [
+        { price: basePriceId, quantity: 1 },
+        { price: overagePriceId },
+      ],
+      success_url: parsed.data.successUrl,
+      cancel_url: parsed.data.cancelUrl,
     });
 
     return NextResponse.json({ success: true, data: { url: session.url } });

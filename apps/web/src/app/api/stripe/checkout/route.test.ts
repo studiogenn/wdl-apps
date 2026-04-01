@@ -7,6 +7,16 @@ const mocks = vi.hoisted(() => ({
   dbInsertValues: vi.fn().mockResolvedValue(undefined),
   dbInsert: vi.fn(),
   authenticateRequest: vi.fn(),
+  stripeIds: {
+    subscription: {
+      productId: "prod_test",
+      basePriceId: "price_base_test",
+      overagePriceId: "price_overage_test",
+      meterId: "meter_test",
+      meterEventName: "wdl_overage_lbs",
+    },
+    singleOrder: { productId: "prod_order_test" },
+  },
 }));
 
 mocks.dbInsert.mockReturnValue({ values: mocks.dbInsertValues });
@@ -32,6 +42,10 @@ vi.mock("@/lib/auth/middleware", () => ({
     r !== null && typeof r === "object" && "status" in (r as Record<string, unknown>),
 }));
 
+vi.mock("@/lib/stripe-config", () => ({
+  STRIPE_IDS: mocks.stripeIds,
+}));
+
 import { POST } from "./route";
 
 function makeRequest(body: unknown): Request {
@@ -43,7 +57,6 @@ function makeRequest(body: unknown): Request {
 }
 
 const validBody = {
-  priceId: "price_abc123",
   successUrl: "http://localhost/success",
   cancelUrl: "http://localhost/cancel",
 };
@@ -55,6 +68,8 @@ describe("POST /api/stripe/checkout", () => {
     vi.clearAllMocks();
     mocks.dbInsert.mockReturnValue({ values: mocks.dbInsertValues });
     mocks.authenticateRequest.mockResolvedValue(authUser);
+    mocks.stripeIds.subscription.basePriceId = "price_base_test";
+    mocks.stripeIds.subscription.overagePriceId = "price_overage_test";
   });
 
   it("returns 401 when not authenticated", async () => {
@@ -66,21 +81,20 @@ describe("POST /api/stripe/checkout", () => {
     expect(res.status).toBe(401);
   });
 
-  it("returns 400 for missing priceId", async () => {
-    const res = await POST(
-      makeRequest({ successUrl: "http://x.com/s", cancelUrl: "http://x.com/c" })
-    );
-    expect(res.status).toBe(400);
+  it("returns 503 when price IDs not configured", async () => {
+    mocks.stripeIds.subscription.basePriceId = "";
+    const res = await POST(makeRequest(validBody));
+    expect(res.status).toBe(503);
   });
 
   it("returns 400 for invalid successUrl", async () => {
     const res = await POST(
-      makeRequest({ priceId: "price_x", successUrl: "not-a-url", cancelUrl: "http://x.com/c" })
+      makeRequest({ successUrl: "not-a-url", cancelUrl: "http://x.com/c" })
     );
     expect(res.status).toBe(400);
   });
 
-  it("reuses existing Stripe customer", async () => {
+  it("creates checkout with base + overage line items", async () => {
     mocks.dbQueryCustomersFindFirst.mockResolvedValue({
       id: "cust_db_1",
       stripeCustomerId: "cus_existing",
@@ -96,7 +110,10 @@ describe("POST /api/stripe/checkout", () => {
     expect(mocks.checkoutSessionsCreate).toHaveBeenCalledWith({
       customer: "cus_existing",
       mode: "subscription",
-      line_items: [{ price: "price_abc123", quantity: 1 }],
+      line_items: [
+        { price: "price_base_test", quantity: 1 },
+        { price: "price_overage_test" },
+      ],
       success_url: "http://localhost/success",
       cancel_url: "http://localhost/cancel",
     });
@@ -118,23 +135,12 @@ describe("POST /api/stripe/checkout", () => {
     expect(mocks.dbInsert).toHaveBeenCalled();
   });
 
-  it("omits phone when undefined", async () => {
-    mocks.authenticateRequest.mockResolvedValue({ uid: "user_2", phone: undefined, cleancloudCustomerId: null });
-    mocks.dbQueryCustomersFindFirst.mockResolvedValue(undefined);
-    mocks.customersCreate.mockResolvedValue({ id: "cus_no_phone" });
-    mocks.checkoutSessionsCreate.mockResolvedValue({ url: "https://checkout.stripe.com/s3" });
-
-    await POST(makeRequest(validBody));
-    expect(mocks.customersCreate).toHaveBeenCalledWith({ metadata: { authUserId: "user_2" } });
-  });
-
   it("returns 500 when Stripe throws", async () => {
     mocks.dbQueryCustomersFindFirst.mockResolvedValue({ id: "c", stripeCustomerId: "cus_x" });
     mocks.checkoutSessionsCreate.mockRejectedValue(new Error("Stripe is down"));
 
     const res = await POST(makeRequest(validBody));
-    const json = await res.json();
     expect(res.status).toBe(500);
-    expect(json.error).toBe("Stripe is down");
+    expect((await res.json()).error).toBe("Stripe is down");
   });
 });

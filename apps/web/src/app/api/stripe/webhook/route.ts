@@ -15,13 +15,21 @@ export async function POST(request: Request) {
     );
   }
 
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!webhookSecret) {
+    return NextResponse.json(
+      { success: false, error: "Webhook secret not configured" },
+      { status: 503 }
+    );
+  }
+
   let event: Stripe.Event;
 
   try {
     event = getStripe().webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      webhookSecret
     );
   } catch {
     return NextResponse.json(
@@ -218,6 +226,23 @@ export async function POST(request: Request) {
           })
           .where(
             eq(schema.subscriptions.stripeSubscriptionId, subscription.id)
+          );
+        break;
+      }
+
+      case "invoice.payment_failed": {
+        const invoice = event.data.object as Stripe.Invoice;
+        const subId = getSubscriptionId(invoice);
+        if (!subId) break;
+
+        await getDb()
+          .update(schema.subscriptions)
+          .set({
+            status: "past_due",
+            updatedAt: new Date(),
+          })
+          .where(
+            eq(schema.subscriptions.stripeSubscriptionId, subId)
           );
         break;
       }
