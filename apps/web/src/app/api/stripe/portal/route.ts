@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 import {
   authenticateRequest,
   isErrorResponse,
-} from "@/lib/firebase/auth-middleware";
+} from "@/lib/auth/middleware";
 
 const portalSchema = z.object({
   returnUrl: z.string().url(),
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     }
 
     const customer = await getDb().query.customers.findFirst({
-      where: eq(schema.customers.firebaseUid, auth.uid),
+      where: eq(schema.customers.authUserId, auth.uid),
     });
 
     if (!customer) {

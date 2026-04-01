@@ -1,18 +1,20 @@
 import { NextResponse } from "next/server";
-import { authenticateRequest, isErrorResponse } from "@/lib/firebase/auth-middleware";
-import { adminDb } from "@/lib/firebase/admin";
+import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
+import { getDb, schema } from "@/lib/db";
+import { eq } from "drizzle-orm";
 
 export async function GET(request: Request) {
   const auth = await authenticateRequest(request);
   if (isErrorResponse(auth)) return auth;
 
   try {
-    const doc = await adminDb.collection("customers").doc(auth.uid).get();
-    const preferences = doc.exists ? doc.data()?.preferences ?? {} : {};
+    const row = await getDb().query.userPreferences.findFirst({
+      where: eq(schema.userPreferences.userId, auth.uid),
+    });
 
     return NextResponse.json({
       success: true,
-      data: { preferences },
+      data: { preferences: row?.preferences ?? {} },
     });
   } catch {
     return NextResponse.json(
@@ -29,10 +31,16 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    await adminDb.collection("customers").doc(auth.uid).set(
-      { preferences: body, updatedAt: new Date().toISOString() },
-      { merge: true }
-    );
+    await getDb()
+      .insert(schema.userPreferences)
+      .values({
+        userId: auth.uid,
+        preferences: body,
+      })
+      .onConflictDoUpdate({
+        target: schema.userPreferences.userId,
+        set: { preferences: body, updatedAt: new Date() },
+      });
 
     return NextResponse.json({ success: true });
   } catch {

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { authenticateRequest, isErrorResponse } from "@/lib/firebase/auth-middleware";
+import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
 import { cleancloudRequest } from "@/lib/cleancloud/client";
 import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
 

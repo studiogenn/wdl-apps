@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { adminAuth, adminDb } from "@/lib/firebase/admin";
+import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
 import { cleancloudRequest } from "@/lib/cleancloud/client";
 import { CleanCloudApiError, getReadableError } from "@/lib/cleancloud/errors";
+import { getDb, schema } from "@/lib/db";
+import { eq } from "drizzle-orm";
 
 const registerSchema = z.object({
   name: z.string().min(1).max(200),
@@ -18,18 +20,10 @@ type CustomerResponse = {
 };
 
 export async function POST(request: Request) {
-  const authHeader = request.headers.get("Authorization");
-  if (!authHeader?.startsWith("Bearer ")) {
-    return NextResponse.json(
-      { success: false, error: "Missing authorization" },
-      { status: 401 }
-    );
-  }
+  const auth = await authenticateRequest(request);
+  if (isErrorResponse(auth)) return auth;
 
   try {
-    const decoded = await adminAuth.verifyIdToken(authHeader.slice(7));
-    const uid = decoded.uid;
-
     const body = await request.json();
     const parsed = registerSchema.safeParse(body);
     if (!parsed.success) {
@@ -39,10 +33,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const digits = parsed.data.phone.replace(/\D/g, "");
-    const e164 = digits.startsWith("1") ? `+${digits}` : `+1${digits}`;
-
-    // Create customer in CleanCloud
     const params: Record<string, unknown> = {
       customerName: parsed.data.name,
       customerEmail: parsed.data.email,
@@ -58,14 +48,15 @@ export async function POST(request: Request) {
 
     const data = await cleancloudRequest<CustomerResponse>("addCustomer", params);
 
-    // Store mapping in Firestore
-    await adminDb.collection("customers").doc(uid).set({
-      cleancloudCustomerId: data.customerID,
-      phone: e164,
-      email: parsed.data.email,
-      name: parsed.data.name,
-      createdAt: new Date().toISOString(),
-    });
+    // Store CleanCloud customer ID on the Better Auth user record
+    await getDb()
+      .update(schema.user)
+      .set({
+        cleancloudCustomerId: data.customerID,
+        phone: parsed.data.phone,
+        updatedAt: new Date(),
+      })
+      .where(eq(schema.user.id, auth.uid));
 
     return NextResponse.json({
       success: true,

@@ -1,4 +1,4 @@
-import { getIdToken } from "@/lib/auth/firebase";
+import { getSessionToken } from "@/lib/auth/client";
 
 const BFF_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:3000";
 
@@ -25,7 +25,7 @@ export async function apiRequest<T>(
   };
 
   if (authenticated) {
-    const token = await getIdToken();
+    const token = await getSessionToken();
     if (!token) {
       return { success: false, error: "Not authenticated" };
     }

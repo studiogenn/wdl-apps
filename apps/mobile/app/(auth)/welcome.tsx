@@ -21,7 +21,7 @@ export default function WelcomeScreen() {
         <View className="w-full gap-4">
           <Pressable
             className="w-full rounded-btn bg-fresh-lemon-200 py-4 active:opacity-90"
-            onPress={() => router.push("/(auth)/phone")}
+            onPress={() => router.push("/(auth)/signup")}
           >
             <Text className="font-heading-medium tracking-cta text-center text-xl uppercase text-detergent-700">
               Get Started
@@ -30,7 +30,7 @@ export default function WelcomeScreen() {
 
           <Pressable
             className="w-full rounded-btn border-2 border-white/30 py-4 active:opacity-80"
-            onPress={() => router.push("/(auth)/phone")}
+            onPress={() => router.push("/(auth)/login")}
           >
             <Text className="font-heading-medium tracking-cta text-center text-xl uppercase text-white">
               Sign In

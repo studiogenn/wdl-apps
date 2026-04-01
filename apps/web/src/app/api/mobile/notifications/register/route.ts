@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { authenticateRequest, isErrorResponse } from "@/lib/firebase/auth-middleware";
-import { adminDb } from "@/lib/firebase/admin";
+import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
+import { getDb, schema } from "@/lib/db";
+import { and, eq } from "drizzle-orm";
 
 const registerSchema = z.object({
-  fcmToken: z.string().min(1),
+  token: z.string().min(1),
   platform: z.enum(["ios", "android"]),
 });
 
@@ -22,16 +23,25 @@ export async function POST(request: Request) {
       );
     }
 
-    await adminDb
-      .collection("customers")
-      .doc(auth.uid)
-      .collection("fcmTokens")
-      .doc(parsed.data.platform)
-      .set({
-        token: parsed.data.fcmToken,
+    const existing = await getDb().query.pushTokens.findFirst({
+      where: and(
+        eq(schema.pushTokens.userId, auth.uid),
+        eq(schema.pushTokens.platform, parsed.data.platform),
+      ),
+    });
+
+    if (existing) {
+      await getDb()
+        .update(schema.pushTokens)
+        .set({ token: parsed.data.token, updatedAt: new Date() })
+        .where(eq(schema.pushTokens.id, existing.id));
+    } else {
+      await getDb().insert(schema.pushTokens).values({
+        userId: auth.uid,
+        token: parsed.data.token,
         platform: parsed.data.platform,
-        updatedAt: new Date().toISOString(),
       });
+    }
 
     return NextResponse.json({ success: true });
   } catch {

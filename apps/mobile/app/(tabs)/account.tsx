@@ -1,6 +1,8 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { authClient, clearSession } from "@/lib/auth/client";
+import { useAuthStore } from "@/lib/stores/auth";
 
 type MenuItem = {
   readonly label: string;
@@ -31,8 +33,14 @@ const MENU_SECTIONS: readonly { readonly title: string; readonly items: readonly
 ];
 
 export default function AccountTab() {
-  const handlePress = (item: MenuItem) => {
+  const user = useAuthStore((s) => s.user);
+  const reset = useAuthStore((s) => s.reset);
+
+  const handlePress = async (item: MenuItem) => {
     if (item.destructive) {
+      await authClient.signOut();
+      await clearSession();
+      reset();
       router.replace("/(auth)/welcome");
       return;
     }
@@ -62,12 +70,12 @@ export default function AccountTab() {
           <Text
             className="font-heading text-2xl text-white"
           >
-            Customer
+            {user?.name ?? "Customer"}
           </Text>
           <Text
             className="font-body-light mt-1 text-sm text-neutral-400"
           >
-            +1 (555) 555-5555
+            {user?.email ?? ""}
           </Text>
         </View>
 

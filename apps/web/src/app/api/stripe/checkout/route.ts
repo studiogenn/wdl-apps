@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 import {
   authenticateRequest,
   isErrorResponse,
-} from "@/lib/firebase/auth-middleware";
+} from "@/lib/auth/middleware";
 
 const checkoutSchema = z.object({
   priceId: z.string().min(1),
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
     // Find or create Stripe customer
     const existing = await getDb().query.customers.findFirst({
-      where: eq(schema.customers.firebaseUid, auth.uid),
+      where: eq(schema.customers.authUserId, auth.uid),
     });
 
     let stripeCustomerId: string;
@@ -39,11 +39,11 @@ export async function POST(request: Request) {
       stripeCustomerId = existing.stripeCustomerId;
     } else {
       const customer = await getStripe().customers.create({
-        metadata: { firebaseUid: auth.uid },
+        metadata: { authUserId: auth.uid },
         ...(auth.phone ? { phone: auth.phone } : {}),
       });
       await getDb().insert(schema.customers).values({
-        firebaseUid: auth.uid,
+        authUserId: auth.uid,
         stripeCustomerId: customer.id,
       });
       stripeCustomerId = customer.id;
