@@ -63,6 +63,26 @@ export const verification = pgTable("verification", {
   updatedAt: timestamp("updated_at", { withTimezone: true }),
 });
 
+// ── Leads table (public schema, Alembic-managed) ──
+
+export const leads = pgTable("leads", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  type: text("type").notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  email: text("email").notNull(),
+  phone: text("phone"),
+  location: text("location"),
+  message: text("message"),
+  companyName: text("company_name"),
+  lbsPerWeek: text("lbs_per_week"),
+  vertical: text("vertical"),
+  source: text("source"),
+  metadata: jsonb("metadata"),
+  status: text("status").notNull().default("new"),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 // ── App tables (public schema) ──
 
 export const userPreferences = pgTable("user_preferences", {
