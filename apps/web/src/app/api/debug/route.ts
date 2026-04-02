@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getsql } from "@/lib/db/connection";
+import { auth } from "@/lib/auth";
 
-export async function GET() {
+export async function GET(request: Request) {
   const checks: Record<string, string> = {};
 
   const envKeys = ["DATABASE_URL", "BETTER_AUTH_SECRET", "BETTER_AUTH_URL", "BEHEMOUTH_API_URL", "CLEANCLOUD_PROXY_API_KEY"];
@@ -10,7 +11,7 @@ export async function GET() {
     if (!val) {
       checks[key] = "MISSING";
     } else if (key === "BETTER_AUTH_URL") {
-      checks[key] = val.includes("\n") ? `HAS_NEWLINE: ${JSON.stringify(val)}` : val;
+      checks[key] = val;
     } else {
       checks[key] = val.includes("\n") ? "set (HAS_NEWLINE)" : "set";
     }
@@ -25,10 +26,19 @@ export async function GET() {
   }
 
   try {
-    const { auth } = await import("@/lib/auth");
-    checks.auth_init = typeof auth.api === "object" ? "OK" : "FAIL: no api";
+    const ts = Date.now();
+    const result = await auth.api.signUpEmail({
+      body: {
+        name: "Debug Test",
+        email: `debug-test-${ts}@example.com`,
+        password: "testpassword123",
+      },
+      headers: request.headers,
+      asResponse: false,
+    });
+    checks.signup_test = result?.user?.id ? `OK: ${result.user.id}` : `UNEXPECTED: ${JSON.stringify(result)}`;
   } catch (e: unknown) {
-    checks.auth_init = `FAIL: ${e instanceof Error ? e.message : String(e)}`;
+    checks.signup_test = `FAIL: ${e instanceof Error ? e.stack ?? e.message : String(e)}`;
   }
 
   return NextResponse.json(checks);
