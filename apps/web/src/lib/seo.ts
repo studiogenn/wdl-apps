@@ -136,29 +136,3 @@ export interface SeoSection {
   visible: boolean;
 }
 
-export async function getSeoSections(
-  path: string,
-  draft: boolean = false,
-): Promise<SeoSection[] | null> {
-  if (!API_URL) return null;
-
-  const draftParam = draft ? '&draft=true' : '';
-  const url = `/public/seo/sections?path=${encodeURIComponent(path)}${draftParam}`;
-
-  if (draft) {
-    // Draft mode: always fetch fresh data, never cache
-    try {
-      const res = await fetch(`${API_URL}${url}`, { cache: 'no-store' });
-      if (!res.ok) return null;
-      const data: SeoSection[] = await res.json();
-      if (!data || data.length === 0) return null;
-      return data;
-    } catch {
-      return null;
-    }
-  }
-
-  const data = await fetchSeoResource<SeoSection[]>(url);
-  if (!data || data.length === 0) return null;
-  return data;
-}

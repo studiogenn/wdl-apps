@@ -1,23 +1,35 @@
 import type { Metadata } from "next";
-import { DynamicSectionRenderer } from "@/components/seo/dynamic-section-renderer";
 import { SchemaRenderer } from "@/components/seo/schema-renderer";
 import { getSeoMetadata } from "@/lib/seo";
 import { getLocalBusinessSchema, getFaqSchema, HOME_FAQ } from "@/lib/schema";
-
-export { DEFAULT_HOME_SECTIONS } from "@/lib/default-home-sections";
+import { Hero } from "@/components/home/Hero";
+import { TrustedBrands } from "@/components/home/TrustedBrands";
+import { Services } from "@/components/home/Services";
+import { HowItWorks } from "@/components/home/HowItWorks";
+import { ByTheNumbers } from "@/components/home/ByTheNumbers";
+import { Testimonials } from "@/components/home/Testimonials";
+import { CTABanner } from "@/components/home/CTABanner";
+import { FAQ } from "@/components/home/FAQ";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSeoMetadata("/");
 }
 
-export default async function Home() {
+export default function Home() {
   return (
     <>
       <SchemaRenderer
         path="/"
         defaultSchemas={[getLocalBusinessSchema(), getFaqSchema(HOME_FAQ)]}
       />
-      <DynamicSectionRenderer path="/" />
+      <Hero />
+      <TrustedBrands />
+      <Services />
+      <HowItWorks />
+      <ByTheNumbers />
+      <Testimonials />
+      <CTABanner />
+      <FAQ />
     </>
   );
 }
