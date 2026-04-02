@@ -9,6 +9,7 @@ const slotsSchema = z.object({
 });
 
 type SlotsResponse = {
+  readonly Slots?: string;
   readonly slots?: string;
   readonly [key: string]: unknown;
 };
@@ -37,8 +38,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const slots = result.data?.slots
-      ? result.data.slots.split(",").map((s) => s.trim()).filter(Boolean)
+    const raw = result.data?.Slots ?? result.data?.slots ?? "";
+    const slots = raw
+      ? raw.split(",").map((s) => s.trim()).filter(Boolean)
       : [];
 
     return NextResponse.json({
