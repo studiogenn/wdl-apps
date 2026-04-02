@@ -2,8 +2,6 @@
 
 import { useState, useCallback } from "react";
 import { Button } from "@/components/shared";
-import { STRIPE_IDS } from "@/lib/stripe-config";
-
 export function SubscribeButton() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +15,9 @@ export function SubscribeButton() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          priceId: STRIPE_IDS.subscription.basePriceId,
+          mode: "subscription",
+          bags: 1,
+          frequency: "weekly",
           successUrl: `${window.location.origin}/subscribe/success`,
           cancelUrl: `${window.location.origin}/subscribe`,
         }),

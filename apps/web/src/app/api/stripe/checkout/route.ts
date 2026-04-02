@@ -3,7 +3,7 @@ import { z } from "zod";
 import { getStripe } from "@/lib/stripe";
 import { getDb, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
-import { STRIPE_IDS } from "@/lib/stripe-config";
+import { STRIPE_IDS, resolveTier } from "@/lib/stripe-config";
 import { auth } from "@/lib/auth";
 
 const subscriptionSchema = z.object({
@@ -74,8 +74,10 @@ export async function POST(request: Request) {
     }
 
     if (parsed.data.mode === "subscription") {
-      const { basePriceId, overagePriceId } = STRIPE_IDS.subscription;
-      if (!basePriceId || !overagePriceId) {
+      const tier = resolveTier(parsed.data.frequency, parsed.data.bags);
+      const tierPrice = STRIPE_IDS.subscription.tiers[tier];
+      const { overagePriceId } = STRIPE_IDS.subscription;
+      if (!tierPrice.priceId || !overagePriceId) {
         return NextResponse.json(
           { success: false, error: "Stripe prices not configured" },
           { status: 503 }
@@ -90,7 +92,7 @@ export async function POST(request: Request) {
         ...(customer ? { customer: customer.stripeCustomerId } : {}),
         mode: "subscription",
         line_items: [
-          { price: basePriceId, quantity },
+          { price: tierPrice.priceId, quantity },
           { price: overagePriceId },
         ],
         subscription_data: {

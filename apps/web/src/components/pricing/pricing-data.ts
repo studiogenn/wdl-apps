@@ -2,7 +2,12 @@
 /*  Pricing page – shared constants, types, and helpers               */
 /* ------------------------------------------------------------------ */
 
-export const BAG_PRICE = 30.99;
+/** Per-bag price depends on frequency + bag count */
+export function getBagPrice(freq: "weekly" | "biweekly", bags: number): number {
+  if (freq === "biweekly") return 34.99;
+  return bags >= 2 ? 30.99 : 32.99;
+}
+
 export const BEDDING_PRICE = 58.99;
 export const STUDENT_BAG = 24.99;
 export const PAYG_RATE = 2.75;

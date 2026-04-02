@@ -1,7 +1,6 @@
 import { cn } from "@/lib/cn";
 import {
-  BAG_PRICE,
-
+  getBagPrice,
   BEDDING_PRICE,
   freqOptions,
   careUpgrades,
@@ -56,7 +55,12 @@ interface SubscriptionBuilderProps {
 export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, checkoutLoading, checkoutError }: SubscriptionBuilderProps) {
   const s = state;
 
-  const update = (partial: Partial<SubState>) => onChange({ ...s, ...partial });
+  const update = (partial: Partial<SubState>) => {
+    let next = { ...s, ...partial };
+    // Biweekly requires minimum 2 bags
+    if (next.freq === "biweekly" && next.bags < 2) next = { ...next, bags: 2 };
+    onChange(next);
+  };
 
   const toggleCare = (id: string) => {
     const idx = s.selectedCare.indexOf(id);
@@ -68,7 +72,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
 
   /* ---- Computed values ---- */
   const freqObj = freqOptions.find((f) => f.value === s.freq)!;
-  const bagPrice = BAG_PRICE;
+  const bagPrice = getBagPrice(s.freq, s.bags);
   const monthlyBags = s.bags * freqObj.pickups;
   const monthlyBase = bagPrice * monthlyBags;
   const beddingPickups = s.beddingFreq === "monthly" ? 1 : 2;
