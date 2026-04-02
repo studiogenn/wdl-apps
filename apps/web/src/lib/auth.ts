@@ -10,9 +10,10 @@ function createAuth() {
   return betterAuth({
     basePath: "/api/auth",
     trustedOrigins: [
+      process.env.BETTER_AUTH_URL ?? "",
       "wedeliverlaundry://",
       "exp://",
-    ],
+    ].filter(Boolean),
     database: drizzleAdapter(getDb(), {
       provider: "pg",
     }),
