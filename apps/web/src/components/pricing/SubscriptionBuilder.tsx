@@ -165,6 +165,11 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
         <p className="mt-1.5 mb-4 text-center text-[11px] leading-relaxed text-[#6b7db3]">
           Each bag holds ~15-18 lbs. Bag zipper must close. Overages billed at $1.99/lb.
         </p>
+        {s.freq === "biweekly" && (
+          <p className="mb-4 -mt-2 rounded-[10px] border border-[#e8e5d0] bg-[#f5f5f5] px-3 py-2 text-center text-[11px] leading-relaxed text-[#6b7db3]">
+            Biweekly plans require a minimum of 2 bags per pickup — the 1-bag option is not available.
+          </p>
+        )}
 
         {/* Frequency */}
         <span className="block text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">How often?</span>
