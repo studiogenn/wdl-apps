@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/shared";
+import { CardUpdateModal } from "./card-update-modal";
 
 type PaymentMethod = {
   readonly id: string;
@@ -71,6 +72,7 @@ export function BillingSection() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showCardModal, setShowCardModal] = useState(false);
 
   useEffect(() => {
     async function fetchBilling() {
@@ -135,27 +137,20 @@ export function BillingSection() {
     setActionLoading(null);
   }, []);
 
-  const handleUpdateCard = useCallback(async () => {
-    setActionLoading("card");
-    setError(null);
+  const handleUpdateCard = useCallback(() => {
+    setShowCardModal(true);
+  }, []);
+
+  const handleCardSuccess = useCallback(async () => {
+    setShowCardModal(false);
+    // Re-fetch billing to show updated card
     try {
-      const res = await fetch("/api/stripe/portal", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          returnUrl: `${window.location.origin}/account?flag=new-account`,
-        }),
-      });
+      const res = await fetch("/api/stripe/billing");
       const data = await res.json();
-      if (data.success && data.data?.url) {
-        window.location.href = data.data.url;
-        return;
-      }
-      setError(data.error ?? "Unable to open billing portal.");
+      if (data.success) setBilling(data.data);
     } catch {
-      setError("Something went wrong.");
+      // Will show on next page load
     }
-    setActionLoading(null);
   }, []);
 
   if (loading) {
@@ -319,6 +314,13 @@ export function BillingSection() {
 
       {error && (
         <p className="font-[family-name:var(--font-poppins)] text-sm text-red-600">{error}</p>
+      )}
+
+      {showCardModal && (
+        <CardUpdateModal
+          onClose={() => setShowCardModal(false)}
+          onSuccess={handleCardSuccess}
+        />
       )}
     </div>
   );
