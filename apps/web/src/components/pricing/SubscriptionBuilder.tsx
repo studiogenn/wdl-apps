@@ -62,6 +62,10 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
     onChange(next);
   };
 
+  const setFreq = (freq: SubState["freq"]) => {
+    update({ freq, bags: freq === "biweekly" && s.bags < 2 ? 2 : s.bags });
+  };
+
   const toggleCare = (id: string) => {
     const idx = s.selectedCare.indexOf(id);
     const next = [...s.selectedCare];
@@ -134,23 +138,29 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           How many bags per pickup?
         </span>
         <div className="mt-2.5 grid grid-cols-4 gap-2">
-          {[1, 2, 3, 4].map((n) => (
-            <button
-              key={n}
-              onClick={() => update({ bags: n })}
-              className={cn(
-                "rounded-[14px] border-[1.5px] px-1.5 py-3.5 text-center text-[15px] font-semibold transition-all",
-                s.bags === n
-                  ? "border-primary bg-primary text-white"
-                  : "border-[#e8e5d0] bg-white text-[#0a1580] hover:border-primary hover:bg-[#f0f3ff]",
-              )}
-            >
-              {n} {n === 1 ? "bag" : "bags"}
-              <span className={cn("mt-1 block text-[10px] font-normal", s.bags === n ? "text-white/65" : "text-[#6b7db3]")}>
-                {n * 15}-{n * 18} lbs
-              </span>
-            </button>
-          ))}
+          {[1, 2, 3, 4].map((n) => {
+            const disabled = n === 1 && s.freq === "biweekly";
+            return (
+              <button
+                key={n}
+                onClick={() => !disabled && update({ bags: n })}
+                disabled={disabled}
+                className={cn(
+                  "rounded-[14px] border-[1.5px] px-1.5 py-3.5 text-center text-[15px] font-semibold transition-all",
+                  disabled
+                    ? "cursor-not-allowed border-[#e8e5d0] bg-[#f5f5f5] text-[#c0c0c0]"
+                    : s.bags === n
+                      ? "border-primary bg-primary text-white"
+                      : "border-[#e8e5d0] bg-white text-[#0a1580] hover:border-primary hover:bg-[#f0f3ff]",
+                )}
+              >
+                {n} {n === 1 ? "bag" : "bags"}
+                <span className={cn("mt-1 block text-[10px] font-normal", disabled ? "text-[#c0c0c0]" : s.bags === n ? "text-white/65" : "text-[#6b7db3]")}>
+                  {disabled ? "weekly only" : `${n * 15}-${n * 18} lbs`}
+                </span>
+              </button>
+            );
+          })}
         </div>
         <p className="mt-1.5 mb-4 text-center text-[11px] leading-relaxed text-[#6b7db3]">
           Each bag holds ~15-18 lbs. Bag zipper must close. Overages billed at $1.99/lb.
@@ -162,7 +172,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           {freqOptions.map((f) => (
             <button
               key={f.value}
-              onClick={() => update({ freq: f.value })}
+              onClick={() => setFreq(f.value)}
               className={cn(
                 "rounded-[14px] border-[1.5px] px-1.5 py-3.5 text-center text-[15px] font-semibold transition-all",
                 s.freq === f.value

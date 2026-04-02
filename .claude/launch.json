@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["/Users/betina/wdl-apps/.claude/dev.js"],
+      "port": 3000
+    }
+  ]
+}

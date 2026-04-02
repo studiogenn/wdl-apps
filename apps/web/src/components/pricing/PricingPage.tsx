@@ -46,7 +46,7 @@ export function PricingPage() {
       const selectedCare = answers.baby === "yes" || answers.pets === "yes" ? ["family"] : [];
       setSubState({
         ...defaultSubState,
-        bags: suggestion.bags,
+        bags: suggestion.freq === "biweekly" && suggestion.bags < 2 ? 2 : suggestion.bags,
         freq: suggestion.freq,
         isStudent: suggestion.student,
         selectedCare,
