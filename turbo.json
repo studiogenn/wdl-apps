@@ -1,8 +1,25 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "DATABASE_URL",
+    "BETTER_AUTH_SECRET",
+    "BETTER_AUTH_URL",
+    "STRIPE_SECRET_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "BEHEMOUTH_API_URL",
+    "CLEANCLOUD_PROXY_API_KEY",
+    "INGEST_API_KEY"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "env": [
+        "NEXT_PUBLIC_POSTHOG_KEY",
+        "NEXT_PUBLIC_GTM_ID",
+        "NEXT_PUBLIC_SITE_URL",
+        "NEXT_PUBLIC_BEHEMOUTH_API_URL",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
+      ],
       "outputs": [".next/**", "dist/**", ".expo/**"]
     },
     "dev": {
