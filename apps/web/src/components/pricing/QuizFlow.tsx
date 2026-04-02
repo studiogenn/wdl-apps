@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback } from "react";
 import { questions, getSuggestion, type QuizAnswers, type Suggestion } from "./pricing-data";
 import { AddressInput } from "@/components/account/address-input";
