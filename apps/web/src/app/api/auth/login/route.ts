@@ -57,20 +57,22 @@ export async function POST(request: Request) {
   const { email, password } = parsed.data;
 
   // Try Better Auth sign-in first
-  let signInResult;
+  let signInResult: { headers?: Headers; response?: unknown; user?: { id?: string }; [key: string]: unknown } | undefined;
   try {
     signInResult = await auth.api.signInEmail({
       body: { email, password },
       headers: request.headers,
       asResponse: false,
       returnHeaders: true,
-    });
+    }) as typeof signInResult;
   } catch {
     // BA account doesn't exist — fall through to CleanCloud
   }
 
-  if (signInResult?.response) {
-    const userId = (signInResult.response as { user?: { id?: string } }).user?.id;
+  if (signInResult) {
+    // returnHeaders wraps as { headers, response } — extract user id from either shape
+    const resp = (signInResult.response ?? signInResult) as { user?: { id?: string } };
+    const userId = resp.user?.id;
 
     // Best-effort CC linking — don't block login
     if (userId) {
@@ -145,8 +147,9 @@ export async function POST(request: Request) {
     }
   }
 
-  if (authResult?.response) {
-    const userId = (authResult.response as { user?: { id?: string } }).user?.id;
+  if (authResult) {
+    const resp = (authResult.response ?? authResult) as { user?: { id?: string } };
+    const userId = resp.user?.id;
     if (userId) {
       const db = getDb();
       await db
@@ -162,7 +165,7 @@ export async function POST(request: Request) {
   });
 
   if (authResult?.headers) {
-    for (const cookie of authResult.headers.getSetCookie()) {
+    for (const cookie of (authResult.headers as Headers).getSetCookie()) {
       response.headers.append("set-cookie", cookie);
     }
   }
