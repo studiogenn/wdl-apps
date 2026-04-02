@@ -95,7 +95,7 @@ export function Dashboard({ user }: DashboardProps) {
 
       {/* Quick Actions */}
       <div className="mt-6 grid grid-cols-2 gap-4">
-        <ButtonLink href="/account/guided" className="text-center">
+        <ButtonLink href="/account/schedule" className="text-center">
           Schedule Pickup
         </ButtonLink>
         <ButtonLink href="/account/manage" variant="outline" className="text-center">

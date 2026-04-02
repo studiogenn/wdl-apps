@@ -1,0 +1,620 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { fromCleanCloudTimestamp } from "@/lib/cleancloud/dates";
+import { Button } from "@/components/shared";
+import { cn } from "@/lib/cn";
+import { OrderSummary, type OrderPayload } from "./order-summary";
+
+// ─── Types ──────────────────────────────────────────────────────────────────
+
+type DateEntry = {
+  readonly date: number;
+  readonly remaining?: number;
+};
+
+type Product = {
+  readonly productID: number;
+  readonly name: string;
+  readonly price: number;
+};
+
+type Preferences = {
+  readonly current: {
+    readonly detergent: string | null;
+    readonly bleach: string | null;
+    readonly fabricSoftener: string | null;
+    readonly dryerTemperature: string | null;
+    readonly dryerSheets: string | null;
+  };
+  readonly options: Readonly<Record<string, readonly string[]>>;
+};
+
+type ScheduleData = {
+  readonly routeId: number;
+  readonly dates: ReadonlyArray<DateEntry>;
+  readonly products: ReadonlyArray<Product>;
+  readonly preferences: Preferences;
+};
+
+type Step = "calendar" | "summary" | "confirmed";
+
+// ─── Constants ──────────────────────────────────────────────────────────────
+
+const DOW = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"] as const;
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+] as const;
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+function isSameDay(a: Date, b: Date): boolean {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+}
+
+function isPast(date: Date): boolean {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const check = new Date(date);
+  check.setHours(0, 0, 0, 0);
+  return check < today;
+}
+
+function buildCalendarCells(year: number, month: number): ReadonlyArray<number | null> {
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const firstDay = new Date(year, month, 1).getDay();
+  const cells: (number | null)[] = [
+    ...Array(firstDay).fill(null) as null[],
+    ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+  ];
+  while (cells.length % 7 !== 0) cells.push(null);
+  return cells;
+}
+
+function formatDateLabel(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+// ─── Component ──────────────────────────────────────────────────────────────
+
+type ScheduleCalendarProps = {
+  readonly customerId: number;
+};
+
+export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
+  const router = useRouter();
+  const today = new Date();
+
+  // Data state
+  const [scheduleData, setScheduleData] = useState<ScheduleData | null>(null);
+  const [slots, setSlots] = useState<ReadonlyArray<string>>([]);
+  const [loading, setLoading] = useState(true);
+  const [slotsLoading, setSlotsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Calendar navigation
+  const [viewMonth, setViewMonth] = useState(today.getMonth());
+  const [viewYear, setViewYear] = useState(today.getFullYear());
+  const [animDir, setAnimDir] = useState<"left" | "right">("right");
+  const [animKey, setAnimKey] = useState(0);
+
+  // Selection
+  const [selectedDate, setSelectedDate] = useState<DateEntry | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+
+  // Flow step
+  const [step, setStep] = useState<Step>("calendar");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  // Map CC timestamps to Date objects for calendar rendering
+  const availableDateMap = new Map<string, DateEntry>();
+  if (scheduleData) {
+    for (const entry of scheduleData.dates) {
+      const d = fromCleanCloudTimestamp(entry.date);
+      const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+      availableDateMap.set(key, entry);
+    }
+  }
+
+  // ─── Fetch schedule data ────────────────────────────────────────────────
+
+  useEffect(() => {
+    async function fetchScheduleData() {
+      try {
+        const res = await fetch("/api/account/schedule-data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        if (data.success) {
+          setScheduleData(data.data);
+        } else {
+          setError(data.error ?? "Unable to load scheduling data");
+        }
+      } catch {
+        setError("Unable to load scheduling data");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchScheduleData();
+  }, []);
+
+  // ─── Fetch slots when date selected ─────────────────────────────────────
+
+  useEffect(() => {
+    if (!selectedDate || !scheduleData) return;
+
+    async function fetchSlots() {
+      setSlotsLoading(true);
+      setSlots([]);
+      setSelectedSlot(null);
+      try {
+        const res = await fetch("/api/cleancloud/scheduling/slots", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            routeID: scheduleData!.routeId,
+            day: selectedDate!.date,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setSlots(data.data.slots);
+        }
+      } catch {
+        // Slots fetch failed
+      } finally {
+        setSlotsLoading(false);
+      }
+    }
+    fetchSlots();
+  }, [selectedDate, scheduleData]);
+
+  // ─── Calendar navigation ────────────────────────────────────────────────
+
+  const navigate = useCallback((dir: "prev" | "next") => {
+    setAnimDir(dir === "next" ? "right" : "left");
+    setAnimKey((k) => k + 1);
+    if (dir === "next") {
+      if (viewMonth === 11) {
+        setViewMonth(0);
+        setViewYear((y) => y + 1);
+      } else {
+        setViewMonth((m) => m + 1);
+      }
+    } else {
+      if (viewMonth === 0) {
+        setViewMonth(11);
+        setViewYear((y) => y - 1);
+      } else {
+        setViewMonth((m) => m - 1);
+      }
+    }
+  }, [viewMonth]);
+
+  const goToday = useCallback(() => {
+    const fwd =
+      viewYear > today.getFullYear() ||
+      (viewYear === today.getFullYear() && viewMonth > today.getMonth());
+    setAnimDir(fwd ? "left" : "right");
+    setAnimKey((k) => k + 1);
+    setViewMonth(today.getMonth());
+    setViewYear(today.getFullYear());
+  }, [viewYear, viewMonth, today]);
+
+  // ─── Date selection ─────────────────────────────────────────────────────
+
+  const handleDateClick = useCallback((day: number) => {
+    const key = `${viewYear}-${viewMonth}-${day}`;
+    const entry = availableDateMap.get(key);
+    if (!entry) return;
+    setSelectedDate(entry);
+    setSelectedSlot(null);
+    setSubmitError("");
+  }, [viewYear, viewMonth, availableDateMap]);
+
+  // ─── Proceed to summary ─────────────────────────────────────────────────
+
+  const handleContinue = useCallback(() => {
+    if (!selectedDate || !selectedSlot) return;
+    setStep("summary");
+    setSubmitError("");
+  }, [selectedDate, selectedSlot]);
+
+  // ─── Back to calendar ───────────────────────────────────────────────────
+
+  const handleBackToCalendar = useCallback(() => {
+    setStep("calendar");
+    setSubmitError("");
+  }, []);
+
+  // ─── Submit order ───────────────────────────────────────────────────────
+
+  const handleSubmitOrder = useCallback(async (order: OrderPayload) => {
+    if (!selectedDate || !selectedSlot || !scheduleData) return;
+    setSubmitting(true);
+    setSubmitError("");
+
+    const slotIndex = slots.indexOf(selectedSlot);
+    const endSlot =
+      slotIndex < slots.length - 1 ? slots[slotIndex + 1] : selectedSlot;
+
+    const payload: Record<string, unknown> = {
+      customerID: customerId,
+      pickupDate: selectedDate.date,
+      pickupStart: selectedSlot,
+      pickupEnd: endSlot,
+    };
+
+    if (order.selectedProducts.length > 0) {
+      payload.products = order.selectedProducts;
+      payload.finalTotal = order.finalTotal;
+    }
+
+    if (order.orderNotes) {
+      payload.orderNotes = order.orderNotes;
+    }
+
+    try {
+      const res = await fetch("/api/cleancloud/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStep("confirmed");
+      } else {
+        setSubmitError(data.error ?? "Unable to schedule pickup");
+      }
+    } catch {
+      setSubmitError("Unable to schedule pickup. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }, [selectedDate, selectedSlot, scheduleData, slots, customerId]);
+
+  // ─── Reset ──────────────────────────────────────────────────────────────
+
+  const handleReset = useCallback(() => {
+    setSelectedDate(null);
+    setSelectedSlot(null);
+    setStep("calendar");
+    setSubmitError("");
+  }, []);
+
+  // ─── Calendar grid ──────────────────────────────────────────────────────
+
+  const cells = buildCalendarCells(viewYear, viewMonth);
+
+  const selectedDateObj = selectedDate
+    ? fromCleanCloudTimestamp(selectedDate.date)
+    : null;
+
+  // ─── Loading state ──────────────────────────────────────────────────────
+
+  if (loading) {
+    return (
+      <div className="mx-auto max-w-3xl px-6 py-12">
+        <div className="rounded-2xl border border-navy/10 bg-white overflow-hidden">
+          <div className="p-8">
+            <div className="h-6 w-48 animate-pulse rounded-lg bg-navy/5 mb-6" />
+            <div className="grid grid-cols-7 gap-2">
+              {Array.from({ length: 35 }, (_, i) => (
+                <div key={i} className="h-10 animate-pulse rounded-lg bg-navy/5" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mx-auto max-w-3xl px-6 py-12">
+        <div className="rounded-2xl border border-navy/10 bg-white p-8 text-center">
+          <p className="text-sm text-red-600 font-body">{error}</p>
+          <Button variant="outline" className="mt-4" onClick={() => router.push("/account")}>
+            Back to Dashboard
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Order summary step ─────────────────────────────────────────────────
+
+  if (step === "summary" && selectedDate && selectedSlot && scheduleData) {
+    return (
+      <OrderSummary
+        pickupTimestamp={selectedDate.date}
+        pickupSlot={selectedSlot}
+        products={scheduleData.products}
+        preferences={scheduleData.preferences}
+        onBack={handleBackToCalendar}
+        onSubmit={handleSubmitOrder}
+        submitting={submitting}
+        submitError={submitError}
+      />
+    );
+  }
+
+  // ─── Confirmed step ────────────────────────────────────────────────────
+
+  if (step === "confirmed" && selectedDateObj) {
+    return (
+      <div className="mx-auto max-w-3xl px-6 py-12">
+        <div className="rounded-2xl border border-navy/10 bg-white overflow-hidden">
+          <div className="flex flex-col items-center justify-center p-12 text-center gap-4">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 border border-green-200">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M7.5 14l5 5 8-9" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-xl font-heading-medium text-navy mb-1">Pickup Scheduled</h2>
+              <p className="text-sm text-navy/50 font-body">
+                {selectedSlot} · {formatDateLabel(selectedDateObj)}
+              </p>
+            </div>
+            <div className="flex gap-3 mt-2">
+              <Button variant="outline" size="sm" onClick={handleReset}>
+                Schedule Another
+              </Button>
+              <Button size="sm" onClick={() => router.push("/account")}>
+                Back to Dashboard
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Calendar step ──────────────────────────────────────────────────────
+
+  return (
+    <div className="mx-auto max-w-3xl px-6 py-12">
+      <div className="flex flex-col md:flex-row rounded-2xl border border-navy/10 bg-white overflow-hidden shadow-sm">
+        {/* ─── LEFT: Calendar ──────────────────────────────────────── */}
+        <div className="md:w-[340px] shrink-0 border-b md:border-b-0 md:border-r border-navy/10 p-7 flex flex-col gap-5">
+          {/* Month + nav */}
+          <div className="flex items-start justify-between">
+            <div>
+              <h2 className="text-2xl font-heading-medium text-navy leading-none">
+                {MONTHS[viewMonth]}
+              </h2>
+              <span className="mt-1 block text-xs text-navy/40 tracking-wider font-body">
+                {viewYear}
+              </span>
+            </div>
+            <div className="flex gap-1.5 mt-1">
+              <button
+                onClick={() => navigate("prev")}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-navy/10 text-navy/40 transition-colors hover:text-primary hover:border-primary/30"
+                aria-label="Previous month"
+              >
+                ‹
+              </button>
+              <button
+                onClick={() => navigate("next")}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-navy/10 text-navy/40 transition-colors hover:text-primary hover:border-primary/30"
+                aria-label="Next month"
+              >
+                ›
+              </button>
+            </div>
+          </div>
+
+          {/* Day-of-week header */}
+          <div className="grid grid-cols-7">
+            {DOW.map((d) => (
+              <div
+                key={d}
+                className="text-center text-[10px] text-navy/30 tracking-wider font-body-medium py-1"
+              >
+                {d}
+              </div>
+            ))}
+          </div>
+
+          {/* Calendar grid */}
+          <div
+            key={animKey}
+            className={cn(
+              "grid grid-cols-7 gap-0.5",
+              animDir === "right" ? "animate-slide-right" : "animate-slide-left"
+            )}
+          >
+            {cells.map((day, i) => {
+              if (day === null) return <div key={`empty-${i}`} />;
+
+              const dateKey = `${viewYear}-${viewMonth}-${day}`;
+              const entry = availableDateMap.get(dateKey);
+              const isAvailable = !!entry;
+              const cellDate = new Date(viewYear, viewMonth, day);
+              const isToday_ = isSameDay(cellDate, today);
+              const isPast_ = isPast(cellDate);
+              const isSelected =
+                selectedDateObj !== null && isSameDay(cellDate, selectedDateObj);
+
+              return (
+                <button
+                  key={day}
+                  type="button"
+                  disabled={!isAvailable || isPast_}
+                  onClick={() => handleDateClick(day)}
+                  className={cn(
+                    "relative flex flex-col items-center py-1 rounded-lg transition-colors",
+                    isPast_ && "opacity-20 cursor-default",
+                    !isPast_ && !isAvailable && "opacity-30 cursor-default",
+                    !isPast_ && isAvailable && !isSelected && "cursor-pointer hover:bg-primary/5",
+                    isSelected && "bg-primary text-white"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "flex h-8 w-8 items-center justify-center rounded-full text-sm",
+                      isSelected
+                        ? "font-body-medium text-white"
+                        : isToday_
+                          ? "font-body-medium text-primary"
+                          : "text-navy"
+                    )}
+                  >
+                    {day}
+                  </span>
+                  {/* Availability dot */}
+                  <div className="flex justify-center gap-1 h-1.5">
+                    {isAvailable && !isSelected && (
+                      <span
+                        className={cn(
+                          "block h-1 w-1 rounded-full",
+                          entry.remaining !== undefined && entry.remaining <= 3
+                            ? "bg-amber-500"
+                            : "bg-primary/50"
+                        )}
+                      />
+                    )}
+                  </div>
+                  {/* Today indicator */}
+                  {isToday_ && !isSelected && (
+                    <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 block h-0.5 w-0.5 rounded-full bg-primary" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Legend + today */}
+          <div className="flex items-center justify-between border-t border-navy/5 pt-3">
+            <div className="flex gap-3">
+              <div className="flex items-center gap-1.5">
+                <span className="block h-1.5 w-1.5 rounded-full bg-primary/50" />
+                <span className="text-[10px] text-navy/40 font-body">Available</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="block h-1.5 w-1.5 rounded-full bg-amber-500" />
+                <span className="text-[10px] text-navy/40 font-body">Few spots</span>
+              </div>
+            </div>
+            <button
+              onClick={goToday}
+              className="rounded-md border border-navy/10 px-2 py-0.5 text-[10px] text-navy/40 tracking-wider font-body transition-colors hover:text-primary hover:border-primary/30"
+            >
+              Today
+            </button>
+          </div>
+        </div>
+
+        {/* ─── RIGHT: Slot picker / empty ─────────────────────────── */}
+        <div className="flex-1 flex flex-col min-h-[400px] bg-cream/30">
+          {/* Empty state */}
+          {!selectedDate && (
+            <div className="flex-1 flex flex-col items-center justify-center p-10 text-center gap-3">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-navy/10">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-navy/20">
+                  <rect x="3" y="4" width="18" height="18" rx="2.5" />
+                  <path d="M16 2v4M8 2v4M3 10h18" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-heading-medium text-navy">Pick a date</h3>
+              <p className="text-sm text-navy/50 font-body">
+                Select a day to see available pickup windows
+              </p>
+            </div>
+          )}
+
+          {/* Slot picker */}
+          {selectedDate && selectedDateObj && (
+            <div className="flex-1 flex flex-col p-7 gap-5">
+              {/* Header */}
+              <div>
+                <span className="block text-[10px] text-navy/40 tracking-widest uppercase font-body-medium mb-1">
+                  Scheduling for
+                </span>
+                <h3 className="text-xl font-heading-medium text-navy">
+                  {formatDateLabel(selectedDateObj)}
+                </h3>
+                {selectedDate.remaining !== undefined && selectedDate.remaining <= 5 && (
+                  <span className="mt-1 inline-block rounded-full bg-amber-50 px-2.5 py-0.5 text-[10px] text-amber-700 font-body-medium">
+                    {selectedDate.remaining} spot{selectedDate.remaining !== 1 ? "s" : ""} left
+                  </span>
+                )}
+              </div>
+
+              {/* Slots grid */}
+              {slotsLoading ? (
+                <div className="grid grid-cols-2 gap-2">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-16 animate-pulse rounded-xl bg-navy/5" />
+                  ))}
+                </div>
+              ) : slots.length > 0 ? (
+                <div className="grid grid-cols-2 gap-2 flex-1">
+                  {slots.map((slot) => {
+                    const isOn = selectedSlot === slot;
+                    return (
+                      <button
+                        key={slot}
+                        type="button"
+                        onClick={() => setSelectedSlot(isOn ? null : slot)}
+                        className={cn(
+                          "rounded-xl border px-4 py-3 text-left text-sm font-body transition-all",
+                          isOn
+                            ? "border-primary bg-primary/5 text-primary font-body-medium"
+                            : "border-navy/10 text-navy hover:border-navy/25 hover:shadow-sm"
+                        )}
+                      >
+                        <span className="block text-sm">{slot}</span>
+                        {isOn && (
+                          <span className="mt-0.5 block text-[10px] text-primary/60">Selected</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="flex-1 flex items-center justify-center">
+                  <p className="text-sm text-navy/50 font-body">
+                    No time slots available for this date.
+                  </p>
+                </div>
+              )}
+
+              {/* Continue strip */}
+              {selectedSlot && (
+                <div className="flex items-center gap-3 rounded-xl border border-navy/10 bg-white p-4">
+                  <div className="flex-1 min-w-0">
+                    <span className="block text-[11px] text-navy/40 font-body">
+                      Pickup · {selectedSlot}
+                    </span>
+                    <span className="block text-sm font-heading-medium text-navy truncate">
+                      {formatDateLabel(selectedDateObj)}
+                    </span>
+                  </div>
+                  <Button onClick={handleContinue} size="sm">
+                    Continue
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
