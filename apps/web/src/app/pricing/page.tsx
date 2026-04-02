@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { PricingPage } from "@/components/pricing/PricingPage";
-import { AddressGate } from "@/components/pricing/AddressGate";
 
 export const metadata: Metadata = {
   title: "Pricing — Laundry Pickup & Delivery Plans",
@@ -83,9 +82,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}
       />
-      <AddressGate>
-        <PricingPage />
-      </AddressGate>
+      <PricingPage />
     </>
   );
 }
