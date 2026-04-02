@@ -9,11 +9,18 @@ import { eq } from "drizzle-orm";
 const registerSchema = z.object({
   name: z.string().min(1).max(200),
   email: z.string().email(),
+  phone: z.string().min(10).max(20),
+  address: z.string().min(1).max(500),
   password: z.string().min(8),
 });
 
 type CleanCloudLoginResponse = {
   readonly cid: number;
+  readonly [key: string]: unknown;
+};
+
+type CleanCloudCustomerResponse = {
+  readonly customerID: number;
   readonly [key: string]: unknown;
 };
 
@@ -28,8 +35,9 @@ export async function POST(request: Request) {
     );
   }
 
-  const { name, email, password } = parsed.data;
+  const { name, email, phone, address, password } = parsed.data;
 
+  // Create Better Auth account
   let signUpResult;
   try {
     signUpResult = await auth.api.signUpEmail({
@@ -46,26 +54,51 @@ export async function POST(request: Request) {
 
   const userId = signUpResult?.response?.user?.id as string | undefined;
 
-  // Try to link CleanCloud customer — best-effort, don't block signup
   if (userId) {
+    // Update phone on the BA user record
+    const db = getDb();
+    await db
+      .update(userTable)
+      .set({ phone })
+      .where(eq(userTable.id, userId));
+
+    // Try to link existing CC customer, or create a new one
+    let cleancloudCustomerId: number | null = null;
+
     try {
-      const ccResult = await cleancloudProxy<CleanCloudLoginResponse>(
+      const ccLogin = await cleancloudProxy<CleanCloudLoginResponse>(
         "/customers/login",
         { email, password }
       );
-      if (ccResult.success && ccResult.data?.cid) {
-        const db = getDb();
-        await db
-          .update(userTable)
-          .set({ cleancloudCustomerId: ccResult.data.cid })
-          .where(eq(userTable.id, userId));
+      if (ccLogin.success && ccLogin.data?.cid) {
+        cleancloudCustomerId = ccLogin.data.cid;
       }
     } catch {
-      // CleanCloud unavailable or credentials don't match — skip linking
+      // CC login failed — not an existing customer
+    }
+
+    if (!cleancloudCustomerId) {
+      try {
+        const ccCreate = await cleancloudProxy<CleanCloudCustomerResponse>(
+          "/customers",
+          { name, email, phone, address, password }
+        );
+        if (ccCreate.success && ccCreate.data?.customerID) {
+          cleancloudCustomerId = ccCreate.data.customerID;
+        }
+      } catch {
+        // CC create failed — continue without CC link
+      }
+    }
+
+    if (cleancloudCustomerId) {
+      await db
+        .update(userTable)
+        .set({ cleancloudCustomerId })
+        .where(eq(userTable.id, userId));
     }
   }
 
-  // Forward session cookies from Better Auth
   const response = NextResponse.json({
     success: true,
     data: { userId },

@@ -18,7 +18,8 @@
         "NEXT_PUBLIC_GTM_ID",
         "NEXT_PUBLIC_SITE_URL",
         "NEXT_PUBLIC_BEHEMOUTH_API_URL",
-        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+        "NEXT_PUBLIC_MAPBOX_TOKEN"
       ],
       "outputs": [".next/**", "dist/**", ".expo/**"]
     },

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/shared";
+import { AddressInput } from "./address-input";
 
 type SignupFormProps = {
   readonly onSwitchToLogin: () => void;
@@ -12,17 +13,26 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [routeID, setRouteID] = useState<number | null>(null);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [alreadyExists, setAlreadyExists] = useState(false);
   const [resetSent, setResetSent] = useState(false);
 
-  const isValid = name.length > 0 && email.includes("@") && password.length >= 8;
+  const isValid =
+    name.length > 0 &&
+    email.includes("@") &&
+    phone.replace(/\D/g, "").length >= 10 &&
+    routeID !== null &&
+    password.length >= 8;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    setAlreadyExists(false);
     setLoading(true);
 
     try {
@@ -32,6 +42,8 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim(),
+          phone: phone.trim(),
+          address: address.trim(),
           password,
         }),
       });
@@ -50,6 +62,13 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
       setError("Unable to create account. Please try again.");
       setLoading(false);
     }
+  }
+
+  function formatPhone(raw: string): string {
+    const digits = raw.replace(/\D/g, "").slice(0, 10);
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
   }
 
   return (
@@ -93,6 +112,33 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
             className="w-full rounded-xl border border-navy/15 px-4 py-3 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
         </div>
+
+        <div>
+          <label
+            htmlFor="signup-phone"
+            className="mb-1 block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70"
+          >
+            Phone
+          </label>
+          <input
+            id="signup-phone"
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(formatPhone(e.target.value))}
+            placeholder="(555) 555-5555"
+            className="w-full rounded-xl border border-navy/15 px-4 py-3 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          />
+        </div>
+
+        <AddressInput
+          value={address}
+          onChange={(addr) => {
+            setAddress(addr);
+            setRouteID(null);
+          }}
+          onValidated={(id) => setRouteID(id)}
+          onInvalid={() => setRouteID(null)}
+        />
 
         <div>
           <label
