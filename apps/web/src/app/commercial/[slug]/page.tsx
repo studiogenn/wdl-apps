@@ -380,7 +380,7 @@ export default async function CommercialLandingPage({
               </ul>
             </div>
             <div className="w-full lg:w-[480px] shrink-0">
-              <ContactForm />
+              <ContactForm vertical={data.vertical} />
             </div>
           </div>
         </div>
