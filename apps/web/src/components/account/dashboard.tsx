@@ -124,7 +124,23 @@ export function Dashboard({ user }: DashboardProps) {
           </div>
         )}
 
-        {!ordersLoading && orders.length > 0 && (
+        {!ordersLoading && orders.length > 0 && (() => {
+          // Compute "April #1" style labels: group by month, number chronologically within each
+          const sorted = [...orders].sort((a, b) =>
+            new Date(a.createdDate ?? 0).getTime() - new Date(b.createdDate ?? 0).getTime()
+          );
+          const monthCounts = new Map<string, number>();
+          const labelMap = new Map<number | undefined, string>();
+          for (const o of sorted) {
+            const d = o.createdDate ? new Date(o.createdDate) : null;
+            if (!d) continue;
+            const monthKey = `${d.getFullYear()}-${d.getMonth()}`;
+            const monthName = d.toLocaleDateString("en-US", { month: "long" });
+            const count = (monthCounts.get(monthKey) ?? 0) + 1;
+            monthCounts.set(monthKey, count);
+            labelMap.set(o.orderID, `${monthName} #${count}`);
+          }
+          return (
           <div className="space-y-3">
             {orders.slice(0, 10).map((order, i) => (
               <div
@@ -134,7 +150,7 @@ export function Dashboard({ user }: DashboardProps) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
-                      #{order.orderID}
+                      {labelMap.get(order.orderID) ?? `#${order.orderID}`}
                     </p>
                     {order.status && (
                       <span className={`rounded-full px-2.5 py-0.5 font-[family-name:var(--font-poppins)] text-xs font-body-medium ${
@@ -188,7 +204,8 @@ export function Dashboard({ user }: DashboardProps) {
               </div>
             ))}
           </div>
-        )}
+          );
+        })()}
       </div>
 
       {payingOrder && typeof payingOrder.orderID === "number" && typeof payingOrder.total === "number" && (
