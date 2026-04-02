@@ -1,17 +1,25 @@
 import { NextResponse } from "next/server";
+import { getsql } from "@/lib/db/connection";
 
 export async function GET() {
   const checks: Record<string, string> = {};
 
-  checks.DATABASE_URL = process.env.DATABASE_URL ? "set" : "MISSING";
-  checks.BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET ? "set" : "MISSING";
-  checks.BETTER_AUTH_URL = process.env.BETTER_AUTH_URL ?? "MISSING";
+  const envKeys = ["DATABASE_URL", "BETTER_AUTH_SECRET", "BETTER_AUTH_URL", "BEHEMOUTH_API_URL", "CLEANCLOUD_PROXY_API_KEY"];
+  for (const key of envKeys) {
+    const val = process.env[key];
+    if (!val) {
+      checks[key] = "MISSING";
+    } else if (key === "BETTER_AUTH_URL") {
+      checks[key] = val.includes("\n") ? `HAS_NEWLINE: ${JSON.stringify(val)}` : val;
+    } else {
+      checks[key] = val.includes("\n") ? "set (HAS_NEWLINE)" : "set";
+    }
+  }
 
   try {
-    const { getDb } = await import("@/lib/db");
-    const db = getDb();
-    const result = await db.execute(new (await import("drizzle-orm")).SQL(["SELECT 1 as ok"]));
-    checks.db_connection = "OK";
+    const sql = getsql();
+    const result = await sql`SELECT 1 as ok`;
+    checks.db_connection = result[0]?.ok === 1 ? "OK" : "UNEXPECTED";
   } catch (e: unknown) {
     checks.db_connection = `FAIL: ${e instanceof Error ? e.message : String(e)}`;
   }

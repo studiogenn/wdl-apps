@@ -10,7 +10,7 @@ function createAuth() {
   return betterAuth({
     basePath: "/api/auth",
     trustedOrigins: [
-      process.env.BETTER_AUTH_URL ?? "",
+      (process.env.BETTER_AUTH_URL ?? "").trim(),
       "wedeliverlaundry://",
       "exp://",
     ].filter(Boolean),
