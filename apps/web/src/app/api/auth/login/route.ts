@@ -57,31 +57,30 @@ export async function POST(request: Request) {
   const { email, password } = parsed.data;
 
   // Try Better Auth sign-in first
-  let signInResult: { headers?: Headers; response?: unknown; user?: { id?: string }; [key: string]: unknown } | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let signInResult: any;
+  let signInError: unknown;
   try {
     signInResult = await auth.api.signInEmail({
       body: { email, password },
       headers: request.headers,
       asResponse: false,
       returnHeaders: true,
-    }) as typeof signInResult;
-  } catch {
-    // BA account doesn't exist — fall through to CleanCloud
+    });
+  } catch (e) {
+    signInError = e;
   }
 
-  if (signInResult) {
-    // Debug: return the actual shape so we can see it
-    return NextResponse.json({
-      success: false,
-      debug: true,
-      keys: Object.keys(signInResult),
-      hasResponse: "response" in signInResult,
-      hasUser: "user" in signInResult,
-      hasHeaders: "headers" in signInResult,
-      type: typeof signInResult,
-      stringified: JSON.stringify(signInResult, (_k, v) => v instanceof Headers ? "[Headers]" : v),
-    });
-  }
+  // Debug: return what happened
+  return NextResponse.json({
+    debug: true,
+    gotResult: signInResult != null,
+    resultKeys: signInResult ? Object.keys(signInResult) : null,
+    resultStr: signInResult ? JSON.stringify(signInResult, (_k: string, v: unknown) => v instanceof Headers ? "[Headers]" : v) : null,
+    gotError: signInError != null,
+    errorMsg: signInError instanceof Error ? signInError.message : String(signInError ?? "none"),
+    errorStack: signInError instanceof Error ? signInError.stack?.split("\n").slice(0, 3) : null,
+  });
 
   // BA failed — try CleanCloud login, then create/link BA account
   let ccResult;
