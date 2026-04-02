@@ -1,8 +1,4 @@
-"use client";
-
-import { useState, useCallback } from "react";
 import type { PageView } from "./pricing-data";
-import { AddressInput } from "@/components/account/address-input";
 
 function SuperBgSvg() {
   return (
@@ -42,24 +38,6 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ onNavigate, onStartQuiz }: HeroSectionProps) {
-  const [address, setAddress] = useState("");
-  const [routeID, setRouteID] = useState<number | null>(null);
-
-  const handleAddressChange = useCallback((addr: string) => {
-    setAddress(addr);
-    setRouteID(null);
-  }, []);
-
-  const handleValidated = useCallback((id: number) => {
-    setRouteID(id);
-  }, []);
-
-  const handleInvalid = useCallback(() => {
-    setRouteID(null);
-  }, []);
-
-  const ctaDisabled = routeID === null;
-
   return (
     <div>
       {/* Hero banner */}
@@ -77,36 +55,22 @@ export function HeroSection({ onNavigate, onStartQuiz }: HeroSectionProps) {
           <p className="mx-auto mb-8 max-w-[320px] text-sm leading-relaxed text-white/70">
             15-18 lbs per bag · Free pickup & delivery · No contracts
           </p>
-
-          {/* Address check */}
-          <div className="mx-auto mb-6 max-w-[340px] text-left [&_label]:text-white/70 [&_input]:bg-white/10 [&_input]:text-white [&_input]:placeholder:text-white/40 [&_input]:border-white/20 [&_input]:focus:border-[#F9EBAA] [&_input]:focus:ring-[#F9EBAA]/20 [&_ul]:bg-[#1a2280] [&_ul]:border-white/15 [&_button]:text-white [&_button]:hover:bg-white/10">
-            <AddressInput
-              value={address}
-              onChange={handleAddressChange}
-              onValidated={handleValidated}
-              onInvalid={handleInvalid}
-            />
-          </div>
-
           <div className="flex flex-col gap-2.5">
             <button
               onClick={onStartQuiz}
-              disabled={ctaDisabled}
-              className="rounded-full bg-[#F9EBAA] px-6 py-4 font-[family-name:var(--font-zilla-slab)] text-[15px] font-semibold tracking-[0.5px] text-[#0a158a] transition-all hover:-translate-y-px hover:bg-[#f5e080] disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-full bg-[#F9EBAA] px-6 py-4 font-[family-name:var(--font-zilla-slab)] text-[15px] font-semibold tracking-[0.5px] text-[#0a158a] transition-all hover:-translate-y-px hover:bg-[#f5e080]"
             >
               HELP ME PICK A PLAN →
             </button>
             <button
               onClick={() => onNavigate("subscription")}
-              disabled={ctaDisabled}
-              className="rounded-full border-[1.5px] border-white/30 bg-white/[0.12] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-full border-[1.5px] border-white/30 bg-white/[0.12] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/20"
             >
               Build my own plan
             </button>
             <button
               onClick={() => onNavigate("payg")}
-              disabled={ctaDisabled}
-              className="rounded-full bg-[#d4eef6] px-6 py-3.5 text-sm font-semibold text-[#0a158a] transition-colors hover:bg-[#A2D5E6] disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-full bg-[#d4eef6] px-6 py-3.5 text-sm font-semibold text-[#0a158a] transition-colors hover:bg-[#A2D5E6]"
             >
               One-time order — no subscription
             </button>
