@@ -3,7 +3,7 @@ import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { cleancloudProxy } from "@/lib/cleancloud/client";
 import { getDb } from "@/lib/db";
-import { user as userTable } from "@/lib/db/schema";
+import { user as userTable, account as accountTable } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 const loginSchema = z.object({
@@ -130,11 +130,36 @@ export async function POST(request: Request) {
 
   const cid = ccResult.data.cid;
 
+  // Check for orphan user (migrated from CleanCloud without credentials row)
+  const db = getDb();
+  const normalizedEmail = email.trim().toLowerCase();
+  const [existingUser] = await db
+    .select({ id: userTable.id, name: userTable.name })
+    .from(userTable)
+    .where(eq(userTable.email, normalizedEmail))
+    .limit(1);
+
+  let preservedName: string | undefined;
+  if (existingUser) {
+    const [existingAccount] = await db
+      .select({ id: accountTable.id })
+      .from(accountTable)
+      .where(eq(accountTable.userId, existingUser.id))
+      .limit(1);
+
+    if (!existingAccount) {
+      // User row exists but no credentials — delete so signUpEmail
+      // can recreate with proper Better Auth account + password hash
+      preservedName = existingUser.name;
+      await db.delete(userTable).where(eq(userTable.id, existingUser.id));
+    }
+  }
+
   // CC login worked — create or sign into BA account and link
   let authResult: AuthResultWithHeaders | undefined;
   try {
     authResult = await auth.api.signUpEmail({
-      body: { name: email.split("@")[0] ?? email, email, password },
+      body: { name: preservedName ?? email.split("@")[0] ?? email, email, password },
       headers: request.headers,
       asResponse: false,
       returnHeaders: true,
@@ -148,16 +173,15 @@ export async function POST(request: Request) {
         returnHeaders: true,
       }) as AuthResultWithHeaders;
     } catch {
-      return NextResponse.json({
-        success: true,
-        data: { customerID: cid, authLinked: false },
-      });
+      return NextResponse.json(
+        { success: false, error: "We couldn't sign you in. Please create a new account or reset your password." },
+        { status: 401 }
+      );
     }
   }
 
   const userId = authResult?.response.user?.id;
   if (userId) {
-    const db = getDb();
     await db
       .update(userTable)
       .set({ cleancloudCustomerId: cid })
