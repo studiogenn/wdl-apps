@@ -63,6 +63,7 @@ export function PostHogProvider({ children }: PostHogProviderProps) {
     posthog.init(key, {
       api_host: "/ingest",
       ui_host: "https://us.posthog.com",
+      person_profiles: "always",
       capture_pageview: true,
       capture_pageleave: true,
       autocapture: true,
