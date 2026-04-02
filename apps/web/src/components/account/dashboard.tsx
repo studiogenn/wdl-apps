@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Button, ButtonLink } from "@/components/shared";
+import { BillingSection } from "./billing-section";
 
 type User = {
   readonly id: string;
@@ -26,8 +27,6 @@ export function Dashboard({ user }: DashboardProps) {
   const [orders, setOrders] = useState<readonly Order[]>([]);
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [signingOut, setSigningOut] = useState(false);
-  const [billingLoading, setBillingLoading] = useState(false);
-  const [billingError, setBillingError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchOrders() {
@@ -55,34 +54,6 @@ export function Dashboard({ user }: DashboardProps) {
     await authClient.signOut();
     router.refresh();
   }, [router]);
-
-  const handleManageBilling = useCallback(async () => {
-    setBillingLoading(true);
-    setBillingError(null);
-
-    try {
-      const res = await fetch("/api/stripe/portal", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          returnUrl: `${window.location.origin}/account`,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!data.success || !data.data?.url) {
-        setBillingError(data.error ?? "Unable to open billing portal.");
-        setBillingLoading(false);
-        return;
-      }
-
-      window.location.href = data.data.url;
-    } catch {
-      setBillingError("Something went wrong. Please try again.");
-      setBillingLoading(false);
-    }
-  }, []);
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-12">
@@ -117,29 +88,7 @@ export function Dashboard({ user }: DashboardProps) {
       </div>
 
       {/* Billing */}
-      <div className="mt-6">
-        <h2 className="mb-4 text-lg font-heading-medium text-navy">Billing</h2>
-        <div className="rounded-xl border border-navy/10 bg-white p-6">
-          <div className="flex items-center justify-between">
-            <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">
-              Manage your subscription, payment method, and invoices.
-            </p>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleManageBilling}
-              disabled={billingLoading}
-            >
-              {billingLoading ? "Opening..." : "Manage Billing"}
-            </Button>
-          </div>
-          {billingError ? (
-            <p className="mt-3 font-[family-name:var(--font-poppins)] text-sm text-red-600">
-              {billingError}
-            </p>
-          ) : null}
-        </div>
-      </div>
+      <BillingSection />
 
       {/* Orders */}
       <div className="mt-8">
