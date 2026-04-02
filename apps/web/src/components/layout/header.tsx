@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { label: "Wash & Fold", href: "/wash-fold" },
   { label: "Locations", href: "/service-areas" },
   { label: "About Us", href: "/our-story" },
-  { label: "Business & Corporate", href: "/commercial-laundry" },
+  { label: "For Business", href: "/commercial-laundry" },
 ];
 
 export function Header() {
