@@ -9,24 +9,50 @@ import {
   isErrorResponse,
 } from "@/lib/auth/middleware";
 
-const checkoutSchema = z.object({
+const subscriptionSchema = z.object({
+  mode: z.literal("subscription"),
   successUrl: z.string().url(),
   cancelUrl: z.string().url(),
-  mode: z.enum(["subscription", "payment"]).default("subscription"),
-  quantity: z.number().int().positive().default(1),
+  bags: z.number().int().min(1).max(4),
+  frequency: z.enum(["weekly", "biweekly"]),
+  planMetadata: z.record(z.string(), z.string()).optional(),
 });
+
+const paymentSchema = z.object({
+  mode: z.literal("payment"),
+  successUrl: z.string().url(),
+  cancelUrl: z.string().url(),
+  amountCents: z.number().int().positive(),
+  description: z.string().optional(),
+  planMetadata: z.record(z.string(), z.string()).optional(),
+});
+
+const checkoutSchema = z.discriminatedUnion("mode", [
+  subscriptionSchema,
+  paymentSchema,
+]);
+
+async function getOrCreateStripeCustomer(authUserId: string, phone?: string) {
+  const existing = await getDb().query.customers.findFirst({
+    where: eq(schema.customers.authUserId, authUserId),
+  });
+
+  if (existing) return existing.stripeCustomerId;
+
+  const customer = await getStripe().customers.create({
+    metadata: { authUserId },
+    ...(phone ? { phone } : {}),
+  });
+  await getDb().insert(schema.customers).values({
+    authUserId,
+    stripeCustomerId: customer.id,
+  });
+  return customer.id;
+}
 
 export async function POST(request: Request) {
   const auth = await authenticateRequest(request);
   if (isErrorResponse(auth)) return auth;
-
-  const { basePriceId, overagePriceId } = STRIPE_IDS.subscription;
-  if (!basePriceId || !overagePriceId) {
-    return NextResponse.json(
-      { success: false, error: "Stripe prices not configured" },
-      { status: 503 }
-    );
-  }
 
   try {
     const body = await request.json();
@@ -38,33 +64,70 @@ export async function POST(request: Request) {
       );
     }
 
-    const existing = await getDb().query.customers.findFirst({
-      where: eq(schema.customers.authUserId, auth.uid),
-    });
+    if (parsed.data.mode === "subscription") {
+      const { basePriceId, overagePriceId } = STRIPE_IDS.subscription;
+      if (!basePriceId || !overagePriceId) {
+        return NextResponse.json(
+          { success: false, error: "Stripe prices not configured" },
+          { status: 503 }
+        );
+      }
 
-    let stripeCustomerId: string;
+      const stripeCustomerId = await getOrCreateStripeCustomer(
+        auth.uid,
+        auth.phone,
+      );
 
-    if (existing) {
-      stripeCustomerId = existing.stripeCustomerId;
-    } else {
-      const customer = await getStripe().customers.create({
-        metadata: { authUserId: auth.uid },
-        ...(auth.phone ? { phone: auth.phone } : {}),
+      const pickupsPerMonth = parsed.data.frequency === "weekly" ? 4 : 2;
+      const quantity = parsed.data.bags * pickupsPerMonth;
+
+      const session = await getStripe().checkout.sessions.create({
+        customer: stripeCustomerId,
+        mode: "subscription",
+        line_items: [
+          { price: basePriceId, quantity },
+          { price: overagePriceId },
+        ],
+        subscription_data: {
+          metadata: {
+            bags: String(parsed.data.bags),
+            frequency: parsed.data.frequency,
+            ...parsed.data.planMetadata,
+          },
+        },
+        success_url: parsed.data.successUrl,
+        cancel_url: parsed.data.cancelUrl,
       });
-      await getDb().insert(schema.customers).values({
-        authUserId: auth.uid,
-        stripeCustomerId: customer.id,
-      });
-      stripeCustomerId = customer.id;
+
+      return NextResponse.json({ success: true, data: { url: session.url } });
     }
+
+    // Payment mode (PAYG)
+    const stripeCustomerId = await getOrCreateStripeCustomer(
+      auth.uid,
+      auth.phone,
+    );
 
     const session = await getStripe().checkout.sessions.create({
       customer: stripeCustomerId,
-      mode: "subscription",
+      mode: "payment",
       line_items: [
-        { price: basePriceId, quantity: 1 },
-        { price: overagePriceId },
+        {
+          price_data: {
+            currency: "usd",
+            product: STRIPE_IDS.singleOrder.productId,
+            unit_amount: parsed.data.amountCents,
+          },
+          quantity: 1,
+        },
       ],
+      payment_intent_data: {
+        capture_method: "manual",
+        metadata: {
+          authUserId: auth.uid,
+          ...parsed.data.planMetadata,
+        },
+      },
       success_url: parsed.data.successUrl,
       cancel_url: parsed.data.cancelUrl,
     });

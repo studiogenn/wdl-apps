@@ -17,7 +17,9 @@ interface SummaryCardProps {
   perkText?: string;
   ctaLabel: string;
   ctaVariant?: "yellow" | "softner";
+  ctaDisabled?: boolean;
   finePrint?: string;
+  error?: string;
   onCta?: () => void;
 }
 
@@ -43,7 +45,9 @@ export function SummaryCard({
   perkText,
   ctaLabel,
   ctaVariant = "yellow",
+  ctaDisabled = false,
   finePrint,
+  error,
   onCta,
 }: SummaryCardProps) {
   return (
@@ -102,11 +106,22 @@ export function SummaryCard({
           </div>
         )}
 
+        {/* Error */}
+        {error && (
+          <div className="mb-3 rounded-[10px] bg-red-500/10 px-3 py-2.5 text-xs text-red-200">
+            {error}
+          </div>
+        )}
+
         {/* CTA */}
         <button
           onClick={onCta}
+          disabled={ctaDisabled}
           className={cn(
-            "w-full rounded-full py-4 text-[15px] font-semibold font-[family-name:var(--font-zilla-slab)] tracking-[0.5px] transition-all hover:-translate-y-px",
+            "w-full rounded-full py-4 text-[15px] font-semibold font-[family-name:var(--font-zilla-slab)] tracking-[0.5px] transition-all",
+            ctaDisabled
+              ? "cursor-not-allowed opacity-50"
+              : "hover:-translate-y-px",
             ctaVariant === "yellow"
               ? "bg-[#F9EBAA] text-[#0a158a] hover:bg-[#f5e080]"
               : "bg-[#A2D5E6] text-[#0a158a] hover:bg-[#84c8de]",

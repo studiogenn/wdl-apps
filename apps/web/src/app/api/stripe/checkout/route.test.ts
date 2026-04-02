@@ -56,9 +56,20 @@ function makeRequest(body: unknown): Request {
   });
 }
 
-const validBody = {
+const validSubBody = {
+  mode: "subscription" as const,
   successUrl: "http://localhost/success",
   cancelUrl: "http://localhost/cancel",
+  bags: 1,
+  frequency: "weekly" as const,
+};
+
+const validPaygBody = {
+  mode: "payment" as const,
+  successUrl: "http://localhost/success",
+  cancelUrl: "http://localhost/cancel",
+  amountCents: 4774,
+  description: "One-time laundry order (~15 lbs est.)",
 };
 
 const authUser = { uid: "user_1", phone: "+15551234567", cleancloudCustomerId: null };
@@ -77,31 +88,31 @@ describe("POST /api/stripe/checkout", () => {
     mocks.authenticateRequest.mockResolvedValue(
       NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
     );
-    const res = await POST(makeRequest(validBody));
+    const res = await POST(makeRequest(validSubBody));
     expect(res.status).toBe(401);
   });
 
-  it("returns 503 when price IDs not configured", async () => {
+  it("returns 503 when subscription price IDs not configured", async () => {
     mocks.stripeIds.subscription.basePriceId = "";
-    const res = await POST(makeRequest(validBody));
+    const res = await POST(makeRequest(validSubBody));
     expect(res.status).toBe(503);
   });
 
-  it("returns 400 for invalid successUrl", async () => {
+  it("returns 400 for invalid request body", async () => {
     const res = await POST(
-      makeRequest({ successUrl: "not-a-url", cancelUrl: "http://x.com/c" })
+      makeRequest({ mode: "subscription", successUrl: "not-a-url", cancelUrl: "http://x.com/c", bags: 1, frequency: "weekly" })
     );
     expect(res.status).toBe(400);
   });
 
-  it("creates checkout with base + overage line items", async () => {
+  it("creates subscription checkout with correct quantity (bags * pickups)", async () => {
     mocks.dbQueryCustomersFindFirst.mockResolvedValue({
       id: "cust_db_1",
       stripeCustomerId: "cus_existing",
     });
     mocks.checkoutSessionsCreate.mockResolvedValue({ url: "https://checkout.stripe.com/s1" });
 
-    const res = await POST(makeRequest(validBody));
+    const res = await POST(makeRequest({ ...validSubBody, bags: 2, frequency: "weekly" }));
     const json = await res.json();
 
     expect(res.status).toBe(200);
@@ -111,12 +122,31 @@ describe("POST /api/stripe/checkout", () => {
       customer: "cus_existing",
       mode: "subscription",
       line_items: [
-        { price: "price_base_test", quantity: 1 },
+        { price: "price_base_test", quantity: 8 },
         { price: "price_overage_test" },
       ],
+      subscription_data: {
+        metadata: { bags: "2", frequency: "weekly" },
+      },
       success_url: "http://localhost/success",
       cancel_url: "http://localhost/cancel",
     });
+  });
+
+  it("uses 2 pickups for biweekly frequency", async () => {
+    mocks.dbQueryCustomersFindFirst.mockResolvedValue({ id: "c", stripeCustomerId: "cus_x" });
+    mocks.checkoutSessionsCreate.mockResolvedValue({ url: "https://checkout.stripe.com/s3" });
+
+    await POST(makeRequest({ ...validSubBody, bags: 1, frequency: "biweekly" }));
+
+    expect(mocks.checkoutSessionsCreate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        line_items: [
+          { price: "price_base_test", quantity: 2 },
+          { price: "price_overage_test" },
+        ],
+      }),
+    );
   });
 
   it("creates new Stripe customer when not in DB", async () => {
@@ -124,7 +154,7 @@ describe("POST /api/stripe/checkout", () => {
     mocks.customersCreate.mockResolvedValue({ id: "cus_new" });
     mocks.checkoutSessionsCreate.mockResolvedValue({ url: "https://checkout.stripe.com/s2" });
 
-    const res = await POST(makeRequest(validBody));
+    const res = await POST(makeRequest(validSubBody));
     const json = await res.json();
 
     expect(json.success).toBe(true);
@@ -135,11 +165,42 @@ describe("POST /api/stripe/checkout", () => {
     expect(mocks.dbInsert).toHaveBeenCalled();
   });
 
+  it("creates payment checkout for PAYG with manual capture", async () => {
+    mocks.dbQueryCustomersFindFirst.mockResolvedValue({ id: "c", stripeCustomerId: "cus_x" });
+    mocks.checkoutSessionsCreate.mockResolvedValue({ url: "https://checkout.stripe.com/payg" });
+
+    const res = await POST(makeRequest(validPaygBody));
+    const json = await res.json();
+
+    expect(json.success).toBe(true);
+    expect(json.data.url).toBe("https://checkout.stripe.com/payg");
+    expect(mocks.checkoutSessionsCreate).toHaveBeenCalledWith({
+      customer: "cus_x",
+      mode: "payment",
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product: "prod_order_test",
+            unit_amount: 4774,
+          },
+          quantity: 1,
+        },
+      ],
+      payment_intent_data: {
+        capture_method: "manual",
+        metadata: { authUserId: "user_1" },
+      },
+      success_url: "http://localhost/success",
+      cancel_url: "http://localhost/cancel",
+    });
+  });
+
   it("returns 500 when Stripe throws", async () => {
     mocks.dbQueryCustomersFindFirst.mockResolvedValue({ id: "c", stripeCustomerId: "cus_x" });
     mocks.checkoutSessionsCreate.mockRejectedValue(new Error("Stripe is down"));
 
-    const res = await POST(makeRequest(validBody));
+    const res = await POST(makeRequest(validSubBody));
     expect(res.status).toBe(500);
     expect((await res.json()).error).toBe("Stripe is down");
   });

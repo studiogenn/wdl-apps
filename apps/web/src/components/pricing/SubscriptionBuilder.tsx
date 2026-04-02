@@ -48,9 +48,12 @@ interface SubscriptionBuilderProps {
   state: SubState;
   onChange: (next: SubState) => void;
   onNavigate: (page: PageView) => void;
+  onCheckout: () => void;
+  checkoutLoading: boolean;
+  checkoutError: string | null;
 }
 
-export function SubscriptionBuilder({ state, onChange, onNavigate }: SubscriptionBuilderProps) {
+export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, checkoutLoading, checkoutError }: SubscriptionBuilderProps) {
   const s = state;
 
   const update = (partial: Partial<SubState>) => onChange({ ...s, ...partial });
@@ -274,9 +277,12 @@ export function SubscriptionBuilder({ state, onChange, onNavigate }: Subscriptio
           totalLabel="Total/month"
           totalValue={fmt(monthlyTotal)}
           perkText="Before any scheduled pickup, add specialty items, care upgrades, or a Bed Refresh. No extra trip needed — just add it to your next pickup."
-          ctaLabel="START MY PLAN"
+          ctaLabel={checkoutLoading ? "LOADING…" : "START MY PLAN"}
           ctaVariant="yellow"
+          ctaDisabled={checkoutLoading}
+          error={checkoutError ?? undefined}
           finePrint="No contracts · Cancel anytime · Free pickup and delivery"
+          onCta={onCheckout}
         />
 
         <button onClick={() => onNavigate("home")} className="mt-4 w-full py-2 text-center text-[13px] text-[#6b7db3] hover:text-primary">

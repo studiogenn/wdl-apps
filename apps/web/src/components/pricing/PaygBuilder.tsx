@@ -71,9 +71,12 @@ interface PaygBuilderProps {
   state: PaygState;
   onChange: (next: PaygState) => void;
   onNavigate: (page: PageView) => void;
+  onCheckout: () => void;
+  checkoutLoading: boolean;
+  checkoutError: string | null;
 }
 
-export function PaygBuilder({ state, onChange, onNavigate }: PaygBuilderProps) {
+export function PaygBuilder({ state, onChange, onNavigate, onCheckout, checkoutLoading, checkoutError }: PaygBuilderProps) {
   const p = state;
   const update = (partial: Partial<PaygState>) => onChange({ ...p, ...partial });
 
@@ -282,9 +285,12 @@ export function PaygBuilder({ state, onChange, onNavigate }: PaygBuilderProps) {
             lines={summaryLines}
             totalLabel="Estimated total"
             totalValue={fmt(orderTotal)}
-            ctaLabel="SCHEDULE PICKUP"
+            ctaLabel={checkoutLoading ? "LOADING…" : "SCHEDULE PICKUP"}
             ctaVariant="softner"
+            ctaDisabled={checkoutLoading}
+            error={checkoutError ?? undefined}
             finePrint="Charged by actual weight at pickup · $30 minimum"
+            onCta={onCheckout}
           />
         </div>
 
