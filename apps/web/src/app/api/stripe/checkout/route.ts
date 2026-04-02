@@ -89,6 +89,7 @@ export async function POST(request: Request) {
       const session = await getStripe().checkout.sessions.create({
         ...(customer ? { customer: customer.stripeCustomerId } : {}),
         mode: "subscription",
+        allow_promotion_codes: true,
         line_items: [
           { price: tierPrice.priceId, quantity: 1 },
           { price: overagePriceId },
@@ -113,6 +114,7 @@ export async function POST(request: Request) {
     const session = await getStripe().checkout.sessions.create({
       ...(customer ? { customer: customer.stripeCustomerId } : {}),
       mode: "payment",
+      allow_promotion_codes: true,
       line_items: [
         {
           price_data: {
