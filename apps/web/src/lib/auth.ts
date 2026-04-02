@@ -58,6 +58,10 @@ export const auth: Auth = new Proxy({} as Auth, {
     const value = Reflect.get(instance as object, prop, receiver);
     return typeof value === "function" ? value.bind(instance) : value;
   },
+  has(_target, prop) {
+    const instance = getAuth();
+    return prop in (instance as object);
+  },
 });
 
 export type Session = typeof auth.$Infer.Session;
