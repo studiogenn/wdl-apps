@@ -5,7 +5,7 @@ const DEFAULTS = {
   heading: "Ready to Get Started?",
   subheading:
     "From easy scheduling to reliable 24-hour delivery, we've built a laundry service that fits into your life instead of taking over it.",
-  ctaText: "See Pricing",
+  ctaText: "View Memberships",
   ctaLink: "/pricing",
   secondaryCtaText: "Schedule Pick-up",
   secondaryCtaLink: "/account/",
