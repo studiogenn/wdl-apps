@@ -140,7 +140,7 @@ export function OrderSummary({
 
   // ─── Submit ───────────────────────────────────────────────────────────
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = () => {
     const productEntries = Array.from(selectedProducts.entries())
       .filter(([, qty]) => qty > 0)
       .map(([productID, quantity]) => ({ productID, quantity }));
@@ -155,7 +155,7 @@ export function OrderSummary({
       orderNotes: buildOrderNotes(),
       finalTotal: total,
     });
-  }, [selectedProducts, notes, prefOverrides, products, preferences, onSubmit]);
+  };
 
   // ─── Computed ─────────────────────────────────────────────────────────
 

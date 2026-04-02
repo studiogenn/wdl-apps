@@ -12,7 +12,7 @@ describe("Hero", () => {
   it("renders the schedule pickup CTA", () => {
     render(<Hero />);
     expect(
-      screen.getByRole("link", { name: /schedule pick-up/i })
+      screen.getByRole("link", { name: /view memberships/i })
     ).toBeInTheDocument();
   });
 

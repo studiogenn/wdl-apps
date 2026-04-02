@@ -190,6 +190,7 @@ describe("POST /api/stripe/checkout", () => {
 
     expect(json.success).toBe(true);
     expect(mocks.checkoutSessionsCreate).toHaveBeenCalledWith({
+      allow_promotion_codes: true,
       customer: "cus_x",
       mode: "payment",
       line_items: [
