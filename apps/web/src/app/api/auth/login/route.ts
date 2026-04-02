@@ -70,31 +70,17 @@ export async function POST(request: Request) {
   }
 
   if (signInResult) {
-    // returnHeaders wraps as { headers, response } — extract user id from either shape
-    const resp = (signInResult.response ?? signInResult) as { user?: { id?: string } };
-    const userId = resp.user?.id;
-
-    // Best-effort CC linking — don't block login
-    if (userId) {
-      try {
-        await tryLinkCleanCloud(userId, email, password);
-      } catch {
-        // CC unavailable — skip
-      }
-    }
-
-    const response = NextResponse.json({
-      success: true,
-      data: { userId },
+    // Debug: return the actual shape so we can see it
+    return NextResponse.json({
+      success: false,
+      debug: true,
+      keys: Object.keys(signInResult),
+      hasResponse: "response" in signInResult,
+      hasUser: "user" in signInResult,
+      hasHeaders: "headers" in signInResult,
+      type: typeof signInResult,
+      stringified: JSON.stringify(signInResult, (_k, v) => v instanceof Headers ? "[Headers]" : v),
     });
-
-    if (signInResult.headers) {
-      for (const cookie of signInResult.headers.getSetCookie()) {
-        response.headers.append("set-cookie", cookie);
-      }
-    }
-
-    return response;
   }
 
   // BA failed — try CleanCloud login, then create/link BA account
