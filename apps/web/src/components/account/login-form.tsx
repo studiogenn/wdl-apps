@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/shared";
 
 type LoginFormProps = {
@@ -21,19 +20,8 @@ export function LoginForm({ onSwitchToSignup }: LoginFormProps) {
     setError("");
     setLoading(true);
 
-    const { error: authError } = await authClient.signIn.email({
-      email: email.trim(),
-      password,
-    });
-
-    if (!authError) {
-      router.refresh();
-      return;
-    }
-
-    // Better Auth failed — try CleanCloud login (which creates the Better Auth account)
     try {
-      const res = await fetch("/api/cleancloud/customers/login", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), password }),
