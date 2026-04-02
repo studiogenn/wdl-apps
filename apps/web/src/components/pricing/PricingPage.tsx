@@ -5,8 +5,6 @@ import {
   type PageView,
   type SubState,
   type PaygState,
-  type QuizAnswers,
-  type Suggestion,
   defaultSubState,
   defaultPaygState,
   PAYG_RATE,
@@ -19,7 +17,7 @@ import {
   specialtyItems,
 } from "./pricing-data";
 import { HeroSection } from "./HeroSection";
-import { QuizFlow } from "./QuizFlow";
+import { QuizFlow, type QuizFlowResult } from "./QuizFlow";
 import { SubscriptionBuilder } from "./SubscriptionBuilder";
 import { PaygBuilder } from "./PaygBuilder";
 
@@ -42,7 +40,8 @@ export function PricingPage() {
   }, []);
 
   const handleQuizComplete = useCallback(
-    (suggestion: Suggestion, answers: QuizAnswers) => {
+    (result: QuizFlowResult) => {
+      const { suggestion, answers } = result;
       const selectedCare = answers.baby === "yes" || answers.pets === "yes" ? ["family"] : [];
       setSubState({
         ...defaultSubState,
