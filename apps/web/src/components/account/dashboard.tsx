@@ -16,7 +16,21 @@ type User = {
 type Order = {
   readonly orderID?: number;
   readonly status?: string;
-  readonly [key: string]: unknown;
+  readonly statusCategory?: string;
+  readonly isTerminal?: boolean;
+  readonly service?: string;
+  readonly total?: number;
+  readonly paid?: boolean;
+  readonly pickupDate?: string;
+  readonly pickupStart?: string;
+  readonly pickupEnd?: string;
+  readonly deliveryDate?: string;
+  readonly deliveryStart?: string;
+  readonly deliveryEnd?: string;
+  readonly weight?: number;
+  readonly pieces?: number;
+  readonly receiptLink?: string;
+  readonly createdDate?: string;
 };
 
 type DashboardProps = {
@@ -115,36 +129,71 @@ export function Dashboard({ user }: DashboardProps) {
             {orders.slice(0, 10).map((order, i) => (
               <div
                 key={order.orderID ?? i}
-                className="flex items-center justify-between rounded-xl border border-navy/10 bg-white px-6 py-4"
+                className="rounded-xl border border-navy/10 bg-white px-6 py-4"
               >
-                <div>
-                  <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
-                    Order #{order.orderID}
-                  </p>
-                  {order.status && (
-                    <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/50">
-                      {String(order.status)}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
+                      #{order.orderID}
                     </p>
-                  )}
+                    {order.status && (
+                      <span className={`rounded-full px-2.5 py-0.5 font-[family-name:var(--font-poppins)] text-xs font-body-medium ${
+                        order.statusCategory === "complete" ? "bg-green-100 text-green-700" :
+                        order.statusCategory === "in_progress" ? "bg-blue-100 text-blue-700" :
+                        order.statusCategory === "canceled" ? "bg-navy/10 text-navy/50" :
+                        "bg-amber-100 text-amber-700"
+                      }`}>
+                        {order.status}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {typeof order.total === "number" && order.total > 0 && (
+                      <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
+                        ${order.total.toFixed(2)}
+                      </p>
+                    )}
+                    {order.receiptLink && (
+                      <a
+                        href={order.receiptLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-[family-name:var(--font-poppins)] text-xs text-primary underline underline-offset-2 hover:text-primary-hover"
+                      >
+                        Receipt
+                      </a>
+                    )}
+                    {typeof order.total === "number" && order.total > 0 && !order.paid && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setPayingOrder(order)}
+                      >
+                        Pay
+                      </Button>
+                    )}
+                  </div>
                 </div>
-                {typeof order.finalTotal === "number" && order.finalTotal > 0 && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setPayingOrder(order)}
-                  >
-                    Pay ${(Number(order.finalTotal) / 100).toFixed(2)}
-                  </Button>
-                )}
+                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-[family-name:var(--font-poppins)] text-xs text-navy/50">
+                  {order.service && <span>{order.service}</span>}
+                  {order.pickupDate && (
+                    <span>Pickup: {new Date(order.pickupDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+                  )}
+                  {order.deliveryDate && (
+                    <span>Delivery: {new Date(order.deliveryDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+                  )}
+                  {order.weight != null && order.weight > 0 && <span>{order.weight} lbs</span>}
+                  {order.pieces != null && order.pieces > 0 && <span>{order.pieces} pcs</span>}
+                </div>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      {payingOrder && typeof payingOrder.orderID === "number" && typeof payingOrder.finalTotal === "number" && (
+      {payingOrder && typeof payingOrder.orderID === "number" && typeof payingOrder.total === "number" && (
         <OrderPaymentModal
-          amountCents={Number(payingOrder.finalTotal)}
+          amountCents={Math.round(payingOrder.total * 100)}
           orderID={payingOrder.orderID}
           onClose={() => setPayingOrder(null)}
           onSuccess={() => {
