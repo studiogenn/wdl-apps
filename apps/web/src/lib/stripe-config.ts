@@ -2,17 +2,17 @@ const isLive = (process.env.STRIPE_SECRET_KEY ?? "").startsWith("sk_live_");
 
 /**
  * Subscription tiers keyed by "frequency-bags".
- * Each tier has a per-bag Stripe price; quantity on checkout = bags × pickups/month.
+ * Each tier is a flat monthly membership with a bag allocation.
  *
- *   biweekly-2 → $34.99/bag × 4 bags/mo = $139.96/mo
- *   weekly-1   → $32.99/bag × 4 bags/mo = $131.96/mo
- *   weekly-2   → $30.99/bag × 8 bags/mo = $247.92/mo
+ *   biweekly-2 → $139.96/mo (2 bags × 2 pickups/mo)
+ *   weekly-1   → $131.96/mo (1 bag  × 4 pickups/mo)
+ *   weekly-2   → $247.92/mo (2 bags × 4 pickups/mo)
  */
 export type SubscriptionTier = "biweekly-2" | "weekly-1" | "weekly-2";
 
 export interface TierPrice {
   readonly priceId: string;
-  readonly perBagCents: number;
+  readonly monthlyCents: number;
 }
 
 export const STRIPE_IDS = isLive
@@ -20,9 +20,9 @@ export const STRIPE_IDS = isLive
       subscription: {
         productId: "prod_UG9hAT6phE29C0",
         tiers: {
-          "biweekly-2": { priceId: "price_1THsPY3uBUfrZCbdc2LmDamx", perBagCents: 3499 },
-          "weekly-1": { priceId: "price_1THsPY3uBUfrZCbdJetPRLd6", perBagCents: 3299 },
-          "weekly-2": { priceId: "price_1THsPY3uBUfrZCbdLI9sMQfX", perBagCents: 3099 },
+          "biweekly-2": { priceId: "price_1THsTM3uBUfrZCbdcOwFYq6R", monthlyCents: 13996 },
+          "weekly-1": { priceId: "price_1THsTM3uBUfrZCbd0uoBtSMy", monthlyCents: 13196 },
+          "weekly-2": { priceId: "price_1THsTM3uBUfrZCbd4PgH7Sa7", monthlyCents: 24792 },
         } satisfies Record<SubscriptionTier, TierPrice>,
         overagePriceId: "price_1THdOE3uBUfrZCbdpf1mDo1i",
         meterId: "mtr_61UR1LQR1lQaIaDuW413uBUfrZCbd0ds",
@@ -36,9 +36,9 @@ export const STRIPE_IDS = isLive
       subscription: {
         productId: "prod_UG0lAckijhXdgv",
         tiers: {
-          "biweekly-2": { priceId: "price_1THs5x3uBUfrZCbdPBs2zPyD", perBagCents: 3499 },
-          "weekly-1": { priceId: "price_1THs5x3uBUfrZCbdNxSAvHBp", perBagCents: 3299 },
-          "weekly-2": { priceId: "price_1THs5y3uBUfrZCbd1mkfvrxP", perBagCents: 3099 },
+          "biweekly-2": { priceId: "price_1THsT63uBUfrZCbd5n4GCD9Z", monthlyCents: 13996 },
+          "weekly-1": { priceId: "price_1THsT63uBUfrZCbd0TgV3sif", monthlyCents: 13196 },
+          "weekly-2": { priceId: "price_1THsT63uBUfrZCbdWhNrEJDr", monthlyCents: 24792 },
         } satisfies Record<SubscriptionTier, TierPrice>,
         overagePriceId: "price_1THUjU3uBUfrZCbddHw0rOhH",
         meterId: "mtr_test_61UQsgqnQW0C1ccZ8413uBUfrZCbdXyS",

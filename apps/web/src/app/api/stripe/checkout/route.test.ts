@@ -11,9 +11,9 @@ const mocks = vi.hoisted(() => ({
     subscription: {
       productId: "prod_test",
       tiers: {
-        "biweekly-2": { priceId: "price_biweekly2", perBagCents: 3499 },
-        "weekly-1": { priceId: "price_weekly1", perBagCents: 3299 },
-        "weekly-2": { priceId: "price_weekly2", perBagCents: 3099 },
+        "biweekly-2": { priceId: "price_biweekly2", monthlyCents: 13996 },
+        "weekly-1": { priceId: "price_weekly1", monthlyCents: 13196 },
+        "weekly-2": { priceId: "price_weekly2", monthlyCents: 24792 },
       },
       overagePriceId: "price_overage_test",
       meterId: "meter_test",
@@ -104,7 +104,7 @@ describe("POST /api/stripe/checkout", () => {
     expect(res.status).toBe(400);
   });
 
-  it("weekly 1-bag uses weekly-1 tier price with quantity 4", async () => {
+  it("weekly 1-bag uses weekly-1 tier price", async () => {
     mocks.dbQueryCustomersFindFirst.mockResolvedValue({ id: "c", stripeCustomerId: "cus_x" });
     mocks.checkoutSessionsCreate.mockResolvedValue({ url: "https://checkout.stripe.com/s1" });
 
@@ -115,14 +115,14 @@ describe("POST /api/stripe/checkout", () => {
     expect(mocks.checkoutSessionsCreate).toHaveBeenCalledWith(
       expect.objectContaining({
         line_items: [
-          { price: "price_weekly1", quantity: 4 },
+          { price: "price_weekly1", quantity: 1 },
           { price: "price_overage_test" },
         ],
       }),
     );
   });
 
-  it("weekly 2-bag uses weekly-2 tier price with quantity 8", async () => {
+  it("weekly 2-bag uses weekly-2 tier price", async () => {
     mocks.dbQueryCustomersFindFirst.mockResolvedValue({ id: "c", stripeCustomerId: "cus_x" });
     mocks.checkoutSessionsCreate.mockResolvedValue({ url: "https://checkout.stripe.com/s2" });
 
@@ -131,14 +131,14 @@ describe("POST /api/stripe/checkout", () => {
     expect(mocks.checkoutSessionsCreate).toHaveBeenCalledWith(
       expect.objectContaining({
         line_items: [
-          { price: "price_weekly2", quantity: 8 },
+          { price: "price_weekly2", quantity: 1 },
           { price: "price_overage_test" },
         ],
       }),
     );
   });
 
-  it("biweekly uses biweekly-2 tier price with quantity 4", async () => {
+  it("biweekly uses biweekly-2 tier price", async () => {
     mocks.dbQueryCustomersFindFirst.mockResolvedValue({ id: "c", stripeCustomerId: "cus_x" });
     mocks.checkoutSessionsCreate.mockResolvedValue({ url: "https://checkout.stripe.com/s3" });
 
@@ -147,7 +147,7 @@ describe("POST /api/stripe/checkout", () => {
     expect(mocks.checkoutSessionsCreate).toHaveBeenCalledWith(
       expect.objectContaining({
         line_items: [
-          { price: "price_biweekly2", quantity: 4 },
+          { price: "price_biweekly2", quantity: 1 },
           { price: "price_overage_test" },
         ],
       }),

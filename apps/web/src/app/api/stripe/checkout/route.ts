@@ -85,14 +85,12 @@ export async function POST(request: Request) {
       }
 
       const customer = await resolveCustomer(request);
-      const pickupsPerMonth = parsed.data.frequency === "weekly" ? 4 : 2;
-      const quantity = parsed.data.bags * pickupsPerMonth;
 
       const session = await getStripe().checkout.sessions.create({
         ...(customer ? { customer: customer.stripeCustomerId } : {}),
         mode: "subscription",
         line_items: [
-          { price: tierPrice.priceId, quantity },
+          { price: tierPrice.priceId, quantity: 1 },
           { price: overagePriceId },
         ],
         subscription_data: {

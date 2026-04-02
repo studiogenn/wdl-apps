@@ -8,10 +8,10 @@ describe("stripe-config", () => {
     }
   });
 
-  it("has correct per-bag cents", () => {
-    expect(STRIPE_IDS.subscription.tiers["biweekly-2"].perBagCents).toBe(3499);
-    expect(STRIPE_IDS.subscription.tiers["weekly-1"].perBagCents).toBe(3299);
-    expect(STRIPE_IDS.subscription.tiers["weekly-2"].perBagCents).toBe(3099);
+  it("has correct monthly cents", () => {
+    expect(STRIPE_IDS.subscription.tiers["biweekly-2"].monthlyCents).toBe(13996);
+    expect(STRIPE_IDS.subscription.tiers["weekly-1"].monthlyCents).toBe(13196);
+    expect(STRIPE_IDS.subscription.tiers["weekly-2"].monthlyCents).toBe(24792);
   });
 
   it("has overage price ID", () => {
