@@ -6,6 +6,7 @@ import { DraftBanner } from "@/components/editor/draft-banner";
 import { PostHogProvider } from "@/components/analytics/posthog-provider";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { FacebookPixel } from "@/components/analytics/facebook-pixel";
+import { GoogleTagManager } from "@/components/analytics/google-tag-manager";
 import "./globals.css";
 
 const zillaSlab = Zilla_Slab({
@@ -62,6 +63,7 @@ export default function RootLayout({
           <Footer />
           <DraftBanner />
         </PostHogProvider>
+        <GoogleTagManager />
         <GoogleAnalytics />
         <FacebookPixel />
       </body>
