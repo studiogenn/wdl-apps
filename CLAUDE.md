@@ -18,9 +18,9 @@ Better Auth with email/password. Server config at `apps/web/src/lib/auth.ts`, cl
 
 ## Database
 
-PostgreSQL via Drizzle ORM. Connection managed through the `wfog/behemoth` infrastructure repo. Schema at `apps/web/src/lib/db/schema.ts`. Connection goes through PgBouncer in transaction mode (`prepare: false` required). Migrations in `apps/web/drizzle/`.
+PostgreSQL via Drizzle ORM — **query-only**. Behemouth (`wfog/behemoth`) owns the database, all tables, and all migrations (Alembic). wdl-apps never creates or manages tables. Schema definitions in `apps/web/src/lib/db/schema.ts` are read-only mirrors for Drizzle query typing. Connection goes through PgBouncer in transaction mode (`prepare: false` required).
 
-Never create tables manually — always use Drizzle migrations (`pnpm drizzle-kit generate`, `pnpm drizzle-kit push`).
+**NEVER run `drizzle-kit generate` or `drizzle-kit push` in this repo.** All schema changes go through Alembic migrations in behemouth. API routes in wdl-apps forward to behemouth webhook endpoints (`arkad.studio/webhooks/ingest/*`) which handle persistence and Temporal workflows.
 
 ## CleanCloud
 
