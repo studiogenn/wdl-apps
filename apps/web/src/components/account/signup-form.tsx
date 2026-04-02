@@ -15,6 +15,8 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [alreadyExists, setAlreadyExists] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
 
   const isValid = name.length > 0 && email.includes("@") && password.length >= 8;
 
@@ -36,7 +38,9 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
       const data = await res.json();
 
       if (!data.success) {
-        setError(data.error ?? "Could not create account.");
+        const msg = data.error ?? "Could not create account.";
+        setError(msg);
+        setAlreadyExists(res.status === 409 || msg.toLowerCase().includes("already"));
         setLoading(false);
         return;
       }
@@ -113,7 +117,42 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
         </div>
 
         {error && (
-          <p className="font-[family-name:var(--font-poppins)] text-sm text-red-600">{error}</p>
+          <div>
+            <p className="font-[family-name:var(--font-poppins)] text-sm text-red-600">{error}</p>
+            {alreadyExists && !resetSent && (
+              <div className="mt-2 flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={onSwitchToLogin}
+                  className="font-[family-name:var(--font-poppins)] text-xs font-body-medium text-primary underline underline-offset-2 hover:text-primary-hover"
+                >
+                  Sign in instead
+                </button>
+                <span className="font-[family-name:var(--font-poppins)] text-xs text-navy/30">or</span>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      await fetch("/api/cleancloud/customers/password", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email: email.trim() }),
+                      });
+                      setResetSent(true);
+                    } catch { /* ignore */ }
+                  }}
+                  className="font-[family-name:var(--font-poppins)] text-xs text-navy/50 underline underline-offset-2 hover:text-primary"
+                >
+                  Reset password
+                </button>
+              </div>
+            )}
+            {resetSent && (
+              <p className="mt-2 font-[family-name:var(--font-poppins)] text-xs text-navy/60">
+                Reset link sent. Check your email.
+              </p>
+            )}
+          </div>
         )}
 
         <Button
