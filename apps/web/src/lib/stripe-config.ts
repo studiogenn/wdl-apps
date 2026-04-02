@@ -20,9 +20,9 @@ export const STRIPE_IDS = isLive
       subscription: {
         productId: "prod_UG9hAT6phE29C0",
         tiers: {
-          "biweekly-2": { priceId: "TODO_LIVE_BIWEEKLY_2", perBagCents: 3499 },
-          "weekly-1": { priceId: "TODO_LIVE_WEEKLY_1", perBagCents: 3299 },
-          "weekly-2": { priceId: "TODO_LIVE_WEEKLY_2", perBagCents: 3099 },
+          "biweekly-2": { priceId: "price_1THsPY3uBUfrZCbdc2LmDamx", perBagCents: 3499 },
+          "weekly-1": { priceId: "price_1THsPY3uBUfrZCbdJetPRLd6", perBagCents: 3299 },
+          "weekly-2": { priceId: "price_1THsPY3uBUfrZCbdLI9sMQfX", perBagCents: 3099 },
         } satisfies Record<SubscriptionTier, TierPrice>,
         overagePriceId: "price_1THdOE3uBUfrZCbdpf1mDo1i",
         meterId: "mtr_61UR1LQR1lQaIaDuW413uBUfrZCbd0ds",
