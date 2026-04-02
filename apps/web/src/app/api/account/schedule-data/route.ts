@@ -3,13 +3,15 @@ import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
 import { getsql } from "@/lib/db/connection";
 import { cleancloudProxy } from "@/lib/cleancloud/client";
 
-type DateEntry = {
-  readonly date: number;
-  readonly remaining?: number;
+type RawDateEntry = {
+  readonly dateStamp: number;
+  readonly remainingSlots?: string;
+  readonly [key: string]: unknown;
 };
 
 type DatesResponse = {
-  readonly dates?: ReadonlyArray<DateEntry>;
+  readonly Dates?: ReadonlyArray<RawDateEntry>;
+  readonly dates?: ReadonlyArray<RawDateEntry>;
 };
 
 type Product = {
@@ -108,7 +110,10 @@ export async function POST(request: Request) {
       success: true,
       data: {
         routeId,
-        dates: datesResult.data?.dates ?? [],
+        dates: (datesResult.data?.Dates ?? datesResult.data?.dates ?? []).map((d) => ({
+          date: d.dateStamp,
+          remaining: d.remainingSlots ? parseInt(d.remainingSlots, 10) : undefined,
+        })),
         products: productsResult.data?.products ?? [],
         preferences: {
           current: {

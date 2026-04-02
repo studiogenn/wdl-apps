@@ -7,15 +7,17 @@ const datesSchema = z.object({
   routeID: z.number().int().positive("Route ID is required"),
 });
 
-type DateEntry = {
-  readonly date: number;
-  readonly slots?: string;
-  readonly remaining?: number;
+type RawDateEntry = {
+  readonly dateStamp: number;
+  readonly date?: string;
+  readonly times?: string;
+  readonly remainingSlots?: string;
   readonly [key: string]: unknown;
 };
 
 type DatesResponse = {
-  readonly dates?: ReadonlyArray<DateEntry>;
+  readonly Dates?: ReadonlyArray<RawDateEntry>;
+  readonly dates?: ReadonlyArray<RawDateEntry>;
   readonly [key: string]: unknown;
 };
 
@@ -42,9 +44,15 @@ export async function POST(request: Request) {
       );
     }
 
+    const rawDates = result.data?.Dates ?? result.data?.dates ?? [];
+    const dates = rawDates.map((d) => ({
+      date: d.dateStamp,
+      remaining: d.remainingSlots ? parseInt(d.remainingSlots, 10) : undefined,
+    }));
+
     return NextResponse.json({
       success: true,
-      data: { dates: result.data?.dates ?? [] },
+      data: { dates },
     });
   } catch {
     return NextResponse.json(
