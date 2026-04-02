@@ -7,6 +7,7 @@ import { ServiceSelector } from "@/components/signup/service-selector";
 import { ContactForm, type ContactInfo } from "@/components/signup/contact-form";
 import { SchedulePicker } from "@/components/signup/schedule-picker";
 import { Confirmation } from "@/components/signup/confirmation";
+import { PaymentStep } from "@/components/signup/payment-step";
 import { LoginForm } from "@/components/signup/login-form";
 import { PromoInput } from "@/components/signup/promo-input";
 import { fromCleanCloudTimestamp } from "@/lib/cleancloud/dates";
@@ -21,8 +22,8 @@ import {
 } from "@/lib/tracking";
 
 const VARIANT = "guided";
-const STEP_LABELS = ["Zip Code", "Service", "Your Info", "Schedule", "Done"] as const;
-const TOTAL_STEPS = 5;
+const STEP_LABELS = ["Zip Code", "Service", "Your Info", "Schedule", "Payment", "Done"] as const;
+const TOTAL_STEPS = 6;
 
 type SelectedProduct = {
   readonly productID: number;
@@ -41,6 +42,7 @@ type GuidedState = {
   readonly pickupDate: number | null;
   readonly pickupStart: string | null;
   readonly orderID: number | null;
+  readonly paymentIntentId: string | null;
   readonly loading: boolean;
   readonly error: string;
 };
@@ -50,6 +52,7 @@ type GuidedAction =
   | { type: "SERVICE_SELECTED"; product: SelectedProduct }
   | { type: "CUSTOMER_CREATED"; customerID: number; contactInfo: ContactInfo }
   | { type: "ORDER_CREATED"; orderID: number; pickupDate: number; pickupStart: string }
+  | { type: "PAYMENT_COMPLETED"; paymentIntentId: string }
   | { type: "GO_BACK" }
   | { type: "SET_PROMO"; promoCode: string }
   | { type: "SET_LOADING"; loading: boolean }
@@ -66,6 +69,7 @@ const initialState: GuidedState = {
   pickupDate: null,
   pickupStart: null,
   orderID: null,
+  paymentIntentId: null,
   loading: false,
   error: "",
 };
@@ -78,8 +82,13 @@ function reducer(state: GuidedState, action: GuidedAction): GuidedState {
       return { ...state, currentStep: 3, selectedProduct: action.product, error: "" };
     case "CUSTOMER_CREATED":
       return { ...state, currentStep: 4, customerID: action.customerID, contactInfo: action.contactInfo, loading: false, error: "" };
-    case "ORDER_CREATED":
-      return { ...state, currentStep: 5, orderID: action.orderID, pickupDate: action.pickupDate, pickupStart: action.pickupStart, loading: false, error: "" };
+    case "ORDER_CREATED": {
+      // Skip payment step if no product price
+      const nextStep = state.selectedProduct && state.selectedProduct.price > 0 ? 5 : 6;
+      return { ...state, currentStep: nextStep, orderID: action.orderID, pickupDate: action.pickupDate, pickupStart: action.pickupStart, loading: false, error: "" };
+    }
+    case "PAYMENT_COMPLETED":
+      return { ...state, currentStep: 6, paymentIntentId: action.paymentIntentId, error: "" };
     case "GO_BACK":
       return { ...state, currentStep: Math.max(1, state.currentStep - 1), error: "" };
     case "SET_PROMO":
@@ -220,6 +229,11 @@ export default function GuidedSignupPage() {
     }
   }, [state.customerID, state.selectedProduct, state.promoCode]);
 
+  const handlePaymentSuccess = useCallback((paymentIntentId: string) => {
+    trackSignupStepCompleted(VARIANT, "payment");
+    dispatch({ type: "PAYMENT_COMPLETED", paymentIntentId });
+  }, []);
+
   const handleBack = useCallback(() => {
     dispatch({ type: "GO_BACK" });
   }, []);
@@ -301,7 +315,15 @@ export default function GuidedSignupPage() {
           </div>
         </div>
       )}
-      {!loginMode && state.currentStep === 5 && (
+      {!loginMode && state.currentStep === 5 && state.selectedProduct && state.selectedProduct.price > 0 && (
+        <PaymentStep
+          amountCents={state.selectedProduct.price}
+          description={`Order #${state.orderID} — ${state.selectedProduct.name}`}
+          onSuccess={handlePaymentSuccess}
+          onBack={handleBack}
+        />
+      )}
+      {!loginMode && state.currentStep === 6 && (
         <Confirmation
           customerName={state.contactInfo?.name}
           pickupDate={state.pickupDate ? formatPickupDate(state.pickupDate) : undefined}

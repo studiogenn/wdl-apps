@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Button, ButtonLink } from "@/components/shared";
 import { BillingSection } from "./billing-section";
+import { OrderPaymentModal } from "./order-payment-modal";
 
 type User = {
   readonly id: string;
@@ -27,6 +28,7 @@ export function Dashboard({ user }: DashboardProps) {
   const [orders, setOrders] = useState<readonly Order[]>([]);
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [signingOut, setSigningOut] = useState(false);
+  const [payingOrder, setPayingOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     async function fetchOrders() {
@@ -125,11 +127,33 @@ export function Dashboard({ user }: DashboardProps) {
                     </p>
                   )}
                 </div>
+                {typeof order.finalTotal === "number" && order.finalTotal > 0 && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPayingOrder(order)}
+                  >
+                    Pay ${(Number(order.finalTotal) / 100).toFixed(2)}
+                  </Button>
+                )}
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {payingOrder && typeof payingOrder.orderID === "number" && typeof payingOrder.finalTotal === "number" && (
+        <OrderPaymentModal
+          amountCents={Number(payingOrder.finalTotal)}
+          orderID={payingOrder.orderID}
+          onClose={() => setPayingOrder(null)}
+          onSuccess={() => {
+            setPayingOrder(null);
+            // Remove paid order from list
+            setOrders((prev) => prev.filter((o) => o.orderID !== payingOrder.orderID));
+          }}
+        />
+      )}
     </div>
   );
 }
