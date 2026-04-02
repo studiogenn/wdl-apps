@@ -4,10 +4,7 @@ import { getStripe } from "@/lib/stripe";
 import { getDb, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { STRIPE_IDS } from "@/lib/stripe-config";
-import {
-  authenticateRequest,
-  isErrorResponse,
-} from "@/lib/auth/middleware";
+import { auth } from "@/lib/auth";
 
 const subscriptionSchema = z.object({
   mode: z.literal("subscription"),
@@ -50,10 +47,22 @@ async function getOrCreateStripeCustomer(authUserId: string, phone?: string) {
   return customer.id;
 }
 
-export async function POST(request: Request) {
-  const auth = await authenticateRequest(request);
-  if (isErrorResponse(auth)) return auth;
+async function resolveCustomer(request: Request) {
+  try {
+    const session = await auth.api.getSession({ headers: request.headers });
+    if (!session?.user) return null;
+    const user = session.user;
+    const customerId = await getOrCreateStripeCustomer(
+      user.id,
+      (user as Record<string, unknown>).phone as string | undefined,
+    );
+    return { authUserId: user.id, stripeCustomerId: customerId };
+  } catch {
+    return null;
+  }
+}
 
+export async function POST(request: Request) {
   try {
     const body = await request.json();
     const parsed = checkoutSchema.safeParse(body);
@@ -73,16 +82,12 @@ export async function POST(request: Request) {
         );
       }
 
-      const stripeCustomerId = await getOrCreateStripeCustomer(
-        auth.uid,
-        auth.phone,
-      );
-
+      const customer = await resolveCustomer(request);
       const pickupsPerMonth = parsed.data.frequency === "weekly" ? 4 : 2;
       const quantity = parsed.data.bags * pickupsPerMonth;
 
       const session = await getStripe().checkout.sessions.create({
-        customer: stripeCustomerId,
+        ...(customer ? { customer: customer.stripeCustomerId } : {}),
         mode: "subscription",
         line_items: [
           { price: basePriceId, quantity },
@@ -103,13 +108,10 @@ export async function POST(request: Request) {
     }
 
     // Payment mode (PAYG)
-    const stripeCustomerId = await getOrCreateStripeCustomer(
-      auth.uid,
-      auth.phone,
-    );
+    const customer = await resolveCustomer(request);
 
     const session = await getStripe().checkout.sessions.create({
-      customer: stripeCustomerId,
+      ...(customer ? { customer: customer.stripeCustomerId } : {}),
       mode: "payment",
       line_items: [
         {
@@ -124,7 +126,7 @@ export async function POST(request: Request) {
       payment_intent_data: {
         capture_method: "manual",
         metadata: {
-          authUserId: auth.uid,
+          ...(customer ? { authUserId: customer.authUserId } : {}),
           ...parsed.data.planMetadata,
         },
       },

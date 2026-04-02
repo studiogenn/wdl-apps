@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { authClient } from "@/lib/auth-client";
 import {
   type PageView,
   type SubState,
@@ -69,12 +68,6 @@ export function PricingPage() {
     setCheckoutLoading(true);
 
     try {
-      const { data: session } = await authClient.getSession();
-      if (!session) {
-        window.location.href = "/account/guided";
-        return;
-      }
-
       const planMetadata: Record<string, string> = {};
       if (subState.selectedCare.length > 0) planMetadata.care = subState.selectedCare.join(",");
       if (subState.addBedding) planMetadata.bedding = subState.beddingFreq;
@@ -111,12 +104,6 @@ export function PricingPage() {
     setCheckoutLoading(true);
 
     try {
-      const { data: session } = await authClient.getSession();
-      if (!session) {
-        window.location.href = "/account/guided";
-        return;
-      }
-
       const rate = paygState.rush ? PAYG_RUSH_RATE : PAYG_RATE;
       const laundryTotal = Math.max(PAYG_MIN, paygState.lbs * rate) + PAYG_FEE;
       const careTotal = paygState.selectedCare.reduce((s, id) => {

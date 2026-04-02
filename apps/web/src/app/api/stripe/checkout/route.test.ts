@@ -6,7 +6,7 @@ const mocks = vi.hoisted(() => ({
   dbQueryCustomersFindFirst: vi.fn(),
   dbInsertValues: vi.fn().mockResolvedValue(undefined),
   dbInsert: vi.fn(),
-  authenticateRequest: vi.fn(),
+  authGetSession: vi.fn(),
   stripeIds: {
     subscription: {
       productId: "prod_test",
@@ -36,10 +36,10 @@ vi.mock("@/lib/db", () => ({
   schema: { customers: "customers_table" },
 }));
 
-vi.mock("@/lib/auth/middleware", () => ({
-  authenticateRequest: mocks.authenticateRequest,
-  isErrorResponse: (r: unknown) =>
-    r !== null && typeof r === "object" && "status" in (r as Record<string, unknown>),
+vi.mock("@/lib/auth", () => ({
+  auth: {
+    api: { getSession: mocks.authGetSession },
+  },
 }));
 
 vi.mock("@/lib/stripe-config", () => ({
@@ -72,24 +72,15 @@ const validPaygBody = {
   description: "One-time laundry order (~15 lbs est.)",
 };
 
-const authUser = { uid: "user_1", phone: "+15551234567", cleancloudCustomerId: null };
+const sessionUser = { id: "user_1", phone: "+15551234567" };
 
 describe("POST /api/stripe/checkout", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.dbInsert.mockReturnValue({ values: mocks.dbInsertValues });
-    mocks.authenticateRequest.mockResolvedValue(authUser);
+    mocks.authGetSession.mockResolvedValue({ user: sessionUser });
     mocks.stripeIds.subscription.basePriceId = "price_base_test";
     mocks.stripeIds.subscription.overagePriceId = "price_overage_test";
-  });
-
-  it("returns 401 when not authenticated", async () => {
-    const { NextResponse } = await import("next/server");
-    mocks.authenticateRequest.mockResolvedValue(
-      NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
-    );
-    const res = await POST(makeRequest(validSubBody));
-    expect(res.status).toBe(401);
   });
 
   it("returns 503 when subscription price IDs not configured", async () => {
@@ -163,6 +154,21 @@ describe("POST /api/stripe/checkout", () => {
       phone: "+15551234567",
     });
     expect(mocks.dbInsert).toHaveBeenCalled();
+  });
+
+  it("works without auth (guest checkout)", async () => {
+    mocks.authGetSession.mockResolvedValue(null);
+    mocks.checkoutSessionsCreate.mockResolvedValue({ url: "https://checkout.stripe.com/guest" });
+
+    const res = await POST(makeRequest(validSubBody));
+    const json = await res.json();
+
+    expect(json.success).toBe(true);
+    expect(mocks.customersCreate).not.toHaveBeenCalled();
+    expect(mocks.dbQueryCustomersFindFirst).not.toHaveBeenCalled();
+    expect(mocks.checkoutSessionsCreate).toHaveBeenCalledWith(
+      expect.not.objectContaining({ customer: expect.anything() }),
+    );
   });
 
   it("creates payment checkout for PAYG with manual capture", async () => {
