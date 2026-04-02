@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/shared";
 
 type SignupFormProps = {
@@ -24,19 +23,29 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
     setError("");
     setLoading(true);
 
-    const { error: authError } = await authClient.signUp.email({
-      name: name.trim(),
-      email: email.trim(),
-      password,
-    });
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          password,
+        }),
+      });
+      const data = await res.json();
 
-    if (authError) {
-      setError(authError.message ?? "Could not create account.");
+      if (!data.success) {
+        setError(data.error ?? "Could not create account.");
+        setLoading(false);
+        return;
+      }
+
+      router.refresh();
+    } catch {
+      setError("Unable to create account. Please try again.");
       setLoading(false);
-      return;
     }
-
-    router.refresh();
   }
 
   return (
