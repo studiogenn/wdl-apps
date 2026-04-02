@@ -43,3 +43,20 @@ export async function GET(request: Request) {
 
   return NextResponse.json(checks);
 }
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const result = await auth.api.signUpEmail({
+      body,
+      headers: request.headers,
+      asResponse: true,
+    });
+    return result;
+  } catch (e: unknown) {
+    return NextResponse.json({
+      error: e instanceof Error ? e.stack ?? e.message : String(e),
+      headers: Object.fromEntries(request.headers.entries()),
+    }, { status: 500 });
+  }
+}
