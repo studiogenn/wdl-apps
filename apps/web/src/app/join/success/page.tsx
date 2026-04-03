@@ -23,7 +23,7 @@ export default function JoinSuccessPage() {
       </p>
 
       <div className="flex flex-col sm:flex-row gap-3">
-        <ButtonLink href="/account">Schedule First Pickup</ButtonLink>
+        <ButtonLink href="/account?checkout=success">Schedule First Pickup</ButtonLink>
         <ButtonLink href="/" variant="outline">Back to Home</ButtonLink>
       </div>
     </div>

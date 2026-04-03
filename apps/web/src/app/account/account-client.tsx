@@ -23,7 +23,8 @@ export function AccountPageClient({ user }: Props) {
   const searchParams = useSearchParams();
   const flagEnabled = useFeatureFlagEnabled(FLAG_KEYS.NEW_ACCOUNT);
   const urlOverride = searchParams.get("flag") === "new-account";
-  const newAccountEnabled = flagEnabled || urlOverride;
+  const fromCheckout = searchParams.get("checkout") === "success";
+  const newAccountEnabled = flagEnabled || urlOverride || fromCheckout;
   const [tab, setTab] = useState<"login" | "signup">("login");
 
   if (!newAccountEnabled) {

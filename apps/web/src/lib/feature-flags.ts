@@ -3,6 +3,7 @@ export const FLAG_KEYS = {
   HOMEPAGE_VARIANT: "homepage-variant",
   SIGNUP_FLOW: "signup-flow",
   NEW_ACCOUNT: "new-account-pages",
+  MEMBERSHIP_FUNNEL: "membership-funnel",
 } as const;
 
 export type SignupFlowVariant = "embed" | "quick" | "guided";
