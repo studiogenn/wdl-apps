@@ -58,7 +58,7 @@ export default function DryCleaningPage() {
               </ul>
               <div className="flex flex-wrap gap-3">
                 <ButtonLink href="/account/">
-                  Schedule Pick-up
+                  Schedule Pickup
                 </ButtonLink>
                 <ButtonLink href="#zipcode" variant="outline">
                   Check Zip Code
@@ -188,7 +188,7 @@ export default function DryCleaningPage() {
 
           <div className="text-center mt-8">
             <ButtonLink href="/account/">
-              Schedule Pick-up
+              Schedule Pickup
             </ButtonLink>
           </div>
         </div>

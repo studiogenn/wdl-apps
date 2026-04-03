@@ -5,10 +5,10 @@ const DEFAULTS = {
   heading: "Ready to Get Started?",
   subheading:
     "From easy scheduling to reliable 24-hour delivery, we've built a laundry service that fits into your life instead of taking over it.",
-  ctaText: "View Memberships",
-  ctaLink: "/pricing",
-  secondaryCtaText: "Schedule Pick-up",
-  secondaryCtaLink: "/account/",
+  ctaText: "Schedule Pickup",
+  ctaLink: "/account/",
+  secondaryCtaText: "View Memberships",
+  secondaryCtaLink: "/membership",
 };
 
 export function CTABanner({ config }: { config?: CtaConfig }) {

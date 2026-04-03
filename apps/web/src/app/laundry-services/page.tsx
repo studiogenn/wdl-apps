@@ -108,7 +108,7 @@ export default function LaundryServicesPage() {
               </p>
               <div className="flex flex-wrap gap-3">
                 <ButtonLink href="/account/">
-                  Schedule Pick-up
+                  Schedule Pickup
                 </ButtonLink>
                 <ButtonLink href="/wash-fold" variant="outline">
                   Learn More
@@ -174,7 +174,7 @@ export default function LaundryServicesPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <ButtonLink href="/account/">
-                Schedule Pick-up
+                Schedule Pickup
               </ButtonLink>
               <ButtonLink href="/wash-fold" variant="outline">
                 View Pricing

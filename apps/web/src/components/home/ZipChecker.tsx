@@ -48,7 +48,7 @@ export function ZipChecker() {
           Schedule your first pickup today.
         </p>
         <ButtonLink href="/account/">
-          Schedule Pick-up
+          Schedule Pickup
         </ButtonLink>
       </div>
     );

@@ -44,7 +44,7 @@ const NJ_FAQS = [
   {
     question: "How do I schedule my first pickup?",
     answer:
-      "Visit our website and click Schedule Pick-up, download the We Deliver Laundry app, or text us at (855) 968-5511. Your first order comes with a free laundry bag.",
+      "Visit our website and click Schedule Pickup, download the We Deliver Laundry app, or text us at (855) 968-5511. Your first order comes with a free laundry bag.",
   },
 ] as const;
 
@@ -112,7 +112,7 @@ export default function NewJerseyAreaPage() {
               </ul>
               <div className="flex flex-wrap gap-3">
                 <ButtonLink href="/account/">
-                  Schedule Pick-up
+                  Schedule Pickup
                 </ButtonLink>
                 <ButtonLink href="/wash-fold" variant="outline">
                   View Pricing
@@ -266,7 +266,7 @@ export default function NewJerseyAreaPage() {
                 step: "Step 1",
                 image: "/images/step-1-schedule.jpg",
                 alt: "Customer scheduling laundry pickup on a phone in a New Jersey home",
-                title: "Schedule Pick-up",
+                title: "Schedule Pickup",
                 desc: "Choose a pickup and delivery window that fits your day. Available 7 days a week across all six counties.",
               },
               {
@@ -321,7 +321,7 @@ export default function NewJerseyAreaPage() {
               first pickup and see why they never went back.
             </p>
             <ButtonLink href="/account/">
-              Schedule Pick-up
+              Schedule Pickup
             </ButtonLink>
           </div>
         </div>

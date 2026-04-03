@@ -58,7 +58,7 @@ export default function WashFoldPage() {
               </ul>
               <div className="flex flex-wrap gap-3">
                 <ButtonLink href="/account/">
-                  Schedule Pick-up
+                  Schedule Pickup
                 </ButtonLink>
                 <ButtonLink href="#zipcode" variant="outline">
                   Check Zip Code
@@ -126,7 +126,7 @@ export default function WashFoldPage() {
                 </li>
               </ul>
               <ButtonLink href="/account/" className="block w-full text-center">
-                Schedule Pick-up
+                Schedule Pickup
               </ButtonLink>
             </div>
 
@@ -165,7 +165,7 @@ export default function WashFoldPage() {
                 </li>
               </ul>
               <ButtonLink href="/account/" className="block w-full text-center">
-                Schedule Pick-up
+                Schedule Pickup
               </ButtonLink>
             </div>
 
@@ -207,7 +207,7 @@ export default function WashFoldPage() {
                 </li>
               </ul>
               <ButtonLink href="/account/" className="block w-full text-center">
-                Schedule Pick-up
+                Schedule Pickup
               </ButtonLink>
             </div>
           </div>

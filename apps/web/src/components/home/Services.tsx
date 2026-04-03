@@ -92,7 +92,7 @@ export function Services({
 
                 <div className="flex flex-col sm:flex-row gap-3">
                   <ButtonLink href="/account/">
-                    Schedule A Pickup
+                    Schedule Pickup
                   </ButtonLink>
                   {resolvedShowPricing ? (
                     <ButtonLink href="/wash-fold" variant="outline">
@@ -194,7 +194,7 @@ export function Services({
             ) : null}
 
             <ButtonLink href="/account/" size="sm" className="w-full mt-auto">
-              Schedule A Pickup
+              Schedule Pickup
             </ButtonLink>
           </div>
         </div>

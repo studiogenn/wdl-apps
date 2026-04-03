@@ -132,7 +132,7 @@ export default function HowToOrderPage() {
 
           <div className="text-center mt-14">
             <ButtonLink href="/account/">
-              Get Started Now
+              Schedule Pickup
             </ButtonLink>
           </div>
         </div>

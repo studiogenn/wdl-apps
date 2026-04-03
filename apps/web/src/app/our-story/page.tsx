@@ -142,7 +142,7 @@ export default function OurStoryPage() {
               </p>
               <div className="flex flex-wrap gap-3">
                 <ButtonLink href="/account/">
-                  Schedule Pick-up
+                  Schedule Pickup
                 </ButtonLink>
                 <ButtonLink href="#zipcode" variant="outline">
                   Check Your Zip Code

@@ -6,10 +6,10 @@ const DEFAULTS = {
   heading: "Laundry Pickup & Delivery in NYC & New Jersey",
   subheading:
     "Schedule a pickup, and get your clothes professionally washed, folded, and returned within 24 hours.",
-  ctaText: "View Memberships",
-  ctaLink: "/pricing",
-  secondaryCtaText: "Check Your Zip Code",
-  secondaryCtaLink: "/account/",
+  ctaText: "Schedule Pickup",
+  ctaLink: "/account/",
+  secondaryCtaText: "View Memberships",
+  secondaryCtaLink: "/membership",
   bulletPoints: [
     "24-Hour Turnaround",
     "Reliable Delivery Service",

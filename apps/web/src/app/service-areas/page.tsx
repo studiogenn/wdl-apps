@@ -70,7 +70,7 @@ export default function ServiceAreasPage() {
                 </li>
               </ul>
               <div className="flex flex-wrap gap-3">
-                <ButtonLink href="/account/">Schedule Pick-up</ButtonLink>
+                <ButtonLink href="/account/">Schedule Pickup</ButtonLink>
                 <ButtonLink href="#zipcode" variant="outline">Check Your Zip Code</ButtonLink>
               </div>
             </div>
@@ -168,7 +168,7 @@ export default function ServiceAreasPage() {
                 />
               </div>
               <h3 className="text-xl font-heading-medium text-navy mb-2">
-                Schedule Pick-up
+                Schedule Pickup
               </h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
                 Choose a pick up and drop off time most convenient for you.
@@ -301,7 +301,7 @@ export default function ServiceAreasPage() {
               over.
             </p>
             <ButtonLink href="/account/">
-              Schedule Pick-up
+              Schedule Pickup
             </ButtonLink>
           </div>
         </div>
