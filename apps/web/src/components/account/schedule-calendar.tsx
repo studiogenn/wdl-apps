@@ -97,6 +97,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
 
   // Data state
   const [scheduleData, setScheduleData] = useState<ScheduleData | null>(null);
+  const [slotsCache, setSlotsCache] = useState<ReadonlyMap<number, ReadonlyArray<string>>>(new Map());
   const [slots, setSlots] = useState<ReadonlyArray<string>>([]);
   const [loading, setLoading] = useState(true);
   const [slotsLoading, setSlotsLoading] = useState(false);
@@ -151,36 +152,51 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
     fetchScheduleData();
   }, []);
 
-  // ─── Fetch slots when date selected ─────────────────────────────────────
+  // ─── Prefetch ALL slots in parallel once schedule data loads ─────────────
 
   useEffect(() => {
-    if (!selectedDate || !scheduleData) return;
+    if (!scheduleData) return;
 
-    async function fetchSlots() {
-      setSlotsLoading(true);
-      setSlots([]);
-      setSelectedSlot(null);
-      try {
-        const res = await fetch("/api/cleancloud/scheduling/slots", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            routeID: scheduleData!.routeId,
-            day: selectedDate!.date,
-          }),
-        });
-        const data = await res.json();
-        if (data.success) {
-          setSlots(data.data.slots);
-        }
-      } catch {
-        // Slots fetch failed
-      } finally {
-        setSlotsLoading(false);
-      }
+    const { routeId, dates } = scheduleData;
+
+    async function prefetchAllSlots() {
+      const entries = await Promise.all(
+        dates.map(async (entry) => {
+          try {
+            const res = await fetch("/api/cleancloud/scheduling/slots", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ routeID: routeId, day: entry.date }),
+            });
+            const data = await res.json();
+            return [entry.date, data.success ? data.data.slots : []] as const;
+          } catch {
+            return [entry.date, []] as const;
+          }
+        }),
+      );
+
+      setSlotsCache(new Map(entries));
     }
-    fetchSlots();
-  }, [selectedDate, scheduleData]);
+
+    prefetchAllSlots();
+  }, [scheduleData]);
+
+  // ─── Resolve slots from cache when date selected ───────────────────────
+
+  useEffect(() => {
+    if (!selectedDate) return;
+
+    const cached = slotsCache.get(selectedDate.date);
+    if (cached) {
+      setSlots(cached);
+      setSlotsLoading(false);
+    } else {
+      setSlots([]);
+      setSlotsLoading(true);
+    }
+    setSelectedSlot(null);
+  }, [selectedDate, slotsCache]);
 
   // ─── Calendar navigation ────────────────────────────────────────────────
 
