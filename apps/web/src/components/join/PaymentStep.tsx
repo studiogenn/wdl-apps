@@ -41,6 +41,7 @@ function MembershipPaymentForm({
   const stripe = useStripe();
   const elements = useElements();
   const [submitting, setSubmitting] = useState(false);
+  const [statusText, setStatusText] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const tierInfo = TIER_LABELS[tier];
 
@@ -51,6 +52,7 @@ function MembershipPaymentForm({
 
       setSubmitting(true);
       setError(null);
+      setStatusText("Securing your payment method...");
 
       // Step 1: Confirm SetupIntent to save the payment method
       const result = await stripe.confirmSetup({
@@ -73,6 +75,8 @@ function MembershipPaymentForm({
         setSubmitting(false);
         return;
       }
+
+      setStatusText("Activating your membership...");
 
       // Step 2: Activate the subscription with the saved payment method
       try {
@@ -144,7 +148,14 @@ function MembershipPaymentForm({
         disabled={submitting || !stripe}
         className="w-full"
       >
-        {submitting ? "Processing..." : `Start Membership — $${tierInfo.price}/mo`}
+        {submitting ? (
+          <span className="flex items-center justify-center gap-2">
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+            {statusText}
+          </span>
+        ) : (
+          `Start Membership — $${tierInfo.price}/mo`
+        )}
       </Button>
 
       <p className="text-center font-[family-name:var(--font-poppins)] text-[11px] text-navy/30">
