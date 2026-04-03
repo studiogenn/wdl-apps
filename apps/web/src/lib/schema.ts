@@ -164,7 +164,7 @@ export const WASH_FOLD_FAQ = [
   {
     question: "How much is the service?",
     answer:
-      "We have different options depending on your lifestyle! Pay As You Go at $2.79/lb, Biweekly Plan at $2.15/lb, or Weekly Plan at $1.95/lb.",
+      "We have different options depending on your lifestyle! Pay As You Go at $2.99/lb, Biweekly Plan at $2.15/lb, or Weekly Plan at $1.95/lb.",
   },
   {
     question: "How much is the delivery fee?",

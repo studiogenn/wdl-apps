@@ -112,7 +112,7 @@ export function Services({
                     <div className="space-y-3">
                       <PricingRow label="Weekly Plan" value="$1.95/lb" highlight />
                       <PricingRow label="Biweekly Plan" value="$2.15/lb" />
-                      <PricingRow label="Pay As You Go" value="$2.79/lb" />
+                      <PricingRow label="Pay As You Go" value="$2.99/lb" />
                     </div>
                     <div className="border-t border-navy/10 mt-4 pt-3">
                       <PricingRow label="Minimum Order" value="$40" />

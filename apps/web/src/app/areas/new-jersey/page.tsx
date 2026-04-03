@@ -14,7 +14,7 @@ const NJ_FAQS = [
   {
     question: "How much does laundry pickup and delivery cost in New Jersey?",
     answer:
-      "We charge per pound with no delivery fees and no hidden charges. Pay As You Go is $2.79/lb, Biweekly Plan is $2.15/lb, and Weekly Plan is $1.95/lb. The minimum order is $40, which covers roughly 15–20 lbs.",
+      "We charge per pound with no delivery fees and no hidden charges. Pay As You Go is $2.99/lb, Biweekly Plan is $2.15/lb, and Weekly Plan is $1.95/lb. The minimum order is $40, which covers roughly 15–20 lbs.",
   },
   {
     question: "Do you pick up from houses and apartments?",
@@ -182,7 +182,7 @@ export default function NewJerseyAreaPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[900px] mx-auto">
             {[
-              { plan: "Pay As You Go", price: "$2.79", unit: "/lb", note: "No commitment required" },
+              { plan: "Pay As You Go", price: "$2.99", unit: "/lb", note: "No commitment required" },
               { plan: "Biweekly Plan", price: "$2.15", unit: "/lb", note: "Pickup every 2 weeks" },
               { plan: "Weekly Plan", price: "$1.95", unit: "/lb", note: "Best value — weekly pickup" },
             ].map((tier) => (

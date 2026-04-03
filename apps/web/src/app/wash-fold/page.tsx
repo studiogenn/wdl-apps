@@ -96,7 +96,7 @@ export default function WashFoldPage() {
               <h3 className="text-lg font-heading-medium text-navy mb-1">Pay As You Go</h3>
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 mb-5">No commitment</p>
               <div className="mb-6">
-                <span className="text-[2.5rem] font-body-bold text-navy">$2.79</span>
+                <span className="text-[2.5rem] font-body-bold text-navy">$2.99</span>
                 <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">/lb</span>
               </div>
               <ul className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 space-y-3 mb-8 flex-1">
@@ -351,7 +351,7 @@ const WASH_FOLD_FAQ = [
   {
     question: "How much is the service?",
     answer:
-      "We have different options depending on your lifestyle! Pay As You Go at $2.79/lb, Biweekly Plan at $2.15/lb, or Weekly Plan at $1.95/lb.",
+      "We have different options depending on your lifestyle! Pay As You Go at $2.99/lb, Biweekly Plan at $2.15/lb, or Weekly Plan at $1.95/lb.",
   },
   {
     question: "How much is the delivery fee?",

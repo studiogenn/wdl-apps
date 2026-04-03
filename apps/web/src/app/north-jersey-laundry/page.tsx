@@ -72,7 +72,7 @@ export default function NorthJerseyLaundryPage() {
         {
           question: "Is pickup and delivery really free?",
           answer:
-            "Yes! We only charge per pound ($1.95-$2.79/lb depending on your plan). No delivery fees, no pickup fees, no hidden charges.",
+            "Yes! We only charge per pound ($1.95-$2.99/lb depending on your plan). No delivery fees, no pickup fees, no hidden charges.",
         },
       ]}
     />
