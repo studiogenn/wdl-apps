@@ -95,8 +95,8 @@ export function Services({
                     Schedule Pickup
                   </ButtonLink>
                   {resolvedShowPricing ? (
-                    <ButtonLink href="/wash-fold" variant="outline">
-                      View Pricing &amp; Details
+                    <ButtonLink href="/membership" variant="outline">
+                      Learn More
                     </ButtonLink>
                   ) : null}
                 </div>
@@ -148,7 +148,7 @@ export function Services({
             ) : null}
 
             <ButtonLink href="/wash-fold" variant="outline" size="sm" className="w-full mt-auto">
-              View Full Price List
+              Learn More
             </ButtonLink>
           </div>
 
@@ -172,7 +172,7 @@ export function Services({
             ) : null}
 
             <ButtonLink href="/wash-fold" variant="outline" size="sm" className="w-full mt-auto">
-              View Full Price List
+              Learn More
             </ButtonLink>
           </div>
 

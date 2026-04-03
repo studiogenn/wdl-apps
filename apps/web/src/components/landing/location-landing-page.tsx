@@ -56,8 +56,8 @@ export function LocationLandingPage({
                 <ButtonLink href="/account/">
                   Schedule Pick-up
                 </ButtonLink>
-                <ButtonLink href="/wash-fold/" variant="outline">
-                  View Pricing
+                <ButtonLink href="/membership" variant="outline">
+                  Learn More
                 </ButtonLink>
               </div>
             </div>

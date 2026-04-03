@@ -322,7 +322,7 @@ export default function OurStoryPage() {
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] mb-5">
                 Professional wash, dry &amp; fold with 24-hour turnaround. Starting at $1.95/lb.
               </p>
-              <ButtonLink href="/wash-fold" variant="outline">
+              <ButtonLink href="/membership" variant="outline">
                 Learn More
               </ButtonLink>
             </div>

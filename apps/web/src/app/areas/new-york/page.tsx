@@ -114,8 +114,8 @@ export default function NewYorkAreaPage() {
                 <ButtonLink href="/account/">
                   Schedule Pickup
                 </ButtonLink>
-                <ButtonLink href="/wash-fold" variant="outline">
-                  View Pricing
+                <ButtonLink href="/membership" variant="outline">
+                  Learn More
                 </ButtonLink>
               </div>
             </div>
