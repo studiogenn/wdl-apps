@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { type MembershipTier } from "@/lib/stripe-config";
 import { SectionHeader } from "@/components/shared/section-header";
@@ -171,9 +172,9 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
       {/* PAYG escape hatch */}
       <p className="mt-6 text-center font-[family-name:var(--font-poppins)] text-sm text-navy/40">
         Just need one pickup?{" "}
-        <a href="/pricing" className="text-primary hover:underline">
+        <Link href="/pricing" className="text-primary hover:underline">
           Order Instant at $2.95/lb →
-        </a>
+        </Link>
       </p>
 
       <p className="mt-3 text-center font-[family-name:var(--font-poppins)] text-xs text-navy/30">
