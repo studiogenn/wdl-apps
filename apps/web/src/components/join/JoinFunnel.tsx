@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { type MembershipTier } from "@/lib/stripe-config";
 import { trackEvent, TRACKING_EVENTS } from "@/lib/tracking";
@@ -34,13 +34,39 @@ export function JoinFunnel() {
   const [step, setStep] = useState<Step>("tier");
   const [plan, setPlan] = useState<PlanChoice>("weekly");
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [walletClientSecret, setWalletClientSecret] = useState<string | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [profile, setProfile] = useState<CustomerProfile | null>(null);
 
   const prefetchFired = useRef(false);
+  const walletPrefetchTier = useRef<string | null>(null);
 
   const isInstant = plan === "instant";
   const membershipTier = isInstant ? null : (plan as MembershipTier);
+
+  // Prefetch SetupIntent for wallet checkout on tier selection (no auth needed)
+  useEffect(() => {
+    if (isInstant || !membershipTier) return;
+    if (walletPrefetchTier.current === membershipTier) return;
+
+    walletPrefetchTier.current = membershipTier;
+    setWalletClientSecret(null);
+
+    fetch("/api/membership/wallet-setup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tier: membershipTier }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setWalletClientSecret(json.data.clientSecret);
+        }
+      })
+      .catch(() => {
+        // Wallet checkout won't be available — manual flow still works
+      });
+  }, [isInstant, membershipTier]);
 
   // Fire SetupIntent + profile prefetch in parallel after auth (membership only)
   const prefetchAll = useCallback((selectedTier: MembershipTier) => {
@@ -106,6 +132,11 @@ export function JoinFunnel() {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleWalletSuccess = useCallback(() => {
+    trackEvent(TRACKING_EVENTS.MEMBERSHIP_ACTIVATED, { tier: plan, method: "wallet" });
+    router.push("/join/success");
+  }, [plan, router]);
+
   const handleAuthComplete = useCallback(() => {
     if (isInstant) {
       trackEvent(TRACKING_EVENTS.MEMBERSHIP_AUTH_COMPLETED, { plan: "instant" });
@@ -139,7 +170,13 @@ export function JoinFunnel() {
     <div className="flex flex-col" style={{ minHeight: "calc(100dvh - var(--header-height))" }}>
       <div className="flex-1 flex flex-col justify-center bg-cream">
         {step === "tier" && (
-          <TierSelection selected={plan} onSelect={handlePlanSelect} />
+          <TierSelection
+            selected={plan}
+            onSelect={handlePlanSelect}
+            walletClientSecret={isInstant ? null : walletClientSecret}
+            walletTier={membershipTier}
+            onWalletSuccess={handleWalletSuccess}
+          />
         )}
 
         {step === "auth" && (

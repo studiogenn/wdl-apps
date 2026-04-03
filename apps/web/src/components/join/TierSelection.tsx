@@ -1,6 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { cn } from "@/lib/cn";
+import { type MembershipTier } from "@/lib/stripe-config";
+import { WalletCheckout } from "./WalletCheckout";
 
 export type PlanChoice = "weekly" | "family" | "instant";
 
@@ -51,9 +54,19 @@ const CHECK = (
 interface TierSelectionProps {
   readonly selected: PlanChoice;
   readonly onSelect: (plan: PlanChoice) => void;
+  readonly walletClientSecret?: string | null;
+  readonly walletTier?: MembershipTier | null;
+  readonly onWalletSuccess?: () => void;
 }
 
-export function TierSelection({ selected, onSelect }: TierSelectionProps) {
+export function TierSelection({
+  selected,
+  onSelect,
+  walletClientSecret,
+  walletTier,
+  onWalletSuccess,
+}: TierSelectionProps) {
+  const [walletAvailable, setWalletAvailable] = useState(false);
   return (
     <div className="mx-auto w-full max-w-3xl px-5 py-6 lg:py-8">
       <h1 className="font-heading-medium text-navy text-2xl lg:text-3xl uppercase text-center mb-1">
@@ -162,6 +175,27 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
           <span className="font-[family-name:var(--font-poppins)] text-xs text-navy/50">/lb</span>
         </div>
       </button>
+
+      {/* Wallet checkout — Apple Pay / Google Pay */}
+      {walletTier && walletClientSecret && onWalletSuccess && selected !== "instant" && (
+        <div className="mb-5">
+          <WalletCheckout
+            tier={walletTier}
+            clientSecret={walletClientSecret}
+            onReady={setWalletAvailable}
+            onSuccess={onWalletSuccess}
+          />
+          {walletAvailable && (
+            <div className="flex items-center gap-3 my-4">
+              <div className="flex-1 h-px bg-navy/10" />
+              <span className="font-[family-name:var(--font-poppins)] text-xs text-navy/30">
+                or continue manually
+              </span>
+              <div className="flex-1 h-px bg-navy/10" />
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Add-ons — compact inline row */}
       <div className="flex items-center justify-center gap-4 flex-wrap mb-4">
