@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { type MembershipTier } from "@/lib/stripe-config";
-import { TierSelection } from "./TierSelection";
+import { TierSelection, type PlanChoice } from "./TierSelection";
 import { AuthStep } from "./AuthStep";
 import { ScheduleStep } from "./ScheduleStep";
 import { PaymentStep } from "./PaymentStep";
@@ -31,19 +31,21 @@ export type CustomerProfile = {
 export function JoinFunnel() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("tier");
-  const [tier, setTier] = useState<MembershipTier>("weekly");
+  const [plan, setPlan] = useState<PlanChoice>("weekly");
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [profile, setProfile] = useState<CustomerProfile | null>(null);
 
   const prefetchFired = useRef(false);
 
-  // Fire both SetupIntent + profile prefetch in parallel after auth
+  const isInstant = plan === "instant";
+  const membershipTier = isInstant ? null : (plan as MembershipTier);
+
+  // Fire SetupIntent + profile prefetch in parallel after auth (membership only)
   const prefetchAll = useCallback((selectedTier: MembershipTier) => {
     if (prefetchFired.current) return;
     prefetchFired.current = true;
 
-    // SetupIntent
     fetch("/api/membership/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -61,34 +63,54 @@ export function JoinFunnel() {
         setPaymentError("Unable to initialize payment.");
       });
 
-    // Customer profile
     fetch("/api/account/profile", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.success) {
-          setProfile(json.data);
-        }
+        if (json.success) setProfile(json.data);
       })
       .catch(() => {
-        // Profile unavailable — proceed as new customer
         setProfile({ isReturning: false });
       });
   }, []);
 
-  const handleTierSelect = useCallback((selected: MembershipTier) => {
-    setTier(selected);
+  // Profile-only prefetch for Instant (no SetupIntent needed)
+  const prefetchProfile = useCallback(() => {
+    fetch("/api/account/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) setProfile(json.data);
+      })
+      .catch(() => {
+        setProfile({ isReturning: false });
+      });
+  }, []);
+
+  const handlePlanSelect = useCallback((selected: PlanChoice) => {
+    setPlan(selected);
+    prefetchFired.current = false;
+    setClientSecret(null);
+    setPaymentError(null);
     setStep("auth");
     window.scrollTo(0, 0);
   }, []);
 
   const handleAuthComplete = useCallback(() => {
-    prefetchAll(tier);
-    setStep("schedule");
-    window.scrollTo(0, 0);
-  }, [tier, prefetchAll]);
+    if (isInstant) {
+      prefetchProfile();
+      // Instant: auth → schedule (ScheduleCalendar handles the order)
+      router.push("/order");
+    } else {
+      prefetchAll(membershipTier!);
+      setStep("schedule");
+      window.scrollTo(0, 0);
+    }
+  }, [isInstant, membershipTier, prefetchAll, prefetchProfile, router]);
 
   const handleScheduleComplete = useCallback(() => {
     setStep("payment");
@@ -99,13 +121,16 @@ export function JoinFunnel() {
     router.push("/join/success");
   }, [router]);
 
+  const steps = isInstant
+    ? ["Plan", "Account"]
+    : ["Plan", "Account", "Schedule", "Payment"];
   const stepIndex = step === "tier" ? 0 : step === "auth" ? 1 : step === "schedule" ? 2 : 3;
 
   return (
     <div className="flex flex-col" style={{ minHeight: "calc(100dvh - var(--header-height))" }}>
       <div className="flex-1 flex flex-col justify-center bg-cream">
         {step === "tier" && (
-          <TierSelection selected={tier} onSelect={handleTierSelect} />
+          <TierSelection selected={plan} onSelect={handlePlanSelect} />
         )}
 
         {step === "auth" && (
@@ -115,18 +140,18 @@ export function JoinFunnel() {
           />
         )}
 
-        {step === "schedule" && (
+        {step === "schedule" && membershipTier && (
           <ScheduleStep
-            tier={tier}
+            tier={membershipTier}
             profile={profile}
             onComplete={handleScheduleComplete}
             onBack={() => { setStep("auth"); window.scrollTo(0, 0); }}
           />
         )}
 
-        {step === "payment" && (
+        {step === "payment" && membershipTier && (
           <PaymentStep
-            tier={tier}
+            tier={membershipTier}
             profile={profile}
             clientSecret={clientSecret}
             fetchError={paymentError}
@@ -140,7 +165,7 @@ export function JoinFunnel() {
       <div className="bg-white border-t border-navy/10 px-6 py-3 shrink-0">
         <div className="mx-auto max-w-lg">
           <div className="flex gap-1.5">
-            {["Plan", "Account", "Schedule", "Payment"].map((label, i) => (
+            {steps.map((label, i) => (
               <div key={label} className="flex-1">
                 <div
                   className={`h-1 rounded-full transition-colors ${

@@ -1,16 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { cn } from "@/lib/cn";
-import { type MembershipTier } from "@/lib/stripe-config";
 
-const TIERS: readonly {
-  readonly id: MembershipTier;
+export type PlanChoice = "weekly" | "family" | "instant";
+
+const MEMBERSHIP_TIERS: readonly {
+  readonly id: PlanChoice;
   readonly name: string;
-  readonly price: number;
-  readonly pickups: number;
-  readonly includedLbs: number;
-  readonly effectiveRate: string;
+  readonly price: string;
+  readonly unit: string;
+  readonly rate: string;
   readonly savings: string;
   readonly badge: string | null;
   readonly perks: readonly string[];
@@ -18,33 +17,22 @@ const TIERS: readonly {
   {
     id: "weekly",
     name: "Weekly",
-    price: 139,
-    pickups: 4,
-    includedLbs: 80,
-    effectiveRate: "$1.74/lb",
+    price: "$139",
+    unit: "/mo",
+    rate: "$1.74/lb",
     savings: "Save 41% vs Instant",
     badge: "Most Popular",
-    perks: [
-      "4 pickups/mo",
-      "Up to 80 lbs",
-      "24-hour turnaround",
-    ],
+    perks: ["4 pickups/mo", "Up to 80 lbs", "24-hour turnaround"],
   },
   {
     id: "family",
     name: "Family",
-    price: 189,
-    pickups: 4,
-    includedLbs: 120,
-    effectiveRate: "$1.58/lb",
+    price: "$189",
+    unit: "/mo",
+    rate: "$1.58/lb",
     savings: "Save 46% vs Instant",
     badge: "Best Value",
-    perks: [
-      "4 pickups/mo",
-      "Up to 120 lbs",
-      "24-hour turnaround",
-      "Family Sort + Hypoallergenic",
-    ],
+    perks: ["4 pickups/mo", "Up to 120 lbs", "24-hour turnaround", "Family Sort + Hypoallergenic"],
   },
 ];
 
@@ -61,8 +49,8 @@ const CHECK = (
 );
 
 interface TierSelectionProps {
-  readonly selected: MembershipTier;
-  readonly onSelect: (tier: MembershipTier) => void;
+  readonly selected: PlanChoice;
+  readonly onSelect: (plan: PlanChoice) => void;
 }
 
 export function TierSelection({ selected, onSelect }: TierSelectionProps) {
@@ -72,12 +60,12 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
         Laundry, handled.
       </h1>
       <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 text-center mb-6">
-        Free pickup & delivery · Cancel anytime · Overages $1.95/lb
+        Free pickup & delivery · Cancel anytime · 24-hour turnaround
       </p>
 
-      {/* Tier cards — side by side on desktop */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
-        {TIERS.map((t) => {
+      {/* Membership cards — side by side on desktop */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+        {MEMBERSHIP_TIERS.map((t) => {
           const isSelected = selected === t.id;
           return (
             <button
@@ -99,13 +87,13 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
               <div className="flex items-start justify-between gap-3">
                 <h3 className="font-heading-medium text-navy text-lg uppercase">{t.name}</h3>
                 <div className="text-right shrink-0">
-                  <span className="text-2xl font-body-bold text-navy">${t.price}</span>
-                  <span className="font-[family-name:var(--font-poppins)] text-xs text-navy/50">/mo</span>
+                  <span className="text-2xl font-body-bold text-navy">{t.price}</span>
+                  <span className="font-[family-name:var(--font-poppins)] text-xs text-navy/50">{t.unit}</span>
                 </div>
               </div>
 
               <p className="mt-1 font-[family-name:var(--font-poppins)] text-xs text-primary font-body-medium">
-                {t.effectiveRate} · {t.savings}
+                {t.rate} · {t.savings}
               </p>
 
               <ul className="mt-3 space-y-1">
@@ -133,13 +121,47 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
                   "font-[family-name:var(--font-poppins)] text-xs font-body-medium",
                   isSelected ? "text-primary" : "text-navy/40",
                 )}>
-                  {isSelected ? "Selected — tap to continue" : "Select"}
+                  {isSelected ? "Selected" : "Select"}
                 </span>
               </div>
             </button>
           );
         })}
       </div>
+
+      {/* Instant — the escape hatch, but still a real option */}
+      <button
+        onClick={() => onSelect("instant")}
+        className={cn(
+          "w-full rounded-2xl border-2 p-4 text-left transition-all flex items-center justify-between gap-4 mb-5",
+          selected === "instant"
+            ? "border-primary bg-white shadow-sm"
+            : "border-navy/10 bg-white hover:border-primary/40",
+        )}
+      >
+        <div className="flex items-center gap-3">
+          <div
+            className={cn(
+              "flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 transition-all",
+              selected === "instant" ? "border-primary bg-primary" : "border-navy/20",
+            )}
+          >
+            {selected === "instant" && (
+              <svg viewBox="0 0 10 10" fill="none" className="h-2 w-2">
+                <path d="M1.5 5L4 7.5L8.5 2.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+          </div>
+          <div>
+            <h3 className="font-heading-medium text-navy text-sm uppercase">Instant</h3>
+            <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/40">One-time pickup · No commitment</p>
+          </div>
+        </div>
+        <div className="text-right shrink-0">
+          <span className="text-lg font-body-bold text-navy">$2.95</span>
+          <span className="font-[family-name:var(--font-poppins)] text-xs text-navy/50">/lb</span>
+        </div>
+      </button>
 
       {/* Add-ons — compact inline row */}
       <div className="flex items-center justify-center gap-4 flex-wrap mb-4">
@@ -153,12 +175,8 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
         ))}
       </div>
 
-      {/* Fine print + escape hatch */}
       <p className="text-center font-[family-name:var(--font-poppins)] text-xs text-navy/30">
-        Priced at pickup — we text a quote before charging ·{" "}
-        <Link href="/order" className="text-primary hover:underline">
-          Just need one pickup? Instant at $2.95/lb →
-        </Link>
+        Premium Care and Deep Clean priced at pickup — we text a quote before charging.
       </p>
     </div>
   );
