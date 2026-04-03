@@ -82,6 +82,30 @@ export async function POST(request: Request) {
     const tierConfig = STRIPE_IDS.membership.tiers[tier];
     const { overagePriceId } = STRIPE_IDS.membership;
 
+    // Pull address from payment method (Apple Pay / Google Pay may provide it)
+    try {
+      const pm = await getStripe().paymentMethods.retrieve(parsed.data.paymentMethodId);
+      const addr = pm.billing_details?.address;
+      const pmName = pm.billing_details?.name;
+      const pmPhone = pm.billing_details?.phone;
+      if (addr?.line1) {
+        await getStripe().customers.update(stripeCustomerId, {
+          address: {
+            line1: addr.line1 ?? undefined,
+            line2: addr.line2 ?? undefined,
+            city: addr.city ?? undefined,
+            state: addr.state ?? undefined,
+            postal_code: addr.postal_code ?? undefined,
+            country: addr.country ?? undefined,
+          },
+          ...(pmName ? { name: pmName } : {}),
+          ...(pmPhone ? { phone: pmPhone } : {}),
+        });
+      }
+    } catch {
+      // Non-critical — address enrichment failed, continue
+    }
+
     if (!tierConfig.priceId || !overagePriceId) {
       return NextResponse.json(
         { success: false, error: "Stripe prices not configured" },

@@ -134,7 +134,19 @@ function MembershipPaymentForm({
         </div>
       </div>
 
-      <PaymentElement />
+      <PaymentElement
+        options={{
+          wallets: {
+            applePay: "auto",
+            googlePay: "auto",
+          },
+          fields: {
+            billingDetails: {
+              address: "auto",
+            },
+          },
+        }}
+      />
 
       {error && (
         <p className="font-[family-name:var(--font-poppins)] text-sm text-red-600 text-center">
