@@ -78,14 +78,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Attach payment method as default
-    await getStripe().customers.update(stripeCustomerId, {
-      invoice_settings: {
-        default_payment_method: parsed.data.paymentMethodId,
-      },
-    });
-
-    // Create subscription — charges immediately with the attached payment method
+    // Create subscription — charges immediately with the provided payment method
     const subscription = await getStripe().subscriptions.create({
       customer: stripeCustomerId,
       items: [
