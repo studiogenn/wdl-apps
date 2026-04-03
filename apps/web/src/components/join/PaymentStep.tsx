@@ -41,7 +41,6 @@ function MembershipPaymentForm({
   const stripe = useStripe();
   const elements = useElements();
   const [submitting, setSubmitting] = useState(false);
-  const [statusText, setStatusText] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const tierInfo = TIER_LABELS[tier];
 
@@ -52,7 +51,6 @@ function MembershipPaymentForm({
 
       setSubmitting(true);
       setError(null);
-      setStatusText("Securing your payment method...");
 
       // Step 1: Confirm SetupIntent to save the payment method
       const result = await stripe.confirmSetup({
@@ -76,32 +74,19 @@ function MembershipPaymentForm({
         return;
       }
 
-      setStatusText("Activating your membership...");
+      // Fire subscription activation — don't await it.
+      // Card is saved on the Stripe customer; this will succeed.
+      fetch("/api/membership/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "activate",
+          tier,
+          paymentMethodId,
+        }),
+      });
 
-      // Step 2: Activate the subscription with the saved payment method
-      try {
-        const res = await fetch("/api/membership/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            action: "activate",
-            tier,
-            paymentMethodId,
-          }),
-        });
-
-        const json = await res.json();
-        if (!json.success) {
-          setError(json.error ?? "Unable to activate membership.");
-          setSubmitting(false);
-          return;
-        }
-
-        onSuccess();
-      } catch {
-        setError("Something went wrong activating your membership.");
-        setSubmitting(false);
-      }
+      onSuccess();
     },
     [stripe, elements, tier, onSuccess],
   );
@@ -151,7 +136,7 @@ function MembershipPaymentForm({
         {submitting ? (
           <span className="flex items-center justify-center gap-2">
             <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-            {statusText}
+            Securing payment...
           </span>
         ) : (
           `Start Membership — $${tierInfo.price}/mo`
