@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { STRIPE_IDS, resolveTier } from "./stripe-config";
+import { STRIPE_IDS, resolveLegacyTier } from "./stripe-config";
 
 describe("stripe-config", () => {
   it("has tier price IDs for all subscription tiers", () => {
@@ -28,20 +28,20 @@ describe("stripe-config", () => {
   });
 });
 
-describe("resolveTier", () => {
+describe("resolveLegacyTier", () => {
   it("biweekly always returns biweekly-2", () => {
-    expect(resolveTier("biweekly", 1)).toBe("biweekly-2");
-    expect(resolveTier("biweekly", 2)).toBe("biweekly-2");
-    expect(resolveTier("biweekly", 3)).toBe("biweekly-2");
+    expect(resolveLegacyTier("biweekly", 1)).toBe("biweekly-2");
+    expect(resolveLegacyTier("biweekly", 2)).toBe("biweekly-2");
+    expect(resolveLegacyTier("biweekly", 3)).toBe("biweekly-2");
   });
 
   it("weekly 1 bag returns weekly-1", () => {
-    expect(resolveTier("weekly", 1)).toBe("weekly-1");
+    expect(resolveLegacyTier("weekly", 1)).toBe("weekly-1");
   });
 
   it("weekly 2+ bags returns weekly-2", () => {
-    expect(resolveTier("weekly", 2)).toBe("weekly-2");
-    expect(resolveTier("weekly", 3)).toBe("weekly-2");
-    expect(resolveTier("weekly", 4)).toBe("weekly-2");
+    expect(resolveLegacyTier("weekly", 2)).toBe("weekly-2");
+    expect(resolveLegacyTier("weekly", 3)).toBe("weekly-2");
+    expect(resolveLegacyTier("weekly", 4)).toBe("weekly-2");
   });
 });

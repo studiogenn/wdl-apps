@@ -1,0 +1,23 @@
+import type { Metadata } from "next";
+import { JoinFunnel } from "@/components/join/JoinFunnel";
+
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Join — Laundry Membership Plans from $79/month",
+  description:
+    "Join We Deliver Laundry. Membership plans from $79/month with free pickup & delivery. 2–4 pickups per month, 40–120 lbs included. Cancel anytime.",
+  openGraph: {
+    title: "We Deliver Laundry — Join a Membership Plan",
+    description:
+      "Membership plans from $79/month. Free pickup & delivery, 24-hour turnaround. Cancel anytime.",
+    url: "https://wedeliverlaundry.com/join",
+  },
+  alternates: {
+    canonical: "https://wedeliverlaundry.com/join",
+  },
+};
+
+export default function JoinPage() {
+  return <JoinFunnel />;
+}
