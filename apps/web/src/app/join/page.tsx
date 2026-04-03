@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { JoinGate } from "@/components/join/JoinGate";
+import { JoinFunnel } from "@/components/join/JoinFunnel";
 
 export const dynamic = "force-dynamic";
 
@@ -19,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function JoinPage() {
-  return <JoinGate />;
+  return <JoinFunnel />;
 }
