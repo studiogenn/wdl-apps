@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getFaqSchema, getServiceSchema } from "@/lib/schema";
 import { AreaFAQ } from "../_components/area-faq";
 import { ButtonLink, SectionHeader } from "@/components/shared";
+import { CustomPlanBanner } from "@/components/home/CustomPlanBanner";
 
 const NY_FAQS = [
   {
@@ -206,6 +207,8 @@ export default function NewYorkAreaPage() {
           </p>
         </div>
       </section>
+
+      <CustomPlanBanner />
 
       {/* Areas We Serve */}
       <section className="py-16 lg:py-20 bg-white">

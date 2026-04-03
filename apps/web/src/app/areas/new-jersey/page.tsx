@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getFaqSchema, getServiceSchema } from "@/lib/schema";
 import { AreaFAQ } from "../_components/area-faq";
 import { ButtonLink, SectionHeader } from "@/components/shared";
+import { CustomPlanBanner } from "@/components/home/CustomPlanBanner";
 
 const NJ_FAQS = [
   {
@@ -205,6 +206,8 @@ export default function NewJerseyAreaPage() {
           </p>
         </div>
       </section>
+
+      <CustomPlanBanner />
 
       {/* Counties We Serve */}
       <section className="py-16 lg:py-20 bg-white">
