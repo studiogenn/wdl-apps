@@ -43,6 +43,9 @@ export async function POST(request: Request) {
       sql`
         SELECT
           route_id          AS "routeId",
+          address,
+          lat,
+          lng,
           detergent_name    AS "detergent",
           bleach_name       AS "bleach",
           fabric_softener_name AS "fabricSoftener",
@@ -64,14 +67,32 @@ export async function POST(request: Request) {
 
     const customer = customerRows[0];
 
-    if (!customer?.routeId) {
+    let routeId = customer?.routeId as number | null;
+
+    // Auto-resolve route if missing
+    if (!routeId && customer) {
+      const routeParams: Record<string, unknown> = {};
+      if (customer.lat && customer.lng) {
+        routeParams.lat = customer.lat;
+        routeParams.lng = customer.lng;
+      } else if (customer.address) {
+        routeParams.address = customer.address;
+      }
+
+      if (Object.keys(routeParams).length > 0) {
+        const routeResult = await cleancloudProxy<{ routeID: number }>("/route", routeParams);
+        if (routeResult.success && routeResult.data?.routeID) {
+          routeId = routeResult.data.routeID;
+        }
+      }
+    }
+
+    if (!routeId) {
       return NextResponse.json(
-        { success: false, error: "No delivery route assigned to your account" },
+        { success: false, error: "We couldn't determine your delivery area. Please update your address." },
         { status: 422 }
       );
     }
-
-    const routeId = customer.routeId as number;
 
     // Fetch dates + products in parallel
     const [datesResult, productsResult] = await Promise.all([
