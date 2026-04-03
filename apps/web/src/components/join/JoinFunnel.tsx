@@ -39,34 +39,33 @@ export function JoinFunnel() {
   const [profile, setProfile] = useState<CustomerProfile | null>(null);
 
   const prefetchFired = useRef(false);
-  const walletPrefetchTier = useRef<string | null>(null);
-
   const isInstant = plan === "instant";
   const membershipTier = isInstant ? null : (plan as MembershipTier);
 
-  // Prefetch SetupIntent for wallet checkout on tier selection (no auth needed)
+  // Prefetch SetupIntent for wallet checkout (default tier on mount)
+  const walletPrefetchTier = useRef<string | null>(null);
+
   useEffect(() => {
-    if (isInstant || !membershipTier) return;
-    if (walletPrefetchTier.current === membershipTier) return;
+    const tier = membershipTier ?? "weekly";
+    if (walletPrefetchTier.current === tier) return;
+    walletPrefetchTier.current = tier;
 
-    walletPrefetchTier.current = membershipTier;
-    setWalletClientSecret(null);
-
+    let cancelled = false;
     fetch("/api/membership/wallet-setup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tier: membershipTier }),
+      body: JSON.stringify({ tier }),
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.success) {
+        if (!cancelled && json.success) {
           setWalletClientSecret(json.data.clientSecret);
         }
       })
-      .catch(() => {
-        // Wallet checkout won't be available — manual flow still works
-      });
-  }, [isInstant, membershipTier]);
+      .catch(() => {});
+
+    return () => { cancelled = true; };
+  }, [membershipTier]);
 
   // Fire SetupIntent + profile prefetch in parallel after auth (membership only)
   const prefetchAll = useCallback((selectedTier: MembershipTier) => {
@@ -90,21 +89,6 @@ export function JoinFunnel() {
         setPaymentError("Unable to initialize payment.");
       });
 
-    fetch("/api/account/profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.success) setProfile(json.data);
-      })
-      .catch(() => {
-        setProfile({ isReturning: false });
-      });
-  }, []);
-
-  // Profile-only prefetch for Instant (no SetupIntent needed)
-  const prefetchProfile = useCallback(() => {
     fetch("/api/account/profile", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -147,7 +131,7 @@ export function JoinFunnel() {
       setStep("schedule");
       window.scrollTo(0, 0);
     }
-  }, [isInstant, membershipTier, prefetchAll, prefetchProfile, router]);
+  }, [isInstant, membershipTier, prefetchAll]);
 
   const handleScheduleComplete = useCallback(() => {
     trackEvent(TRACKING_EVENTS.MEMBERSHIP_SCHEDULE_COMPLETED, { tier: plan });
