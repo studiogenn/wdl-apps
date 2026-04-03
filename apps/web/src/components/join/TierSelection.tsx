@@ -13,6 +13,7 @@ const TIERS: readonly {
   readonly effectiveRate: string;
   readonly savings: string;
   readonly badge: string | null;
+  readonly perks: readonly string[];
 }[] = [
   {
     id: "weekly",
@@ -21,8 +22,14 @@ const TIERS: readonly {
     pickups: 4,
     includedLbs: 80,
     effectiveRate: "$1.74/lb",
-    savings: "Save 41% vs on-demand",
+    savings: "Save 41% vs Instant",
     badge: "Most Popular",
+    perks: [
+      "4 pickups per month",
+      "Up to 80 lbs included",
+      "Free pickup & delivery",
+      "24-hour turnaround",
+    ],
   },
   {
     id: "family",
@@ -31,9 +38,22 @@ const TIERS: readonly {
     pickups: 4,
     includedLbs: 120,
     effectiveRate: "$1.58/lb",
-    savings: "Save 46% vs on-demand",
+    savings: "Save 46% vs Instant",
     badge: "Best Value",
+    perks: [
+      "4 pickups per month",
+      "Up to 120 lbs included",
+      "Free pickup & delivery",
+      "24-hour turnaround",
+      "Family Sort + Hypoallergenic included",
+    ],
   },
+];
+
+const ADD_ONS = [
+  { name: "Premium Care", desc: "Gentle cycle, premium detergent, delicates", price: "From $5" },
+  { name: "Deep Clean", desc: "Heavily soiled items, stain treatment", price: "From $3" },
+  { name: "Bedding", desc: "Sheets, pillowcases, duvet cover", price: "$29" },
 ];
 
 const CHECK = (
@@ -82,8 +102,8 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
                   <h3 className="font-heading-medium text-navy text-lg uppercase">
                     {t.name}
                   </h3>
-                  <p className="mt-1 font-[family-name:var(--font-poppins)] text-sm text-navy/50">
-                    {t.pickups} pickups/mo · Up to {t.includedLbs} lbs
+                  <p className="mt-0.5 font-[family-name:var(--font-poppins)] text-xs text-primary font-body-medium">
+                    {t.effectiveRate} · {t.savings}
                   </p>
                 </div>
                 <div className="text-right">
@@ -92,14 +112,13 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
                 </div>
               </div>
 
-              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5">
-                <span className="flex items-center gap-1.5 font-[family-name:var(--font-poppins)] text-xs text-navy/60">
-                  {CHECK} {t.effectiveRate}
-                </span>
-                <span className="flex items-center gap-1.5 font-[family-name:var(--font-poppins)] text-xs text-primary font-body-medium">
-                  {CHECK} {t.savings}
-                </span>
-              </div>
+              <ul className="mt-4 space-y-1.5">
+                {t.perks.map((perk) => (
+                  <li key={perk} className="flex items-center gap-2 font-[family-name:var(--font-poppins)] text-xs text-navy/60">
+                    {CHECK} {perk}
+                  </li>
+                ))}
+              </ul>
 
               <div className="mt-4 flex items-center gap-2">
                 <div
@@ -126,6 +145,30 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
         })}
       </div>
 
+      {/* Add-ons */}
+      <div className="mt-8">
+        <p className="mb-3 font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/40 uppercase tracking-widest text-center">
+          Available add-ons
+        </p>
+        <div className="flex flex-col gap-2">
+          {ADD_ONS.map((a) => (
+            <div key={a.name} className="flex items-center justify-between rounded-xl border border-navy/10 bg-white px-4 py-3">
+              <div>
+                <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">{a.name}</p>
+                <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/40">{a.desc}</p>
+              </div>
+              <span className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy/60 shrink-0 ml-4">
+                {a.price}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-2 text-center font-[family-name:var(--font-poppins)] text-[11px] text-navy/30">
+          Premium Care and Deep Clean priced at pickup — we&apos;ll text you a quote before charging.
+        </p>
+      </div>
+
+      {/* PAYG escape hatch */}
       <p className="mt-6 text-center font-[family-name:var(--font-poppins)] text-sm text-navy/40">
         Just need one pickup?{" "}
         <a href="/pricing" className="text-primary hover:underline">
