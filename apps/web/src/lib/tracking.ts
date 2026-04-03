@@ -9,6 +9,15 @@ export const TRACKING_EVENTS = {
   SIGNUP_ZIP_CHECKED: "signup_zip_checked",
   SIGNUP_COMPLETED: "signup_completed",
   SIGNUP_ABANDONED: "signup_abandoned",
+  // Membership funnel
+  MEMBERSHIP_PLAN_SELECTED: "membership_plan_selected",
+  MEMBERSHIP_PLAN_CHANGED: "membership_plan_changed",
+  MEMBERSHIP_AUTH_COMPLETED: "membership_auth_completed",
+  MEMBERSHIP_SCHEDULE_COMPLETED: "membership_schedule_completed",
+  MEMBERSHIP_CHECKOUT_REACHED: "membership_checkout_reached",
+  MEMBERSHIP_PAYMENT_SUBMITTED: "membership_payment_submitted",
+  MEMBERSHIP_ACTIVATED: "membership_activated",
+  INSTANT_SELECTED: "instant_selected",
 } as const;
 
 export type TrackingEvent =

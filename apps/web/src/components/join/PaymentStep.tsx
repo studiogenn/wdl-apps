@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { trackEvent, TRACKING_EVENTS } from "@/lib/tracking";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -51,6 +52,7 @@ function MembershipPaymentForm({
 
       setSubmitting(true);
       setError(null);
+      trackEvent(TRACKING_EVENTS.MEMBERSHIP_PAYMENT_SUBMITTED, { tier });
 
       // Step 1: Confirm SetupIntent to save the payment method
       const result = await stripe.confirmSetup({

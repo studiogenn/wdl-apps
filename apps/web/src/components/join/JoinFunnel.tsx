@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { type MembershipTier } from "@/lib/stripe-config";
+import { trackEvent, TRACKING_EVENTS } from "@/lib/tracking";
 import { TierSelection, type PlanChoice } from "./TierSelection";
 import { AuthStep } from "./AuthStep";
 import { ScheduleStep } from "./ScheduleStep";
@@ -92,6 +93,11 @@ export function JoinFunnel() {
   }, []);
 
   const handlePlanSelect = useCallback((selected: PlanChoice) => {
+    if (selected === "instant") {
+      trackEvent(TRACKING_EVENTS.INSTANT_SELECTED);
+    } else {
+      trackEvent(TRACKING_EVENTS.MEMBERSHIP_PLAN_SELECTED, { tier: selected });
+    }
     setPlan(selected);
     prefetchFired.current = false;
     setClientSecret(null);
@@ -102,9 +108,10 @@ export function JoinFunnel() {
 
   const handleAuthComplete = useCallback(() => {
     if (isInstant) {
-      // Full navigation so server reads the fresh auth cookies
+      trackEvent(TRACKING_EVENTS.MEMBERSHIP_AUTH_COMPLETED, { plan: "instant" });
       window.location.href = "/order";
     } else {
+      trackEvent(TRACKING_EVENTS.MEMBERSHIP_AUTH_COMPLETED, { plan: membershipTier! });
       prefetchAll(membershipTier!);
       setStep("schedule");
       window.scrollTo(0, 0);
@@ -112,13 +119,16 @@ export function JoinFunnel() {
   }, [isInstant, membershipTier, prefetchAll, prefetchProfile, router]);
 
   const handleScheduleComplete = useCallback(() => {
+    trackEvent(TRACKING_EVENTS.MEMBERSHIP_SCHEDULE_COMPLETED, { tier: plan });
+    trackEvent(TRACKING_EVENTS.MEMBERSHIP_CHECKOUT_REACHED, { tier: plan });
     setStep("payment");
     window.scrollTo(0, 0);
-  }, []);
+  }, [plan]);
 
   const handlePaymentSuccess = useCallback(() => {
+    trackEvent(TRACKING_EVENTS.MEMBERSHIP_ACTIVATED, { tier: plan });
     router.push("/join/success");
-  }, [router]);
+  }, [plan, router]);
 
   const steps = isInstant
     ? ["Plan", "Account"]
