@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ButtonLink } from "@/components/shared";
 
 const NAV_ITEMS = [
-  { label: "Memberships", href: "/pricing" },
+  { label: "Memberships", href: "/membership" },
   { label: "Wash & Fold", href: "/wash-fold" },
   { label: "Locations", href: "/service-areas" },
   { label: "About Us", href: "/our-story" },
