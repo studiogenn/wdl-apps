@@ -156,7 +156,7 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
       {/* Fine print + escape hatch */}
       <p className="text-center font-[family-name:var(--font-poppins)] text-xs text-navy/30">
         Priced at pickup — we text a quote before charging ·{" "}
-        <Link href="/pricing" className="text-primary hover:underline">
+        <Link href="/order" className="text-primary hover:underline">
           Just need one pickup? Instant at $2.95/lb →
         </Link>
       </p>
