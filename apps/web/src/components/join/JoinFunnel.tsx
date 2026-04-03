@@ -102,9 +102,8 @@ export function JoinFunnel() {
 
   const handleAuthComplete = useCallback(() => {
     if (isInstant) {
-      prefetchProfile();
-      // Instant: auth → schedule (ScheduleCalendar handles the order)
-      router.push("/order");
+      // Full navigation so server reads the fresh auth cookies
+      window.location.href = "/order";
     } else {
       prefetchAll(membershipTier!);
       setStep("schedule");

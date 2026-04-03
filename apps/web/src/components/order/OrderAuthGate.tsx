@@ -47,7 +47,20 @@ export function OrderAuthGate({ needsCleanCloud }: OrderAuthGateProps) {
     setError(null);
 
     try {
-      if (mode === "register") {
+      if (needsCleanCloud) {
+        // Already authenticated — just link CleanCloud customer
+        const res = await fetch("/api/cleancloud/customers/link", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, phone, address }),
+        });
+        const data = await res.json();
+        if (!data.success) {
+          setError(data.error ?? "Could not set up your account.");
+          setLoading(false);
+          return;
+        }
+      } else if (mode === "register") {
         const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

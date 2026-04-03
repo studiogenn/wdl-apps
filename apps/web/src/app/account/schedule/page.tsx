@@ -7,6 +7,7 @@ import { getDb } from "@/lib/db";
 import { user as userTable } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { ScheduleCalendar } from "@/components/account/schedule-calendar";
+import { OrderAuthGate } from "@/components/order/OrderAuthGate";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +23,6 @@ async function resolveCustomerId(
 ): Promise<number | null> {
   if (existing) return existing;
 
-  // Auto-link: find CC customer by email
   const sql = getsql();
   const [match] = await sql`
     SELECT cleancloud_id AS "cleancloudId"
@@ -37,7 +37,6 @@ async function resolveCustomerId(
 
   const ccId = match.cleancloudId as number;
 
-  // Write it back to the user record
   const db = getDb();
   await db
     .update(userTable)
@@ -66,7 +65,7 @@ export default async function SchedulePage() {
   );
 
   if (!customerId) {
-    redirect("/account?flag=new-account");
+    return <OrderAuthGate needsCleanCloud />;
   }
 
   return <ScheduleCalendar customerId={customerId} />;

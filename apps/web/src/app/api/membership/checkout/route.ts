@@ -89,7 +89,22 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create subscription — charges immediately with the provided payment method
+    // Guard: check if customer already has an active subscription
+    const existingSubs = await getStripe().subscriptions.list({
+      customer: stripeCustomerId,
+      status: "active",
+      limit: 1,
+    });
+    if (existingSubs.data.length > 0) {
+      return NextResponse.json({
+        success: true,
+        data: {
+          subscriptionId: existingSubs.data[0].id,
+          status: existingSubs.data[0].status,
+        },
+      });
+    }
+
     const subscription = await getStripe().subscriptions.create({
       customer: stripeCustomerId,
       items: [
