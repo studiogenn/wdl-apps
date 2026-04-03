@@ -339,11 +339,24 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
   }
 
   if (error) {
+    const isRouteError = error.toLowerCase().includes("route");
     return (
       <div className="mx-auto max-w-3xl px-6 py-12">
         <div className="rounded-2xl border border-navy/10 bg-white p-8 text-center">
-          <p className="text-sm text-red-600 font-body">{error}</p>
-          <Button variant="outline" className="mt-4" onClick={() => router.push("/account")}>
+          {isRouteError ? (
+            <>
+              <h3 className="text-lg font-heading-medium text-navy mb-2">We&apos;re setting up your area</h3>
+              <p className="text-sm text-navy/60 font-[family-name:var(--font-poppins)] mb-4">
+                Your address hasn&apos;t been assigned to a delivery route yet. This usually takes a few hours after sign-up.
+              </p>
+              <p className="text-sm text-navy/60 font-[family-name:var(--font-poppins)] mb-6">
+                Need it sooner? Text us at <a href="sms:+18559685511" className="text-primary font-body-medium">(855) 968-5511</a> or email <a href="mailto:hello@wedeliverlaundry.com" className="text-primary font-body-medium">hello@wedeliverlaundry.com</a>.
+              </p>
+            </>
+          ) : (
+            <p className="text-sm text-red-600 font-body mb-4">{error}</p>
+          )}
+          <Button variant="outline" onClick={() => router.push("/account")}>
             Back to Dashboard
           </Button>
         </div>
