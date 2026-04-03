@@ -21,8 +21,6 @@ interface ScheduleStepProps {
   readonly tier: MembershipTier;
   readonly onComplete: () => void;
   readonly onBack: () => void;
-  readonly loading: boolean;
-  readonly error: string | null;
 }
 
 function formatDate(timestamp: number): string {
@@ -34,7 +32,7 @@ function formatSlot(slot: string): string {
   return slot.trim();
 }
 
-export function ScheduleStep({ tier, onComplete, onBack, loading, error }: ScheduleStepProps) {
+export function ScheduleStep({ tier, onComplete, onBack }: ScheduleStepProps) {
   const [address, setAddress] = useState("");
   const [routeID, setRouteID] = useState<number | null>(null);
   const [dates, setDates] = useState<readonly DateOption[]>([]);
@@ -219,23 +217,16 @@ export function ScheduleStep({ tier, onComplete, onBack, loading, error }: Sched
         </div>
       )}
 
-      {/* Checkout */}
-      {error && (
-        <p className="mb-4 font-[family-name:var(--font-poppins)] text-sm text-red-600 text-center">
-          {error}
-        </p>
-      )}
-
       <Button
         className="w-full"
-        disabled={!canProceed || loading}
+        disabled={!canProceed}
         onClick={onComplete}
       >
-        {loading ? "Redirecting to checkout..." : `Start My Membership — $${tierInfo.price}/mo`}
+        Continue to Payment
       </Button>
 
       <p className="mt-3 text-center font-[family-name:var(--font-poppins)] text-[11px] text-navy/30">
-        Cancel anytime · First pickup {selectedDate ? formatDate(selectedDate) : "—"} {selectedSlot ?? ""}
+        First pickup {selectedDate ? formatDate(selectedDate) : "—"} {selectedSlot ?? ""}
       </p>
 
       <button

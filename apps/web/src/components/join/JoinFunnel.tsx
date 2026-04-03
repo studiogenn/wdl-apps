@@ -1,18 +1,21 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { type MembershipTier } from "@/lib/stripe-config";
 import { TierSelection } from "./TierSelection";
 import { AuthStep } from "./AuthStep";
 import { ScheduleStep } from "./ScheduleStep";
+import { PaymentStep } from "./PaymentStep";
 
-type Step = "tier" | "auth" | "schedule";
+type Step = "tier" | "auth" | "schedule" | "payment";
 
 export function JoinFunnel() {
+  const router = useRouter();
   const [step, setStep] = useState<Step>("tier");
   const [tier, setTier] = useState<MembershipTier>("standard");
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
-  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   const handleTierSelect = useCallback((selected: MembershipTier) => {
     setTier(selected);
@@ -26,35 +29,35 @@ export function JoinFunnel() {
   }, []);
 
   const handleScheduleComplete = useCallback(async () => {
-    setCheckoutError(null);
-    setCheckoutLoading(true);
+    setPaymentError(null);
+    setClientSecret(null);
+    setStep("payment");
+    window.scrollTo(0, 0);
 
     try {
       const res = await fetch("/api/membership/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          tier,
-          successUrl: `${window.location.origin}/join/success`,
-          cancelUrl: `${window.location.origin}/join`,
-        }),
+        body: JSON.stringify({ tier }),
       });
 
       const json = await res.json();
       if (!json.success) {
-        setCheckoutError(json.error ?? "Something went wrong");
-        setCheckoutLoading(false);
+        setPaymentError(json.error ?? "Something went wrong");
         return;
       }
 
-      window.location.href = json.data.url;
+      setClientSecret(json.data.clientSecret);
     } catch {
-      setCheckoutError("Unable to start checkout. Please try again.");
-      setCheckoutLoading(false);
+      setPaymentError("Unable to start checkout. Please try again.");
     }
   }, [tier]);
 
-  const stepIndex = step === "tier" ? 0 : step === "auth" ? 1 : 2;
+  const handlePaymentSuccess = useCallback(() => {
+    router.push("/join/success");
+  }, [router]);
+
+  const stepIndex = step === "tier" ? 0 : step === "auth" ? 1 : step === "schedule" ? 2 : 3;
 
   return (
     <div className="min-h-screen bg-cream">
@@ -62,7 +65,7 @@ export function JoinFunnel() {
       <div className="bg-white border-b border-navy/10 px-6 py-3">
         <div className="mx-auto max-w-lg">
           <div className="flex gap-1.5">
-            {["Plan", "Account", "Schedule"].map((label, i) => (
+            {["Plan", "Account", "Schedule", "Payment"].map((label, i) => (
               <div key={label} className="flex-1">
                 <div
                   className={`h-1 rounded-full transition-colors ${
@@ -98,8 +101,16 @@ export function JoinFunnel() {
           tier={tier}
           onComplete={handleScheduleComplete}
           onBack={() => { setStep("auth"); window.scrollTo(0, 0); }}
-          loading={checkoutLoading}
-          error={checkoutError}
+        />
+      )}
+
+      {step === "payment" && (
+        <PaymentStep
+          tier={tier}
+          clientSecret={clientSecret}
+          fetchError={paymentError}
+          onSuccess={handlePaymentSuccess}
+          onBack={() => { setStep("schedule"); window.scrollTo(0, 0); }}
         />
       )}
     </div>

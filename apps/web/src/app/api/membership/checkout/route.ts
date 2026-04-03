@@ -8,8 +8,6 @@ import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
 
 const checkoutSchema = z.object({
   tier: z.enum(["starter", "standard", "family"]),
-  successUrl: z.string().url(),
-  cancelUrl: z.string().url(),
 });
 
 async function getOrCreateStripeCustomer(authUserId: string, phone?: string) {
@@ -57,30 +55,52 @@ export async function POST(request: Request) {
 
     const stripeCustomerId = await getOrCreateStripeCustomer(auth.uid, auth.phone);
 
-    const session = await getStripe().checkout.sessions.create({
+    const subscription = await getStripe().subscriptions.create({
       customer: stripeCustomerId,
-      mode: "subscription",
-      allow_promotion_codes: true,
-      line_items: [
-        { price: tierConfig.priceId, quantity: 1 },
+      items: [
+        { price: tierConfig.priceId },
         { price: overagePriceId },
       ],
-      subscription_data: {
-        metadata: {
-          tier,
-          pickups: String(tierConfig.pickups),
-          includedLbs: String(tierConfig.includedLbs),
-          source: "join_funnel",
-        },
+      payment_behavior: "default_incomplete",
+      payment_settings: {
+        save_default_payment_method: "on_subscription",
       },
-      success_url: parsed.data.successUrl,
-      cancel_url: parsed.data.cancelUrl,
+      expand: ["latest_invoice.payment_intent"],
+      metadata: {
+        tier,
+        pickups: String(tierConfig.pickups),
+        includedLbs: String(tierConfig.includedLbs),
+        source: "join_funnel",
+      },
     });
 
-    return NextResponse.json({ success: true, data: { url: session.url } });
+    const invoice = subscription.latest_invoice;
+    const paymentIntent =
+      typeof invoice === "object" && invoice !== null && "payment_intent" in invoice
+        ? invoice.payment_intent
+        : null;
+    const clientSecret =
+      typeof paymentIntent === "object" && paymentIntent !== null && "client_secret" in paymentIntent
+        ? (paymentIntent.client_secret as string)
+        : null;
+
+    if (!clientSecret) {
+      return NextResponse.json(
+        { success: false, error: "Failed to initialize payment" },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: {
+        subscriptionId: subscription.id,
+        clientSecret,
+      },
+    });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Failed to create checkout";
+      error instanceof Error ? error.message : "Failed to create subscription";
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 },
