@@ -5,6 +5,7 @@ import {
   type PageView,
   type SubState,
   type PaygState,
+  type ScheduleState,
   defaultSubState,
   defaultPaygState,
   PAYG_RATE,
@@ -20,11 +21,19 @@ import { HeroSection } from "./HeroSection";
 import { QuizFlow, type QuizFlowResult } from "./QuizFlow";
 import { SubscriptionBuilder } from "./SubscriptionBuilder";
 import { PaygBuilder } from "./PaygBuilder";
+import { SchedulePicker } from "./SchedulePicker";
+
+const defaultScheduleState: ScheduleState = {
+  date: "",
+  timeSlot: "",
+  repeatPickup: false,
+};
 
 export function PricingPage() {
   const [view, setView] = useState<PageView>("home");
   const [subState, setSubState] = useState<SubState>(defaultSubState);
   const [paygState, setPaygState] = useState<PaygState>(defaultPaygState);
+  const [scheduleState, setScheduleState] = useState<ScheduleState>(defaultScheduleState);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
@@ -62,6 +71,11 @@ export function PricingPage() {
     navigate("subscription");
   }, [navigate]);
 
+  const handleShowSchedule = useCallback(() => {
+    setScheduleState(defaultScheduleState);
+    navigate("schedule");
+  }, [navigate]);
+
   const handleSubscriptionCheckout = useCallback(async () => {
     setCheckoutError(null);
     setCheckoutLoading(true);
@@ -71,6 +85,9 @@ export function PricingPage() {
       if (subState.selectedCare.length > 0) planMetadata.care = subState.selectedCare.join(",");
       if (subState.addBedding) planMetadata.bedding = subState.beddingFreq;
       if (subState.isStudent) planMetadata.student = "true";
+      if (scheduleState.date) planMetadata.pickupDate = scheduleState.date;
+      if (scheduleState.timeSlot) planMetadata.pickupTime = scheduleState.timeSlot;
+      if (scheduleState.repeatPickup) planMetadata.repeatPickup = "true";
 
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
@@ -96,7 +113,7 @@ export function PricingPage() {
     } finally {
       setCheckoutLoading(false);
     }
-  }, [subState]);
+  }, [subState, scheduleState]);
 
   const handlePaygCheckout = useCallback(async () => {
     setCheckoutError(null);
@@ -170,6 +187,17 @@ export function PricingPage() {
         <SubscriptionBuilder
           state={subState}
           onChange={setSubState}
+          onNavigate={navigate}
+          onCheckout={handleShowSchedule}
+          checkoutLoading={false}
+          checkoutError={null}
+        />
+      );
+    case "schedule":
+      return (
+        <SchedulePicker
+          state={scheduleState}
+          onChange={setScheduleState}
           onNavigate={navigate}
           onCheckout={handleSubscriptionCheckout}
           checkoutLoading={checkoutLoading}
