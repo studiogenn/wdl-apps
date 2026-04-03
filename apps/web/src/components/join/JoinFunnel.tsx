@@ -61,30 +61,6 @@ export function JoinFunnel() {
 
   return (
     <div className="flex flex-col" style={{ minHeight: "calc(100dvh - var(--header-height))" }}>
-      {/* Progress */}
-      <div className="bg-white border-b border-navy/10 px-6 py-3 shrink-0">
-        <div className="mx-auto max-w-lg">
-          <div className="flex gap-1.5">
-            {["Plan", "Account", "Schedule", "Payment"].map((label, i) => (
-              <div key={label} className="flex-1">
-                <div
-                  className={`h-1 rounded-full transition-colors ${
-                    i <= stepIndex ? "bg-primary" : "bg-navy/10"
-                  }`}
-                />
-                <p
-                  className={`mt-1 text-[11px] font-[family-name:var(--font-poppins)] ${
-                    i <= stepIndex ? "text-primary font-body-medium" : "text-navy/30"
-                  }`}
-                >
-                  {label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       <div className="flex-1 flex flex-col justify-center bg-cream">
         {step === "tier" && (
           <TierSelection selected={tier} onSelect={handleTierSelect} />
@@ -114,6 +90,30 @@ export function JoinFunnel() {
             onBack={() => { setStep("schedule"); window.scrollTo(0, 0); }}
           />
         )}
+      </div>
+
+      {/* Progress */}
+      <div className="bg-white border-t border-navy/10 px-6 py-3 shrink-0">
+        <div className="mx-auto max-w-lg">
+          <div className="flex gap-1.5">
+            {["Plan", "Account", "Schedule", "Payment"].map((label, i) => (
+              <div key={label} className="flex-1">
+                <div
+                  className={`h-1 rounded-full transition-colors ${
+                    i <= stepIndex ? "bg-primary" : "bg-navy/10"
+                  }`}
+                />
+                <p
+                  className={`mt-1 text-[11px] font-[family-name:var(--font-poppins)] ${
+                    i <= stepIndex ? "text-primary font-body-medium" : "text-navy/30"
+                  }`}
+                >
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
