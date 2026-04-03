@@ -6,9 +6,18 @@ import { eq } from "drizzle-orm";
 import { STRIPE_IDS, type MembershipTier } from "@/lib/stripe-config";
 import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
 
-const checkoutSchema = z.object({
+const setupSchema = z.object({
+  action: z.literal("setup"),
   tier: z.enum(["starter", "standard", "family"]),
 });
+
+const activateSchema = z.object({
+  action: z.literal("activate"),
+  tier: z.enum(["starter", "standard", "family"]),
+  paymentMethodId: z.string().min(1),
+});
+
+const requestSchema = z.discriminatedUnion("action", [setupSchema, activateSchema]);
 
 async function getOrCreateStripeCustomer(authUserId: string, phone?: string) {
   const existing = await getDb().query.customers.findFirst({
@@ -34,7 +43,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const parsed = checkoutSchema.safeParse(body);
+    const parsed = requestSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(
         { success: false, error: "Invalid request data" },
@@ -42,6 +51,22 @@ export async function POST(request: Request) {
       );
     }
 
+    const stripeCustomerId = await getOrCreateStripeCustomer(auth.uid, auth.phone);
+
+    if (parsed.data.action === "setup") {
+      const setupIntent = await getStripe().setupIntents.create({
+        customer: stripeCustomerId,
+        usage: "off_session",
+        automatic_payment_methods: { enabled: true },
+      });
+
+      return NextResponse.json({
+        success: true,
+        data: { clientSecret: setupIntent.client_secret },
+      });
+    }
+
+    // action === "activate"
     const tier = parsed.data.tier as MembershipTier;
     const tierConfig = STRIPE_IDS.membership.tiers[tier];
     const { overagePriceId } = STRIPE_IDS.membership;
@@ -53,19 +78,21 @@ export async function POST(request: Request) {
       );
     }
 
-    const stripeCustomerId = await getOrCreateStripeCustomer(auth.uid, auth.phone);
+    // Attach payment method as default
+    await getStripe().customers.update(stripeCustomerId, {
+      invoice_settings: {
+        default_payment_method: parsed.data.paymentMethodId,
+      },
+    });
 
+    // Create subscription — charges immediately with the attached payment method
     const subscription = await getStripe().subscriptions.create({
       customer: stripeCustomerId,
       items: [
         { price: tierConfig.priceId },
         { price: overagePriceId },
       ],
-      payment_behavior: "default_incomplete",
-      payment_settings: {
-        save_default_payment_method: "on_subscription",
-      },
-      expand: ["latest_invoice.payment_intent"],
+      default_payment_method: parsed.data.paymentMethodId,
       metadata: {
         tier,
         pickups: String(tierConfig.pickups),
@@ -74,33 +101,16 @@ export async function POST(request: Request) {
       },
     });
 
-    const invoice = subscription.latest_invoice;
-    const paymentIntent =
-      typeof invoice === "object" && invoice !== null && "payment_intent" in invoice
-        ? invoice.payment_intent
-        : null;
-    const clientSecret =
-      typeof paymentIntent === "object" && paymentIntent !== null && "client_secret" in paymentIntent
-        ? (paymentIntent.client_secret as string)
-        : null;
-
-    if (!clientSecret) {
-      return NextResponse.json(
-        { success: false, error: "Failed to initialize payment" },
-        { status: 500 },
-      );
-    }
-
     return NextResponse.json({
       success: true,
       data: {
         subscriptionId: subscription.id,
-        clientSecret,
+        status: subscription.status,
       },
     });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Failed to create subscription";
+      error instanceof Error ? error.message : "Failed to process request";
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 },

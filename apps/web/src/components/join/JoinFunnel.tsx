@@ -38,7 +38,7 @@ export function JoinFunnel() {
       const res = await fetch("/api/membership/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier }),
+        body: JSON.stringify({ action: "setup", tier }),
       });
 
       const json = await res.json();

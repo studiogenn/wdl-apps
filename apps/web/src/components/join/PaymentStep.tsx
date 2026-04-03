@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -53,11 +53,9 @@ function MembershipPaymentForm({
       setSubmitting(true);
       setError(null);
 
-      const result = await stripe.confirmPayment({
+      // Step 1: Confirm SetupIntent to save the payment method
+      const result = await stripe.confirmSetup({
         elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/join/success`,
-        },
         redirect: "if_required",
       });
 
@@ -67,9 +65,42 @@ function MembershipPaymentForm({
         return;
       }
 
-      onSuccess();
+      const paymentMethodId = typeof result.setupIntent.payment_method === "string"
+        ? result.setupIntent.payment_method
+        : result.setupIntent.payment_method?.id;
+
+      if (!paymentMethodId) {
+        setError("Unable to save payment method. Please try again.");
+        setSubmitting(false);
+        return;
+      }
+
+      // Step 2: Activate the subscription with the saved payment method
+      try {
+        const res = await fetch("/api/membership/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "activate",
+            tier,
+            paymentMethodId,
+          }),
+        });
+
+        const json = await res.json();
+        if (!json.success) {
+          setError(json.error ?? "Unable to activate membership.");
+          setSubmitting(false);
+          return;
+        }
+
+        onSuccess();
+      } catch {
+        setError("Something went wrong activating your membership.");
+        setSubmitting(false);
+      }
     },
-    [stripe, elements, onSuccess],
+    [stripe, elements, tier, onSuccess],
   );
 
   return (
@@ -124,7 +155,8 @@ function MembershipPaymentForm({
       <button
         type="button"
         onClick={onBack}
-        className="w-full py-2 text-center font-[family-name:var(--font-poppins)] text-[13px] text-navy/40 hover:text-primary"
+        disabled={submitting}
+        className="w-full py-2 text-center font-[family-name:var(--font-poppins)] text-[13px] text-navy/40 hover:text-primary disabled:opacity-50"
       >
         ← Back
       </button>
