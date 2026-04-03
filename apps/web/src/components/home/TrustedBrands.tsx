@@ -35,7 +35,7 @@ const SLOT_WIDTH = 144;
 const GAP = 48;
 const STEP = SLOT_WIDTH + GAP;
 const SLIDE_MS = 600;
-const PAUSE_MS = 2000;
+const PAUSE_MS = 3500;
 
 function LogoImage({ logo }: { logo: LogoItem }) {
   return (
@@ -99,7 +99,7 @@ export function TrustedBrands({ config }: { config?: TrustedBrandsConfig }) {
               style={{ width: `${SLOT_WIDTH}px`, height: 28 }}
             >
               {Array.isArray(slot) ? (
-                <div className="flex items-center justify-center gap-4">
+                <div className="flex items-center justify-center gap-7">
                   {slot.map((logo, j) => (
                     <LogoImage key={j} logo={logo} />
                   ))}
