@@ -114,7 +114,7 @@ export function ScheduleStep({ tier, onComplete, onBack }: ScheduleStepProps) {
     setSelectedSlot(null);
   }, []);
 
-  const canProceed = routeID && selectedDate && selectedSlot;
+  const hasSchedule = routeID && selectedDate && selectedSlot;
 
   return (
     <div className="mx-auto max-w-lg px-5 py-10">
@@ -219,15 +219,20 @@ export function ScheduleStep({ tier, onComplete, onBack }: ScheduleStepProps) {
 
       <Button
         className="w-full"
-        disabled={!canProceed}
         onClick={onComplete}
       >
         Continue to Payment
       </Button>
 
-      <p className="mt-3 text-center font-[family-name:var(--font-poppins)] text-[11px] text-navy/30">
-        First pickup {selectedDate ? formatDate(selectedDate) : "—"} {selectedSlot ?? ""}
-      </p>
+      {hasSchedule ? (
+        <p className="mt-3 text-center font-[family-name:var(--font-poppins)] text-[11px] text-navy/30">
+          First pickup {formatDate(selectedDate!)} {selectedSlot}
+        </p>
+      ) : (
+        <p className="mt-3 text-center font-[family-name:var(--font-poppins)] text-[11px] text-navy/30">
+          You can also schedule your first pickup from your dashboard after joining.
+        </p>
+      )}
 
       <button
         type="button"
