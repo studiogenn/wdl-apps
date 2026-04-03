@@ -60,9 +60,9 @@ export function JoinFunnel() {
   const stepIndex = step === "tier" ? 0 : step === "auth" ? 1 : step === "schedule" ? 2 : 3;
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="flex flex-col" style={{ minHeight: "calc(100dvh - var(--header-height))" }}>
       {/* Progress */}
-      <div className="bg-white border-b border-navy/10 px-6 py-3">
+      <div className="bg-white border-b border-navy/10 px-6 py-3 shrink-0">
         <div className="mx-auto max-w-lg">
           <div className="flex gap-1.5">
             {["Plan", "Account", "Schedule", "Payment"].map((label, i) => (
@@ -85,34 +85,36 @@ export function JoinFunnel() {
         </div>
       </div>
 
-      {step === "tier" && (
-        <TierSelection selected={tier} onSelect={handleTierSelect} />
-      )}
+      <div className="flex-1 flex flex-col justify-center bg-cream">
+        {step === "tier" && (
+          <TierSelection selected={tier} onSelect={handleTierSelect} />
+        )}
 
-      {step === "auth" && (
-        <AuthStep
-          onComplete={handleAuthComplete}
-          onBack={() => { setStep("tier"); window.scrollTo(0, 0); }}
-        />
-      )}
+        {step === "auth" && (
+          <AuthStep
+            onComplete={handleAuthComplete}
+            onBack={() => { setStep("tier"); window.scrollTo(0, 0); }}
+          />
+        )}
 
-      {step === "schedule" && (
-        <ScheduleStep
-          tier={tier}
-          onComplete={handleScheduleComplete}
-          onBack={() => { setStep("auth"); window.scrollTo(0, 0); }}
-        />
-      )}
+        {step === "schedule" && (
+          <ScheduleStep
+            tier={tier}
+            onComplete={handleScheduleComplete}
+            onBack={() => { setStep("auth"); window.scrollTo(0, 0); }}
+          />
+        )}
 
-      {step === "payment" && (
-        <PaymentStep
-          tier={tier}
-          clientSecret={clientSecret}
-          fetchError={paymentError}
-          onSuccess={handlePaymentSuccess}
-          onBack={() => { setStep("schedule"); window.scrollTo(0, 0); }}
-        />
-      )}
+        {step === "payment" && (
+          <PaymentStep
+            tier={tier}
+            clientSecret={clientSecret}
+            fetchError={paymentError}
+            onSuccess={handlePaymentSuccess}
+            onBack={() => { setStep("schedule"); window.scrollTo(0, 0); }}
+          />
+        )}
+      </div>
     </div>
   );
 }
