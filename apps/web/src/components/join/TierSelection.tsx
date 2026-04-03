@@ -126,11 +126,10 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
         })}
       </div>
 
-      {/* PAYG escape hatch */}
       <p className="mt-6 text-center font-[family-name:var(--font-poppins)] text-sm text-navy/40">
         Just need one pickup?{" "}
         <a href="/pricing" className="text-primary hover:underline">
-          Order on-demand at $2.95/lb →
+          Order Instant at $2.95/lb →
         </a>
       </p>
 
