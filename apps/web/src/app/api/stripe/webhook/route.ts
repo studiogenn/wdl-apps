@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { getDb, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
+import { STRIPE_IDS } from "@/lib/stripe-config";
 import type Stripe from "stripe";
 
 export async function POST(request: Request) {
@@ -213,6 +214,49 @@ export async function POST(request: Request) {
           .where(
             eq(schema.subscriptions.stripeSubscriptionId, subscription.id)
           );
+        break;
+      }
+
+      // ── SetupIntent (membership safety net) ──
+      case "setup_intent.succeeded": {
+        const si = event.data.object as Stripe.SetupIntent;
+        const meta = si.metadata;
+        if (meta?.source !== "join_funnel" || !meta.priceId) break;
+
+        const siCustomer = typeof si.customer === "string" ? si.customer : si.customer?.id;
+        if (!siCustomer) break;
+
+        const localCustomer = await findCustomerByStripeId(siCustomer);
+        if (!localCustomer) break;
+
+        // Check if subscription already exists (activate call may have succeeded)
+        const existingSub = await getDb().query.subscriptions.findFirst({
+          where: eq(schema.subscriptions.customerId, localCustomer),
+        });
+        if (existingSub && existingSub.status !== "canceled") break;
+
+        // Activate call missed — create subscription from webhook
+        const pmId = typeof si.payment_method === "string"
+          ? si.payment_method
+          : si.payment_method?.id;
+        if (!pmId) break;
+
+        const { overagePriceId } = STRIPE_IDS.membership;
+
+        await getStripe().subscriptions.create({
+          customer: siCustomer,
+          items: [
+            { price: meta.priceId },
+            { price: overagePriceId },
+          ],
+          default_payment_method: pmId,
+          metadata: {
+            tier: meta.tier ?? "",
+            pickups: meta.pickups ?? "",
+            includedLbs: meta.includedLbs ?? "",
+            source: "join_funnel_webhook_recovery",
+          },
+        });
         break;
       }
 

@@ -55,10 +55,20 @@ export async function POST(request: Request) {
     const stripeCustomerId = await getOrCreateStripeCustomer(auth.uid, auth.email, auth.phone);
 
     if (parsed.data.action === "setup") {
+      const tier = parsed.data.tier;
+      const tierConfig = STRIPE_IDS.membership.tiers[tier];
+
       const setupIntent = await getStripe().setupIntents.create({
         customer: stripeCustomerId,
         usage: "off_session",
         automatic_payment_methods: { enabled: true },
+        metadata: {
+          tier,
+          priceId: tierConfig.priceId,
+          pickups: String(tierConfig.pickups),
+          includedLbs: String(tierConfig.includedLbs),
+          source: "join_funnel",
+        },
       });
 
       return NextResponse.json({
