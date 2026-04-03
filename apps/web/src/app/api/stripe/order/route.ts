@@ -34,6 +34,7 @@ export async function POST(request: Request) {
       stripeCustomerId = existing.stripeCustomerId;
     } else {
       const customer = await getStripe().customers.create({
+        email: auth.email,
         metadata: { authUserId: auth.uid },
         ...(auth.phone ? { phone: auth.phone } : {}),
       });

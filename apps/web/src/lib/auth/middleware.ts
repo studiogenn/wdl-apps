@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 
 export type AuthenticatedUser = {
   readonly uid: string;
+  readonly email: string;
   readonly phone: string | undefined;
   readonly cleancloudCustomerId: number | null;
 };
@@ -24,6 +25,7 @@ export async function authenticateRequest(
 
     return {
       uid: session.user.id,
+      email: session.user.email,
       phone: (session.user as Record<string, unknown>).phone as string | undefined,
       cleancloudCustomerId:
         ((session.user as Record<string, unknown>).cleancloudCustomerId as number) ?? null,

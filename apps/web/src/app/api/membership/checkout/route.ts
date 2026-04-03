@@ -19,7 +19,7 @@ const activateSchema = z.object({
 
 const requestSchema = z.discriminatedUnion("action", [setupSchema, activateSchema]);
 
-async function getOrCreateStripeCustomer(authUserId: string, phone?: string) {
+async function getOrCreateStripeCustomer(authUserId: string, email: string, phone?: string) {
   const existing = await getDb().query.customers.findFirst({
     where: eq(schema.customers.authUserId, authUserId),
   });
@@ -27,6 +27,7 @@ async function getOrCreateStripeCustomer(authUserId: string, phone?: string) {
   if (existing) return existing.stripeCustomerId;
 
   const customer = await getStripe().customers.create({
+    email,
     metadata: { authUserId },
     ...(phone ? { phone } : {}),
   });
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const stripeCustomerId = await getOrCreateStripeCustomer(auth.uid, auth.phone);
+    const stripeCustomerId = await getOrCreateStripeCustomer(auth.uid, auth.email, auth.phone);
 
     if (parsed.data.action === "setup") {
       const setupIntent = await getStripe().setupIntents.create({
