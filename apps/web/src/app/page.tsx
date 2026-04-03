@@ -10,7 +10,7 @@ import { ByTheNumbers } from "@/components/home/ByTheNumbers";
 import { Testimonials } from "@/components/home/Testimonials";
 import { CTABanner } from "@/components/home/CTABanner";
 import { FAQ } from "@/components/home/FAQ";
-import { CustomPlanBanner } from "@/components/home/CustomPlanBanner";
+
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSeoMetadata("/");
@@ -25,7 +25,6 @@ export default function Home() {
       />
       <Hero />
       <TrustedBrands />
-      <CustomPlanBanner />
       <Services />
       <HowItWorks />
       <ByTheNumbers />
