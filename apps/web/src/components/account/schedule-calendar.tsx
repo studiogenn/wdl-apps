@@ -2,22 +2,20 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { fromCleanCloudTimestamp } from "@/lib/cleancloud/dates";
 import { Button } from "@/components/shared";
 import { cn } from "@/lib/cn";
 import { OrderSummary, type OrderPayload } from "./order-summary";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-type DateEntry = {
-  readonly date: number;
-  readonly remaining?: number;
+type Slot = {
+  readonly start: string;
+  readonly end: string;
 };
 
-type Product = {
-  readonly productID: number;
-  readonly name: string;
-  readonly price: number;
+type DateEntry = {
+  readonly date: string;
+  readonly slots: readonly Slot[];
 };
 
 type Preferences = {
@@ -34,7 +32,6 @@ type Preferences = {
 type ScheduleData = {
   readonly routeId: number;
   readonly dates: ReadonlyArray<DateEntry>;
-  readonly products: ReadonlyArray<Product>;
   readonly preferences: Preferences;
 };
 
@@ -85,6 +82,15 @@ function formatDateLabel(date: Date): string {
   });
 }
 
+function formatSlotLabel(slot: Slot): string {
+  return `${slot.start} - ${slot.end}`;
+}
+
+function parseISODate(iso: string): Date {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
 // ─── Component ──────────────────────────────────────────────────────────────
 
 type ScheduleCalendarProps = {
@@ -97,10 +103,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
 
   // Data state
   const [scheduleData, setScheduleData] = useState<ScheduleData | null>(null);
-  const [slotsCache, setSlotsCache] = useState<ReadonlyMap<number, ReadonlyArray<string>>>(new Map());
-  const [slots, setSlots] = useState<ReadonlyArray<string>>([]);
   const [loading, setLoading] = useState(true);
-  const [slotsLoading, setSlotsLoading] = useState(false);
   const [error, setError] = useState("");
 
   // Calendar navigation
@@ -111,18 +114,18 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
 
   // Selection
   const [selectedDate, setSelectedDate] = useState<DateEntry | null>(null);
-  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
 
   // Flow step
   const [step, setStep] = useState<Step>("calendar");
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  // Map CC timestamps to Date objects for calendar rendering
+  // Map ISO date strings to DateEntry for calendar rendering
   const availableDateMap = new Map<string, DateEntry>();
   if (scheduleData) {
     for (const entry of scheduleData.dates) {
-      const d = fromCleanCloudTimestamp(entry.date);
+      const d = parseISODate(entry.date);
       const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
       availableDateMap.set(key, entry);
     }
@@ -151,52 +154,6 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
     }
     fetchScheduleData();
   }, []);
-
-  // ─── Prefetch ALL slots in parallel once schedule data loads ─────────────
-
-  useEffect(() => {
-    if (!scheduleData) return;
-
-    const { routeId, dates } = scheduleData;
-
-    async function prefetchAllSlots() {
-      const entries = await Promise.all(
-        dates.map(async (entry) => {
-          try {
-            const res = await fetch("/api/cleancloud/scheduling/slots", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ routeID: routeId, day: entry.date }),
-            });
-            const data = await res.json();
-            return [entry.date, data.success ? data.data.slots : []] as const;
-          } catch {
-            return [entry.date, []] as const;
-          }
-        }),
-      );
-
-      setSlotsCache(new Map(entries));
-    }
-
-    prefetchAllSlots();
-  }, [scheduleData]);
-
-  // ─── Resolve slots from cache when date selected ───────────────────────
-
-  useEffect(() => {
-    if (!selectedDate) return;
-
-    const cached = slotsCache.get(selectedDate.date);
-    if (cached) {
-      setSlots(cached);
-      setSlotsLoading(false);
-    } else {
-      setSlots([]);
-      setSlotsLoading(true);
-    }
-    setSelectedSlot(null);
-  }, [selectedDate, slotsCache]);
 
   // ─── Calendar navigation ────────────────────────────────────────────────
 
@@ -263,44 +220,53 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
     setSubmitting(true);
     setSubmitError("");
 
-    const slotIndex = slots.indexOf(selectedSlot);
-    const endSlot =
-      slotIndex < slots.length - 1 ? slots[slotIndex + 1] : selectedSlot;
-
-    const payload: Record<string, unknown> = {
-      customerID: customerId,
-      pickupDate: selectedDate.date,
-      pickupStart: selectedSlot,
-      pickupEnd: endSlot,
-    };
-
-    if (order.selectedProducts.length > 0) {
-      payload.products = order.selectedProducts;
-      payload.finalTotal = order.finalTotal;
-    }
-
-    if (order.orderNotes) {
-      payload.orderNotes = order.orderNotes;
-    }
-
     try {
-      const res = await fetch("/api/cleancloud/orders", {
+      // Step 1: Create Stripe PaymentIntent (manual capture)
+      const stripeRes = await fetch("/api/stripe/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          amountCents: 2999, // PAYG minimum hold
+          description: `PAYG Pickup – ${selectedDate.date} ${formatSlotLabel(selectedSlot)}${order.deepClean ? " + Deep Clean" : ""}`,
+        }),
       });
-      const data = await res.json();
-      if (data.success) {
-        setStep("confirmed");
-      } else {
-        setSubmitError(data.error ?? "Unable to schedule pickup");
+      const stripeData = await stripeRes.json();
+
+      if (!stripeData.success) {
+        setSubmitError(stripeData.error ?? "Payment setup failed");
+        return;
       }
+
+      const { paymentIntentId } = stripeData.data;
+
+      // Step 2: Push to CleanCloud for ops (fire-and-forget)
+      const ccNotes = [
+        `Stripe PI: ${paymentIntentId}`,
+        order.deepClean ? "Deep Clean requested (+$0.45/lb)" : "",
+        order.notes,
+      ].filter(Boolean).join("\n");
+
+      fetch("/api/cleancloud/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerID: customerId,
+          pickupDate: selectedDate.date,
+          pickupStart: selectedSlot.start,
+          pickupEnd: selectedSlot.end,
+          orderNotes: ccNotes,
+        }),
+      }).catch(() => {
+        // CC failure is non-blocking — Stripe is source of truth
+      });
+
+      setStep("confirmed");
     } catch {
       setSubmitError("Unable to schedule pickup. Please try again.");
     } finally {
       setSubmitting(false);
     }
-  }, [selectedDate, selectedSlot, scheduleData, slots, customerId]);
+  }, [selectedDate, selectedSlot, scheduleData, customerId]);
 
   // ─── Reset ──────────────────────────────────────────────────────────────
 
@@ -316,7 +282,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
   const cells = buildCalendarCells(viewYear, viewMonth);
 
   const selectedDateObj = selectedDate
-    ? fromCleanCloudTimestamp(selectedDate.date)
+    ? parseISODate(selectedDate.date)
     : null;
 
   // ─── Loading state ──────────────────────────────────────────────────────
@@ -369,9 +335,8 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
   if (step === "summary" && selectedDate && selectedSlot && scheduleData) {
     return (
       <OrderSummary
-        pickupTimestamp={selectedDate.date}
-        pickupSlot={selectedSlot}
-        products={scheduleData.products}
+        pickupDate={selectedDate.date}
+        pickupSlot={formatSlotLabel(selectedSlot)}
         preferences={scheduleData.preferences}
         onBack={handleBackToCalendar}
         onSubmit={handleSubmitOrder}
@@ -383,7 +348,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
 
   // ─── Confirmed step ────────────────────────────────────────────────────
 
-  if (step === "confirmed" && selectedDateObj) {
+  if (step === "confirmed" && selectedDateObj && selectedSlot) {
     return (
       <div className="mx-auto max-w-3xl px-6 py-12">
         <div className="rounded-2xl border border-navy/10 bg-white overflow-hidden">
@@ -396,7 +361,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
             <div>
               <h2 className="text-xl font-heading-medium text-navy mb-1">Pickup Scheduled</h2>
               <p className="text-sm text-navy/50 font-body">
-                {selectedSlot} · {formatDateLabel(selectedDateObj)}
+                {formatSlotLabel(selectedSlot)} &middot; {formatDateLabel(selectedDateObj)}
               </p>
             </div>
             <div className="flex gap-3 mt-2">
@@ -436,14 +401,14 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
                 className="flex h-8 w-8 items-center justify-center rounded-full border border-navy/10 text-navy/40 transition-colors hover:text-primary hover:border-primary/30"
                 aria-label="Previous month"
               >
-                ‹
+                &#8249;
               </button>
               <button
                 onClick={() => navigate("next")}
                 className="flex h-8 w-8 items-center justify-center rounded-full border border-navy/10 text-navy/40 transition-colors hover:text-primary hover:border-primary/30"
                 aria-label="Next month"
               >
-                ›
+                &#8250;
               </button>
             </div>
           </div>
@@ -509,14 +474,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
                   {/* Availability dot */}
                   <div className="flex justify-center gap-1 h-1.5">
                     {isAvailable && !isSelected && (
-                      <span
-                        className={cn(
-                          "block h-1 w-1 rounded-full",
-                          entry.remaining !== undefined && entry.remaining <= 3
-                            ? "bg-amber-500"
-                            : "bg-primary/50"
-                        )}
-                      />
+                      <span className="block h-1 w-1 rounded-full bg-primary/50" />
                     )}
                   </div>
                   {/* Today indicator */}
@@ -534,10 +492,6 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
               <div className="flex items-center gap-1.5">
                 <span className="block h-1.5 w-1.5 rounded-full bg-primary/50" />
                 <span className="text-[10px] text-navy/40 font-body">Available</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="block h-1.5 w-1.5 rounded-full bg-amber-500" />
-                <span className="text-[10px] text-navy/40 font-body">Few spots</span>
               </div>
             </div>
             <button
@@ -578,27 +532,17 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
                 <h3 className="text-xl font-heading-medium text-navy">
                   {formatDateLabel(selectedDateObj)}
                 </h3>
-                {selectedDate.remaining !== undefined && selectedDate.remaining <= 5 && (
-                  <span className="mt-1 inline-block rounded-full bg-amber-50 px-2.5 py-0.5 text-[10px] text-amber-700 font-body-medium">
-                    {selectedDate.remaining} spot{selectedDate.remaining !== 1 ? "s" : ""} left
-                  </span>
-                )}
               </div>
 
               {/* Slots grid */}
-              {slotsLoading ? (
-                <div className="grid grid-cols-2 gap-2">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="h-16 animate-pulse rounded-xl bg-navy/5" />
-                  ))}
-                </div>
-              ) : slots.length > 0 ? (
+              {selectedDate.slots.length > 0 ? (
                 <div className="grid grid-cols-2 gap-2 flex-1">
-                  {slots.map((slot) => {
-                    const isOn = selectedSlot === slot;
+                  {selectedDate.slots.map((slot) => {
+                    const label = formatSlotLabel(slot);
+                    const isOn = selectedSlot?.start === slot.start && selectedSlot?.end === slot.end;
                     return (
                       <button
-                        key={slot}
+                        key={label}
                         type="button"
                         onClick={() => setSelectedSlot(isOn ? null : slot)}
                         className={cn(
@@ -608,7 +552,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
                             : "border-navy/10 text-navy hover:border-navy/25 hover:shadow-sm"
                         )}
                       >
-                        <span className="block text-sm">{slot}</span>
+                        <span className="block text-sm">{label}</span>
                         {isOn && (
                           <span className="mt-0.5 block text-[10px] text-primary/60">Selected</span>
                         )}
@@ -629,7 +573,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
                 <div className="flex items-center gap-3 rounded-xl border border-navy/10 bg-white p-4">
                   <div className="flex-1 min-w-0">
                     <span className="block text-[11px] text-navy/40 font-body">
-                      Pickup · {selectedSlot}
+                      Pickup &middot; {formatSlotLabel(selectedSlot)}
                     </span>
                     <span className="block text-sm font-heading-medium text-navy truncate">
                       {formatDateLabel(selectedDateObj)}

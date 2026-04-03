@@ -7,7 +7,7 @@ const DEFAULT_FAQ_ITEMS = [
   {
     question: "What's the difference between the Weekly and Family plan?",
     answer:
-      "The Weekly plan is $139/mo and includes 80 lbs of laundry across 4 weekly pickups. The Family plan is $189/mo with 120 lbs included — ideal for households with 3+ people. Both plans include free pickup and delivery with 24-hour turnaround.",
+      "The Weekly plan is $139/mo and includes 80 lbs of laundry with up to 4 weekly pickups. The Family plan is $189/mo with 120 lbs included — ideal for households with 3+ people. Both plans include free pickup and delivery with 24-hour turnaround.",
   },
   {
     question: "What happens if I go over my included pounds?",

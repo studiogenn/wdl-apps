@@ -1,17 +1,10 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { fromCleanCloudTimestamp } from "@/lib/cleancloud/dates";
 import { Button } from "@/components/shared";
 import { cn } from "@/lib/cn";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
-
-type Product = {
-  readonly productID: number;
-  readonly name: string;
-  readonly price: number;
-};
 
 type Preferences = {
   readonly current: {
@@ -25,9 +18,8 @@ type Preferences = {
 };
 
 type OrderSummaryProps = {
-  readonly pickupTimestamp: number;
+  readonly pickupDate: string;
   readonly pickupSlot: string;
-  readonly products: ReadonlyArray<Product>;
   readonly preferences: Preferences;
   readonly onBack: () => void;
   readonly onSubmit: (order: OrderPayload) => void;
@@ -36,9 +28,8 @@ type OrderSummaryProps = {
 };
 
 export type OrderPayload = {
-  readonly selectedProducts: ReadonlyArray<{ productID: number; quantity: number }>;
-  readonly orderNotes: string;
-  readonly finalTotal: number;
+  readonly deepClean: boolean;
+  readonly notes: string;
 };
 
 // ─── Preference config ──────────────────────────────────────────────────────
@@ -55,7 +46,9 @@ type PrefKey = (typeof PREFERENCE_FIELDS)[number]["key"];
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-function formatDateLabel(date: Date): string {
+function formatDateLabel(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
   return date.toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
@@ -63,48 +56,20 @@ function formatDateLabel(date: Date): string {
   });
 }
 
-function formatPrice(cents: number): string {
-  return `$${(cents / 100).toFixed(2)}`;
-}
-
 // ─── Component ──────────────────────────────────────────────────────────────
 
 export function OrderSummary({
-  pickupTimestamp,
+  pickupDate,
   pickupSlot,
-  products,
   preferences,
   onBack,
   onSubmit,
   submitting,
   submitError,
 }: OrderSummaryProps) {
-  const pickupDate = fromCleanCloudTimestamp(pickupTimestamp);
-
-  // Product selection — map of productID → quantity (0 = not selected)
-  const [selectedProducts, setSelectedProducts] = useState<ReadonlyMap<number, number>>(
-    () => new Map()
-  );
-
-  // Preference overrides
+  const [deepClean, setDeepClean] = useState(false);
   const [prefOverrides, setPrefOverrides] = useState<Readonly<Record<string, string>>>({});
-
-  // Instructions
   const [notes, setNotes] = useState("");
-
-  // ─── Product handlers ─────────────────────────────────────────────────
-
-  const toggleProduct = useCallback((productID: number) => {
-    setSelectedProducts((prev) => {
-      const next = new Map(prev);
-      if (next.has(productID)) {
-        next.delete(productID);
-      } else {
-        next.set(productID, 1);
-      }
-      return next;
-    });
-  }, []);
 
   // ─── Preference handler ───────────────────────────────────────────────
 
@@ -117,7 +82,6 @@ export function OrderSummary({
   function buildOrderNotes(): string {
     const parts: string[] = [];
 
-    // Preference changes
     const changes: string[] = [];
     for (const { key, label } of PREFERENCE_FIELDS) {
       const override = prefOverrides[key];
@@ -130,7 +94,6 @@ export function OrderSummary({
       parts.push(`Preferences: ${changes.join(", ")}`);
     }
 
-    // Customer instructions
     if (notes.trim()) {
       parts.push(notes.trim());
     }
@@ -141,28 +104,11 @@ export function OrderSummary({
   // ─── Submit ───────────────────────────────────────────────────────────
 
   const handleSubmit = () => {
-    const productEntries = Array.from(selectedProducts.entries())
-      .filter(([, qty]) => qty > 0)
-      .map(([productID, quantity]) => ({ productID, quantity }));
-
-    const total = productEntries.reduce((sum, { productID, quantity }) => {
-      const product = products.find((p) => p.productID === productID);
-      return sum + (product ? product.price * quantity : 0);
-    }, 0);
-
     onSubmit({
-      selectedProducts: productEntries,
-      orderNotes: buildOrderNotes(),
-      finalTotal: total,
+      deepClean,
+      notes: buildOrderNotes(),
     });
   };
-
-  // ─── Computed ─────────────────────────────────────────────────────────
-
-  const total = Array.from(selectedProducts.entries()).reduce((sum, [productID, qty]) => {
-    const product = products.find((p) => p.productID === productID);
-    return sum + (product ? product.price * qty : 0);
-  }, 0);
 
   // ─── Render ───────────────────────────────────────────────────────────
 
@@ -201,53 +147,62 @@ export function OrderSummary({
           </div>
         </div>
 
-        {/* Services / Add-ons */}
-        {products.length > 0 && (
-          <div className="rounded-xl border border-navy/10 bg-white p-5">
-            <h2 className="text-sm font-heading-medium text-navy mb-3">Services</h2>
-            <div className="space-y-2">
-              {products.map((product) => {
-                const isOn = selectedProducts.has(product.productID);
-                return (
-                  <button
-                    key={product.productID}
-                    type="button"
-                    onClick={() => toggleProduct(product.productID)}
-                    className={cn(
-                      "flex w-full items-center gap-3 rounded-lg border px-4 py-3 text-left transition-all",
-                      isOn
-                        ? "border-primary bg-primary/5"
-                        : "border-navy/10 hover:border-navy/20"
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        "flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors",
-                        isOn
-                          ? "border-primary bg-primary"
-                          : "border-navy/20"
-                      )}
-                    >
-                      {isOn && (
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M2.5 6l2.5 2.5L9.5 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <span className={cn("block text-sm", isOn ? "text-primary font-body-medium" : "text-navy")}>
-                        {product.name}
-                      </span>
-                    </div>
-                    <span className="text-xs text-navy/50 font-body">
-                      {formatPrice(product.price)}
-                    </span>
-                  </button>
-                );
-              })}
+        {/* Services */}
+        <div className="rounded-xl border border-navy/10 bg-white p-5">
+          <h2 className="text-sm font-heading-medium text-navy mb-3">Services</h2>
+          <div className="space-y-2">
+            {/* Wash & Fold — always included */}
+            <div className="flex w-full items-center gap-3 rounded-lg border border-primary bg-primary/5 px-4 py-3">
+              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded border border-primary bg-primary">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2.5 6l2.5 2.5L9.5 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <span className="block text-sm text-primary font-body-medium">Wash &amp; Fold</span>
+              </div>
+              <span className="text-xs text-navy/50 font-body">$2.95/lb</span>
             </div>
+
+            {/* Deep Clean — toggle */}
+            <button
+              type="button"
+              onClick={() => setDeepClean((prev) => !prev)}
+              className={cn(
+                "flex w-full items-center gap-3 rounded-lg border px-4 py-3 text-left transition-all",
+                deepClean
+                  ? "border-primary bg-primary/5"
+                  : "border-navy/10 hover:border-navy/20"
+              )}
+            >
+              <div
+                className={cn(
+                  "flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors",
+                  deepClean ? "border-primary bg-primary" : "border-navy/20"
+                )}
+              >
+                {deepClean && (
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M2.5 6l2.5 2.5L9.5 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </div>
+              <div className="flex-1">
+                <span className={cn("block text-sm", deepClean ? "text-primary font-body-medium" : "text-navy")}>
+                  Deep Clean
+                </span>
+                <span className="block text-[11px] text-navy/40 mt-0.5">
+                  Heavily soiled items — separate bag recommended
+                </span>
+              </div>
+              <span className="text-xs text-navy/50 font-body">+$0.45/lb</span>
+            </button>
           </div>
-        )}
+
+          <p className="text-[11px] text-navy/40 mt-3 font-body">
+            Final cost based on weight at processing. Pay-as-you-go — no membership required.
+          </p>
+        </div>
 
         {/* Preferences */}
         {PREFERENCE_FIELDS.some(({ key }) =>
@@ -314,16 +269,12 @@ export function OrderSummary({
         {/* Footer */}
         <div className="flex items-center justify-between rounded-xl border border-navy/10 bg-white p-5">
           <div>
-            {total > 0 && (
-              <div>
-                <span className="block text-[10px] text-navy/40 tracking-widest uppercase font-body-medium">
-                  Estimated Total
-                </span>
-                <span className="block text-lg font-heading-medium text-navy">
-                  {formatPrice(total)}
-                </span>
-              </div>
-            )}
+            <span className="block text-[10px] text-navy/40 tracking-widest uppercase font-body-medium">
+              Rate
+            </span>
+            <span className="block text-lg font-heading-medium text-navy">
+              $2.95/lb{deepClean ? " + $0.45/lb" : ""}
+            </span>
           </div>
           <div className="flex gap-3">
             <Button variant="outline" size="sm" onClick={onBack} disabled={submitting}>

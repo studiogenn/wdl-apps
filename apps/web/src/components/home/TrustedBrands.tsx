@@ -62,7 +62,7 @@ export function TrustedBrands({ config }: { config?: TrustedBrandsConfig }) {
       timerRef.current = setTimeout(tick, SLIDE_MS + PAUSE_MS);
     };
 
-    timerRef.current = setTimeout(tick, PAUSE_MS);
+    timerRef.current = setTimeout(tick, 1500);
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };

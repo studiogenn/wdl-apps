@@ -81,7 +81,7 @@ export function Services({
                     <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/50">/mo</span>
                   </div>
                   <p className="font-[family-name:var(--font-poppins)] text-[13px] text-navy/60 mb-4">
-                    4 pickups · 80 lbs included
+                    Up to 4 pickups · 80 lbs included
                   </p>
                   <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/40 mb-4">
                     Overage at $1.95/lb · Effective rate $1.74/lb
@@ -101,7 +101,7 @@ export function Services({
                     <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/50">/mo</span>
                   </div>
                   <p className="font-[family-name:var(--font-poppins)] text-[13px] text-navy/60 mb-4">
-                    4 pickups · 120 lbs included
+                    Up to 4 pickups · 120 lbs included
                   </p>
                   <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/40 mb-4">
                     Overage at $1.95/lb · Effective rate $1.58/lb
@@ -112,14 +112,22 @@ export function Services({
                 </div>
               </div>
 
-              {/* PAYG fallback */}
-              <div className="text-center py-3">
-                <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50">
-                  No commitment?{" "}
-                  <ButtonLink href="/account/" variant="outline" size="sm">
-                    Pay as you go — $2.95/lb
-                  </ButtonLink>
-                </p>
+              {/* PAYG */}
+              <div className="border border-dashed border-navy/15 rounded-xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
+                    Pay As You Go
+                  </p>
+                  <p className="font-[family-name:var(--font-poppins)] text-[13px] text-navy/60">
+                    No commitment — just $2.95/lb when you need it
+                  </p>
+                  <p className="font-[family-name:var(--font-poppins)] text-[12px] text-navy/40 mt-1">
+                    Deep Clean available +$0.45/lb
+                  </p>
+                </div>
+                <ButtonLink href="/account/" variant="outline" className="shrink-0">
+                  Schedule Pickup
+                </ButtonLink>
               </div>
             </>
           ) : (
@@ -130,72 +138,8 @@ export function Services({
           )}
         </div>
 
-        {/* ── Three Secondary Cards ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-          {/* Add-On Services */}
-          <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-6 sm:p-7 flex flex-col">
-            <h3 className="text-lg font-heading-medium text-navy mb-2">
-              Add-On Services
-            </h3>
-            <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/60 leading-relaxed mb-4">
-              Per-pound upcharges added to your wash &amp; fold base rate.
-              Separate these items in a different bag.
-            </p>
-
-            {resolvedShowPricing ? (
-              <div className="space-y-2.5 mb-5 flex-1">
-                <AddonRow label="Premium Care (Delicates)" value="+$0.55/lb" />
-                <AddonRow label="Family Sorted + Hypoallergenic" value="+$0.30/lb" />
-                <AddonRow label="Deep Clean (Heavily Soiled)" value="+$0.45/lb" />
-              </div>
-            ) : null}
-
-            <ButtonLink href="/wash-fold" variant="outline" size="sm" className="w-full mt-auto">
-              Learn More
-            </ButtonLink>
-          </div>
-
-          {/* Specialty Wash & Fold */}
-          <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-6 sm:p-7 flex flex-col">
-            <h3 className="text-lg font-heading-medium text-navy mb-2">
-              Specialty Wash &amp; Fold
-            </h3>
-            <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/60 leading-relaxed mb-4 flex-1">
-              We wash and fold oversized and specialty items including bed sets,
-              comforters, tablecloths, coats, rugs, and more. Priced
-              individually by item.
-            </p>
-
-            {resolvedShowPricing ? (
-              <div className="space-y-2.5 mb-5">
-                <AddonRow label="Comforter (Queen)" value="$35" />
-                <AddonRow label="Comforter (King)" value="$40" />
-                <AddonRow label="Bed Sheet Set" value="$20" />
-              </div>
-            ) : null}
-
-            <ButtonLink href="/wash-fold" variant="outline" size="sm" className="w-full mt-auto">
-              Learn More
-            </ButtonLink>
-          </div>
-
-        </div>
       </div>
     </section>
   );
 }
 
-/* ── Helper components ── */
-
-function AddonRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex justify-between items-center gap-3">
-      <span className="font-[family-name:var(--font-poppins)] text-xs text-navy/60">
-        {label}
-      </span>
-      <span className="font-[family-name:var(--font-poppins)] text-xs font-body-medium whitespace-nowrap text-navy/80">
-        {value}
-      </span>
-    </div>
-  );
-}

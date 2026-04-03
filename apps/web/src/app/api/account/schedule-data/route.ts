@@ -3,26 +3,30 @@ import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
 import { getsql } from "@/lib/db/connection";
 import { cleancloudProxy } from "@/lib/cleancloud/client";
 
-type RawDateEntry = {
-  readonly dateStamp: number;
-  readonly remainingSlots?: string;
-  readonly [key: string]: unknown;
+type WindowRow = {
+  readonly date: string;
+  readonly window_start: string;
+  readonly window_end: string;
 };
 
-type DatesResponse = {
-  readonly Dates?: ReadonlyArray<RawDateEntry>;
-  readonly dates?: ReadonlyArray<RawDateEntry>;
+type Slot = { readonly start: string; readonly end: string };
+
+type DateWithSlots = {
+  readonly date: string;
+  readonly slots: readonly Slot[];
 };
 
-type Product = {
-  readonly productID: number;
+export type ScheduleProduct = {
+  readonly id: string;
   readonly name: string;
-  readonly price: number;
+  readonly rateCentsPerLb: number;
+  readonly addon?: boolean;
 };
 
-type ProductsResponse = {
-  readonly products?: ReadonlyArray<Product>;
-};
+const PRODUCTS: readonly ScheduleProduct[] = [
+  { id: "wash-fold", name: "Wash & Fold", rateCentsPerLb: 295 },
+  { id: "deep-clean", name: "Deep Clean", rateCentsPerLb: 45, addon: true },
+];
 
 export async function POST(request: Request) {
   const auth = await authenticateRequest(request);
@@ -38,7 +42,6 @@ export async function POST(request: Request) {
   try {
     const sql = getsql();
 
-    // Fetch customer data + preference options in parallel
     const [customerRows, preferenceOptions] = await Promise.all([
       sql`
         SELECT
@@ -94,18 +97,34 @@ export async function POST(request: Request) {
       );
     }
 
-    // Fetch dates + products in parallel
-    const [datesResult, productsResult] = await Promise.all([
-      cleancloudProxy<DatesResponse>("/scheduling/dates", { routeID: routeId }),
-      cleancloudProxy<ProductsResponse>("/products"),
-    ]);
+    // Fetch available windows from own DB
+    const windowRows = await sql`
+      SELECT
+        date::text AS "date",
+        window_start,
+        window_end
+      FROM operations.agent_available_windows
+      WHERE route_id = ${routeId}
+        AND date >= CURRENT_DATE
+        AND window_type = 'pickup'
+      ORDER BY date, window_start
+    ` as readonly WindowRow[];
 
-    if (!datesResult.success) {
-      return NextResponse.json(
-        { success: false, error: "Unable to load available dates" },
-        { status: 502 }
-      );
+    // Group windows by date
+    const dateMap = new Map<string, Slot[]>();
+    for (const row of windowRows) {
+      const existing = dateMap.get(row.date);
+      const slot: Slot = { start: row.window_start, end: row.window_end };
+      if (existing) {
+        existing.push(slot);
+      } else {
+        dateMap.set(row.date, [slot]);
+      }
     }
+
+    const dates: DateWithSlots[] = Array.from(dateMap.entries()).map(
+      ([date, slots]) => ({ date, slots })
+    );
 
     // Group preference options by field
     const PREF_FIELD_MAP: Record<string, string> = {
@@ -131,11 +150,8 @@ export async function POST(request: Request) {
       success: true,
       data: {
         routeId,
-        dates: (datesResult.data?.Dates ?? datesResult.data?.dates ?? []).map((d) => ({
-          date: d.dateStamp,
-          remaining: d.remainingSlots ? parseInt(d.remainingSlots, 10) : undefined,
-        })),
-        products: productsResult.data?.products ?? [],
+        dates,
+        products: PRODUCTS,
         preferences: {
           current: {
             detergent: customer.detergent ?? null,
