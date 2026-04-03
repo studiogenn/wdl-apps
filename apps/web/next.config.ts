@@ -62,7 +62,7 @@ const nextConfig: NextConfig = {
         "alphabet-city", "battery-park-city", "bowery", "chelsea",
         "chinatown", "east-village", "financial-district", "flatiron",
         "gramercy-park", "greenwich-village", "lower-east-side",
-        "soho", "tribeca", "west-village", "hells-kitchen", "midtown",
+        "soho", "tribeca", "hells-kitchen", "midtown",
       ].map((n) => ({
         source: `/laundry-pickup-${n}`,
         destination: "/downtown-manhattan",
