@@ -134,6 +134,8 @@ export default function NewJerseyAreaPage() {
         </div>
       </section>
 
+      <CustomPlanBanner />
+
       {/* Why NJ Residents Choose Us */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
@@ -206,8 +208,6 @@ export default function NewJerseyAreaPage() {
           </p>
         </div>
       </section>
-
-      <CustomPlanBanner />
 
       {/* Counties We Serve */}
       <section className="py-16 lg:py-20 bg-white">

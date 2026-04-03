@@ -134,6 +134,8 @@ export default function NewYorkAreaPage() {
         </div>
       </section>
 
+      <CustomPlanBanner />
+
       {/* Why NYC Residents Choose Us */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container-site max-w-[1100px]">
@@ -207,8 +209,6 @@ export default function NewYorkAreaPage() {
           </p>
         </div>
       </section>
-
-      <CustomPlanBanner />
 
       {/* Areas We Serve */}
       <section className="py-16 lg:py-20 bg-white">
