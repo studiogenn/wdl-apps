@@ -76,7 +76,7 @@ export function CustomPlanBanner() {
               ))}
             </div>
 
-            <ButtonLink href="/pricing" className="bg-white text-navy hover:bg-white/90 uppercase tracking-wider text-sm font-body-medium px-8 py-3.5">
+            <ButtonLink href="/join" className="bg-white text-navy hover:bg-white/90 uppercase tracking-wider text-sm font-body-medium px-8 py-3.5">
               Get my plan →
             </ButtonLink>
           </div>
