@@ -124,15 +124,15 @@ export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checko
           <button
             onClick={() => update({ repeatPickup: !state.repeatPickup })}
             className={cn(
-              "relative h-7 w-12 rounded-full transition-colors duration-200",
+              "relative h-7 w-12 shrink-0 rounded-full transition-colors duration-200",
               state.repeatPickup ? "bg-primary" : "bg-[#d1d5db]",
             )}
             aria-label="Toggle repeat pickup"
           >
             <span
               className={cn(
-                "absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-transform duration-200",
-                state.repeatPickup ? "translate-x-5" : "translate-x-0.5",
+                "absolute top-[3px] h-[22px] w-[22px] rounded-full bg-white shadow transition-all duration-200",
+                state.repeatPickup ? "left-[calc(100%-25px)]" : "left-[3px]",
               )}
             />
           </button>
