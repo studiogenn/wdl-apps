@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { type MembershipTier } from "@/lib/stripe-config";
 import { TierSelection } from "./TierSelection";
@@ -17,6 +17,32 @@ export function JoinFunnel() {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
 
+  // Track if we've already started prefetching the SetupIntent
+  const setupFired = useRef(false);
+
+  // Prefetch SetupIntent — fire once after auth, result ready by payment step
+  const prefetchSetupIntent = useCallback((selectedTier: MembershipTier) => {
+    if (setupFired.current) return;
+    setupFired.current = true;
+
+    fetch("/api/membership/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "setup", tier: selectedTier }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setClientSecret(json.data.clientSecret);
+        } else {
+          setPaymentError(json.error ?? "Something went wrong");
+        }
+      })
+      .catch(() => {
+        setPaymentError("Unable to initialize payment.");
+      });
+  }, []);
+
   const handleTierSelect = useCallback((selected: MembershipTier) => {
     setTier(selected);
     setStep("auth");
@@ -24,34 +50,17 @@ export function JoinFunnel() {
   }, []);
 
   const handleAuthComplete = useCallback(() => {
+    // Auth done — immediately prefetch SetupIntent while user is on schedule step
+    prefetchSetupIntent(tier);
     setStep("schedule");
     window.scrollTo(0, 0);
-  }, []);
+  }, [tier, prefetchSetupIntent]);
 
-  const handleScheduleComplete = useCallback(async () => {
-    setPaymentError(null);
-    setClientSecret(null);
+  const handleScheduleComplete = useCallback(() => {
+    // clientSecret is already prefetched — just show payment
     setStep("payment");
     window.scrollTo(0, 0);
-
-    try {
-      const res = await fetch("/api/membership/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "setup", tier }),
-      });
-
-      const json = await res.json();
-      if (!json.success) {
-        setPaymentError(json.error ?? "Something went wrong");
-        return;
-      }
-
-      setClientSecret(json.data.clientSecret);
-    } catch {
-      setPaymentError("Unable to start checkout. Please try again.");
-    }
-  }, [tier]);
+  }, []);
 
   const handlePaymentSuccess = useCallback(() => {
     router.push("/join/success");
