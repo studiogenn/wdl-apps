@@ -5,47 +5,44 @@ import { FAQAccordion, SectionHeader } from "@/components/shared";
 
 const DEFAULT_FAQ_ITEMS = [
   {
-    question: "How can I place my order?",
+    question: "What's the difference between the Weekly and Family plan?",
     answer:
-      'You may place your order on this website by clicking on "Start Service Now" and following the prompts, downloading our We Deliver Laundry app, or simply texting us at (855) 968-5511.',
+      "The Weekly plan is $139/mo and includes 80 lbs of laundry across 4 weekly pickups. The Family plan is $189/mo with 120 lbs included — ideal for households with 3+ people. Both plans include free pickup and delivery with 24-hour turnaround.",
   },
   {
-    question: "I don't have a laundry bag - how can I send my clothes out?",
+    question: "What happens if I go over my included pounds?",
     answer:
-      "You may use any bag you have handy - a tote, a picnic bag, even a garbage bag! We'll provide a laundry bag with your first order for future use.",
+      "Any weight beyond your included pounds is billed at $1.95/lb. You'll see the exact weight and overage on your order summary — no surprises.",
   },
   {
-    question: "How do I know when you're on your way?",
+    question: "Do I need a membership?",
     answer:
-      "Once you're our next stop, you'll receive a notification with our driver's ETA and a link to track their progress straight to your door.",
+      "No. You can order anytime with Pay As You Go at $2.95/lb — no commitment, no monthly fee. Membership just gives you a better rate and recurring scheduled pickups.",
   },
   {
-    question: "How do I know my laundry is being taken care of?",
+    question: "How do I schedule a pickup?",
     answer:
-      "You receive notifications every step of the way from start to finish - from when we pick up your laundry to when we deliver it back to you.",
+      "Create an account on our website or app, choose your time window, and leave your laundry at the door. Members get automatic recurring pickups on their chosen day.",
   },
   {
-    question: "I live in a walk-up, do I have to come downstairs?",
+    question: "I don't have a laundry bag — how can I send my clothes out?",
     answer:
-      "Only if you want to. As long as we have entry into the building and access to your door, we'll come right up.",
+      "Use any bag you have — a tote, a duffel, even a garbage bag. We'll provide a reusable laundry bag with your first order.",
   },
   {
-    question:
-      "I won't be home during the time window but I'd still like to get my order picked up - what can I do?",
+    question: "How will I know when my driver is coming?",
     answer:
-      "You may leave your laundry outside your door, in the lobby, or with security/reception if you're comfortable. Please ensure we know where to find it by adding a note to your order.",
+      "You'll receive a notification with your driver's ETA and a live tracking link when they're on their way.",
   },
   {
-    question:
-      "My order is scheduled for tonight but I had a change of plans, how can I reschedule?",
+    question: "Can I cancel or switch my plan?",
     answer:
-      "You may cancel your order through our website and/or app up to one (1) hour before your time slot.",
+      "Yes. You can switch between Weekly and Family or cancel your membership anytime from your account dashboard. No cancellation fees.",
   },
   {
-    question:
-      "What happens if I forget to cancel my order and I'm not home?",
+    question: "What if I'm not home during my pickup window?",
     answer:
-      'A 9.95% "Nothing to Pickup Fee" will be charged to your account. Please reach out to us to reschedule.',
+      "Just leave your laundry outside your door, in the lobby, or with your doorman. Add a note to your order so our driver knows where to find it.",
   },
 ];
 

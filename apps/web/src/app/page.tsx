@@ -6,8 +6,7 @@ import { Hero } from "@/components/home/Hero";
 import { TrustedBrands } from "@/components/home/TrustedBrands";
 import { Services } from "@/components/home/Services";
 import { HowItWorks } from "@/components/home/HowItWorks";
-import { ByTheNumbers } from "@/components/home/ByTheNumbers";
-import { Testimonials } from "@/components/home/Testimonials";
+import { SocialProof } from "@/components/home/SocialProof";
 import { CTABanner } from "@/components/home/CTABanner";
 import { FAQ } from "@/components/home/FAQ";
 
@@ -27,8 +26,7 @@ export default function Home() {
       <TrustedBrands />
       <Services />
       <HowItWorks />
-      <ByTheNumbers />
-      <Testimonials />
+      <SocialProof />
       <CTABanner />
       <FAQ />
     </>

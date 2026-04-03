@@ -4,24 +4,24 @@ import { SectionHeader } from "@/components/shared";
 
 const STEPS = [
   {
-    step: "Step 1",
-    title: "Schedule Pick-up",
+    num: 1,
+    title: "Schedule Your Pickup",
     description:
-      "Choose a pickup and drop-off time that works for you. Schedule online in minutes and leave your laundry at your door, no waiting around required.",
+      "Pick a day and time window that works for you. Members get recurring weekly pickups — or schedule one-off pickups anytime.",
     image: "/images/step-1.webp",
   },
   {
-    step: "Step 2",
-    title: "We Pick Up",
+    num: 2,
+    title: "Leave It at Your Door",
     description:
-      "Our professional drivers pick up your laundry at the scheduled time and carefully follow any special instructions.",
+      "Bag your laundry and set it outside. Our driver picks it up at your scheduled time — no waiting around.",
     image: "/images/step-2.webp",
   },
   {
-    step: "Step 3",
-    title: "We Wash, Fold & Deliver",
+    num: 3,
+    title: "Clean Clothes, Delivered",
     description:
-      "Your clothes are professionally washed, dried, neatly folded, and delivered back to you within 24 hours, fresh, clean, and ready to wear.",
+      "We wash, dry, and neatly fold everything — then deliver it back within 24 hours, fresh and ready to wear.",
     image: "/images/step-3.webp",
   },
 ];
@@ -43,29 +43,42 @@ export function HowItWorks({ config }: { config?: HowItWorksConfig }) {
       <div className="container-site max-w-[1100px]">
         <SectionHeader eyebrow={eyebrow} heading={heading} description={subheading} size="lg" headingClassName="font-normal leading-[3.375rem] tracking-[0.84px]" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {STEPS.map((step) => (
-            <div key={step.step} className="text-center">
-              <span className="inline-block bg-highlight text-navy font-[family-name:var(--font-poppins)] text-xs font-body-medium px-4 py-1.5 rounded-full mb-5">
-                {step.step}
-              </span>
-              <div className="mb-5 overflow-hidden rounded-xl">
-                <Image
-                  src={step.image}
-                  alt={step.title}
-                  width={400}
-                  height={260}
-                  className="w-full h-[200px] object-cover"
-                />
+        <div className="space-y-10 lg:space-y-16">
+          {STEPS.map((step, i) => {
+            const isEven = i % 2 === 1;
+            return (
+              <div
+                key={step.num}
+                className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-14 ${
+                  isEven ? "lg:flex-row-reverse" : ""
+                }`}
+              >
+                {/* Image */}
+                <div className="w-full lg:w-1/2 overflow-hidden rounded-2xl">
+                  <Image
+                    src={step.image}
+                    alt={step.title}
+                    width={560}
+                    height={380}
+                    className="w-full h-[240px] sm:h-[300px] lg:h-[340px] object-cover"
+                  />
+                </div>
+
+                {/* Text */}
+                <div className="w-full lg:w-1/2">
+                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-primary text-white font-[family-name:var(--font-poppins)] text-sm font-body-medium mb-4">
+                    {step.num}
+                  </span>
+                  <h3 className="text-xl lg:text-[1.75rem] font-heading-medium text-navy mb-3">
+                    {step.title}
+                  </h3>
+                  <p className="font-[family-name:var(--font-poppins)] text-sm sm:text-[15px] text-navy/70 leading-relaxed max-w-md">
+                    {step.description}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-xl lg:text-[1.5rem] font-heading-medium text-navy mb-2">
-                {step.title}
-              </h3>
-              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
-                {step.description}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

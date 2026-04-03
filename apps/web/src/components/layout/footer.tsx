@@ -56,7 +56,7 @@ export function Footer() {
             </p>
             <p className="font-[family-name:var(--font-poppins)] text-sm text-white/70 mt-1">
               <a
-                href="https://careers.wedeliverlaundry.com/jobs/delivery-driver"
+                href="https://careers.wedeliverlaundry.com"
                 className="hover:text-white transition-colors"
               >
                 Deliver Driver
@@ -113,7 +113,7 @@ export function Footer() {
             </ButtonLink>
             <div className="flex gap-3 mt-2">
               <a
-                href="https://apps.apple.com/app/we-deliver-laundry/id1234567890"
+                href="https://apps.apple.com/us/app/we-deliver-laundry-app/id6740860549"
                 className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 hover:bg-white/20 transition-colors"
               >
                 <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
@@ -125,7 +125,7 @@ export function Footer() {
                 </div>
               </a>
               <a
-                href="https://play.google.com/store/apps/details?id=com.cleancloudapp.wedeliverlaundry"
+                href="https://play.google.com/store/apps/details?id=com.cleancloudapp.wedeliverlaundry&hl=en_US"
                 className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2 hover:bg-white/20 transition-colors"
               >
                 <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
