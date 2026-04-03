@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/shared";
@@ -41,14 +41,13 @@ export function OrderAuthGate({ needsCleanCloud }: OrderAuthGateProps) {
     check();
   }, [needsCleanCloud, router]);
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
       if (needsCleanCloud) {
-        // Already authenticated — just link CleanCloud customer
         const res = await fetch("/api/cleancloud/customers/link", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -96,7 +95,7 @@ export function OrderAuthGate({ needsCleanCloud }: OrderAuthGateProps) {
       setError("Something went wrong. Please try again.");
       setLoading(false);
     }
-  }, [mode, name, email, phone, address, password, router]);
+  }
 
   if (checkingSession) {
     return (
