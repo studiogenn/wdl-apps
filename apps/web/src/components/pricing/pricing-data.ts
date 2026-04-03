@@ -162,6 +162,8 @@ export interface SubState {
   selectedCare: string[];
   suggestion: Suggestion | null;
   quizAnswers: QuizAnswers | null;
+  address: string;
+  routeID: number | null;
 }
 
 export const defaultSubState: SubState = {
@@ -173,6 +175,8 @@ export const defaultSubState: SubState = {
   selectedCare: [],
   suggestion: null,
   quizAnswers: null,
+  address: "",
+  routeID: null,
 };
 
 export interface PaygState {
@@ -183,6 +187,8 @@ export interface PaygState {
   deepItems: number;
   showSpecialty: boolean;
   addBedding: boolean;
+  address: string;
+  routeID: number | null;
 }
 
 export const defaultPaygState: PaygState = {
@@ -193,4 +199,6 @@ export const defaultPaygState: PaygState = {
   deepItems: 0,
   showSpecialty: false,
   addBedding: false,
+  address: "",
+  routeID: null,
 };

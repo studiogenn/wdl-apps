@@ -13,6 +13,7 @@ import {
   type PageView,
 } from "./pricing-data";
 import { SummaryCard } from "./SummaryCard";
+import { AddressInput } from "@/components/account/address-input";
 
 function PageHeroSmall({ title, subtitle }: { title: string; subtitle: string }) {
   return (
@@ -126,8 +127,23 @@ export function PaygBuilder({ state, onChange, onNavigate, onCheckout, checkoutL
       <PageHeroSmall title="One-time order" subtitle="No subscription · Schedule when you want" />
 
       <div className="mx-auto max-w-[500px] px-4 pb-24">
-        {/* Laundry slider */}
+        {/* Address */}
         <span className="mt-6 block text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">
+          Pickup address
+        </span>
+        <div className="mt-2.5">
+          <AddressInput
+            value={p.address}
+            onChange={(addr) => update({ address: addr, routeID: null })}
+            onValidated={(id) => update({ routeID: id })}
+            onInvalid={() => update({ routeID: null })}
+          />
+        </div>
+
+        <div className="my-5 h-px bg-[#e8e5d0]" />
+
+        {/* Laundry slider */}
+        <span className="block text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">
           Laundry (wash and fold)
         </span>
         <div className="mt-2.5 rounded-[14px] border-[1.5px] border-[#e8e5d0] bg-white p-[18px]">
@@ -287,7 +303,7 @@ export function PaygBuilder({ state, onChange, onNavigate, onCheckout, checkoutL
             totalValue={fmt(orderTotal)}
             ctaLabel={checkoutLoading ? "LOADING…" : "SCHEDULE PICKUP"}
             ctaVariant="softner"
-            ctaDisabled={checkoutLoading}
+            ctaDisabled={checkoutLoading || !p.routeID}
             error={checkoutError ?? undefined}
             finePrint="Charged by actual weight at pickup · $30 minimum"
             onCta={onCheckout}

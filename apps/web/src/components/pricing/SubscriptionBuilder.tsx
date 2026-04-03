@@ -9,6 +9,7 @@ import {
   type PageView,
 } from "./pricing-data";
 import { SummaryCard } from "./SummaryCard";
+import { AddressInput } from "@/components/account/address-input";
 
 function PageHeroSmall({ title, subtitle }: { title: string; subtitle: string }) {
   return (
@@ -133,8 +134,23 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           </div>
         )}
 
-        {/* Bags */}
+        {/* Address */}
         <span className="mt-6 block text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">
+          Pickup address
+        </span>
+        <div className="mt-2.5">
+          <AddressInput
+            value={s.address}
+            onChange={(addr) => update({ address: addr, routeID: null })}
+            onValidated={(id) => update({ routeID: id })}
+            onInvalid={() => update({ routeID: null })}
+          />
+        </div>
+
+        <div className="my-5 h-px bg-[#e8e5d0]" />
+
+        {/* Bags */}
+        <span className="block text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">
           How many bags per pickup?
         </span>
         <div className="mt-2.5 grid grid-cols-4 gap-2">
@@ -299,7 +315,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           perkText="Before any scheduled pickup, add specialty items, care upgrades, or a Bed Refresh. No extra trip needed — just add it to your next pickup."
           ctaLabel={checkoutLoading ? "LOADING…" : "START MY PLAN"}
           ctaVariant="yellow"
-          ctaDisabled={checkoutLoading}
+          ctaDisabled={checkoutLoading || !s.routeID}
           error={checkoutError ?? undefined}
           finePrint="No contracts · Cancel anytime · Free pickup and delivery"
           onCta={onCheckout}

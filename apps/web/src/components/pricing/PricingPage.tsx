@@ -85,6 +85,8 @@ export function PricingPage() {
       if (subState.selectedCare.length > 0) planMetadata.care = subState.selectedCare.join(",");
       if (subState.addBedding) planMetadata.bedding = subState.beddingFreq;
       if (subState.isStudent) planMetadata.student = "true";
+      if (subState.address) planMetadata.pickupAddress = subState.address;
+      if (subState.routeID) planMetadata.routeID = String(subState.routeID);
       if (scheduleState.date) planMetadata.pickupDate = scheduleState.date;
       if (scheduleState.timeSlot) planMetadata.pickupTime = scheduleState.timeSlot;
       if (scheduleState.repeatPickup) planMetadata.repeatPickup = "true";
@@ -142,6 +144,8 @@ export function PricingPage() {
       if (paygState.selectedCare.length > 0) planMetadata.care = paygState.selectedCare.join(",");
       if (paygState.addBedding) planMetadata.bedding = "true";
       if (paygState.deepItems > 0) planMetadata.deepCleanItems = String(paygState.deepItems);
+      if (paygState.address) planMetadata.pickupAddress = paygState.address;
+      if (paygState.routeID) planMetadata.routeID = String(paygState.routeID);
 
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
