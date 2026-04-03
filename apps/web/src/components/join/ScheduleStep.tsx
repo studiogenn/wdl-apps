@@ -12,9 +12,9 @@ const TIER_LABELS: Record<MembershipTier, { name: string; price: number; pickups
   family: { name: "Family", price: 189, pickups: 4, lbs: 120 },
 };
 
-type DateOption = {
-  readonly date: number;
-  readonly remaining?: number;
+type DateWithSlots = {
+  readonly date: string;
+  readonly slots: readonly string[];
 };
 
 interface ScheduleStepProps {
@@ -24,13 +24,9 @@ interface ScheduleStepProps {
   readonly onBack: () => void;
 }
 
-function formatDate(timestamp: number): string {
-  const d = new Date(timestamp * 1000);
+function formatDateLabel(iso: string): string {
+  const d = new Date(iso + "T12:00:00");
   return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-}
-
-function formatSlot(slot: string): string {
-  return slot.trim();
 }
 
 export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStepProps) {
@@ -39,79 +35,42 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
 
   const [address, setAddress] = useState(profile?.address ?? "");
   const [routeID, setRouteID] = useState<number | null>(profileRouteId);
-  const [dates, setDates] = useState<readonly DateOption[]>([]);
-  const [slotsCache, setSlotsCache] = useState<ReadonlyMap<number, ReadonlyArray<string>>>(new Map());
-  const [selectedDate, setSelectedDate] = useState<number | null>(null);
-  const [slots, setSlots] = useState<readonly string[]>([]);
+  const [schedule, setSchedule] = useState<readonly DateWithSlots[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
-  const [loadingDates, setLoadingDates] = useState(!!profileRouteId);
-  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [loading, setLoading] = useState(!!profileRouteId);
 
   const tierInfo = TIER_LABELS[tier];
 
-  // Fetch dates, then prefetch ALL slots in parallel
+  const selectedDateSlots = schedule.find((d) => d.date === selectedDate)?.slots ?? [];
+
+  // Single query — dates + slots in one response
   useEffect(() => {
     if (!routeID) return;
 
-    setLoadingDates(true);
+    setLoading(true);
     setSelectedDate(null);
-    setSlots([]);
     setSelectedSlot(null);
-    setSlotsCache(new Map());
+    setSchedule([]);
 
     (async () => {
       try {
-        const res = await fetch("/api/cleancloud/scheduling/dates", {
+        const res = await fetch("/api/scheduling/windows", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ routeID }),
+          body: JSON.stringify({ routeId: routeID }),
         });
         const data = await res.json();
-        if (!data.success) return;
-
-        const fetchedDates: readonly DateOption[] = data.data.dates;
-        setDates(fetchedDates);
-        setLoadingDates(false);
-
-        // Fire all slot requests in parallel
-        const entries = await Promise.all(
-          fetchedDates.map(async (d) => {
-            try {
-              const slotRes = await fetch("/api/cleancloud/scheduling/slots", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ routeID, day: d.date }),
-              });
-              const slotData = await slotRes.json();
-              return [d.date, slotData.success ? slotData.data.slots : []] as const;
-            } catch {
-              return [d.date, []] as const;
-            }
-          }),
-        );
-        setSlotsCache(new Map(entries));
+        if (data.success) {
+          setSchedule(data.data.dates);
+        }
       } catch {
-        // Dates unavailable
+        // Windows unavailable
       } finally {
-        setLoadingDates(false);
+        setLoading(false);
       }
     })();
   }, [routeID]);
-
-  // Resolve slots from cache when date selected
-  useEffect(() => {
-    if (!selectedDate) return;
-
-    const cached = slotsCache.get(selectedDate);
-    if (cached) {
-      setSlots(cached);
-      setLoadingSlots(false);
-    } else {
-      setSlots([]);
-      setLoadingSlots(true);
-    }
-    setSelectedSlot(null);
-  }, [selectedDate, slotsCache]);
 
   const handleAddressValidated = useCallback((id: number) => {
     setRouteID(id);
@@ -119,9 +78,8 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
 
   const handleAddressInvalid = useCallback(() => {
     setRouteID(null);
-    setDates([]);
+    setSchedule([]);
     setSelectedDate(null);
-    setSlots([]);
     setSelectedSlot(null);
   }, []);
 
@@ -129,7 +87,7 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
 
   return (
     <div className="mx-auto max-w-lg px-5 py-10">
-      {/* Welcome back banner for returning customers */}
+      {/* Welcome back banner */}
       {isReturning && (profile?.orderCount ?? 0) > 0 && (
         <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 px-5 py-4 text-center">
           <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
@@ -182,16 +140,6 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
                 </div>
               ))}
           </div>
-          {[
-            profile.preferences.detergent,
-            profile.preferences.fabricSoftener,
-            profile.preferences.dryerTemperature,
-            profile.preferences.dryerSheets,
-          ].every((v) => !v || v === "None Selected") && (
-            <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/40">
-              No preferences set — we&apos;ll use our defaults (Tide Free & Gentle, medium heat).
-            </p>
-          )}
         </div>
       )}
 
@@ -203,9 +151,8 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
             onChange={(addr) => {
               setAddress(addr);
               setRouteID(null);
-              setDates([]);
+              setSchedule([]);
               setSelectedDate(null);
-              setSlots([]);
               setSelectedSlot(null);
             }}
             onValidated={handleAddressValidated}
@@ -214,30 +161,26 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
         </div>
       )}
 
-      {profileRouteId && !loadingDates && dates.length === 0 && (
-        <p className="mb-6 font-[family-name:var(--font-poppins)] text-sm text-navy/40 text-center">
-          No dates available right now. You can schedule from your dashboard later.
-        </p>
-      )}
-
       {/* Dates */}
-      {routeID && (loadingDates || dates.length > 0) && (
+      {routeID && (
         <div className="mb-6">
           <label className="mb-2 block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70">
             Pickup date
           </label>
-          {loadingDates ? (
+          {loading ? (
             <div className="grid grid-cols-3 gap-2">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="h-12 animate-pulse rounded-xl bg-navy/5" />
               ))}
             </div>
+          ) : schedule.length === 0 ? (
+            <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/40">No dates available right now.</p>
           ) : (
             <div className="grid grid-cols-3 gap-2">
-              {dates.slice(0, 6).map((d) => (
+              {schedule.slice(0, 6).map((d) => (
                 <button
                   key={d.date}
-                  onClick={() => setSelectedDate(d.date)}
+                  onClick={() => { setSelectedDate(d.date); setSelectedSlot(null); }}
                   className={cn(
                     "rounded-xl border px-3 py-3 text-center font-[family-name:var(--font-poppins)] text-sm transition-all",
                     selectedDate === d.date
@@ -245,7 +188,7 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
                       : "border-navy/10 bg-white text-navy hover:border-primary/40",
                   )}
                 >
-                  {formatDate(d.date)}
+                  {formatDateLabel(d.date)}
                 </button>
               ))}
             </div>
@@ -253,38 +196,28 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
         </div>
       )}
 
-      {/* Time slots */}
-      {selectedDate && (
+      {/* Time slots — instant from the same response */}
+      {selectedDate && selectedDateSlots.length > 0 && (
         <div className="mb-6">
           <label className="mb-2 block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70">
             Pickup window
           </label>
-          {loadingSlots ? (
-            <div className="flex gap-2">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="h-10 w-24 animate-pulse rounded-full bg-navy/5" />
-              ))}
-            </div>
-          ) : slots.length === 0 ? (
-            <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/40">No slots available for this date.</p>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {slots.map((slot) => (
-                <button
-                  key={slot}
-                  onClick={() => setSelectedSlot(slot)}
-                  className={cn(
-                    "rounded-full border px-4 py-2.5 font-[family-name:var(--font-poppins)] text-sm transition-all",
-                    selectedSlot === slot
-                      ? "border-primary bg-primary text-white"
-                      : "border-navy/10 bg-white text-navy hover:border-primary/40",
-                  )}
-                >
-                  {formatSlot(slot)}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="flex flex-wrap gap-2">
+            {selectedDateSlots.map((slot) => (
+              <button
+                key={slot}
+                onClick={() => setSelectedSlot(slot)}
+                className={cn(
+                  "rounded-full border px-4 py-2.5 font-[family-name:var(--font-poppins)] text-sm transition-all",
+                  selectedSlot === slot
+                    ? "border-primary bg-primary text-white"
+                    : "border-navy/10 bg-white text-navy hover:border-primary/40",
+                )}
+              >
+                {slot}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
@@ -294,7 +227,7 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
 
       {hasSchedule ? (
         <p className="mt-3 text-center font-[family-name:var(--font-poppins)] text-[11px] text-navy/30">
-          First pickup {formatDate(selectedDate!)} {selectedSlot}
+          First pickup {formatDateLabel(selectedDate!)} {selectedSlot}
         </p>
       ) : (
         <p className="mt-3 text-center font-[family-name:var(--font-poppins)] text-[11px] text-navy/30">
