@@ -40,6 +40,7 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
   const [address, setAddress] = useState(profile?.address ?? "");
   const [routeID, setRouteID] = useState<number | null>(profileRouteId);
   const [dates, setDates] = useState<readonly DateOption[]>([]);
+  const [slotsCache, setSlotsCache] = useState<ReadonlyMap<number, ReadonlyArray<string>>>(new Map());
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
   const [slots, setSlots] = useState<readonly string[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
@@ -48,16 +49,17 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
 
   const tierInfo = TIER_LABELS[tier];
 
-  // Fetch dates when route is available (including from profile)
+  // Fetch dates, then prefetch ALL slots in parallel
   useEffect(() => {
     if (!routeID) return;
 
-    async function fetchDates() {
-      setLoadingDates(true);
-      setSelectedDate(null);
-      setSlots([]);
-      setSelectedSlot(null);
+    setLoadingDates(true);
+    setSelectedDate(null);
+    setSlots([]);
+    setSelectedSlot(null);
+    setSlotsCache(new Map());
 
+    (async () => {
       try {
         const res = await fetch("/api/cleancloud/scheduling/dates", {
           method: "POST",
@@ -65,46 +67,51 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
           body: JSON.stringify({ routeID }),
         });
         const data = await res.json();
-        if (data.success) {
-          setDates(data.data.dates);
-        }
+        if (!data.success) return;
+
+        const fetchedDates: readonly DateOption[] = data.data.dates;
+        setDates(fetchedDates);
+        setLoadingDates(false);
+
+        // Fire all slot requests in parallel
+        const entries = await Promise.all(
+          fetchedDates.map(async (d) => {
+            try {
+              const slotRes = await fetch("/api/cleancloud/scheduling/slots", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ routeID, day: d.date }),
+              });
+              const slotData = await slotRes.json();
+              return [d.date, slotData.success ? slotData.data.slots : []] as const;
+            } catch {
+              return [d.date, []] as const;
+            }
+          }),
+        );
+        setSlotsCache(new Map(entries));
       } catch {
         // Dates unavailable
       } finally {
         setLoadingDates(false);
       }
-    }
-
-    fetchDates();
+    })();
   }, [routeID]);
 
-  // Fetch slots when date is selected
+  // Resolve slots from cache when date selected
   useEffect(() => {
-    if (!routeID || !selectedDate) return;
+    if (!selectedDate) return;
 
-    async function fetchSlots() {
+    const cached = slotsCache.get(selectedDate);
+    if (cached) {
+      setSlots(cached);
+      setLoadingSlots(false);
+    } else {
+      setSlots([]);
       setLoadingSlots(true);
-      setSelectedSlot(null);
-
-      try {
-        const res = await fetch("/api/cleancloud/scheduling/slots", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ routeID, day: selectedDate }),
-        });
-        const data = await res.json();
-        if (data.success) {
-          setSlots(data.data.slots);
-        }
-      } catch {
-        // Slots unavailable
-      } finally {
-        setLoadingSlots(false);
-      }
     }
-
-    fetchSlots();
-  }, [routeID, selectedDate]);
+    setSelectedSlot(null);
+  }, [selectedDate, slotsCache]);
 
   const handleAddressValidated = useCallback((id: number) => {
     setRouteID(id);

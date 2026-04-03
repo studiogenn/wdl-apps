@@ -42,6 +42,7 @@ function MembershipPaymentForm({
   const stripe = useStripe();
   const elements = useElements();
   const [submitting, setSubmitting] = useState(false);
+  const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const tierInfo = TIER_LABELS[tier];
 
@@ -51,10 +52,10 @@ function MembershipPaymentForm({
       if (!stripe || !elements) return;
 
       setSubmitting(true);
+      setProcessing(true);
       setError(null);
       trackEvent(TRACKING_EVENTS.MEMBERSHIP_PAYMENT_SUBMITTED, { tier });
 
-      // Step 1: Confirm SetupIntent to save the payment method
       const result = await stripe.confirmSetup({
         elements,
         redirect: "if_required",
@@ -63,6 +64,7 @@ function MembershipPaymentForm({
       if (result.error) {
         setError(result.error.message ?? "Payment failed. Please try again.");
         setSubmitting(false);
+        setProcessing(false);
         return;
       }
 
@@ -92,6 +94,16 @@ function MembershipPaymentForm({
     },
     [stripe, elements, tier, onSuccess],
   );
+
+  if (processing) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 gap-4">
+        <div className="h-10 w-10 animate-spin rounded-full border-3 border-navy/10 border-t-primary" />
+        <p className="font-heading-medium text-navy text-lg uppercase">Setting up your membership...</p>
+        <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/40">Securing your payment — just a moment.</p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
