@@ -5,6 +5,7 @@ import { cn } from "@/lib/cn";
 import { type MembershipTier } from "@/lib/stripe-config";
 import { Button } from "@/components/shared";
 import { AddressInput } from "@/components/account/address-input";
+import { type CustomerProfile } from "./JoinFunnel";
 
 const TIER_LABELS: Record<MembershipTier, { name: string; price: number; pickups: number; lbs: number }> = {
   weekly: { name: "Weekly", price: 139, pickups: 4, lbs: 80 },
@@ -18,6 +19,7 @@ type DateOption = {
 
 interface ScheduleStepProps {
   readonly tier: MembershipTier;
+  readonly profile: CustomerProfile | null;
   readonly onComplete: () => void;
   readonly onBack: () => void;
 }
@@ -31,19 +33,22 @@ function formatSlot(slot: string): string {
   return slot.trim();
 }
 
-export function ScheduleStep({ tier, onComplete, onBack }: ScheduleStepProps) {
-  const [address, setAddress] = useState("");
-  const [routeID, setRouteID] = useState<number | null>(null);
+export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStepProps) {
+  const isReturning = profile?.isReturning ?? false;
+  const profileRouteId = profile?.routeId ?? null;
+
+  const [address, setAddress] = useState(profile?.address ?? "");
+  const [routeID, setRouteID] = useState<number | null>(profileRouteId);
   const [dates, setDates] = useState<readonly DateOption[]>([]);
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
   const [slots, setSlots] = useState<readonly string[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
-  const [loadingDates, setLoadingDates] = useState(false);
+  const [loadingDates, setLoadingDates] = useState(!!profileRouteId);
   const [loadingSlots, setLoadingSlots] = useState(false);
 
   const tierInfo = TIER_LABELS[tier];
 
-  // Fetch dates when route is validated
+  // Fetch dates when route is available (including from profile)
   useEffect(() => {
     if (!routeID) return;
 
@@ -117,6 +122,18 @@ export function ScheduleStep({ tier, onComplete, onBack }: ScheduleStepProps) {
 
   return (
     <div className="mx-auto max-w-lg px-5 py-10">
+      {/* Welcome back banner for returning customers */}
+      {isReturning && (profile?.orderCount ?? 0) > 0 && (
+        <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 px-5 py-4 text-center">
+          <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
+            Welcome back{profile?.name ? `, ${profile.name.split(" ")[0]}` : ""}
+          </p>
+          <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/50 mt-0.5">
+            {profile!.orderCount} order{profile!.orderCount !== 1 ? "s" : ""} with us so far
+          </p>
+        </div>
+      )}
+
       <h2 className="font-heading-medium text-navy text-2xl uppercase text-center mb-2">
         Schedule your first pickup
       </h2>
@@ -137,33 +154,77 @@ export function ScheduleStep({ tier, onComplete, onBack }: ScheduleStepProps) {
         <p className="font-body-bold text-navy text-xl">${tierInfo.price}<span className="text-sm font-normal text-navy/50">/mo</span></p>
       </div>
 
-      {/* Address */}
-      <div className="mb-6">
-        <AddressInput
-          value={address}
-          onChange={(addr) => {
-            setAddress(addr);
-            setRouteID(null);
-            setDates([]);
-            setSelectedDate(null);
-            setSlots([]);
-            setSelectedSlot(null);
-          }}
-          onValidated={handleAddressValidated}
-          onInvalid={handleAddressInvalid}
-        />
-      </div>
+      {/* Preferences (returning customers) */}
+      {isReturning && profile?.preferences && (
+        <div className="mb-6 rounded-xl border border-navy/10 bg-white px-5 py-4">
+          <p className="font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/40 uppercase tracking-widest mb-3">
+            Your preferences
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { label: "Detergent", value: profile.preferences.detergent },
+              { label: "Softener", value: profile.preferences.fabricSoftener },
+              { label: "Dryer", value: profile.preferences.dryerTemperature },
+              { label: "Dryer sheets", value: profile.preferences.dryerSheets },
+            ]
+              .filter((p) => p.value && p.value !== "None Selected")
+              .map((p) => (
+                <div key={p.label} className="font-[family-name:var(--font-poppins)] text-xs">
+                  <span className="text-navy/40">{p.label}: </span>
+                  <span className="text-navy">{p.value}</span>
+                </div>
+              ))}
+          </div>
+          {[
+            profile.preferences.detergent,
+            profile.preferences.fabricSoftener,
+            profile.preferences.dryerTemperature,
+            profile.preferences.dryerSheets,
+          ].every((v) => !v || v === "None Selected") && (
+            <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/40">
+              No preferences set — we&apos;ll use our defaults (Tide Free & Gentle, medium heat).
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Address — skip if profile has routeId */}
+      {!profileRouteId && (
+        <div className="mb-6">
+          <AddressInput
+            value={address}
+            onChange={(addr) => {
+              setAddress(addr);
+              setRouteID(null);
+              setDates([]);
+              setSelectedDate(null);
+              setSlots([]);
+              setSelectedSlot(null);
+            }}
+            onValidated={handleAddressValidated}
+            onInvalid={handleAddressInvalid}
+          />
+        </div>
+      )}
+
+      {profileRouteId && !loadingDates && dates.length === 0 && (
+        <p className="mb-6 font-[family-name:var(--font-poppins)] text-sm text-navy/40 text-center">
+          No dates available right now. You can schedule from your dashboard later.
+        </p>
+      )}
 
       {/* Dates */}
-      {routeID && (
+      {routeID && (loadingDates || dates.length > 0) && (
         <div className="mb-6">
           <label className="mb-2 block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70">
             Pickup date
           </label>
           {loadingDates ? (
-            <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/40">Loading available dates...</p>
-          ) : dates.length === 0 ? (
-            <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/40">No dates available for this address.</p>
+            <div className="grid grid-cols-3 gap-2">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-12 animate-pulse rounded-xl bg-navy/5" />
+              ))}
+            </div>
           ) : (
             <div className="grid grid-cols-3 gap-2">
               {dates.slice(0, 6).map((d) => (
@@ -192,7 +253,11 @@ export function ScheduleStep({ tier, onComplete, onBack }: ScheduleStepProps) {
             Pickup window
           </label>
           {loadingSlots ? (
-            <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/40">Loading time slots...</p>
+            <div className="flex gap-2">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-10 w-24 animate-pulse rounded-full bg-navy/5" />
+              ))}
+            </div>
           ) : slots.length === 0 ? (
             <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/40">No slots available for this date.</p>
           ) : (
@@ -216,10 +281,7 @@ export function ScheduleStep({ tier, onComplete, onBack }: ScheduleStepProps) {
         </div>
       )}
 
-      <Button
-        className="w-full"
-        onClick={onComplete}
-      >
+      <Button className="w-full" onClick={onComplete}>
         Continue to Payment
       </Button>
 

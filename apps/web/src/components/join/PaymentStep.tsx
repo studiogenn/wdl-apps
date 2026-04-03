@@ -161,20 +161,25 @@ function MembershipPaymentForm({
 
 interface PaymentStepProps {
   readonly tier: MembershipTier;
+  readonly profile: import("./JoinFunnel").CustomerProfile | null;
   readonly clientSecret: string | null;
   readonly fetchError: string | null;
   readonly onSuccess: () => void;
   readonly onBack: () => void;
 }
 
-export function PaymentStep({ tier, clientSecret, fetchError, onSuccess, onBack }: PaymentStepProps) {
+export function PaymentStep({ tier, profile, clientSecret, fetchError, onSuccess, onBack }: PaymentStepProps) {
+  const hasSavedPayment = profile?.isReturning && profile.hasSavedPayment;
+
   return (
     <div className="mx-auto max-w-lg px-5 py-10">
       <h2 className="font-heading-medium text-navy text-2xl uppercase text-center mb-2">
         Complete your membership
       </h2>
       <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 text-center mb-8">
-        Secure payment — your card is never stored on our servers.
+        {hasSavedPayment
+          ? "We've upgraded our billing system — just need your card one more time."
+          : "Secure payment — your card is never stored on our servers."}
       </p>
 
       {fetchError && (

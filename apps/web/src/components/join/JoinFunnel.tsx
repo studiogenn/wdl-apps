@@ -10,21 +10,40 @@ import { PaymentStep } from "./PaymentStep";
 
 type Step = "tier" | "auth" | "schedule" | "payment";
 
+export type CustomerProfile = {
+  readonly isReturning: boolean;
+  readonly name?: string;
+  readonly address?: string;
+  readonly routeId?: number;
+  readonly routeName?: string;
+  readonly preferences?: {
+    readonly detergent: string | null;
+    readonly bleach: string | null;
+    readonly fabricSoftener: string | null;
+    readonly dryerTemperature: string | null;
+    readonly dryerSheets: string | null;
+  };
+  readonly hasSavedPayment?: boolean;
+  readonly orderCount?: number;
+  readonly lastOrderDate?: string | null;
+};
+
 export function JoinFunnel() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("tier");
   const [tier, setTier] = useState<MembershipTier>("weekly");
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [profile, setProfile] = useState<CustomerProfile | null>(null);
 
-  // Track if we've already started prefetching the SetupIntent
-  const setupFired = useRef(false);
+  const prefetchFired = useRef(false);
 
-  // Prefetch SetupIntent — fire once after auth, result ready by payment step
-  const prefetchSetupIntent = useCallback((selectedTier: MembershipTier) => {
-    if (setupFired.current) return;
-    setupFired.current = true;
+  // Fire both SetupIntent + profile prefetch in parallel after auth
+  const prefetchAll = useCallback((selectedTier: MembershipTier) => {
+    if (prefetchFired.current) return;
+    prefetchFired.current = true;
 
+    // SetupIntent
     fetch("/api/membership/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -41,6 +60,22 @@ export function JoinFunnel() {
       .catch(() => {
         setPaymentError("Unable to initialize payment.");
       });
+
+    // Customer profile
+    fetch("/api/account/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setProfile(json.data);
+        }
+      })
+      .catch(() => {
+        // Profile unavailable — proceed as new customer
+        setProfile({ isReturning: false });
+      });
   }, []);
 
   const handleTierSelect = useCallback((selected: MembershipTier) => {
@@ -50,14 +85,12 @@ export function JoinFunnel() {
   }, []);
 
   const handleAuthComplete = useCallback(() => {
-    // Auth done — immediately prefetch SetupIntent while user is on schedule step
-    prefetchSetupIntent(tier);
+    prefetchAll(tier);
     setStep("schedule");
     window.scrollTo(0, 0);
-  }, [tier, prefetchSetupIntent]);
+  }, [tier, prefetchAll]);
 
   const handleScheduleComplete = useCallback(() => {
-    // clientSecret is already prefetched — just show payment
     setStep("payment");
     window.scrollTo(0, 0);
   }, []);
@@ -85,6 +118,7 @@ export function JoinFunnel() {
         {step === "schedule" && (
           <ScheduleStep
             tier={tier}
+            profile={profile}
             onComplete={handleScheduleComplete}
             onBack={() => { setStep("auth"); window.scrollTo(0, 0); }}
           />
@@ -93,6 +127,7 @@ export function JoinFunnel() {
         {step === "payment" && (
           <PaymentStep
             tier={tier}
+            profile={profile}
             clientSecret={clientSecret}
             fetchError={paymentError}
             onSuccess={handlePaymentSuccess}
