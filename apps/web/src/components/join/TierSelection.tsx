@@ -15,33 +15,23 @@ const TIERS: readonly {
   readonly badge: string | null;
 }[] = [
   {
-    id: "starter",
-    name: "Starter",
-    price: 79,
-    pickups: 2,
-    includedLbs: 40,
-    effectiveRate: "$1.98/lb",
-    savings: "Convenience + consistency",
-    badge: null,
-  },
-  {
-    id: "standard",
-    name: "Standard",
-    price: 129,
+    id: "weekly",
+    name: "Weekly",
+    price: 139,
     pickups: 4,
     includedLbs: 80,
-    effectiveRate: "$1.61/lb",
-    savings: "Save 17% vs on-demand",
+    effectiveRate: "$1.74/lb",
+    savings: "Save 41% vs on-demand",
     badge: "Most Popular",
   },
   {
     id: "family",
     name: "Family",
-    price: 169,
+    price: 189,
     pickups: 4,
     includedLbs: 120,
-    effectiveRate: "$1.41/lb",
-    savings: "Save 28% vs on-demand",
+    effectiveRate: "$1.58/lb",
+    savings: "Save 46% vs on-demand",
     badge: "Best Value",
   },
 ];
@@ -136,11 +126,16 @@ export function TierSelection({ selected, onSelect }: TierSelectionProps) {
         })}
       </div>
 
-      <p className="mt-6 text-center font-[family-name:var(--font-poppins)] text-xs text-navy/40">
-        All plans include free pickup & delivery · 24-hour turnaround · Cancel anytime
+      {/* PAYG escape hatch */}
+      <p className="mt-6 text-center font-[family-name:var(--font-poppins)] text-sm text-navy/40">
+        Just need one pickup?{" "}
+        <a href="/pricing" className="text-primary hover:underline">
+          Order on-demand at $2.95/lb →
+        </a>
       </p>
-      <p className="mt-2 text-center font-[family-name:var(--font-poppins)] text-xs text-navy/40">
-        Go over your included weight? No surprise fees — extra pounds billed at $1.95/lb.
+
+      <p className="mt-3 text-center font-[family-name:var(--font-poppins)] text-xs text-navy/30">
+        All plans include free pickup & delivery · 24-hour turnaround · Cancel anytime
       </p>
     </div>
   );

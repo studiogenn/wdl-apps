@@ -7,9 +7,8 @@ import { Button } from "@/components/shared";
 import { AddressInput } from "@/components/account/address-input";
 
 const TIER_LABELS: Record<MembershipTier, { name: string; price: number; pickups: number; lbs: number }> = {
-  starter: { name: "Starter", price: 79, pickups: 2, lbs: 40 },
-  standard: { name: "Standard", price: 129, pickups: 4, lbs: 80 },
-  family: { name: "Family", price: 169, pickups: 4, lbs: 120 },
+  weekly: { name: "Weekly", price: 139, pickups: 4, lbs: 80 },
+  family: { name: "Family", price: 189, pickups: 4, lbs: 120 },
 };
 
 type DateOption = {

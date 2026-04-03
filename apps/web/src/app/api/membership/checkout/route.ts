@@ -8,12 +8,12 @@ import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
 
 const setupSchema = z.object({
   action: z.literal("setup"),
-  tier: z.enum(["starter", "standard", "family"]),
+  tier: z.enum(["weekly", "family"]),
 });
 
 const activateSchema = z.object({
   action: z.literal("activate"),
-  tier: z.enum(["starter", "standard", "family"]),
+  tier: z.enum(["weekly", "family"]),
   paymentMethodId: z.string().min(1),
 });
 

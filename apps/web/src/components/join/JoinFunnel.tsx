@@ -13,7 +13,7 @@ type Step = "tier" | "auth" | "schedule" | "payment";
 export function JoinFunnel() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("tier");
-  const [tier, setTier] = useState<MembershipTier>("standard");
+  const [tier, setTier] = useState<MembershipTier>("weekly");
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
 

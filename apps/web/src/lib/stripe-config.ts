@@ -11,7 +11,7 @@ export interface LegacyTierPrice {
 
 // ── Membership tiers (weight-based) ──
 
-export type MembershipTier = "starter" | "standard" | "family";
+export type MembershipTier = "weekly" | "family";
 
 export interface MembershipTierConfig {
   readonly priceId: string;
@@ -25,12 +25,12 @@ export const STRIPE_IDS = isLive
       membership: {
         productId: "prod_UGYUCSP1TmwIy6",
         tiers: {
-          starter: { priceId: "price_1TI1N43uBUfrZCbdb7UQsftx", monthlyCents: 7900, pickups: 2, includedLbs: 40 },
-          standard: { priceId: "price_1TI1N43uBUfrZCbdvaJxUelt", monthlyCents: 12900, pickups: 4, includedLbs: 80 },
-          family: { priceId: "price_1TI1N43uBUfrZCbdRNlxVhwn", monthlyCents: 16900, pickups: 4, includedLbs: 120 },
+          weekly: { priceId: "price_1TI23A3uBUfrZCbdZYksg6nE", monthlyCents: 13900, pickups: 4, includedLbs: 80 },
+          family: { priceId: "price_1TI23A3uBUfrZCbddxcUgBe0", monthlyCents: 18900, pickups: 4, includedLbs: 120 },
         } satisfies Record<MembershipTier, MembershipTierConfig>,
         overagePriceId: "price_1THdOE3uBUfrZCbdpf1mDo1i",
         overageRateCents: 195,
+        paygRateCents: 295,
         meterId: "mtr_61UR1LQR1lQaIaDuW413uBUfrZCbd0ds",
         meterEventName: "wdl_overage_lbs",
       },
@@ -53,12 +53,12 @@ export const STRIPE_IDS = isLive
       membership: {
         productId: "prod_UGYUCSP1TmwIy6",
         tiers: {
-          starter: { priceId: "price_1TI1N43uBUfrZCbdb7UQsftx", monthlyCents: 7900, pickups: 2, includedLbs: 40 },
-          standard: { priceId: "price_1TI1N43uBUfrZCbdvaJxUelt", monthlyCents: 12900, pickups: 4, includedLbs: 80 },
-          family: { priceId: "price_1TI1N43uBUfrZCbdRNlxVhwn", monthlyCents: 16900, pickups: 4, includedLbs: 120 },
+          weekly: { priceId: "price_1TI23A3uBUfrZCbdZYksg6nE", monthlyCents: 13900, pickups: 4, includedLbs: 80 },
+          family: { priceId: "price_1TI23A3uBUfrZCbddxcUgBe0", monthlyCents: 18900, pickups: 4, includedLbs: 120 },
         } satisfies Record<MembershipTier, MembershipTierConfig>,
         overagePriceId: "price_1THUjU3uBUfrZCbddHw0rOhH",
         overageRateCents: 195,
+        paygRateCents: 295,
         meterId: "mtr_test_61UQsgqnQW0C1ccZ8413uBUfrZCbdXyS",
         meterEventName: "wdl_overage_lbs",
       },
