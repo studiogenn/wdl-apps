@@ -24,6 +24,7 @@ export function AddressInput({ value, onChange, onValidated, onInvalid }: Addres
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [validating, setValidating] = useState(false);
   const [notInArea, setNotInArea] = useState(false);
+  const [inArea, setInArea] = useState(false);
 
   const fetchSuggestions = useCallback(async (query: string) => {
     if (query.length < 3) {
@@ -61,6 +62,7 @@ export function AddressInput({ value, onChange, onValidated, onInvalid }: Addres
     setSuggestions([]);
     setShowSuggestions(false);
     setNotInArea(false);
+    setInArea(false);
     setValidating(true);
 
     try {
@@ -75,6 +77,7 @@ export function AddressInput({ value, onChange, onValidated, onInvalid }: Addres
       const data = await res.json();
 
       if (data.success) {
+        setInArea(true);
         onValidated(data.data.routeID);
       } else {
         setNotInArea(true);
@@ -103,6 +106,7 @@ export function AddressInput({ value, onChange, onValidated, onInvalid }: Addres
         onChange={(e) => {
           onChange(e.target.value);
           setNotInArea(false);
+          setInArea(false);
           fetchSuggestions(e.target.value);
         }}
         onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
@@ -131,6 +135,12 @@ export function AddressInput({ value, onChange, onValidated, onInvalid }: Addres
       {validating && (
         <p className="mt-1 font-[family-name:var(--font-poppins)] text-xs text-navy/50">
           Checking service area...
+        </p>
+      )}
+
+      {inArea && (
+        <p className="mt-1 font-[family-name:var(--font-poppins)] text-xs text-green-600">
+          Great news — we serve your area!
         </p>
       )}
 
