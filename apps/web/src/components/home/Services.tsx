@@ -85,7 +85,7 @@ export function Services(_props: ServicesProps = {}) {
 
           {/* CTA */}
           <a
-            href="/join"
+            href="/subscriptions"
             className="wdl-hero-cta relative z-10 inline-block text-sm font-medium tracking-[0.1em] uppercase rounded-full px-8 py-4 transition-transform hover:-translate-y-px"
             style={{
               fontFamily: "inherit",

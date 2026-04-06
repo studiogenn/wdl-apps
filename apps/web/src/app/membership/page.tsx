@@ -165,7 +165,7 @@ export default function MembershipPage() {
                 ))}
               </ul>
               <div className="flex flex-wrap gap-3">
-                <ButtonLink href="/pricing">Build your plan</ButtonLink>
+                <ButtonLink href="/subscriptions">Build your plan</ButtonLink>
                 <ButtonLink href="/wash-fold" variant="outline">See all pricing</ButtonLink>
               </div>
             </div>
@@ -263,7 +263,7 @@ export default function MembershipPage() {
                     </li>
                   ))}
                 </ul>
-                <ButtonLink href="/pricing" variant={plan.highlight ? "primary" : "outline"} className="w-full justify-center">
+                <ButtonLink href="/subscriptions" variant={plan.highlight ? "primary" : "outline"} className="w-full justify-center">
                   Get started
                 </ButtonLink>
               </div>
@@ -370,7 +370,7 @@ export default function MembershipPage() {
           />
           <FAQAccordion items={faqs} />
           <div className="text-center mt-12">
-            <ButtonLink href="/pricing" className="bg-white text-navy hover:bg-white/90">
+            <ButtonLink href="/subscriptions" className="bg-white text-navy hover:bg-white/90">
               Build your plan
             </ButtonLink>
           </div>
