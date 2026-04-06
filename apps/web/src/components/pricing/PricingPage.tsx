@@ -27,8 +27,6 @@ const defaultScheduleState: ScheduleState = {
   date: "",
   timeSlot: "",
   repeatPickup: false,
-  address: "",
-  routeID: null,
 };
 
 export function PricingPage() {
@@ -87,8 +85,8 @@ export function PricingPage() {
       if (subState.selectedCare.length > 0) planMetadata.care = subState.selectedCare.join(",");
       if (subState.addBedding) planMetadata.bedding = subState.beddingFreq;
       if (subState.isStudent) planMetadata.student = "true";
-      if (scheduleState.address) planMetadata.pickupAddress = scheduleState.address;
-      if (scheduleState.routeID) planMetadata.routeID = String(scheduleState.routeID);
+      if (subState.address) planMetadata.pickupAddress = subState.address;
+      if (subState.routeID !== null) planMetadata.routeID = String(subState.routeID);
       if (scheduleState.date) planMetadata.pickupDate = scheduleState.date;
       if (scheduleState.timeSlot) planMetadata.pickupTime = scheduleState.timeSlot;
       if (scheduleState.repeatPickup) planMetadata.repeatPickup = "true";

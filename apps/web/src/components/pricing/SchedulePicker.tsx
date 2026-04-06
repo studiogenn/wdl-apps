@@ -1,9 +1,8 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { cn } from "@/lib/cn";
 import { type ScheduleState, type PageView } from "./pricing-data";
-import { AddressInput } from "@/components/account/address-input";
 
 const TIME_SLOTS = ["8am - 12pm", "8pm - 11pm"];
 
@@ -41,24 +40,10 @@ interface SchedulePickerProps {
 
 export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checkoutLoading, checkoutError }: SchedulePickerProps) {
   const dates = useMemo(() => getAvailableDates(), []);
-  const stateRef = useRef(state);
-  stateRef.current = state;
 
-  const update = (partial: Partial<ScheduleState>) => onChange({ ...stateRef.current, ...partial });
+  const update = (partial: Partial<ScheduleState>) => onChange({ ...state, ...partial });
 
-  const handleAddressChange = (address: string) => {
-    update({ address, routeID: null });
-  };
-
-  const handleAddressValidated = (routeID: number) => {
-    update({ routeID });
-  };
-
-  const handleAddressInvalid = () => {
-    update({ routeID: null });
-  };
-
-  const canContinue = state.date && state.timeSlot && state.address && state.routeID !== null;
+  const canContinue = state.date && state.timeSlot;
 
   return (
     <div>
@@ -87,21 +72,8 @@ export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checko
 
       <div className="mx-auto max-w-[500px] px-4 pb-28">
 
-        {/* Pickup address */}
-        <div className="mt-8">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0a1580]/60">Pickup Address</p>
-          <AddressInput
-            value={state.address}
-            onChange={handleAddressChange}
-            onValidated={handleAddressValidated}
-            onInvalid={handleAddressInvalid}
-          />
-        </div>
-
-        <hr className="my-6 border-[#e8e5d0]" />
-
         {/* When would you like your pickup? */}
-        <p className="mb-4 text-center text-[15px] text-[#0a1580]">When would you like your pickup?</p>
+        <p className="mt-8 mb-4 text-center text-[15px] text-[#0a1580]">When would you like your pickup?</p>
 
         {/* Date selector */}
         <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4">

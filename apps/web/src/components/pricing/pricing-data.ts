@@ -133,8 +133,6 @@ export interface ScheduleState {
   date: string; // ISO date string e.g. "2026-04-04"
   timeSlot: string; // e.g. "8am - 12pm"
   repeatPickup: boolean;
-  address: string;
-  routeID: number | null;
 }
 
 export interface QuizAnswers {
