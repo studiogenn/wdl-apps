@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useCallback } from "react";
+import { useMemo } from "react";
 import { cn } from "@/lib/cn";
 import { type ScheduleState, type PageView } from "./pricing-data";
 import { AddressInput } from "@/components/account/address-input";
@@ -44,17 +44,17 @@ export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checko
 
   const update = (partial: Partial<ScheduleState>) => onChange({ ...state, ...partial });
 
-  const handleAddressChange = useCallback((address: string) => {
+  const handleAddressChange = (address: string) => {
     update({ address, routeID: null });
-  }, []);
+  };
 
-  const handleAddressValidated = useCallback((routeID: number) => {
+  const handleAddressValidated = (routeID: number) => {
     update({ routeID });
-  }, []);
+  };
 
-  const handleAddressInvalid = useCallback(() => {
+  const handleAddressInvalid = () => {
     update({ routeID: null });
-  }, []);
+  };
 
   const canContinue = state.date && state.timeSlot && state.address && state.routeID;
 

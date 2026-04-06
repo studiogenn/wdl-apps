@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { cn } from "@/lib/cn";
 import {
   getBagPrice,
@@ -81,17 +80,17 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
     update({ freq, bags: freq === "biweekly" && s.bags < 2 ? 2 : s.bags });
   };
 
-  const handleAddressChange = useCallback((address: string) => {
+  const handleAddressChange = (address: string) => {
     update({ address, routeID: null });
-  }, []);
+  };
 
-  const handleAddressValidated = useCallback((routeID: number) => {
+  const handleAddressValidated = (routeID: number) => {
     update({ routeID });
-  }, []);
+  };
 
-  const handleAddressInvalid = useCallback(() => {
+  const handleAddressInvalid = () => {
     update({ routeID: null });
-  }, []);
+  };
 
   const toggleCare = (id: string) => {
     const idx = s.selectedCare.indexOf(id);
