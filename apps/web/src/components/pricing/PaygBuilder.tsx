@@ -15,7 +15,7 @@ import {
 import { SummaryCard } from "./SummaryCard";
 import { AddressInput } from "@/components/account/address-input";
 
-function PageHeroSmall({ title, subtitle }: { title: string; subtitle: string }) {
+function PageHeroSmall({ title, subtitle, onBack }: { title: string; subtitle: string; onBack?: () => void }) {
   return (
     <div className="relative overflow-hidden bg-primary px-5 pb-9 pt-7 text-center">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -23,6 +23,18 @@ function PageHeroSmall({ title, subtitle }: { title: string; subtitle: string })
           <path d="M-50 140 Q100 60 200 120 Q300 180 450 100" stroke="#fff" strokeWidth="20" fill="none" strokeLinecap="round" />
         </svg>
       </div>
+      {onBack && (
+        <button
+          type="button"
+          onClick={onBack}
+          className="absolute left-4 top-7 z-20 flex items-center gap-1 text-[13px] font-medium text-white/80 transition-colors hover:text-white"
+        >
+          <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+            <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd" />
+          </svg>
+          Back
+        </button>
+      )}
       <div className="relative z-10">
         <h2 className="text-2xl font-normal uppercase tracking-[1.5px] text-white">{title}</h2>
         <p className="mt-1.5 text-[13px] text-white/65">{subtitle}</p>
@@ -124,7 +136,7 @@ export function PaygBuilder({ state, onChange, onNavigate, onCheckout, checkoutL
 
   return (
     <div>
-      <PageHeroSmall title="One-time order" subtitle="No subscription · Schedule when you want" />
+      <PageHeroSmall title="One-time order" subtitle="No subscription · Schedule when you want" onBack={() => onNavigate("home")} />
 
       <div className="mx-auto max-w-[500px] px-4 pb-24">
         {/* Address */}

@@ -27,6 +27,8 @@ const defaultScheduleState: ScheduleState = {
   date: "",
   timeSlot: "",
   repeatPickup: false,
+  address: "",
+  routeID: null,
 };
 
 export function PricingPage() {
@@ -85,8 +87,8 @@ export function PricingPage() {
       if (subState.selectedCare.length > 0) planMetadata.care = subState.selectedCare.join(",");
       if (subState.addBedding) planMetadata.bedding = subState.beddingFreq;
       if (subState.isStudent) planMetadata.student = "true";
-      if (subState.address) planMetadata.pickupAddress = subState.address;
-      if (subState.routeID) planMetadata.routeID = String(subState.routeID);
+      if (scheduleState.address) planMetadata.pickupAddress = scheduleState.address;
+      if (scheduleState.routeID) planMetadata.routeID = String(scheduleState.routeID);
       if (scheduleState.date) planMetadata.pickupDate = scheduleState.date;
       if (scheduleState.timeSlot) planMetadata.pickupTime = scheduleState.timeSlot;
       if (scheduleState.repeatPickup) planMetadata.repeatPickup = "true";
@@ -185,7 +187,7 @@ export function PricingPage() {
         />
       );
     case "quiz":
-      return <QuizFlow onComplete={handleQuizComplete} />;
+      return <QuizFlow onComplete={handleQuizComplete} onBack={() => navigate("home")} />;
     case "subscription":
       return (
         <SubscriptionBuilder

@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { cn } from "@/lib/cn";
 import { type ScheduleState, type PageView } from "./pricing-data";
+import { AddressInput } from "@/components/account/address-input";
 
 const TIME_SLOTS = ["8am - 12pm", "8pm - 11pm"];
 
@@ -43,7 +44,19 @@ export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checko
 
   const update = (partial: Partial<ScheduleState>) => onChange({ ...state, ...partial });
 
-  const canContinue = state.date && state.timeSlot;
+  const handleAddressChange = useCallback((address: string) => {
+    update({ address, routeID: null });
+  }, []);
+
+  const handleAddressValidated = useCallback((routeID: number) => {
+    update({ routeID });
+  }, []);
+
+  const handleAddressInvalid = useCallback(() => {
+    update({ routeID: null });
+  }, []);
+
+  const canContinue = state.date && state.timeSlot && state.address && state.routeID;
 
   return (
     <div>
@@ -54,6 +67,16 @@ export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checko
             <path d="M-50 140 Q100 60 200 120 Q300 180 450 100" stroke="#fff" strokeWidth="20" fill="none" strokeLinecap="round" />
           </svg>
         </div>
+        <button
+          type="button"
+          onClick={() => onNavigate("subscription")}
+          className="absolute left-4 top-7 z-20 flex items-center gap-1 text-[13px] font-medium text-white/80 transition-colors hover:text-white"
+        >
+          <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+            <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd" />
+          </svg>
+          Back
+        </button>
         <div className="relative z-10">
           <h2 className="text-2xl font-normal uppercase tracking-[1.5px] text-white">Pickup Date & Time</h2>
           <p className="mt-1.5 text-[13px] text-white/65">Choose your first pickup window</p>
@@ -62,8 +85,21 @@ export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checko
 
       <div className="mx-auto max-w-[500px] px-4 pb-28">
 
+        {/* Pickup address */}
+        <div className="mt-8">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0a1580]/60">Pickup Address</p>
+          <AddressInput
+            value={state.address}
+            onChange={handleAddressChange}
+            onValidated={handleAddressValidated}
+            onInvalid={handleAddressInvalid}
+          />
+        </div>
+
+        <hr className="my-6 border-[#e8e5d0]" />
+
         {/* When would you like your pickup? */}
-        <p className="mt-8 mb-4 text-center text-[15px] text-[#0a1580]">When would you like your pickup?</p>
+        <p className="mb-4 text-center text-[15px] text-[#0a1580]">When would you like your pickup?</p>
 
         {/* Date selector */}
         <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4">
