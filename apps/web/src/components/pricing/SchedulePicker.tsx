@@ -58,7 +58,7 @@ export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checko
     update({ routeID: null });
   };
 
-  const canContinue = state.date && state.timeSlot && state.address && state.routeID;
+  const canContinue = state.date && state.timeSlot && state.address && state.routeID !== null;
 
   return (
     <div>

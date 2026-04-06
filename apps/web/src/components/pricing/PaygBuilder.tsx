@@ -315,7 +315,7 @@ export function PaygBuilder({ state, onChange, onNavigate, onCheckout, checkoutL
             totalValue={fmt(orderTotal)}
             ctaLabel={checkoutLoading ? "LOADING…" : "SCHEDULE PICKUP"}
             ctaVariant="softner"
-            ctaDisabled={checkoutLoading || !p.routeID}
+            ctaDisabled={checkoutLoading || p.routeID === null}
             error={checkoutError ?? undefined}
             finePrint="Charged by actual weight at pickup · $30 minimum"
             onCta={onCheckout}

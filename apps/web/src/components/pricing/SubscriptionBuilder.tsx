@@ -346,7 +346,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           perkText="Before any scheduled pickup, add specialty items, care upgrades, or a Bed Refresh. No extra trip needed — just add it to your next pickup."
           ctaLabel={checkoutLoading ? "LOADING…" : "START MY PLAN"}
           ctaVariant="yellow"
-          ctaDisabled={checkoutLoading || !s.address || !s.routeID}
+          ctaDisabled={checkoutLoading || !s.address || s.routeID === null}
           error={checkoutError ?? undefined}
           finePrint="No contracts · Cancel anytime · Free pickup and delivery"
           onCta={onCheckout}
