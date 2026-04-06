@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { cn } from "@/lib/cn";
 import { type ScheduleState, type PageView } from "./pricing-data";
 import { AddressInput } from "@/components/account/address-input";
@@ -41,8 +41,10 @@ interface SchedulePickerProps {
 
 export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checkoutLoading, checkoutError }: SchedulePickerProps) {
   const dates = useMemo(() => getAvailableDates(), []);
+  const stateRef = useRef(state);
+  stateRef.current = state;
 
-  const update = (partial: Partial<ScheduleState>) => onChange({ ...state, ...partial });
+  const update = (partial: Partial<ScheduleState>) => onChange({ ...stateRef.current, ...partial });
 
   const handleAddressChange = (address: string) => {
     update({ address, routeID: null });

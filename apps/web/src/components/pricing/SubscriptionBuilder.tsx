@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { cn } from "@/lib/cn";
 import {
   getBagPrice,
@@ -68,9 +69,11 @@ interface SubscriptionBuilderProps {
 
 export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, checkoutLoading, checkoutError }: SubscriptionBuilderProps) {
   const s = state;
+  const stateRef = useRef(state);
+  stateRef.current = state;
 
   const update = (partial: Partial<SubState>) => {
-    let next = { ...s, ...partial };
+    let next = { ...stateRef.current, ...partial };
     // Biweekly requires minimum 2 bags
     if (next.freq === "biweekly" && next.bags < 2) next = { ...next, bags: 2 };
     onChange(next);
