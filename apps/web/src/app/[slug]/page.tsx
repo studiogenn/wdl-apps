@@ -4,6 +4,8 @@ import { getMarket, getAllMarketSlugs } from "./data";
 import { LocationForm } from "./location-form";
 import { ButtonLink, SectionHeader, FAQAccordion } from "@/components/shared";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllMarketSlugs();
 }
