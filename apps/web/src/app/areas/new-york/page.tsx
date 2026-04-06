@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getFaqSchema, getServiceSchema } from "@/lib/schema";
 import { AreaFAQ } from "../_components/area-faq";
 import { ButtonLink, SectionHeader } from "@/components/shared";
+import { Services } from "@/components/home/Services";
 
 
 const NY_FAQS = [
@@ -133,6 +134,9 @@ export default function NewYorkAreaPage() {
           </div>
         </div>
       </section>
+
+      {/* Plan Hero Block */}
+      <Services />
 
       {/* Why NYC Residents Choose Us */}
       <section className="py-16 lg:py-20 bg-white">

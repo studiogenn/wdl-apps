@@ -97,6 +97,9 @@ export function BillingSection() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          mode: "subscription",
+          bags: 1,
+          frequency: "weekly",
           successUrl: `${window.location.origin}/account?billing=success`,
           cancelUrl: `${window.location.origin}/account`,
         }),

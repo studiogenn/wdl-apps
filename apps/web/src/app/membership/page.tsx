@@ -6,11 +6,11 @@ import { FAQAccordion } from "@/components/shared/faq-accordion";
 export const metadata: Metadata = {
   title: "Membership — How Our Laundry Subscription Works",
   description:
-    "Learn how We Deliver Laundry's membership works. Weekly pickup, up to 80–120 lbs included, free delivery, 24-hour turnaround. Plans from $139/mo.",
+    "Learn how We Deliver Laundry's subscription plan works. Weekly or biweekly pickup, ~15–18 lbs per bag, free delivery, 24-hour turnaround. No contracts.",
   openGraph: {
-    title: "We Deliver Laundry — Membership Plans",
+    title: "We Deliver Laundry — Membership & Subscription Plans",
     description:
-      "Laundry on autopilot. Weekly pickup, clean clothes back in 24 hours. From $139/mo.",
+      "Laundry on autopilot. Weekly or biweekly pickup, clean clothes back in 24 hours. From $30.99/bag.",
     url: "https://wedeliverlaundry.com/membership",
   },
   alternates: {
@@ -46,59 +46,65 @@ const plans = [
   {
     label: "Weekly",
     freq: "4 pickups / month",
-    priceFrom: "$139",
-    unit: "/mo",
-    note: "$1.74/lb · Save 41% vs Instant",
+    priceFrom: "$30.99",
+    unit: "/bag",
+    note: "From $30.99/bag · Best value",
     highlight: true,
     perks: [
       "Free pickup & delivery",
-      "Up to 80 lbs included",
+      "~15–18 lbs per bag",
       "24-hour turnaround",
       "Cancel anytime",
     ],
   },
   {
-    label: "Family",
-    freq: "4 pickups / month",
-    priceFrom: "$189",
-    unit: "/mo",
-    note: "$1.58/lb · Save 46% vs Instant",
+    label: "Biweekly",
+    freq: "2 pickups / month · min. 2 bags required",
+    priceFrom: "$34.99",
+    unit: "/bag",
+    note: "$34.99/bag",
     highlight: false,
     perks: [
       "Free pickup & delivery",
-      "Up to 120 lbs included",
+      "~15–18 lbs per bag",
       "24-hour turnaround",
-      "Family Sort + Hypoallergenic included",
+      "Cancel anytime",
     ],
   },
 ];
 
 const addOns = [
   {
-    emoji: "✨",
-    name: "Premium Care",
-    price: "From $5",
-    desc: "Gentle cycle and premium detergent for delicates. Priced at pickup — we text you a quote.",
-  },
-  {
     emoji: "🧼",
     name: "Deep Clean",
-    price: "From $3",
-    desc: "Stain treatment and extra care for heavily soiled items. Priced at pickup.",
+    price: "$9.99/bag",
+    desc: "Extra detergent pass for heavily soiled loads. Or add per item ($1.49/item) in a separate bag.",
+  },
+  {
+    emoji: "👨‍👩‍👧",
+    name: "Family Sort + Hypoallergenic",
+    price: "$4.99/bag",
+    desc: "Clothes sorted by person and washed with fragrance-free, hypoallergenic detergent.",
+  },
+  {
+    emoji: "✨",
+    name: "Premium Care",
+    price: "$4.99/bag",
+    desc: "Gentle cycle and premium detergent for delicates. No special sorting needed from you.",
   },
   {
     emoji: "🛏️",
-    name: "Bedding",
-    price: "$29",
-    desc: "Sheets, pillowcases, duvet cover — washed and returned fresh. Add to any pickup.",
+    name: "Bedding Refresh",
+    price: "$58.99/order",
+    desc: "Full bedding set — sheets, pillowcases, duvet cover — washed and returned fresh.",
   },
 ];
 
 const faqs = [
   {
-    question: "How much laundry is included?",
+    question: "How big is a bag?",
     answer:
-      "The Weekly plan includes up to 80 lbs per month (about 20 lbs per pickup). The Family plan includes 120 lbs. If you go over, extra pounds are billed at $1.95/lb — no surprises.",
+      "Each bag holds roughly 15–18 lbs of laundry — that's about a week's worth of clothes for one person. If you have more, you can add a second bag to your plan.",
   },
   {
     question: "What do I do if I don't have laundry that week?",
@@ -121,9 +127,9 @@ const faqs = [
       "We use Tide Free & Gentle by default — unscented and hypoallergenic. If you have a preference, note it in your account and we'll do our best to accommodate.",
   },
   {
-    question: "Can I upgrade my plan?",
+    question: "Can I add a second bag later?",
     answer:
-      "Yes. You can switch between Weekly and Family plans at any time from your account dashboard. Changes take effect on your next billing cycle.",
+      "Yes. You can add or remove bags from your plan at any time. Pricing adjusts automatically — 2+ bags/week drops to $30.99/bag.",
   },
 ];
 
@@ -142,14 +148,14 @@ export default function MembershipPage() {
                 Laundry on autopilot
               </h1>
               <p className="font-[family-name:var(--font-poppins)] text-navy/70 text-[15px] leading-relaxed mb-8 max-w-lg">
-                Set up weekly pickups and never think about laundry again. We
+                Set up a weekly or biweekly pickup and never think about laundry again. We
                 pick up, wash, fold, and deliver back to your door — all within 24 hours.
               </p>
               <ul className="space-y-3 mb-8">
                 {[
                   "Free pickup & delivery, always",
                   "No contracts — cancel anytime",
-                  "Up to 80–120 lbs included",
+                  "~15–18 lbs per bag",
                   "24-hour turnaround",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5 font-[family-name:var(--font-poppins)] text-[15px] text-navy/80">
@@ -159,7 +165,7 @@ export default function MembershipPage() {
                 ))}
               </ul>
               <div className="flex flex-wrap gap-3">
-                <ButtonLink href="/join">Build your plan</ButtonLink>
+                <ButtonLink href="/pricing">Build your plan</ButtonLink>
                 <ButtonLink href="/wash-fold" variant="outline">See all pricing</ButtonLink>
               </div>
             </div>
@@ -170,16 +176,16 @@ export default function MembershipPage() {
                   Starting from
                 </p>
                 <div className="flex items-end justify-center gap-1 mb-2">
-                  <span className="text-[3.5rem] font-body-bold text-navy leading-none">$139</span>
-                  <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 mb-2">/mo</span>
+                  <span className="text-[3.5rem] font-body-bold text-navy leading-none">$30.99</span>
+                  <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 mb-2">/bag</span>
                 </div>
                 <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 text-center mb-8">
-                  4 pickups/mo · Up to 80 lbs
+                  Weekly plan · 2+ bags
                 </p>
                 <div className="border-t border-navy/10 pt-6 space-y-3">
                   {[
-                    ["Weekly", "$139/mo · 80 lbs"],
-                    ["Family", "$189/mo · 120 lbs"],
+                    ["Weekly", "from $30.99/bag"],
+                    ["Biweekly", "from $34.99/bag"],
                   ].map(([label, price]) => (
                     <div key={label} className="flex justify-between font-[family-name:var(--font-poppins)] text-sm">
                       <span className="text-navy/70">{label}</span>
@@ -257,7 +263,7 @@ export default function MembershipPage() {
                     </li>
                   ))}
                 </ul>
-                <ButtonLink href="/join" variant={plan.highlight ? "primary" : "outline"} className="w-full justify-center">
+                <ButtonLink href="/pricing" variant={plan.highlight ? "primary" : "outline"} className="w-full justify-center">
                   Get started
                 </ButtonLink>
               </div>
@@ -278,7 +284,7 @@ export default function MembershipPage() {
                 headingClassName="mb-4"
               />
               <p className="font-[family-name:var(--font-poppins)] text-[15px] text-navy/70 leading-relaxed mb-6">
-                Each pickup handles up to 20 lbs of everyday clothes — about a week&apos;s worth for one person.
+                Each bag holds roughly 15–18 lbs — about a week&apos;s worth of everyday clothes for one person.
                 We wash, dry, and fold everything neatly. You never need to sort or separate anything.
               </p>
               <ul className="space-y-3">
@@ -304,12 +310,11 @@ export default function MembershipPage() {
                 </p>
                 <div className="space-y-5">
                   {[
-                    ["Included weight", "80 lbs (Weekly) / 120 lbs (Family)"],
                     ["Turnaround", "24 hours"],
-                    ["Overage rate", "$1.95/lb"],
                     ["Default detergent", "Tide Free & Gentle"],
-                    ["Bedding", "Add-on — $29 per pickup"],
-                    ["Instant orders", "$2.95/lb — no membership needed"],
+                    ["Folding", "Neatly folded, every time"],
+                    ["Bedding", "Add-on available separately"],
+                    ["Dry cleaning", "Not included — wash & fold only"],
                   ].map(([label, value]) => (
                     <div key={label} className="flex justify-between items-start gap-4 border-b border-navy/10 pb-4 last:border-0 last:pb-0">
                       <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">{label}</span>
@@ -340,9 +345,6 @@ export default function MembershipPage() {
                     <h3 className="font-heading-medium text-navy uppercase text-[1rem]">
                       {addon.name}
                     </h3>
-                    <span className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-primary">
-                      {addon.price}
-                    </span>
                   </div>
                   <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70 leading-relaxed">
                     {addon.desc}
@@ -368,7 +370,7 @@ export default function MembershipPage() {
           />
           <FAQAccordion items={faqs} />
           <div className="text-center mt-12">
-            <ButtonLink href="/join" className="bg-white text-navy hover:bg-white/90">
+            <ButtonLink href="/pricing" className="bg-white text-navy hover:bg-white/90">
               Build your plan
             </ButtonLink>
           </div>
