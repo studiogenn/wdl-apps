@@ -114,7 +114,7 @@ export function QuizFlow({ onComplete, onBack }: QuizFlowProps) {
         });
       }
     },
-    [answers, currentQ, onComplete, address, routeID],
+    [answers, currentQ, onComplete, zip, routeID],
   );
 
   return (
