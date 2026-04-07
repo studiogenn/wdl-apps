@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/shared";
 import { CardUpdateModal } from "./card-update-modal";
 
@@ -68,6 +69,7 @@ function formatDate(iso: string): string {
 }
 
 export function BillingSection() {
+  const router = useRouter();
   const [billing, setBilling] = useState<BillingData | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
@@ -89,32 +91,9 @@ export function BillingSection() {
     fetchBilling();
   }, []);
 
-  const handleSubscribe = useCallback(async () => {
-    setActionLoading("subscribe");
-    setError(null);
-    try {
-      const res = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          mode: "subscription",
-          bags: 1,
-          frequency: "weekly",
-          successUrl: `${window.location.origin}/account?billing=success`,
-          cancelUrl: `${window.location.origin}/account`,
-        }),
-      });
-      const data = await res.json();
-      if (data.success && data.data?.url) {
-        window.location.href = data.data.url;
-        return;
-      }
-      setError(data.error ?? "Unable to start checkout.");
-    } catch {
-      setError("Something went wrong.");
-    }
-    setActionLoading(null);
-  }, []);
+  const handleSubscribe = useCallback(() => {
+    router.push("/subscriptions");
+  }, [router]);
 
   const handleCancel = useCallback(async () => {
     setActionLoading("cancel");
