@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { cn } from "@/lib/cn";
 import { questions, getSuggestion, type QuizAnswers, type Suggestion } from "./pricing-data";
-import { AddressInput } from "@/components/account/address-input";
 
 function PageHeroSmall({ title, subtitle, onBack }: { title: string; subtitle: string; onBack?: () => void }) {
   return (
@@ -35,7 +35,7 @@ function PageHeroSmall({ title, subtitle, onBack }: { title: string; subtitle: s
 export interface QuizFlowResult {
   suggestion: Suggestion;
   answers: QuizAnswers;
-  address: string;
+  zip: string;
   routeID: number;
 }
 
@@ -45,33 +45,50 @@ interface QuizFlowProps {
 }
 
 export function QuizFlow({ onComplete, onBack }: QuizFlowProps) {
-  const [address, setAddress] = useState("");
+  const [zip, setZip] = useState("");
+  const [zipStatus, setZipStatus] = useState<"idle" | "checking" | "valid" | "invalid">("idle");
   const [routeID, setRouteID] = useState<number | null>(null);
-  const [addressConfirmed, setAddressConfirmed] = useState(false);
+  const [zipConfirmed, setZipConfirmed] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<QuizAnswers>({});
 
-  const totalSteps = questions.length + 1; // address step + quiz questions
-  const currentStep = addressConfirmed ? currentQ + 1 : 0;
+  const totalSteps = questions.length + 1;
+  const currentStep = zipConfirmed ? currentQ + 1 : 0;
   const q = questions[currentQ];
 
-  const handleAddressValidated = useCallback((id: number) => {
-    setRouteID(id);
+  const checkZip = useCallback(async (value: string) => {
+    const clean = value.replace(/\D/g, "");
+    if (clean.length !== 5) return;
+    setZipStatus("checking");
+    try {
+      const res = await fetch("/api/cleancloud/route", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ zip: clean }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setZipStatus("valid");
+        setRouteID(data.data.routeID);
+      } else {
+        setZipStatus("invalid");
+        setRouteID(null);
+      }
+    } catch {
+      setZipStatus("invalid");
+      setRouteID(null);
+    }
   }, []);
 
-  const handleAddressInvalid = useCallback(() => {
-    setRouteID(null);
-  }, []);
-
-  const handleAddressContinue = useCallback(() => {
-    setAddressConfirmed(true);
+  const handleZipContinue = useCallback(() => {
+    setZipConfirmed(true);
   }, []);
 
   const handleBack = useCallback(() => {
-    if (!addressConfirmed) {
+    if (!zipConfirmed) {
       onBack();
     } else if (currentQ === 0) {
-      setAddressConfirmed(false);
+      setZipConfirmed(false);
     } else {
       const prevQ = questions[currentQ - 1];
       const next = { ...answers };
@@ -79,7 +96,7 @@ export function QuizFlow({ onComplete, onBack }: QuizFlowProps) {
       setAnswers(next);
       setCurrentQ((prev) => prev - 1);
     }
-  }, [addressConfirmed, currentQ, answers, onBack]);
+  }, [zipConfirmed, currentQ, answers, onBack]);
 
   const handleAnswer = useCallback(
     (qId: string, val: string) => {
@@ -92,7 +109,7 @@ export function QuizFlow({ onComplete, onBack }: QuizFlowProps) {
         onComplete({
           suggestion: getSuggestion(next),
           answers: next,
-          address,
+          zip,
           routeID: routeID!,
         });
       }
@@ -122,26 +139,45 @@ export function QuizFlow({ onComplete, onBack }: QuizFlowProps) {
           </div>
         </div>
 
-        {!addressConfirmed ? (
+        {!zipConfirmed ? (
           <>
             <h3 className="mb-6 text-[26px] font-normal uppercase leading-tight tracking-[1px] text-primary">
               Where do we pick up?
             </h3>
 
-            <AddressInput
-              value={address}
-              onChange={(addr) => {
-                setAddress(addr);
+            <input
+              type="text"
+              inputMode="numeric"
+              value={zip}
+              onChange={(e) => {
+                const val = e.target.value.replace(/\D/g, "").slice(0, 5);
+                setZip(val);
+                setZipStatus("idle");
                 setRouteID(null);
+                if (val.length === 5) checkZip(val);
               }}
-              onValidated={handleAddressValidated}
-              onInvalid={handleAddressInvalid}
+              placeholder="Enter your ZIP code"
+              className={cn(
+                "w-full rounded-[14px] border-[1.5px] bg-white px-4 py-3.5 text-[15px] text-[#0a1580] placeholder:text-[#b0b8cc] focus:outline-none focus:ring-2 focus:ring-primary/15",
+                zipStatus === "valid" ? "border-green-400 focus:border-green-400" :
+                zipStatus === "invalid" ? "border-red-400 focus:border-red-400" :
+                "border-[#e8e5d0] focus:border-primary",
+              )}
             />
+            {zipStatus === "checking" && (
+              <p className="mt-2 text-[12px] text-[#6b7db3]">Checking service area…</p>
+            )}
+            {zipStatus === "valid" && (
+              <p className="mt-2 text-[12px] text-green-600">Great news — we serve your area!</p>
+            )}
+            {zipStatus === "invalid" && (
+              <p className="mt-2 text-[12px] text-red-500">Sorry, we don&apos;t serve this zip code yet.</p>
+            )}
 
             <button
               type="button"
               disabled={routeID === null}
-              onClick={handleAddressContinue}
+              onClick={handleZipContinue}
               className="mt-6 w-full rounded-full bg-primary px-6 py-3.5 text-[15px] font-medium text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
             >
               Continue

@@ -60,6 +60,8 @@ export function PricingPage() {
         selectedCare,
         suggestion,
         quizAnswers: answers,
+        zip: result.zip,
+        routeID: result.routeID,
       });
       navigate("subscription");
     },
