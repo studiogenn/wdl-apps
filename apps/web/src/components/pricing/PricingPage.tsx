@@ -85,6 +85,7 @@ export function PricingPage() {
       if (subState.selectedCare.length > 0) planMetadata.care = subState.selectedCare.join(",");
       if (subState.addBedding) planMetadata.bedding = subState.beddingFreq;
       if (subState.isStudent) planMetadata.student = "true";
+      if (subState.zip) planMetadata.pickupZip = subState.zip;
       if (subState.address) planMetadata.pickupAddress = subState.address;
       if (subState.apt) planMetadata.pickupApt = subState.apt;
       if (subState.driverNotes) planMetadata.driverNotes = subState.driverNotes;

@@ -162,6 +162,7 @@ export interface SubState {
   selectedCare: string[];
   suggestion: Suggestion | null;
   quizAnswers: QuizAnswers | null;
+  zip: string;
   address: string;
   apt: string;
   driverNotes: string;
@@ -177,6 +178,7 @@ export const defaultSubState: SubState = {
   selectedCare: [],
   suggestion: null,
   quizAnswers: null,
+  zip: "",
   address: "",
   apt: "",
   driverNotes: "",

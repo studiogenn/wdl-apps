@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import { cn } from "@/lib/cn";
 import {
   getBagPrice,
@@ -10,7 +10,6 @@ import {
   type PageView,
 } from "./pricing-data";
 import { SummaryCard } from "./SummaryCard";
-import { AddressInput } from "@/components/account/address-input";
 
 
 function PageHeroSmall({ title, subtitle, onBack }: { title: string; subtitle: string; onBack?: () => void }) {
@@ -83,17 +82,31 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
     update({ freq, bags: freq === "biweekly" && s.bags < 2 ? 2 : s.bags });
   };
 
-  const handleAddressChange = (address: string) => {
-    update({ address, routeID: null });
-  };
+  const [zipStatus, setZipStatus] = useState<"idle" | "checking" | "valid" | "invalid">("idle");
 
-  const handleAddressValidated = (routeID: number) => {
-    update({ routeID });
-  };
-
-  const handleAddressInvalid = () => {
-    update({ routeID: null });
-  };
+  const handleZipBlur = useCallback(async (zip: string) => {
+    const clean = zip.replace(/\D/g, "");
+    if (clean.length !== 5) return;
+    setZipStatus("checking");
+    try {
+      const res = await fetch("/api/cleancloud/route", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ zip: clean }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setZipStatus("valid");
+        update({ routeID: data.data.routeID });
+      } else {
+        setZipStatus("invalid");
+        update({ routeID: null });
+      }
+    } catch {
+      setZipStatus("invalid");
+      update({ routeID: null });
+    }
+  }, []);
 
   const toggleCare = (id: string) => {
     const idx = s.selectedCare.indexOf(id);
@@ -168,14 +181,47 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           <span className="block text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">
             Pickup Address
           </span>
+          {/* Zip code */}
           <div className="mt-2.5">
-            <AddressInput
+            <input
+              type="text"
+              inputMode="numeric"
+              value={s.zip}
+              onChange={(e) => {
+                const val = e.target.value.replace(/\D/g, "").slice(0, 5);
+                update({ zip: val, routeID: null });
+                setZipStatus("idle");
+              }}
+              onBlur={(e) => handleZipBlur(e.target.value)}
+              placeholder="ZIP code"
+              className={cn(
+                "w-full rounded-[14px] border-[1.5px] bg-white px-4 py-3 text-[14px] text-[#0a1580] placeholder:text-[#b0b8cc] focus:outline-none focus:ring-2 focus:ring-primary/15",
+                zipStatus === "valid" ? "border-green-400 focus:border-green-400" :
+                zipStatus === "invalid" ? "border-red-400 focus:border-red-400" :
+                "border-[#e8e5d0] focus:border-primary",
+              )}
+            />
+            {zipStatus === "checking" && (
+              <p className="mt-1 text-[11px] text-[#6b7db3]">Checking service area…</p>
+            )}
+            {zipStatus === "valid" && (
+              <p className="mt-1 text-[11px] text-green-600">Great news — we serve your area!</p>
+            )}
+            {zipStatus === "invalid" && (
+              <p className="mt-1 text-[11px] text-red-500">Sorry, we don&apos;t serve this zip code yet.</p>
+            )}
+          </div>
+          {/* Street address */}
+          <div className="mt-2.5">
+            <input
+              type="text"
               value={s.address}
-              onChange={handleAddressChange}
-              onValidated={handleAddressValidated}
-              onInvalid={handleAddressInvalid}
+              onChange={(e) => update({ address: e.target.value })}
+              placeholder="Street address"
+              className="w-full rounded-[14px] border-[1.5px] border-[#e8e5d0] bg-white px-4 py-3 text-[14px] text-[#0a1580] placeholder:text-[#b0b8cc] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
             />
           </div>
+          {/* Apt */}
           <div className="mt-2.5">
             <input
               type="text"
@@ -185,6 +231,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
               className="w-full rounded-[14px] border-[1.5px] border-[#e8e5d0] bg-white px-4 py-3 text-[14px] text-[#0a1580] placeholder:text-[#b0b8cc] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
             />
           </div>
+          {/* Driver notes */}
           <div className="mt-2.5">
             <textarea
               value={s.driverNotes}
@@ -364,7 +411,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           perkText="Before any scheduled pickup, add specialty items, care upgrades, or a Bed Refresh. No extra trip needed — just add it to your next pickup."
           ctaLabel={checkoutLoading ? "LOADING…" : "START MY PLAN"}
           ctaVariant="yellow"
-          ctaDisabled={checkoutLoading || !s.address || s.routeID === null}
+          ctaDisabled={checkoutLoading || s.zip.length !== 5 || s.routeID === null}
           error={checkoutError ?? undefined}
           finePrint="No contracts · Cancel anytime · Free pickup and delivery"
           onCta={onCheckout}
