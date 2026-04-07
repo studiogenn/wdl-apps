@@ -103,8 +103,8 @@ export function PricingPage() {
           mode: "subscription",
           bags: subState.bags,
           frequency: subState.freq,
-          successUrl: `${window.location.origin}/account?checkout=success`,
-          cancelUrl: `${window.location.origin}/pricing`,
+          successUrl: `${window.location.origin}/subscribe/thank-you`,
+          cancelUrl: `${window.location.origin}/subscriptions`,
           planMetadata,
         }),
       });
