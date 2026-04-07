@@ -10,6 +10,7 @@ import {
   type PageView,
 } from "./pricing-data";
 import { SummaryCard } from "./SummaryCard";
+import { AddressInput } from "@/components/account/address-input";
 
 
 function PageHeroSmall({ title, subtitle, onBack }: { title: string; subtitle: string; onBack?: () => void }) {
@@ -213,12 +214,11 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           </div>
           {/* Street address */}
           <div className="mt-2.5">
-            <input
-              type="text"
+            <AddressInput
               value={s.address}
-              onChange={(e) => update({ address: e.target.value })}
-              placeholder="Street address"
-              className="w-full rounded-[14px] border-[1.5px] border-[#e8e5d0] bg-white px-4 py-3 text-[14px] text-[#0a1580] placeholder:text-[#b0b8cc] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
+              onChange={(addr) => update({ address: addr })}
+              onValidated={() => {}}
+              onInvalid={() => {}}
             />
           </div>
           {/* Apt */}
