@@ -176,6 +176,24 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
               onInvalid={handleAddressInvalid}
             />
           </div>
+          <div className="mt-2.5">
+            <input
+              type="text"
+              value={s.apt}
+              onChange={(e) => update({ apt: e.target.value })}
+              placeholder="Apt, suite, floor (optional)"
+              className="w-full rounded-[14px] border-[1.5px] border-[#e8e5d0] bg-white px-4 py-3 text-[14px] text-[#0a1580] placeholder:text-[#b0b8cc] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
+            />
+          </div>
+          <div className="mt-2.5">
+            <textarea
+              value={s.driverNotes}
+              onChange={(e) => update({ driverNotes: e.target.value })}
+              placeholder="Notes for your driver — e.g. leave at door, buzz #2B, call on arrival…"
+              rows={3}
+              className="w-full resize-none rounded-[14px] border-[1.5px] border-[#e8e5d0] bg-white px-4 py-3 text-[14px] text-[#0a1580] placeholder:text-[#b0b8cc] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
+            />
+          </div>
         </div>
 
         <div className="my-5 h-px bg-[#e8e5d0]" />

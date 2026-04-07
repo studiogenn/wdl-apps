@@ -86,6 +86,8 @@ export function PricingPage() {
       if (subState.addBedding) planMetadata.bedding = subState.beddingFreq;
       if (subState.isStudent) planMetadata.student = "true";
       if (subState.address) planMetadata.pickupAddress = subState.address;
+      if (subState.apt) planMetadata.pickupApt = subState.apt;
+      if (subState.driverNotes) planMetadata.driverNotes = subState.driverNotes;
       if (subState.routeID !== null) planMetadata.routeID = String(subState.routeID);
       if (scheduleState.date) planMetadata.pickupDate = scheduleState.date;
       if (scheduleState.timeSlot) planMetadata.pickupTime = scheduleState.timeSlot;

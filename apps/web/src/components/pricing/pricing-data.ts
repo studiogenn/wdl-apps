@@ -163,6 +163,8 @@ export interface SubState {
   suggestion: Suggestion | null;
   quizAnswers: QuizAnswers | null;
   address: string;
+  apt: string;
+  driverNotes: string;
   routeID: number | null;
 }
 
@@ -176,6 +178,8 @@ export const defaultSubState: SubState = {
   suggestion: null,
   quizAnswers: null,
   address: "",
+  apt: "",
+  driverNotes: "",
   routeID: null,
 };
 
