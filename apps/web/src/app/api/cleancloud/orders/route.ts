@@ -36,20 +36,25 @@ export async function POST(request: Request) {
       );
     }
 
+    console.log("[CleanCloud Orders] Creating order for customer:", parsed.data.customerID);
     const result = await cleancloudProxy<OrderResponse>("/orders", parsed.data);
+    console.log("[CleanCloud Orders] Proxy response:", JSON.stringify(result));
 
     if (!result.success) {
+      console.error("[CleanCloud Orders] CleanCloud rejected order:", result.error);
       return NextResponse.json(
         { success: false, error: getReadableError(result.error ?? "") },
         { status: 422 }
       );
     }
 
+    console.log("[CleanCloud Orders] Order created successfully, orderID:", result.data!.orderID);
     return NextResponse.json({
       success: true,
       data: { orderID: result.data!.orderID },
     });
-  } catch {
+  } catch (err) {
+    console.error("[CleanCloud Orders] Unhandled error:", err);
     return NextResponse.json(
       { success: false, error: "Unable to create order. Please try again." },
       { status: 500 }

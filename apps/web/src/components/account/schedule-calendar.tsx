@@ -121,6 +121,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
   const [step, setStep] = useState<Step>("calendar");
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [confirmedOrderId, setConfirmedOrderId] = useState<number | null>(null);
 
   // Map ISO date strings to DateEntry for calendar rendering
   const availableDateMap = new Map<string, DateEntry>();
@@ -262,13 +263,15 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
         }),
       });
 
-      if (!ccRes.ok) {
-        const ccError = await ccRes.text();
-        console.error("CleanCloud order failed:", ccError);
-        setSubmitError("Order scheduling failed. Please try again.");
+      const ccData = await ccRes.json();
+
+      if (!ccRes.ok || !ccData.success) {
+        console.error("CleanCloud order failed:", ccData);
+        setSubmitError(ccData.error ?? "Order scheduling failed. Please try again.");
         return;
       }
 
+      setConfirmedOrderId(ccData.data?.orderID ?? null);
       setStep("confirmed");
     } catch {
       setSubmitError("Unable to schedule pickup. Please try again.");
@@ -284,6 +287,7 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
     setSelectedSlot(null);
     setStep("calendar");
     setSubmitError("");
+    setConfirmedOrderId(null);
   }, []);
 
   // ─── Calendar grid ──────────────────────────────────────────────────────
@@ -372,6 +376,11 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
               <p className="text-sm text-navy/50 font-body">
                 {formatSlotLabel(selectedSlot)} &middot; {formatDateLabel(selectedDateObj)}
               </p>
+              {confirmedOrderId && (
+                <p className="text-xs text-navy/40 font-body mt-1">
+                  Order #{confirmedOrderId}
+                </p>
+              )}
             </div>
             <div className="flex gap-3 mt-2">
               <Button variant="outline" size="sm" onClick={handleReset}>
