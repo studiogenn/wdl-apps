@@ -239,26 +239,33 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
 
       const { paymentIntentId } = stripeData.data;
 
-      // Step 2: Push to CleanCloud for ops (fire-and-forget)
+      // Step 2: Push to CleanCloud for ops
       const ccNotes = [
         `Stripe PI: ${paymentIntentId}`,
         order.deepClean ? "Deep Clean requested (+$0.45/lb)" : "",
         order.notes,
       ].filter(Boolean).join("\n");
 
-      fetch("/api/cleancloud/orders", {
+      // Convert ISO date string to Unix timestamp (seconds)
+      const pickupTimestamp = Math.floor(
+        new Date(selectedDate.date + "T00:00:00").getTime() / 1000
+      );
+
+      const ccRes = await fetch("/api/cleancloud/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           customerID: customerId,
-          pickupDate: selectedDate.date,
+          pickupDate: pickupTimestamp,
           pickupStart: selectedSlot.start,
           pickupEnd: selectedSlot.end,
           orderNotes: ccNotes,
         }),
-      }).catch(() => {
-        // CC failure is non-blocking — Stripe is source of truth
       });
+
+      if (!ccRes.ok) {
+        console.error("CleanCloud order failed:", await ccRes.text());
+      }
 
       setStep("confirmed");
     } catch {
