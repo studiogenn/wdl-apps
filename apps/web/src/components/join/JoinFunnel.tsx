@@ -6,7 +6,7 @@ import { type MembershipTier } from "@/lib/stripe-config";
 import { trackEvent, TRACKING_EVENTS } from "@/lib/tracking";
 import { TierSelection, type PlanChoice } from "./TierSelection";
 import { AuthStep } from "./AuthStep";
-import { ScheduleStep } from "./ScheduleStep";
+import { ScheduleStep, type ScheduleData } from "./ScheduleStep";
 import { PaymentStep } from "./PaymentStep";
 
 type Step = "tier" | "auth" | "schedule" | "payment";
@@ -37,6 +37,7 @@ export function JoinFunnel() {
   const [walletClientSecret, setWalletClientSecret] = useState<string | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [profile, setProfile] = useState<CustomerProfile | null>(null);
+  const [scheduleData, setScheduleData] = useState<ScheduleData | null>(null);
 
   const prefetchFired = useRef(false);
   const isInstant = plan === "instant";
@@ -133,7 +134,8 @@ export function JoinFunnel() {
     }
   }, [isInstant, membershipTier, prefetchAll]);
 
-  const handleScheduleComplete = useCallback(() => {
+  const handleScheduleComplete = useCallback((schedule: ScheduleData) => {
+    setScheduleData(schedule);
     trackEvent(TRACKING_EVENTS.MEMBERSHIP_SCHEDULE_COMPLETED, { tier: plan });
     trackEvent(TRACKING_EVENTS.MEMBERSHIP_CHECKOUT_REACHED, { tier: plan });
     setStep("payment");
@@ -185,6 +187,7 @@ export function JoinFunnel() {
             profile={profile}
             clientSecret={clientSecret}
             fetchError={paymentError}
+            scheduleData={scheduleData}
             onSuccess={handlePaymentSuccess}
             onBack={() => { setStep("schedule"); window.scrollTo(0, 0); }}
           />

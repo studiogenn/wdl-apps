@@ -15,6 +15,10 @@ const activateSchema = z.object({
   action: z.literal("activate"),
   tier: z.enum(["weekly", "family"]),
   paymentMethodId: z.string().min(1),
+  pickupDate: z.string().optional(),
+  pickupSlot: z.string().optional(),
+  pickupAddress: z.string().optional(),
+  pickupRouteID: z.number().optional(),
 });
 
 const requestSchema = z.discriminatedUnion("action", [setupSchema, activateSchema]);
@@ -129,6 +133,20 @@ export async function POST(request: Request) {
       });
     }
 
+    // Also update customer with shipping address if provided
+    if (parsed.data.pickupAddress) {
+      try {
+        await getStripe().customers.update(stripeCustomerId, {
+          shipping: {
+            name: (await getStripe().customers.retrieve(stripeCustomerId) as { name?: string }).name ?? "",
+            address: { line1: parsed.data.pickupAddress },
+          },
+        });
+      } catch {
+        // Non-critical
+      }
+    }
+
     const subscription = await getStripe().subscriptions.create({
       customer: stripeCustomerId,
       items: [
@@ -141,6 +159,10 @@ export async function POST(request: Request) {
         pickups: String(tierConfig.pickups),
         includedLbs: String(tierConfig.includedLbs),
         source: "join_funnel",
+        ...(parsed.data.pickupDate && { pickup_date: parsed.data.pickupDate }),
+        ...(parsed.data.pickupSlot && { pickup_slot: parsed.data.pickupSlot }),
+        ...(parsed.data.pickupAddress && { pickup_address: parsed.data.pickupAddress }),
+        ...(parsed.data.pickupRouteID && { pickup_route_id: String(parsed.data.pickupRouteID) }),
       },
     });
 

@@ -17,10 +17,17 @@ type DateWithSlots = {
   readonly slots: readonly string[];
 };
 
+export type ScheduleData = {
+  readonly pickupDate: string;      // ISO date e.g. "2026-04-09"
+  readonly pickupSlot: string;      // e.g. "8am-12pm"
+  readonly address: string;
+  readonly routeID: number;
+};
+
 interface ScheduleStepProps {
   readonly tier: MembershipTier;
   readonly profile: CustomerProfile | null;
-  readonly onComplete: () => void;
+  readonly onComplete: (schedule: ScheduleData) => void;
   readonly onBack: () => void;
 }
 
@@ -221,7 +228,24 @@ export function ScheduleStep({ tier, profile, onComplete, onBack }: ScheduleStep
         </div>
       )}
 
-      <Button className="w-full" onClick={onComplete}>
+      <Button className="w-full" onClick={() => {
+        if (selectedDate && selectedSlot && routeID) {
+          onComplete({
+            pickupDate: selectedDate,
+            pickupSlot: selectedSlot,
+            address,
+            routeID,
+          });
+        } else {
+          // Allow skipping — they can schedule from dashboard later
+          onComplete({
+            pickupDate: "",
+            pickupSlot: "",
+            address,
+            routeID: routeID ?? 0,
+          });
+        }
+      }}>
         Continue to Payment
       </Button>
 

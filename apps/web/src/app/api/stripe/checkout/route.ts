@@ -13,6 +13,10 @@ const subscriptionSchema = z.object({
   bags: z.number().int().min(1).max(4),
   frequency: z.enum(["weekly", "biweekly"]),
   planMetadata: z.record(z.string(), z.string()).optional(),
+  pickupDate: z.string().optional(),
+  pickupSlot: z.string().optional(),
+  pickupAddress: z.string().optional(),
+  pickupRouteID: z.number().optional(),
 });
 
 const paymentSchema = z.object({
@@ -94,11 +98,16 @@ export async function POST(request: Request) {
           { price: tierPrice.priceId, quantity: 1 },
           { price: overagePriceId },
         ],
+        phone_number_collection: { enabled: true },
         subscription_data: {
           metadata: {
             bags: String(parsed.data.bags),
             frequency: parsed.data.frequency,
             ...parsed.data.planMetadata,
+            ...(parsed.data.pickupDate && { pickup_date: parsed.data.pickupDate }),
+            ...(parsed.data.pickupSlot && { pickup_slot: parsed.data.pickupSlot }),
+            ...(parsed.data.pickupAddress && { pickup_address: parsed.data.pickupAddress }),
+            ...(parsed.data.pickupRouteID && { pickup_route_id: String(parsed.data.pickupRouteID) }),
           },
         },
         success_url: parsed.data.successUrl,

@@ -11,6 +11,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { Button } from "@/components/shared";
 import { type MembershipTier } from "@/lib/stripe-config";
+import { type ScheduleData } from "./ScheduleStep";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? "",
@@ -32,10 +33,12 @@ const TIER_LABELS: Record<MembershipTier, { name: string; price: number; pickups
 
 function MembershipPaymentForm({
   tier,
+  scheduleData,
   onSuccess,
   onBack,
 }: {
   readonly tier: MembershipTier;
+  readonly scheduleData: ScheduleData | null;
   readonly onSuccess: () => void;
   readonly onBack: () => void;
 }) {
@@ -87,6 +90,12 @@ function MembershipPaymentForm({
           action: "activate",
           tier,
           paymentMethodId,
+          ...(scheduleData?.pickupDate && {
+            pickupDate: scheduleData.pickupDate,
+            pickupSlot: scheduleData.pickupSlot,
+            pickupAddress: scheduleData.address,
+            pickupRouteID: scheduleData.routeID,
+          }),
         }),
       });
 
@@ -190,11 +199,12 @@ interface PaymentStepProps {
   readonly profile: import("./JoinFunnel").CustomerProfile | null;
   readonly clientSecret: string | null;
   readonly fetchError: string | null;
+  readonly scheduleData: ScheduleData | null;
   readonly onSuccess: () => void;
   readonly onBack: () => void;
 }
 
-export function PaymentStep({ tier, profile, clientSecret, fetchError, onSuccess, onBack }: PaymentStepProps) {
+export function PaymentStep({ tier, profile, clientSecret, fetchError, scheduleData, onSuccess, onBack }: PaymentStepProps) {
   const hasSavedPayment = profile?.isReturning && profile.hasSavedPayment;
 
   return (
@@ -234,6 +244,7 @@ export function PaymentStep({ tier, profile, clientSecret, fetchError, onSuccess
         >
           <MembershipPaymentForm
             tier={tier}
+            scheduleData={scheduleData}
             onSuccess={onSuccess}
             onBack={onBack}
           />
