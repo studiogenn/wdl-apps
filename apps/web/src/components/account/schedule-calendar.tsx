@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/shared";
 import { cn } from "@/lib/cn";
 import { OrderSummary, type OrderPayload } from "./order-summary";
+import { toCleanCloudTimestamp } from "@/lib/cleancloud/dates";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -246,10 +247,8 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
         order.notes,
       ].filter(Boolean).join("\n");
 
-      // Convert ISO date string to Unix timestamp (seconds)
-      const pickupTimestamp = Math.floor(
-        new Date(selectedDate.date + "T00:00:00").getTime() / 1000
-      );
+      // Convert ISO date string to Unix timestamp (noon UTC, as CleanCloud expects)
+      const pickupTimestamp = toCleanCloudTimestamp(parseISODate(selectedDate.date));
 
       const ccRes = await fetch("/api/cleancloud/orders", {
         method: "POST",
@@ -264,7 +263,10 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
       });
 
       if (!ccRes.ok) {
-        console.error("CleanCloud order failed:", await ccRes.text());
+        const ccError = await ccRes.text();
+        console.error("CleanCloud order failed:", ccError);
+        setSubmitError("Order scheduling failed. Please try again.");
+        return;
       }
 
       setStep("confirmed");
