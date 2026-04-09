@@ -267,21 +267,10 @@ export async function handleInvoicePaid(
   const pickupApt = meta.pickupApt ?? "";
   const repeatPickup = meta.repeatPickup ?? "";
 
+  // Only include info the operations team and drivers need
   const noteLines = [
-    // /subscriptions flow metadata
-    (bags || frequency) &&
-      `Plan: ${frequency}${bags ? `, ${bags} bag(s)` : ""}`,
-    // /join flow metadata
-    tier &&
-      `Tier: ${tier}${pickups ? ` (${pickups} pickups/mo)` : ""}${includedLbs ? `, ${includedLbs} lbs included` : ""}`,
     care && `Care upgrades: ${care}`,
-    bedding && `Bedding: ${bedding}`,
-    student === "true" && "Student plan",
-    pickupApt && `Apt: ${pickupApt}`,
-    pickupZip && `Zip: ${pickupZip}`,
-    repeatPickup === "true" && "Recurring weekly pickup",
     driverNotes && `Driver notes: ${driverNotes}`,
-    `Stripe Invoice: ${invoiceId}`,
   ].filter(Boolean) as string[];
 
   // 7. Create order in CleanCloud
@@ -297,11 +286,8 @@ export async function handleInvoicePaid(
     `[Stripe → CleanCloud] Order ${orderId} created for ${customer.email} ($${total})`,
   );
 
-  // 8. Update customer profile notes with plan details
-  const profileNotes = noteLines
-    .filter((line) => !line.startsWith("Stripe Invoice:"))
-    .join("\n");
-  if (profileNotes) {
-    await updateCustomerNotes(cleanCloudCustomerId, profileNotes);
+  // 8. Update customer profile notes (care upgrades + driver notes only)
+  if (noteLines.length > 0) {
+    await updateCustomerNotes(cleanCloudCustomerId, noteLines.join("\n"));
   }
 }
