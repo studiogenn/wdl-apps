@@ -253,6 +253,7 @@ export function PricingPage() {
     case "auth":
       return (
         <AuthStep
+          defaultAddress={subState.address ?? ""}
           onComplete={() => {
             setIsLoggedIn(true);
             handleSubscriptionCheckout();
@@ -274,6 +275,7 @@ export function PricingPage() {
     case "payg-auth":
       return (
         <AuthStep
+          defaultAddress={paygState.address ?? ""}
           onComplete={() => {
             setIsLoggedIn(true);
             handlePaygCheckout();
