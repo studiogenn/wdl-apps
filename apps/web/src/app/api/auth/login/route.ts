@@ -36,96 +36,129 @@ export async function POST(request: Request) {
   }
 
   const { email, password } = parsed.data;
-
-  // Always validate against CleanCloud first
-  let ccResult;
-  try {
-    ccResult = await cleancloudProxy<CleanCloudLoginResponse>(
-      "/customers/login",
-      { email, password }
-    );
-  } catch {
-    return NextResponse.json(
-      { success: false, error: "Invalid email or password." },
-      { status: 401 }
-    );
-  }
-
-  if (!ccResult.success || !ccResult.data?.cid) {
-    return NextResponse.json(
-      { success: false, error: "Invalid email or password." },
-      { status: 401 }
-    );
-  }
-
-  const cid = ccResult.data.cid;
   const db = getDb();
   const normalizedEmail = email.trim().toLowerCase();
 
-  // Check for existing user
-  const [existingUser] = await db
-    .select({ id: userTable.id, name: userTable.name })
-    .from(userTable)
-    .where(eq(userTable.email, normalizedEmail))
-    .limit(1);
-
-  let preservedName: string | undefined;
-  if (existingUser) {
-    const [existingAccount] = await db
-      .select({ id: accountTable.id })
-      .from(accountTable)
-      .where(eq(accountTable.userId, existingUser.id))
-      .limit(1);
-
-    if (!existingAccount) {
-      // Orphan user — delete so signUpEmail can recreate with proper credentials
-      preservedName = existingUser.name;
-      await db.delete(userTable).where(eq(userTable.id, existingUser.id));
-    }
-  }
-
-  // CleanCloud validated — create or sign into Better Auth for session management
+  // Try Better Auth sign-in first (primary auth)
   let authResult: AuthResultWithHeaders | undefined;
   try {
-    authResult = await auth.api.signUpEmail({
-      body: { name: preservedName ?? email.split("@")[0] ?? email, email, password },
+    authResult = await auth.api.signInEmail({
+      body: { email, password },
       headers: request.headers,
       asResponse: false,
       returnHeaders: true,
     }) as AuthResultWithHeaders;
   } catch {
+    // Better Auth sign-in failed — try CleanCloud validation + account creation
+  }
+
+  // If Better Auth failed, try validating against CleanCloud and creating/linking an account
+  if (!authResult?.response?.user?.id) {
+    let ccCid: number | null = null;
     try {
-      authResult = await auth.api.signInEmail({
-        body: { email, password },
+      const ccResult = await cleancloudProxy<CleanCloudLoginResponse>(
+        "/customers/login",
+        { email, password },
+      );
+      if (ccResult.success && ccResult.data?.cid) {
+        ccCid = ccResult.data.cid;
+      }
+    } catch {
+      // CleanCloud also failed — credentials are invalid
+    }
+
+    if (!ccCid) {
+      return NextResponse.json(
+        { success: false, error: "Invalid email or password." },
+        { status: 401 },
+      );
+    }
+
+    // CleanCloud validated — check for orphan user record and recreate with proper credentials
+    const [existingUser] = await db
+      .select({ id: userTable.id, name: userTable.name })
+      .from(userTable)
+      .where(eq(userTable.email, normalizedEmail))
+      .limit(1);
+
+    let preservedName: string | undefined;
+    if (existingUser) {
+      const [existingAccount] = await db
+        .select({ id: accountTable.id })
+        .from(accountTable)
+        .where(eq(accountTable.userId, existingUser.id))
+        .limit(1);
+
+      if (!existingAccount) {
+        preservedName = existingUser.name;
+        await db.delete(userTable).where(eq(userTable.id, existingUser.id));
+      }
+    }
+
+    // Create Better Auth account with CleanCloud-validated password
+    try {
+      authResult = await auth.api.signUpEmail({
+        body: { name: preservedName ?? email.split("@")[0] ?? email, email, password },
         headers: request.headers,
         asResponse: false,
         returnHeaders: true,
       }) as AuthResultWithHeaders;
     } catch {
-      // BA sign-in failed — update password to match CleanCloud's
+      // signUpEmail may fail if account exists with different password — try signIn again
+      // This shouldn't normally happen but handles edge cases
+      return NextResponse.json(
+        { success: false, error: "We couldn't sign you in. Please try again." },
+        { status: 401 },
+      );
     }
-  }
 
-  const userId = authResult?.response.user?.id;
-
-  if (userId) {
     // Link CleanCloud ID
-    await db
-      .update(userTable)
-      .set({ cleancloudCustomerId: cid })
-      .where(eq(userTable.id, userId));
-
-    const response = NextResponse.json({ success: true, data: { userId } });
-    if (authResult?.headers) {
-      for (const cookie of authResult.headers.getSetCookie()) {
-        response.headers.append("set-cookie", cookie);
-      }
+    const userId = authResult?.response?.user?.id;
+    if (userId && ccCid) {
+      await db
+        .update(userTable)
+        .set({ cleancloudCustomerId: ccCid })
+        .where(eq(userTable.id, userId));
     }
-    return response;
   }
 
-  return NextResponse.json(
-    { success: false, error: "We couldn't sign you in. Please try again." },
-    { status: 401 }
-  );
+  const userId = authResult?.response?.user?.id;
+  if (!userId) {
+    return NextResponse.json(
+      { success: false, error: "We couldn't sign you in. Please try again." },
+      { status: 401 },
+    );
+  }
+
+  // Opportunistically link CleanCloud if not already linked
+  const [userRecord] = await db
+    .select({ cleancloudCustomerId: userTable.cleancloudCustomerId })
+    .from(userTable)
+    .where(eq(userTable.id, userId))
+    .limit(1);
+
+  if (!userRecord?.cleancloudCustomerId) {
+    try {
+      const ccResult = await cleancloudProxy<CleanCloudLoginResponse>(
+        "/customers/login",
+        { email, password },
+      );
+      if (ccResult.success && ccResult.data?.cid) {
+        await db
+          .update(userTable)
+          .set({ cleancloudCustomerId: ccResult.data.cid })
+          .where(eq(userTable.id, userId));
+      }
+    } catch {
+      // Non-critical — CC link can happen later
+    }
+  }
+
+  const response = NextResponse.json({ success: true, data: { userId } });
+  if (authResult?.headers) {
+    for (const cookie of authResult.headers.getSetCookie()) {
+      response.headers.append("set-cookie", cookie);
+    }
+  }
+  return response;
 }

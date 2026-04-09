@@ -3,19 +3,11 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/shared";
-import { CardUpdateModal } from "./card-update-modal";
-
-type PaymentMethod = {
-  readonly id: string;
-  readonly brand: string;
-  readonly last4: string;
-  readonly expMonth: number;
-  readonly expYear: number;
-};
 
 type Subscription = {
   readonly id: string;
   readonly status: string;
+  readonly priceId: string;
   readonly currentPeriodEnd: string;
   readonly cancelAtPeriodEnd: boolean;
 };
@@ -34,7 +26,6 @@ type Invoice = {
 type BillingData = {
   readonly hasStripeAccount: boolean;
   readonly subscription: Subscription | null;
-  readonly paymentMethod: PaymentMethod | null;
   readonly invoices: readonly Invoice[];
 };
 
@@ -46,12 +37,10 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   unpaid: { label: "Unpaid", color: "bg-red-100 text-red-700" },
 };
 
-const BRAND_NAMES: Record<string, string> = {
-  visa: "Visa",
-  mastercard: "Mastercard",
-  amex: "Amex",
-  discover: "Discover",
-};
+const PLANS = [
+  { tier: "weekly", name: "Weekly", price: "$139", lbs: "80 lbs", priceId_live: "price_1TI23A3uBUfrZCbdZYksg6nE", priceId_test: "price_1TI23A3uBUfrZCbdZYksg6nE" },
+  { tier: "family", name: "Family", price: "$189", lbs: "120 lbs", priceId_live: "price_1TI23A3uBUfrZCbddxcUgBe0", priceId_test: "price_1TI23A3uBUfrZCbddxcUgBe0" },
+] as const;
 
 function formatCents(cents: number, currency: string): string {
   return new Intl.NumberFormat("en-US", {
@@ -68,13 +57,18 @@ function formatDate(iso: string): string {
   });
 }
 
+function getCurrentPlanName(priceId: string): string {
+  const match = PLANS.find((p) => p.priceId_live === priceId || p.priceId_test === priceId);
+  return match ? `${match.name} Plan` : "Monthly Subscription";
+}
+
 export function BillingSection() {
   const router = useRouter();
   const [billing, setBilling] = useState<BillingData | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showCardModal, setShowCardModal] = useState(false);
+  const [showPlanPicker, setShowPlanPicker] = useState(false);
 
   useEffect(() => {
     async function fetchBilling() {
@@ -95,21 +89,25 @@ export function BillingSection() {
     router.push("/subscriptions");
   }, [router]);
 
-  const handleChangePlan = useCallback(async () => {
-    setActionLoading("change");
+  const handleChangePlan = useCallback(async (tier: string) => {
+    setActionLoading(`change-${tier}`);
     setError(null);
     try {
-      const res = await fetch("/api/stripe/portal", {
+      const res = await fetch("/api/stripe/change-plan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ returnUrl: window.location.href }),
+        body: JSON.stringify({ tier }),
       });
       const data = await res.json();
-      if (data.success && data.data.url) {
-        window.location.href = data.data.url;
-        return;
+      if (data.success) {
+        // Re-fetch billing to reflect the change
+        const billingRes = await fetch("/api/stripe/billing");
+        const billingData = await billingRes.json();
+        if (billingData.success) setBilling(billingData.data);
+        setShowPlanPicker(false);
+      } else {
+        setError(data.error ?? "Unable to change plan.");
       }
-      setError(data.error ?? "Unable to open billing portal.");
     } catch {
       setError("Something went wrong.");
     }
@@ -140,22 +138,6 @@ export function BillingSection() {
     setActionLoading(null);
   }, []);
 
-  const handleUpdateCard = useCallback(() => {
-    setShowCardModal(true);
-  }, []);
-
-  const handleCardSuccess = useCallback(async () => {
-    setShowCardModal(false);
-    // Re-fetch billing to show updated card
-    try {
-      const res = await fetch("/api/stripe/billing");
-      const data = await res.json();
-      if (data.success) setBilling(data.data);
-    } catch {
-      // Will show on next page load
-    }
-  }, []);
-
   if (loading) {
     return (
       <div className="mt-6">
@@ -171,7 +153,7 @@ export function BillingSection() {
 
   if (!billing) return null;
 
-  const { subscription, paymentMethod, invoices } = billing;
+  const { subscription, invoices } = billing;
   const statusInfo = subscription
     ? STATUS_LABELS[subscription.status] ?? { label: subscription.status, color: "bg-navy/10 text-navy/60" }
     : null;
@@ -183,46 +165,87 @@ export function BillingSection() {
       {/* Plan */}
       <div className="rounded-xl border border-navy/10 bg-white p-6">
         {subscription ? (
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
-                  Monthly Subscription
-                </p>
-                <span className={`rounded-full px-2.5 py-0.5 font-[family-name:var(--font-poppins)] text-xs font-body-medium ${statusInfo?.color}`}>
-                  {statusInfo?.label}
-                </span>
+          <>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
+                    {getCurrentPlanName(subscription.priceId)}
+                  </p>
+                  <span className={`rounded-full px-2.5 py-0.5 font-[family-name:var(--font-poppins)] text-xs font-body-medium ${statusInfo?.color}`}>
+                    {statusInfo?.label}
+                  </span>
+                </div>
+                {subscription.cancelAtPeriodEnd ? (
+                  <p className="mt-1 font-[family-name:var(--font-poppins)] text-xs text-amber-600">
+                    Cancels {formatDate(subscription.currentPeriodEnd)}
+                  </p>
+                ) : (
+                  <p className="mt-1 font-[family-name:var(--font-poppins)] text-xs text-navy/50">
+                    Renews {formatDate(subscription.currentPeriodEnd)}
+                  </p>
+                )}
               </div>
-              {subscription.cancelAtPeriodEnd ? (
-                <p className="mt-1 font-[family-name:var(--font-poppins)] text-xs text-amber-600">
-                  Cancels {formatDate(subscription.currentPeriodEnd)}
-                </p>
-              ) : (
-                <p className="mt-1 font-[family-name:var(--font-poppins)] text-xs text-navy/50">
-                  Renews {formatDate(subscription.currentPeriodEnd)}
-                </p>
+              {subscription.status === "active" && !subscription.cancelAtPeriodEnd && (
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    onClick={() => setShowPlanPicker(!showPlanPicker)}
+                  >
+                    {showPlanPicker ? "Close" : "Change Plan"}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleCancel}
+                    disabled={actionLoading === "cancel"}
+                  >
+                    {actionLoading === "cancel" ? "Canceling..." : "Cancel Plan"}
+                  </Button>
+                </div>
               )}
             </div>
-            {subscription.status === "active" && !subscription.cancelAtPeriodEnd && (
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  onClick={handleChangePlan}
-                  disabled={actionLoading === "change"}
-                >
-                  {actionLoading === "change" ? "Opening..." : "Change Plan"}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleCancel}
-                  disabled={actionLoading === "cancel"}
-                >
-                  {actionLoading === "cancel" ? "Canceling..." : "Cancel Plan"}
-                </Button>
+
+            {/* Plan picker */}
+            {showPlanPicker && subscription.status === "active" && (
+              <div className="mt-4 grid grid-cols-2 gap-3 border-t border-navy/10 pt-4">
+                {PLANS.map((plan) => {
+                  const isCurrent = plan.priceId_live === subscription.priceId || plan.priceId_test === subscription.priceId;
+                  return (
+                    <button
+                      key={plan.tier}
+                      disabled={isCurrent || actionLoading?.startsWith("change")}
+                      onClick={() => handleChangePlan(plan.tier)}
+                      className={`rounded-xl border p-4 text-left transition-colors ${
+                        isCurrent
+                          ? "border-primary bg-primary/5 cursor-default"
+                          : "border-navy/10 hover:border-primary/40 hover:bg-primary/[0.02]"
+                      }`}
+                    >
+                      <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
+                        {plan.name}
+                      </p>
+                      <p className="font-[family-name:var(--font-poppins)] text-lg font-body-bold text-navy">
+                        {plan.price}<span className="text-xs font-normal text-navy/50">/mo</span>
+                      </p>
+                      <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/50">
+                        4 pickups · {plan.lbs} included
+                      </p>
+                      {isCurrent ? (
+                        <p className="mt-2 font-[family-name:var(--font-poppins)] text-xs font-body-medium text-primary">
+                          Current plan
+                        </p>
+                      ) : (
+                        <p className="mt-2 font-[family-name:var(--font-poppins)] text-xs text-primary">
+                          {actionLoading === `change-${plan.tier}` ? "Switching..." : "Switch to this plan"}
+                        </p>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             )}
-          </div>
+          </>
         ) : (
           <div className="flex items-center justify-between">
             <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">
@@ -237,43 +260,6 @@ export function BillingSection() {
             </Button>
           </div>
         )}
-      </div>
-
-      {/* Payment Method */}
-      <div className="rounded-xl border border-navy/10 bg-white p-6">
-        <div className="flex items-center justify-between">
-          {paymentMethod ? (
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-14 items-center justify-center rounded-lg bg-navy/5 font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70">
-                {BRAND_NAMES[paymentMethod.brand] ?? paymentMethod.brand}
-              </div>
-              <div>
-                <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
-                  •••• {paymentMethod.last4}
-                </p>
-                <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/50">
-                  Expires {paymentMethod.expMonth}/{paymentMethod.expYear}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/60">
-              No payment method on file.
-            </p>
-          )}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleUpdateCard}
-            disabled={actionLoading === "card"}
-          >
-            {actionLoading === "card"
-              ? "Opening..."
-              : paymentMethod
-                ? "Update Card"
-                : "Add Card"}
-          </Button>
-        </div>
       </div>
 
       {/* Invoices */}
@@ -326,13 +312,6 @@ export function BillingSection() {
 
       {error && (
         <p className="font-[family-name:var(--font-poppins)] text-sm text-red-600">{error}</p>
-      )}
-
-      {showCardModal && (
-        <CardUpdateModal
-          onClose={() => setShowCardModal(false)}
-          onSuccess={handleCardSuccess}
-        />
       )}
     </div>
   );
