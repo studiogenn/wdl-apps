@@ -33,7 +33,17 @@ export async function POST(request: Request) {
       signature,
       webhookSecret
     );
-  } catch {
+  } catch (err) {
+    console.error(
+      "[Webhook] Signature verification failed:",
+      err instanceof Error ? err.message : err,
+      "| secret starts with:",
+      webhookSecret.slice(0, 12) + "...",
+      "| sig starts with:",
+      signature.slice(0, 30) + "...",
+      "| body length:",
+      body.length,
+    );
     return NextResponse.json(
       { success: false, error: "Invalid signature" },
       { status: 400 }
