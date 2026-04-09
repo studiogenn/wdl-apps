@@ -69,6 +69,7 @@ export function BillingSection() {
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showPlanPicker, setShowPlanPicker] = useState(false);
+  const [confirmTier, setConfirmTier] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchBilling() {
@@ -190,7 +191,7 @@ export function BillingSection() {
                 <div className="flex gap-2">
                   <Button
                     size="sm"
-                    onClick={() => setShowPlanPicker(!showPlanPicker)}
+                    onClick={() => { setShowPlanPicker(!showPlanPicker); setConfirmTier(null); }}
                   >
                     {showPlanPicker ? "Close" : "Change Plan"}
                   </Button>
@@ -208,41 +209,77 @@ export function BillingSection() {
 
             {/* Plan picker */}
             {showPlanPicker && subscription.status === "active" && (
-              <div className="mt-4 grid grid-cols-2 gap-3 border-t border-navy/10 pt-4">
-                {PLANS.map((plan) => {
-                  const isCurrent = plan.priceId_live === subscription.priceId || plan.priceId_test === subscription.priceId;
+              <div className="mt-4 border-t border-navy/10 pt-4">
+                {confirmTier ? (() => {
+                  const target = PLANS.find((p) => p.tier === confirmTier);
+                  const current = PLANS.find((p) => p.priceId_live === subscription.priceId || p.priceId_test === subscription.priceId);
+                  const isUpgrade = target && current && parseInt(target.price.replace("$", "")) > parseInt(current.price.replace("$", ""));
                   return (
-                    <button
-                      key={plan.tier}
-                      disabled={isCurrent || actionLoading?.startsWith("change")}
-                      onClick={() => handleChangePlan(plan.tier)}
-                      className={`rounded-xl border p-4 text-left transition-colors ${
-                        isCurrent
-                          ? "border-primary bg-primary/5 cursor-default"
-                          : "border-navy/10 hover:border-primary/40 hover:bg-primary/[0.02]"
-                      }`}
-                    >
-                      <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
-                        {plan.name}
+                    <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
+                      <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy mb-2">
+                        Switch to {target?.name} Plan ({target?.price}/mo)?
                       </p>
-                      <p className="font-[family-name:var(--font-poppins)] text-lg font-body-bold text-navy">
-                        {plan.price}<span className="text-xs font-normal text-navy/50">/mo</span>
+                      <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/60 mb-4">
+                        {isUpgrade
+                          ? "You'll be charged a prorated amount for the rest of this billing period. Your next invoice will reflect the new plan price."
+                          : "You'll receive a prorated credit on your next invoice for the remaining days on your current plan."}
                       </p>
-                      <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/50">
-                        4 pickups · {plan.lbs} included
-                      </p>
-                      {isCurrent ? (
-                        <p className="mt-2 font-[family-name:var(--font-poppins)] text-xs font-body-medium text-primary">
-                          Current plan
-                        </p>
-                      ) : (
-                        <p className="mt-2 font-[family-name:var(--font-poppins)] text-xs text-primary">
-                          {actionLoading === `change-${plan.tier}` ? "Switching..." : "Switch to this plan"}
-                        </p>
-                      )}
-                    </button>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          onClick={() => { handleChangePlan(confirmTier); setConfirmTier(null); }}
+                          disabled={actionLoading?.startsWith("change")}
+                        >
+                          {actionLoading?.startsWith("change") ? "Switching..." : `Yes, switch to ${target?.name}`}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setConfirmTier(null)}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
                   );
-                })}
+                })() : (
+                  <div className="grid grid-cols-2 gap-3">
+                    {PLANS.map((plan) => {
+                      const isCurrent = plan.priceId_live === subscription.priceId || plan.priceId_test === subscription.priceId;
+                      return (
+                        <button
+                          key={plan.tier}
+                          disabled={isCurrent || actionLoading?.startsWith("change")}
+                          onClick={() => setConfirmTier(plan.tier)}
+                          className={`rounded-xl border p-4 text-left transition-colors ${
+                            isCurrent
+                              ? "border-primary bg-primary/5 cursor-default"
+                              : "border-navy/10 hover:border-primary/40 hover:bg-primary/[0.02]"
+                          }`}
+                        >
+                          <p className="font-[family-name:var(--font-poppins)] text-sm font-body-medium text-navy">
+                            {plan.name}
+                          </p>
+                          <p className="font-[family-name:var(--font-poppins)] text-lg font-body-bold text-navy">
+                            {plan.price}<span className="text-xs font-normal text-navy/50">/mo</span>
+                          </p>
+                          <p className="font-[family-name:var(--font-poppins)] text-xs text-navy/50">
+                            4 pickups · {plan.lbs} included
+                          </p>
+                          {isCurrent ? (
+                            <p className="mt-2 font-[family-name:var(--font-poppins)] text-xs font-body-medium text-primary">
+                              Current plan
+                            </p>
+                          ) : (
+                            <p className="mt-2 font-[family-name:var(--font-poppins)] text-xs text-primary">
+                              Switch to this plan
+                            </p>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             )}
           </>

@@ -44,6 +44,27 @@ export function Dashboard({ user }: DashboardProps) {
   const [signingOut, setSigningOut] = useState(false);
   const [managingAccount, setManagingAccount] = useState(false);
   const [payingOrder, setPayingOrder] = useState<Order | null>(null);
+  const [address, setAddress] = useState("");
+  const [addressLoading, setAddressLoading] = useState(true);
+  const [editingAddress, setEditingAddress] = useState(false);
+  const [addressDraft, setAddressDraft] = useState("");
+  const [addressSaving, setAddressSaving] = useState(false);
+  const [addressError, setAddressError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchAddress() {
+      try {
+        const res = await fetch("/api/account/address");
+        const data = await res.json();
+        if (data.success) setAddress(data.data?.address ?? "");
+      } catch {
+        // Address unavailable
+      } finally {
+        setAddressLoading(false);
+      }
+    }
+    fetchAddress();
+  }, []);
 
   useEffect(() => {
     async function fetchOrders() {
@@ -65,6 +86,28 @@ export function Dashboard({ user }: DashboardProps) {
 
     fetchOrders();
   }, []);
+
+  const handleSaveAddress = useCallback(async () => {
+    setAddressSaving(true);
+    setAddressError(null);
+    try {
+      const res = await fetch("/api/account/address", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ address: addressDraft }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setAddress(addressDraft);
+        setEditingAddress(false);
+      } else {
+        setAddressError(data.error ?? "Unable to update address.");
+      }
+    } catch {
+      setAddressError("Something went wrong.");
+    }
+    setAddressSaving(false);
+  }, [addressDraft]);
 
   const handleManageAccount = useCallback(async () => {
     setManagingAccount(true);
@@ -110,6 +153,52 @@ export function Dashboard({ user }: DashboardProps) {
           >
             {signingOut ? "Signing out..." : "Sign Out"}
           </Button>
+        </div>
+      </div>
+
+      {/* Pickup Address */}
+      <div className="mt-4 rounded-xl border border-navy/10 bg-white p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1">
+            <p className="font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/40 uppercase tracking-wider mb-1">
+              Pickup Address
+            </p>
+            {editingAddress ? (
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  value={addressDraft}
+                  onChange={(e) => setAddressDraft(e.target.value)}
+                  className="w-full rounded-lg border border-navy/15 px-3 py-2 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  placeholder="123 Main St, Apt 4B, Brooklyn NY 11201"
+                />
+                {addressError && (
+                  <p className="font-[family-name:var(--font-poppins)] text-xs text-red-600">{addressError}</p>
+                )}
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={handleSaveAddress} disabled={addressSaving || !addressDraft.trim()}>
+                    {addressSaving ? "Saving..." : "Save"}
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => { setEditingAddress(false); setAddressError(null); }}>
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70">
+                {addressLoading ? "Loading..." : address || "No address on file"}
+              </p>
+            )}
+          </div>
+          {!editingAddress && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => { setEditingAddress(true); setAddressDraft(address); }}
+            >
+              {address ? "Edit" : "Add"}
+            </Button>
+          )}
         </div>
       </div>
 
