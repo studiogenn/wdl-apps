@@ -108,7 +108,7 @@ export function PricingPage() {
       const statusJson = await statusRes.json();
       if (statusJson.success && statusJson.data.hasActiveSubscription) {
         const confirmed = window.confirm(
-          "You already have an active subscription. Starting a new checkout will create an additional subscription. Do you want to continue?"
+          "Looks like you already have a subscription! If you'd like to change your plan, you can do that from your account page. Do you still want to start a new subscription?"
         );
         if (!confirmed) {
           setCheckoutLoading(false);

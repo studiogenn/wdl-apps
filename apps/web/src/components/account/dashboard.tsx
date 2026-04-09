@@ -44,10 +44,10 @@ export function Dashboard({ user }: DashboardProps) {
   const [signingOut, setSigningOut] = useState(false);
   const [managingAccount, setManagingAccount] = useState(false);
   const [payingOrder, setPayingOrder] = useState<Order | null>(null);
-  const [address, setAddress] = useState("");
+  const [addressData, setAddressData] = useState({ street: "", apt: "", city: "", state: "", zip: "" });
   const [addressLoading, setAddressLoading] = useState(true);
   const [editingAddress, setEditingAddress] = useState(false);
-  const [addressDraft, setAddressDraft] = useState("");
+  const [addressDraft, setAddressDraft] = useState({ street: "", apt: "", city: "", state: "", zip: "" });
   const [addressSaving, setAddressSaving] = useState(false);
   const [addressError, setAddressError] = useState<string | null>(null);
 
@@ -56,7 +56,15 @@ export function Dashboard({ user }: DashboardProps) {
       try {
         const res = await fetch("/api/account/address");
         const data = await res.json();
-        if (data.success) setAddress(data.data?.address ?? "");
+        if (data.success && data.data) {
+          setAddressData({
+            street: data.data.street ?? "",
+            apt: data.data.apt ?? "",
+            city: data.data.city ?? "",
+            state: data.data.state ?? "",
+            zip: data.data.zip ?? "",
+          });
+        }
       } catch {
         // Address unavailable
       } finally {
@@ -88,17 +96,21 @@ export function Dashboard({ user }: DashboardProps) {
   }, []);
 
   const handleSaveAddress = useCallback(async () => {
+    if (!addressDraft.street.trim() || !addressDraft.city.trim() || !addressDraft.state.trim() || !addressDraft.zip.trim()) {
+      setAddressError("Please fill in street, city, state, and zip.");
+      return;
+    }
     setAddressSaving(true);
     setAddressError(null);
     try {
       const res = await fetch("/api/account/address", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ address: addressDraft }),
+        body: JSON.stringify(addressDraft),
       });
       const data = await res.json();
       if (data.success) {
-        setAddress(addressDraft);
+        setAddressData({ ...addressDraft });
         setEditingAddress(false);
       } else {
         setAddressError(data.error ?? "Unable to update address.");
@@ -167,16 +179,48 @@ export function Dashboard({ user }: DashboardProps) {
               <div className="space-y-3">
                 <input
                   type="text"
-                  value={addressDraft}
-                  onChange={(e) => setAddressDraft(e.target.value)}
+                  value={addressDraft.street}
+                  onChange={(e) => setAddressDraft({ ...addressDraft, street: e.target.value })}
                   className="w-full rounded-lg border border-navy/15 px-3 py-2 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                  placeholder="123 Main St, Apt 4B, Brooklyn NY 11201"
+                  placeholder="Street address"
                 />
+                <input
+                  type="text"
+                  value={addressDraft.apt}
+                  onChange={(e) => setAddressDraft({ ...addressDraft, apt: e.target.value })}
+                  className="w-full rounded-lg border border-navy/15 px-3 py-2 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  placeholder="Apt, suite, unit (optional)"
+                />
+                <div className="grid grid-cols-3 gap-2">
+                  <input
+                    type="text"
+                    value={addressDraft.city}
+                    onChange={(e) => setAddressDraft({ ...addressDraft, city: e.target.value })}
+                    className="w-full rounded-lg border border-navy/15 px-3 py-2 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    placeholder="City"
+                  />
+                  <input
+                    type="text"
+                    value={addressDraft.state}
+                    onChange={(e) => setAddressDraft({ ...addressDraft, state: e.target.value })}
+                    className="w-full rounded-lg border border-navy/15 px-3 py-2 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    placeholder="State"
+                    maxLength={2}
+                  />
+                  <input
+                    type="text"
+                    value={addressDraft.zip}
+                    onChange={(e) => setAddressDraft({ ...addressDraft, zip: e.target.value })}
+                    className="w-full rounded-lg border border-navy/15 px-3 py-2 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    placeholder="Zip"
+                    maxLength={10}
+                  />
+                </div>
                 {addressError && (
                   <p className="font-[family-name:var(--font-poppins)] text-xs text-red-600">{addressError}</p>
                 )}
                 <div className="flex gap-2">
-                  <Button size="sm" onClick={handleSaveAddress} disabled={addressSaving || !addressDraft.trim()}>
+                  <Button size="sm" onClick={handleSaveAddress} disabled={addressSaving}>
                     {addressSaving ? "Saving..." : "Save"}
                   </Button>
                   <Button variant="outline" size="sm" onClick={() => { setEditingAddress(false); setAddressError(null); }}>
@@ -186,7 +230,11 @@ export function Dashboard({ user }: DashboardProps) {
               </div>
             ) : (
               <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/70">
-                {addressLoading ? "Loading..." : address || "No address on file"}
+                {addressLoading
+                  ? "Loading..."
+                  : addressData.street
+                    ? [addressData.street, addressData.apt, addressData.city, addressData.state, addressData.zip].filter(Boolean).join(", ")
+                    : "No address on file"}
               </p>
             )}
           </div>
@@ -194,9 +242,9 @@ export function Dashboard({ user }: DashboardProps) {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => { setEditingAddress(true); setAddressDraft(address); }}
+              onClick={() => { setEditingAddress(true); setAddressDraft({ ...addressData }); }}
             >
-              {address ? "Edit" : "Add"}
+              {addressData.street ? "Edit" : "Add"}
             </Button>
           )}
         </div>
