@@ -34,7 +34,7 @@ type EditorPhase =
 // Constants
 // ---------------------------------------------------------------------------
 
-const API_URL = process.env.NEXT_PUBLIC_BEHEMOUTH_API_URL ?? '';
+const API_URL = process.env.NEXT_PUBLIC_CMS_API_URL ?? '';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? '';
 
 const EMPTY_DATA: Data = { content: [], root: { props: {} } };

@@ -1,7 +1,7 @@
 /**
  * Draft mode route handler.
  *
- * Validates the editor JWT token via the Behemouth API, enables
+ * Validates the editor JWT token via the CMS API, enables
  * Next.js draft mode, and redirects the user to the target page.
  *
  * Usage: GET /api/draft?token=xxx&path=/some-page
@@ -10,7 +10,7 @@
 import { draftMode } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-const API_URL = process.env.BEHEMOUTH_API_URL ?? '';
+const API_URL = process.env.CMS_API_URL ?? '';
 
 export async function GET(request: NextRequest) {
   const token = request.nextUrl.searchParams.get('token');

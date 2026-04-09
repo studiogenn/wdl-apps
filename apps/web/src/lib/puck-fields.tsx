@@ -224,7 +224,7 @@ const styles = {
 // Media browser modal
 // ---------------------------------------------------------------------------
 
-const API_URL = process.env.NEXT_PUBLIC_BEHEMOUTH_API_URL ?? '';
+const API_URL = process.env.NEXT_PUBLIC_CMS_API_URL ?? '';
 const PAGE_SIZE = 24;
 
 function MediaBrowserModal({

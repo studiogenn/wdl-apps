@@ -2,10 +2,11 @@
  * Editor API helpers -- client-side calls used by the Puck visual editor route.
  *
  * Token is passed as a Bearer header (or query param for verify).
- * Base URL comes from the public env var so it's available in the browser.
+ * Base URL comes from NEXT_PUBLIC_CMS_API_URL so it's available in the browser.
+ * If no CMS is configured, editor features are unavailable.
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_BEHEMOUTH_API_URL ?? ''
+const BASE_URL = process.env.NEXT_PUBLIC_CMS_API_URL ?? ''
 
 // ---------------------------------------------------------------------------
 // Types

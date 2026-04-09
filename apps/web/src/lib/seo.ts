@@ -1,5 +1,5 @@
 /**
- * SEO metadata fetcher — pulls CMS-backed metadata from the Behemouth API.
+ * SEO metadata fetcher — pulls CMS-backed metadata from an external CMS API.
  *
  * Usage in any page.tsx:
  *
@@ -7,7 +7,7 @@
  *     return getSeoMetadata('/wash-fold')
  *   }
  *
- * If no published metadata exists for a path, returns {} so
+ * If no CMS API is configured or no metadata exists for a path, returns {} so
  * Next.js falls back to the root layout defaults.
  *
  * Revalidates every 60 seconds via ISR.
@@ -15,7 +15,7 @@
 
 import type { Metadata } from "next";
 
-const API_URL = process.env.BEHEMOUTH_API_URL || "";
+const API_URL = process.env.CMS_API_URL || "";
 
 interface SeoMetadataResponse {
   page_path: string;

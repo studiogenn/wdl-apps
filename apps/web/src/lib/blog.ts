@@ -3,7 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 
 const BLOG_DIR = path.join(process.cwd(), "src/content/blog");
-const API_URL = process.env.BEHEMOUTH_API_URL || "";
+const API_URL = process.env.CMS_API_URL || "";
 
 type BlogCategory = {
   id: number;

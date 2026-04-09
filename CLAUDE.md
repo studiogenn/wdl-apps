@@ -18,15 +18,21 @@ Better Auth with email/password. Server config at `apps/web/src/lib/auth.ts`, cl
 
 ## Database
 
-PostgreSQL via Drizzle ORM — **query-only**. Behemouth (`wfog/behemoth`) owns the database, all tables, and all migrations (Alembic). wdl-apps never creates or manages tables. Schema definitions in `apps/web/src/lib/db/schema.ts` are read-only mirrors for Drizzle query typing. Connection goes through PgBouncer in transaction mode (`prepare: false` required).
+PostgreSQL via Drizzle ORM. Schema definitions in `apps/web/src/lib/db/schema.ts`. Connection goes through PgBouncer in transaction mode (`prepare: false` required).
 
-**NEVER run `drizzle-kit generate` or `drizzle-kit push` in this repo.** All schema changes go through Alembic migrations in behemouth. API routes in wdl-apps forward to behemouth webhook endpoints (`arkad.studio/webhooks/ingest/*`) which handle persistence and Temporal workflows.
+Schema changes should be coordinated carefully — the `leads`, `user`, `session`, `account`, `verification`, `user_preferences`, and `push_tokens` tables are in the public schema. Stripe tables (`customers`, `subscriptions`, `payments`, `invoices`, `subscription_events`) are in the `stripe_wdl` schema.
 
 ## CleanCloud
 
-CleanCloud is the current POS system for orders, customers, routing, and scheduling. API wrapper at `apps/web/src/lib/cleancloud/client.ts`. All CleanCloud API calls go through Next.js API routes at `apps/web/src/app/api/cleancloud/`. The mobile app calls these routes, not CleanCloud directly.
+CleanCloud is the current POS system for orders, customers, routing, and scheduling. The API client at `apps/web/src/lib/cleancloud/client.ts` calls CleanCloud's API directly at `https://cleancloudapp.com/api` using the `CLEANCLOUD_API_TOKEN` env var.
+
+All CleanCloud API calls go through Next.js API routes at `apps/web/src/app/api/cleancloud/`. The mobile app calls these routes, not CleanCloud directly.
 
 Goal: migrate off CleanCloud entirely. Customer auth already owned. CleanCloud customer IDs stored on the Better Auth user record (`cleancloudCustomerId` field).
+
+## CMS / Visual Editor (Optional)
+
+The site supports an optional CMS API for SEO metadata, blog posts, and a Puck visual editor. Configured via `CMS_API_URL` / `NEXT_PUBLIC_CMS_API_URL` env vars. When not configured, SEO falls back to layout defaults and blog falls back to local MDX files in `src/content/blog/`.
 
 ## Feature Flags
 
@@ -56,7 +62,11 @@ When adding new design tokens, add them to `packages/tokens/src/` first, then ex
 - `BETTER_AUTH_URL` — base URL (e.g. `https://wedeliverlaundry.com`)
 - `NEXT_PUBLIC_POSTHOG_KEY` — PostHog project API key
 - `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` — Stripe keys
+- `CLEANCLOUD_API_TOKEN` — CleanCloud API token for direct API access
 - `EXPO_PUBLIC_API_URL` — mobile app's API base URL
+
+**Optional:**
+- `CMS_API_URL` / `NEXT_PUBLIC_CMS_API_URL` — CMS API for SEO metadata, blog, and visual editor
 
 **NEVER hardcode env vars, API keys, or webhook URLs in source code.** All secrets and external URLs go in `.env` locally and in the Vercel dashboard for deployments. Use `process.env.VAR_NAME` to read them. Only `NEXT_PUBLIC_*` vars are available client-side — server secrets (`DATABASE_URL`, `STRIPE_SECRET_KEY`, etc.) must never be exposed to the browser.
 

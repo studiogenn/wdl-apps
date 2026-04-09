@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function TrackingScreen() {
   const { token } = useLocalSearchParams<{ token: string }>();
 
-  // TODO: poll behemouth /public/track/{token} every 10s
+  // TODO: poll tracking API /public/track/{token} every 10s
   // TODO: render react-native-maps with driver marker + route polyline
   return (
     <SafeAreaView className="flex-1 bg-neutral-100">

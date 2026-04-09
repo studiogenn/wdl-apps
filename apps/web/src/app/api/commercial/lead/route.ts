@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-
-const WEBHOOK_URL = process.env.BEHEMOUTH_API_URL
-  ? `${process.env.BEHEMOUTH_API_URL.replace(/\/+$/, "")}/webhooks/ingest/commercial`
-  : "https://arkad.studio/webhooks/ingest/commercial";
-const INGEST_API_KEY = process.env.INGEST_API_KEY || "";
+import { getDb } from "@/lib/db";
+import { leads } from "@/lib/db/schema";
 
 const leadSchema = z.object({
   contact_name: z.string().min(1, "Contact name is required"),
@@ -25,27 +22,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: firstError }, { status: 400 });
     }
 
-    const response = await fetch(WEBHOOK_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": INGEST_API_KEY,
-      },
-      body: JSON.stringify({
-        ...result.data,
+    const db = getDb();
+    const [lead] = await db
+      .insert(leads)
+      .values({
+        type: "commercial_lead",
+        firstName: result.data.contact_name,
+        email: result.data.email,
+        location: result.data.location,
+        companyName: result.data.company_name,
+        lbsPerWeek: result.data.lbs_per_week,
+        vertical: result.data.vertical ?? null,
         source: "commercial_landing_page",
-        submitted_at: new Date().toISOString(),
-      }),
-    });
+        metadata: { ...result.data, submitted_at: new Date().toISOString() },
+      })
+      .returning({ id: leads.id });
 
-    if (!response.ok) {
-      const text = await response.text();
-      console.error(`Commercial lead webhook failed: ${response.status} ${text}`);
-      return NextResponse.json({ success: false, error: "Failed to submit" }, { status: 502 });
-    }
-
-    const data = await response.json().catch(() => ({}));
-    return NextResponse.json({ success: true, event_id: data.event_id });
+    return NextResponse.json({ success: true, event_id: lead?.id });
   } catch (error) {
     console.error("Commercial lead error:", error);
     return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 });
