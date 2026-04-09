@@ -127,7 +127,7 @@ export const questions: QuizQuestion[] = [
 /* ---- Helpers ---- */
 export const fmt = (n: number) => "$" + n.toFixed(2);
 
-export type PageView = "home" | "quiz" | "subscription" | "payg" | "schedule";
+export type PageView = "home" | "quiz" | "subscription" | "payg" | "schedule" | "auth";
 
 export interface ScheduleState {
   date: string; // ISO date string e.g. "2026-04-04"

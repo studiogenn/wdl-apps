@@ -22,6 +22,7 @@ import { QuizFlow, type QuizFlowResult } from "./QuizFlow";
 import { SubscriptionBuilder } from "./SubscriptionBuilder";
 import { PaygBuilder } from "./PaygBuilder";
 import { SchedulePicker } from "./SchedulePicker";
+import { AuthStep } from "@/components/join/AuthStep";
 
 const defaultScheduleState: ScheduleState = {
   date: "",
@@ -208,9 +209,16 @@ export function PricingPage() {
           state={scheduleState}
           onChange={setScheduleState}
           onNavigate={navigate}
-          onCheckout={handleSubscriptionCheckout}
-          checkoutLoading={checkoutLoading}
-          checkoutError={checkoutError}
+          onCheckout={() => navigate("auth")}
+          checkoutLoading={false}
+          checkoutError={null}
+        />
+      );
+    case "auth":
+      return (
+        <AuthStep
+          onComplete={handleSubscriptionCheckout}
+          onBack={() => navigate("schedule")}
         />
       );
     case "payg":
