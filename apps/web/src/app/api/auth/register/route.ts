@@ -10,7 +10,7 @@ const registerSchema = z.object({
   name: z.string().min(1).max(200),
   email: z.string().email(),
   phone: z.string().min(10).max(20),
-  address: z.string().min(1).max(500),
+  address: z.string().max(500).optional().default(""),
   password: z.string().min(8),
 });
 

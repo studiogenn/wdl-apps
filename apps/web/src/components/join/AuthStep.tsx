@@ -16,7 +16,6 @@ export function AuthStep({ onComplete, onBack }: AuthStepProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,7 +48,7 @@ export function AuthStep({ onComplete, onBack }: AuthStepProps) {
         const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, phone, address, password }),
+          body: JSON.stringify({ name, email, phone, address: "", password }),
         });
         const data = await res.json();
         if (!data.success) {
@@ -81,7 +80,7 @@ export function AuthStep({ onComplete, onBack }: AuthStepProps) {
       setError("Something went wrong. Please try again.");
       setLoading(false);
     }
-  }, [mode, name, email, phone, address, password, onComplete]);
+  }, [mode, name, email, phone, password, onComplete]);
 
   if (checkingSession) {
     return (
@@ -138,20 +137,6 @@ export function AuthStep({ onComplete, onBack }: AuthStepProps) {
               />
             </div>
 
-            <div>
-              <label htmlFor="join-address" className="mb-1 block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70">
-                Pickup address
-              </label>
-              <input
-                id="join-address"
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                required
-                className="w-full rounded-xl border border-navy/15 px-4 py-3 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="123 Main St, Apt 4B, Brooklyn NY 11201"
-              />
-            </div>
           </>
         )}
 

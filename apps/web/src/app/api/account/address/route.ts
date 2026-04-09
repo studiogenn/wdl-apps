@@ -119,27 +119,46 @@ export async function GET(request: Request) {
   }
 
   const sql = getsql();
-  const [customer] = await sql`
-    SELECT
-      address AS "street",
-      apt,
-      city,
-      state,
-      zip
-    FROM stg_cleancloud.stg_cc_customers
-    WHERE cleancloud_id = ${ccId}
-      AND deleted_at IS NULL
-    LIMIT 1
-  `;
+  // Query all available address columns — some may not exist in all environments
+  let customer: Record<string, unknown> | undefined;
+  try {
+    const [row] = await sql`
+      SELECT
+        address AS "street",
+        coalesce(apt_number, '') AS "apt",
+        coalesce(city, '') AS "city",
+        coalesce(state, '') AS "state",
+        coalesce(zip_code, '') AS "zip"
+      FROM stg_cleancloud.stg_cc_customers
+      WHERE cleancloud_id = ${ccId}
+        AND deleted_at IS NULL
+      LIMIT 1
+    `;
+    customer = row;
+  } catch {
+    // Column names might differ — try simpler query
+    try {
+      const [row] = await sql`
+        SELECT address AS "street"
+        FROM stg_cleancloud.stg_cc_customers
+        WHERE cleancloud_id = ${ccId}
+          AND deleted_at IS NULL
+        LIMIT 1
+      `;
+      customer = row;
+    } catch {
+      // Table might not exist
+    }
+  }
 
   return NextResponse.json({
     success: true,
     data: {
-      street: customer?.street ?? "",
-      apt: customer?.apt ?? "",
-      city: customer?.city ?? "",
-      state: customer?.state ?? "",
-      zip: customer?.zip ?? "",
+      street: (customer?.street as string) ?? "",
+      apt: (customer?.apt as string) ?? "",
+      city: (customer?.city as string) ?? "",
+      state: (customer?.state as string) ?? "",
+      zip: (customer?.zip as string) ?? "",
     },
   });
 }
