@@ -329,6 +329,22 @@ export async function addOrder(params: {
   return String(data.orderID ?? data.OrderID);
 }
 
+/** Update notes on a CleanCloud customer profile. */
+export async function updateCustomerNotes(
+  customerID: string,
+  notes: string,
+): Promise<void> {
+  try {
+    await rateLimitedFetch("/editCustomer", {
+      customerID,
+      customerNotes: notes,
+    });
+  } catch {
+    // Non-critical — log but don't fail
+    console.warn("[CleanCloud] Failed to update customer notes for", customerID);
+  }
+}
+
 /** Get the next available pickup/delivery schedule for an address. */
 export async function getNextPickupDelivery(address: string): Promise<{
   routeID: string;

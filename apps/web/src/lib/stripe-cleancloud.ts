@@ -15,6 +15,7 @@ import {
   findOrCreateCustomer,
   addOrder,
   getNextPickupDelivery,
+  updateCustomerNotes,
 } from "@/lib/cleancloud/client";
 
 // ─── Product mapping ─────────────────────────────────────────────────
@@ -295,4 +296,12 @@ export async function handleInvoicePaid(
   console.log(
     `[Stripe → CleanCloud] Order ${orderId} created for ${customer.email} ($${total})`,
   );
+
+  // 8. Update customer profile notes with plan details
+  const profileNotes = noteLines
+    .filter((line) => !line.startsWith("Stripe Invoice:"))
+    .join("\n");
+  if (profileNotes) {
+    await updateCustomerNotes(cleanCloudCustomerId, profileNotes);
+  }
 }
