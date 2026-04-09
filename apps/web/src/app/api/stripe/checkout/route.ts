@@ -33,7 +33,10 @@ const checkoutSchema = z.discriminatedUnion("mode", [
   paymentSchema,
 ]);
 
-async function getOrCreateStripeCustomer(authUserId: string, phone?: string) {
+async function getOrCreateStripeCustomer(
+  authUserId: string,
+  opts?: { name?: string; email?: string; phone?: string },
+) {
   const existing = await getDb().query.customers.findFirst({
     where: eq(schema.customers.authUserId, authUserId),
   });
@@ -42,11 +45,14 @@ async function getOrCreateStripeCustomer(authUserId: string, phone?: string) {
 
   const customer = await getStripe().customers.create({
     metadata: { authUserId },
-    ...(phone ? { phone } : {}),
+    ...(opts?.name ? { name: opts.name } : {}),
+    ...(opts?.email ? { email: opts.email } : {}),
+    ...(opts?.phone ? { phone: opts.phone } : {}),
   });
   await getDb().insert(schema.customers).values({
     authUserId,
     stripeCustomerId: customer.id,
+    email: opts?.email ?? null,
   });
   return customer.id;
 }
@@ -56,10 +62,11 @@ async function resolveCustomer(request: Request) {
     const session = await auth.api.getSession({ headers: request.headers });
     if (!session?.user) return null;
     const user = session.user;
-    const customerId = await getOrCreateStripeCustomer(
-      user.id,
-      (user as Record<string, unknown>).phone as string | undefined,
-    );
+    const customerId = await getOrCreateStripeCustomer(user.id, {
+      name: user.name ?? undefined,
+      email: user.email ?? undefined,
+      phone: (user as Record<string, unknown>).phone as string | undefined,
+    });
     return { authUserId: user.id, stripeCustomerId: customerId };
   } catch {
     return null;

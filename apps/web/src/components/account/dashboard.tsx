@@ -42,6 +42,7 @@ export function Dashboard({ user }: DashboardProps) {
   const [orders, setOrders] = useState<readonly Order[]>([]);
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [signingOut, setSigningOut] = useState(false);
+  const [managingAccount, setManagingAccount] = useState(false);
   const [payingOrder, setPayingOrder] = useState<Order | null>(null);
 
   useEffect(() => {
@@ -63,6 +64,25 @@ export function Dashboard({ user }: DashboardProps) {
     }
 
     fetchOrders();
+  }, []);
+
+  const handleManageAccount = useCallback(async () => {
+    setManagingAccount(true);
+    try {
+      const res = await fetch("/api/stripe/portal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ returnUrl: window.location.href }),
+      });
+      const data = await res.json();
+      if (data.success && data.data.url) {
+        window.location.href = data.data.url;
+        return;
+      }
+    } catch {
+      // Fall through
+    }
+    setManagingAccount(false);
   }, []);
 
   const handleSignOut = useCallback(async () => {
@@ -98,9 +118,14 @@ export function Dashboard({ user }: DashboardProps) {
         <ButtonLink href="/account/schedule" className="text-center">
           Schedule Pickup
         </ButtonLink>
-        <ButtonLink href="/account/manage" variant="outline" className="text-center">
-          Manage Account
-        </ButtonLink>
+        <Button
+          variant="outline"
+          className="text-center"
+          onClick={handleManageAccount}
+          disabled={managingAccount}
+        >
+          {managingAccount ? "Opening..." : "Manage Account"}
+        </Button>
       </div>
 
       {/* Billing */}

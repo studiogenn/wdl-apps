@@ -251,20 +251,34 @@ export async function handleInvoicePaid(
   }
 
   // 6. Build order notes
-  const tier = subscriptionMetadata.tier ?? "";
-  const pickups = subscriptionMetadata.pickups ?? "";
-  const includedLbs = subscriptionMetadata.includedLbs ?? "";
-  const care = subscriptionMetadata.care ?? "";
-  const driverNotes = subscriptionMetadata.driverNotes ?? "";
-  const bedding = subscriptionMetadata.bedding ?? "";
-  const student = subscriptionMetadata.student ?? "";
+  // Support metadata keys from both /join and /subscriptions flows
+  const meta = subscriptionMetadata;
+  const bags = meta.bags ?? "";
+  const frequency = meta.frequency ?? "";
+  const tier = meta.tier ?? "";
+  const pickups = meta.pickups ?? "";
+  const includedLbs = meta.includedLbs ?? "";
+  const care = meta.care ?? "";
+  const driverNotes = meta.driverNotes ?? "";
+  const bedding = meta.bedding ?? "";
+  const student = meta.student ?? "";
+  const pickupZip = meta.pickupZip ?? "";
+  const pickupApt = meta.pickupApt ?? "";
+  const repeatPickup = meta.repeatPickup ?? "";
 
   const noteLines = [
+    // /subscriptions flow metadata
+    (bags || frequency) &&
+      `Plan: ${frequency}${bags ? `, ${bags} bag(s)` : ""}`,
+    // /join flow metadata
     tier &&
-      `Plan: ${tier}${pickups ? ` (${pickups} pickups/mo)` : ""}${includedLbs ? `, ${includedLbs} lbs included` : ""}`,
+      `Tier: ${tier}${pickups ? ` (${pickups} pickups/mo)` : ""}${includedLbs ? `, ${includedLbs} lbs included` : ""}`,
     care && `Care upgrades: ${care}`,
     bedding && `Bedding: ${bedding}`,
     student === "true" && "Student plan",
+    pickupApt && `Apt: ${pickupApt}`,
+    pickupZip && `Zip: ${pickupZip}`,
+    repeatPickup === "true" && "Recurring weekly pickup",
     driverNotes && `Driver notes: ${driverNotes}`,
     `Stripe Invoice: ${invoiceId}`,
   ].filter(Boolean) as string[];
