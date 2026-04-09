@@ -7,6 +7,7 @@ import { ContactForm, type ContactInfo } from "@/components/signup/contact-form"
 import { SchedulePicker } from "@/components/signup/schedule-picker";
 import { Confirmation } from "@/components/signup/confirmation";
 import { LoginForm } from "@/components/signup/login-form";
+import { AuthStep } from "@/components/join/AuthStep";
 import { fromCleanCloudTimestamp } from "@/lib/cleancloud/dates";
 import {
   trackSignupFlowStarted,
@@ -19,8 +20,8 @@ import {
 } from "@/lib/tracking";
 
 const VARIANT = "quick";
-const STEP_LABELS = ["Zip Code", "Your Info", "Schedule", "Done"] as const;
-const TOTAL_STEPS = 4;
+const STEP_LABELS = ["Zip Code", "Account", "Your Info", "Schedule", "Done"] as const;
+const TOTAL_STEPS = 5;
 
 type QuickState = {
   readonly currentStep: number;
@@ -37,6 +38,7 @@ type QuickState = {
 
 type QuickAction =
   | { type: "ZIP_CHECKED"; routeID: number; zip: string }
+  | { type: "AUTH_COMPLETED" }
   | { type: "CUSTOMER_CREATED"; customerID: number; contactInfo: ContactInfo }
   | { type: "ORDER_CREATED"; orderID: number; pickupDate: number; pickupStart: string }
   | { type: "GO_BACK" }
@@ -60,10 +62,12 @@ function reducer(state: QuickState, action: QuickAction): QuickState {
   switch (action.type) {
     case "ZIP_CHECKED":
       return { ...state, currentStep: 2, routeID: action.routeID, zip: action.zip, error: "" };
+    case "AUTH_COMPLETED":
+      return { ...state, currentStep: 3, error: "" };
     case "CUSTOMER_CREATED":
-      return { ...state, currentStep: 3, customerID: action.customerID, contactInfo: action.contactInfo, loading: false, error: "" };
+      return { ...state, currentStep: 4, customerID: action.customerID, contactInfo: action.contactInfo, loading: false, error: "" };
     case "ORDER_CREATED":
-      return { ...state, currentStep: 4, orderID: action.orderID, pickupDate: action.pickupDate, pickupStart: action.pickupStart, loading: false, error: "" };
+      return { ...state, currentStep: 5, orderID: action.orderID, pickupDate: action.pickupDate, pickupStart: action.pickupStart, loading: false, error: "" };
     case "GO_BACK":
       return { ...state, currentStep: Math.max(1, state.currentStep - 1), error: "" };
     case "SET_LOADING":
@@ -110,6 +114,11 @@ export default function QuickSignupPage() {
   const handleZipSuccess = useCallback((routeID: number, zip: string) => {
     trackSignupStepCompleted(VARIANT, "zip_check");
     dispatch({ type: "ZIP_CHECKED", routeID, zip });
+  }, []);
+
+  const handleAuthComplete = useCallback(() => {
+    trackSignupStepCompleted(VARIANT, "auth");
+    dispatch({ type: "AUTH_COMPLETED" });
   }, []);
 
   const handleContactSubmit = useCallback(async (info: ContactInfo) => {
@@ -213,6 +222,12 @@ export default function QuickSignupPage() {
         <ZipCheck onSuccess={handleZipSuccess} />
       )}
       {!loginMode && state.currentStep === 2 && (
+        <AuthStep
+          onComplete={handleAuthComplete}
+          onBack={handleBack}
+        />
+      )}
+      {!loginMode && state.currentStep === 3 && (
         <ContactForm
           onSubmit={handleContactSubmit}
           onBack={handleBack}
@@ -220,7 +235,7 @@ export default function QuickSignupPage() {
           error={state.error}
         />
       )}
-      {!loginMode && state.currentStep === 3 && state.routeID && (
+      {!loginMode && state.currentStep === 4 && state.routeID && (
         <SchedulePicker
           routeID={state.routeID}
           onSubmit={handleScheduleSubmit}
@@ -229,7 +244,7 @@ export default function QuickSignupPage() {
           error={state.error}
         />
       )}
-      {!loginMode && state.currentStep === 4 && (
+      {!loginMode && state.currentStep === 5 && (
         <Confirmation
           customerName={state.contactInfo?.name}
           pickupDate={state.pickupDate ? formatPickupDate(state.pickupDate) : undefined}

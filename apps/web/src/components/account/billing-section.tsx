@@ -95,6 +95,27 @@ export function BillingSection() {
     router.push("/subscriptions");
   }, [router]);
 
+  const handleChangePlan = useCallback(async () => {
+    setActionLoading("change");
+    setError(null);
+    try {
+      const res = await fetch("/api/stripe/portal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ returnUrl: window.location.href }),
+      });
+      const data = await res.json();
+      if (data.success && data.data.url) {
+        window.location.href = data.data.url;
+        return;
+      }
+      setError(data.error ?? "Unable to open billing portal.");
+    } catch {
+      setError("Something went wrong.");
+    }
+    setActionLoading(null);
+  }, []);
+
   const handleCancel = useCallback(async () => {
     setActionLoading("cancel");
     setError(null);
@@ -183,14 +204,23 @@ export function BillingSection() {
               )}
             </div>
             {subscription.status === "active" && !subscription.cancelAtPeriodEnd && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleCancel}
-                disabled={actionLoading === "cancel"}
-              >
-                {actionLoading === "cancel" ? "Canceling..." : "Cancel Plan"}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  onClick={handleChangePlan}
+                  disabled={actionLoading === "change"}
+                >
+                  {actionLoading === "change" ? "Opening..." : "Change Plan"}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCancel}
+                  disabled={actionLoading === "cancel"}
+                >
+                  {actionLoading === "cancel" ? "Canceling..." : "Cancel Plan"}
+                </Button>
+              </div>
             )}
           </div>
         ) : (

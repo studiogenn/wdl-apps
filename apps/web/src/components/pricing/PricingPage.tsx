@@ -253,7 +253,10 @@ export function PricingPage() {
     case "auth":
       return (
         <AuthStep
-          onComplete={handleSubscriptionCheckout}
+          onComplete={() => {
+            setIsLoggedIn(true);
+            handleSubscriptionCheckout();
+          }}
           onBack={() => navigate("schedule")}
         />
       );
@@ -271,9 +274,12 @@ export function PricingPage() {
     case "payg-auth":
       return (
         <AuthStep
-          onComplete={handlePaygCheckout}
+          onComplete={() => {
+            setIsLoggedIn(true);
+            handlePaygCheckout();
+          }}
           onBack={() => navigate("payg")}
         />
-      );
+       );
   }
 }

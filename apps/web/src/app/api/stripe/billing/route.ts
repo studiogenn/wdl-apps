@@ -59,21 +59,83 @@ export async function GET(request: Request) {
     return NextResponse.json({ success: true, data: empty });
   }
 
-  // Subscription from local DB
-  const sub = await db.query.subscriptions.findFirst({
+  // Subscription from local DB — prefer active, fall back to any
+  let sub = await db.query.subscriptions.findFirst({
     where: eq(schema.subscriptions.customerId, customer.id),
   });
 
-  const subscription: SubscriptionInfo | null = sub
-    ? {
-        id: sub.stripeSubscriptionId,
-        status: sub.status,
-        priceId: sub.stripePriceId,
-        currentPeriodStart: sub.currentPeriodStart.toISOString(),
-        currentPeriodEnd: sub.currentPeriodEnd.toISOString(),
-        cancelAtPeriodEnd: sub.cancelAtPeriodEnd === 1,
+  // If local DB has no subscription (or only canceled), check Stripe directly.
+  // This handles cases where the webhook didn't sync properly.
+  let subscription: SubscriptionInfo | null = null;
+  if (sub && sub.status !== "canceled") {
+    subscription = {
+      id: sub.stripeSubscriptionId,
+      status: sub.status,
+      priceId: sub.stripePriceId,
+      currentPeriodStart: sub.currentPeriodStart.toISOString(),
+      currentPeriodEnd: sub.currentPeriodEnd.toISOString(),
+      cancelAtPeriodEnd: sub.cancelAtPeriodEnd === 1,
+    };
+  } else {
+    // Fallback: check Stripe for active subscriptions not yet in local DB
+    try {
+      const stripeSubs = await getStripe().subscriptions.list({
+        customer: customer.stripeCustomerId,
+        status: "active",
+        limit: 1,
+      });
+      const activeSub = stripeSubs.data[0];
+      if (activeSub) {
+        subscription = {
+          id: activeSub.id,
+          status: activeSub.status,
+          priceId: activeSub.items.data[0]?.price?.id ?? "",
+          currentPeriodStart: new Date(activeSub.start_date * 1000).toISOString(),
+          currentPeriodEnd: new Date(
+            (activeSub.items.data[0]?.current_period_end ?? activeSub.start_date) * 1000,
+          ).toISOString(),
+          cancelAtPeriodEnd: activeSub.cancel_at_period_end,
+        };
+
+        // Backfill to local DB so future requests are fast
+        try {
+          await db.insert(schema.subscriptions).values({
+            customerId: customer.id,
+            stripeSubscriptionId: activeSub.id,
+            stripePriceId: subscription.priceId,
+            status: activeSub.status,
+            currentPeriodStart: new Date(activeSub.start_date * 1000),
+            currentPeriodEnd: new Date(
+              (activeSub.items.data[0]?.current_period_end ?? activeSub.start_date) * 1000,
+            ),
+            cancelAtPeriodEnd: activeSub.cancel_at_period_end ? 1 : 0,
+          }).onConflictDoUpdate({
+            target: schema.subscriptions.stripeSubscriptionId,
+            set: {
+              status: activeSub.status,
+              stripePriceId: subscription.priceId,
+              cancelAtPeriodEnd: activeSub.cancel_at_period_end ? 1 : 0,
+              updatedAt: new Date(),
+            },
+          });
+        } catch {
+          // Non-critical — backfill can fail silently
+        }
       }
-    : null;
+    } catch {
+      // Stripe unreachable — return what we have
+      if (sub) {
+        subscription = {
+          id: sub.stripeSubscriptionId,
+          status: sub.status,
+          priceId: sub.stripePriceId,
+          currentPeriodStart: sub.currentPeriodStart.toISOString(),
+          currentPeriodEnd: sub.currentPeriodEnd.toISOString(),
+          cancelAtPeriodEnd: sub.cancelAtPeriodEnd === 1,
+        };
+      }
+    }
+  }
 
   // Payment method from Stripe (not stored locally)
   let paymentMethod: PaymentMethodInfo | null = null;

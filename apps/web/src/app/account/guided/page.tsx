@@ -10,6 +10,7 @@ import { Confirmation } from "@/components/signup/confirmation";
 import { PaymentStep } from "@/components/signup/payment-step";
 import { LoginForm } from "@/components/signup/login-form";
 import { PromoInput } from "@/components/signup/promo-input";
+import { AuthStep } from "@/components/join/AuthStep";
 import { fromCleanCloudTimestamp } from "@/lib/cleancloud/dates";
 import {
   trackSignupFlowStarted,
@@ -22,8 +23,8 @@ import {
 } from "@/lib/tracking";
 
 const VARIANT = "guided";
-const STEP_LABELS = ["Zip Code", "Service", "Your Info", "Schedule", "Payment", "Done"] as const;
-const TOTAL_STEPS = 6;
+const STEP_LABELS = ["Zip Code", "Service", "Account", "Your Info", "Schedule", "Payment", "Done"] as const;
+const TOTAL_STEPS = 7;
 
 type SelectedProduct = {
   readonly productID: number;
@@ -50,6 +51,7 @@ type GuidedState = {
 type GuidedAction =
   | { type: "ZIP_CHECKED"; routeID: number; zip: string }
   | { type: "SERVICE_SELECTED"; product: SelectedProduct }
+  | { type: "AUTH_COMPLETED" }
   | { type: "CUSTOMER_CREATED"; customerID: number; contactInfo: ContactInfo }
   | { type: "ORDER_CREATED"; orderID: number; pickupDate: number; pickupStart: string }
   | { type: "PAYMENT_COMPLETED"; paymentIntentId: string }
@@ -80,15 +82,17 @@ function reducer(state: GuidedState, action: GuidedAction): GuidedState {
       return { ...state, currentStep: 2, routeID: action.routeID, zip: action.zip, error: "" };
     case "SERVICE_SELECTED":
       return { ...state, currentStep: 3, selectedProduct: action.product, error: "" };
+    case "AUTH_COMPLETED":
+      return { ...state, currentStep: 4, error: "" };
     case "CUSTOMER_CREATED":
-      return { ...state, currentStep: 4, customerID: action.customerID, contactInfo: action.contactInfo, loading: false, error: "" };
+      return { ...state, currentStep: 5, customerID: action.customerID, contactInfo: action.contactInfo, loading: false, error: "" };
     case "ORDER_CREATED": {
       // Skip payment step if no product price
-      const nextStep = state.selectedProduct && state.selectedProduct.price > 0 ? 5 : 6;
+      const nextStep = state.selectedProduct && state.selectedProduct.price > 0 ? 6 : 7;
       return { ...state, currentStep: nextStep, orderID: action.orderID, pickupDate: action.pickupDate, pickupStart: action.pickupStart, loading: false, error: "" };
     }
     case "PAYMENT_COMPLETED":
-      return { ...state, currentStep: 6, paymentIntentId: action.paymentIntentId, error: "" };
+      return { ...state, currentStep: 7, paymentIntentId: action.paymentIntentId, error: "" };
     case "GO_BACK":
       return { ...state, currentStep: Math.max(1, state.currentStep - 1), error: "" };
     case "SET_PROMO":
@@ -152,6 +156,11 @@ export default function GuidedSignupPage() {
   const handleServiceSelect = useCallback((product: SelectedProduct) => {
     trackSignupStepCompleted(VARIANT, "service_select");
     dispatch({ type: "SERVICE_SELECTED", product });
+  }, []);
+
+  const handleAuthComplete = useCallback(() => {
+    trackSignupStepCompleted(VARIANT, "auth");
+    dispatch({ type: "AUTH_COMPLETED" });
   }, []);
 
   const handleContactSubmit = useCallback(async (info: ContactInfo) => {
@@ -275,6 +284,12 @@ export default function GuidedSignupPage() {
         />
       )}
       {!loginMode && state.currentStep === 3 && (
+        <AuthStep
+          onComplete={handleAuthComplete}
+          onBack={handleBack}
+        />
+      )}
+      {!loginMode && state.currentStep === 4 && (
         <div className="space-y-6">
           <ContactForm
             onSubmit={handleContactSubmit}
@@ -285,7 +300,7 @@ export default function GuidedSignupPage() {
           <PromoInput value={state.promoCode} onChange={handlePromoChange} />
         </div>
       )}
-      {!loginMode && state.currentStep === 4 && state.routeID && (
+      {!loginMode && state.currentStep === 5 && state.routeID && (
         <div>
           <SchedulePicker
             routeID={state.routeID}
@@ -315,7 +330,7 @@ export default function GuidedSignupPage() {
           </div>
         </div>
       )}
-      {!loginMode && state.currentStep === 5 && state.selectedProduct && state.selectedProduct.price > 0 && (
+      {!loginMode && state.currentStep === 6 && state.selectedProduct && state.selectedProduct.price > 0 && (
         <PaymentStep
           amountCents={state.selectedProduct.price}
           description={`Order #${state.orderID} — ${state.selectedProduct.name}`}
@@ -323,7 +338,7 @@ export default function GuidedSignupPage() {
           onBack={handleBack}
         />
       )}
-      {!loginMode && state.currentStep === 6 && (
+      {!loginMode && state.currentStep === 7 && (
         <Confirmation
           customerName={state.contactInfo?.name}
           pickupDate={state.pickupDate ? formatPickupDate(state.pickupDate) : undefined}
