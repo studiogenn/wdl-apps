@@ -6,12 +6,56 @@ import { STRIPE_IDS } from "@/lib/stripe-config";
 import { handleInvoicePaid } from "@/lib/stripe-cleancloud";
 import type Stripe from "stripe";
 
+import crypto from "crypto";
+
 // Ensure the raw body is not parsed/modified by Next.js
 export const runtime = "nodejs";
 
+function verifyStripeSignature(
+  payload: string,
+  sigHeader: string,
+  secret: string,
+  toleranceSeconds = 300,
+): Stripe.Event {
+  const parts = sigHeader.split(",").reduce(
+    (acc, part) => {
+      const [key, val] = part.split("=");
+      if (key === "t") acc.timestamp = val;
+      if (key === "v1") acc.signatures.push(val);
+      return acc;
+    },
+    { timestamp: "", signatures: [] as string[] },
+  );
+
+  if (!parts.timestamp || parts.signatures.length === 0) {
+    throw new Error("Invalid stripe-signature header format");
+  }
+
+  const expectedSig = crypto
+    .createHmac("sha256", secret)
+    .update(`${parts.timestamp}.${payload}`)
+    .digest("hex");
+
+  const match = parts.signatures.some(
+    (sig) => crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expectedSig)),
+  );
+
+  if (!match) {
+    throw new Error(
+      `Signature mismatch. Expected ${expectedSig.slice(0, 12)}... Got ${parts.signatures[0]?.slice(0, 12)}...`,
+    );
+  }
+
+  const age = Math.floor(Date.now() / 1000) - parseInt(parts.timestamp, 10);
+  if (age > toleranceSeconds) {
+    throw new Error(`Timestamp too old: ${age}s`);
+  }
+
+  return JSON.parse(payload) as Stripe.Event;
+}
+
 export async function POST(request: Request) {
-  const rawBody = await request.arrayBuffer();
-  const body = Buffer.from(rawBody);
+  const body = await request.text();
   const signature = request.headers.get("stripe-signature");
 
   if (!signature) {
@@ -32,21 +76,11 @@ export async function POST(request: Request) {
   let event: Stripe.Event;
 
   try {
-    event = getStripe().webhooks.constructEvent(
-      body,
-      signature,
-      webhookSecret
-    );
+    event = verifyStripeSignature(body, signature, webhookSecret);
   } catch (err) {
     console.error(
       "[Webhook] Signature verification failed:",
       err instanceof Error ? err.message : err,
-      "| secret starts with:",
-      webhookSecret.slice(0, 12) + "...",
-      "| sig starts with:",
-      signature.slice(0, 30) + "...",
-      "| body length:",
-      body.length,
     );
     return NextResponse.json(
       { success: false, error: "Invalid signature" },
