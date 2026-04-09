@@ -206,3 +206,171 @@ export async function cleancloudProxy<T = Record<string, unknown>>(
   const raw = await rateLimitedFetch(endpoint, mappedParams);
   return transformResponse<T>(path, raw);
 }
+
+// ─── Direct API helpers (used by server-side pipelines) ──────────────
+
+/**
+ * Low-level POST to CleanCloud. Use for operations that don't fit the
+ * proxy path mapping (e.g. searching customers by date range).
+ */
+export async function cleancloudPost(
+  endpoint: string,
+  body: Record<string, unknown>,
+): Promise<Record<string, unknown>> {
+  return rateLimitedFetch(endpoint, body);
+}
+
+/** Find a CleanCloud customer by email (searches last 31 days). */
+export async function findCustomerByEmail(
+  email: string,
+): Promise<{ customerID: string; name: string; email: string } | null> {
+  const now = new Date();
+  const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const dateTo = now.toISOString().split("T")[0];
+  const dateFrom = monthAgo.toISOString().split("T")[0];
+
+  const data = await rateLimitedFetch("/getCustomer", { dateFrom, dateTo });
+  const customers =
+    (data.Customers as Array<Record<string, unknown>>) ??
+    (data.customers as Array<Record<string, unknown>>) ??
+    [];
+
+  const match = customers.find(
+    (c) =>
+      ((c.Email as string) ?? (c.email as string) ?? "").toLowerCase() ===
+      email.toLowerCase(),
+  );
+
+  if (!match) return null;
+
+  return {
+    customerID: String(match.ID ?? match.id),
+    name: String(match.Name ?? match.name ?? ""),
+    email: String(match.Email ?? match.email ?? ""),
+  };
+}
+
+/** Find existing customer or create a new one. Returns customerID. */
+export async function findOrCreateCustomer(params: {
+  name: string;
+  email: string;
+  phone: string;
+  address?: string;
+}): Promise<string> {
+  const existing = await findCustomerByEmail(params.email);
+  if (existing) return existing.customerID;
+
+  const phone =
+    params.phone && params.phone.length >= 7 ? params.phone : "0000000000";
+  const data = await rateLimitedFetch("/addCustomer", {
+    customerName: params.name,
+    customerEmail: params.email,
+    customerTel: phone,
+    customerAddress: params.address ?? "",
+  });
+
+  if (data.CustomerID) return String(data.CustomerID);
+
+  // Customer may already exist
+  if (
+    data.Error &&
+    typeof data.Error === "string" &&
+    data.Error.includes("already exists")
+  ) {
+    const found = await findCustomerByEmail(params.email);
+    if (found) return found.customerID;
+  }
+
+  if (data.Error) throw new Error(`CleanCloud addCustomer: ${data.Error}`);
+  return String(data.customerID ?? data.CustomerID);
+}
+
+/** Create an order in CleanCloud. Returns orderID. */
+export async function addOrder(params: {
+  customerID: string;
+  products: Array<{
+    id: string;
+    price: string;
+    pieces: string;
+    quantity: string;
+    name: string;
+  }>;
+  finalTotal: string;
+  delivery?: number;
+  paid?: number;
+  paymentType?: number;
+  notifyMethod?: number;
+  orderNotes?: string;
+  pickupDate?: string;
+  pickupStart?: string;
+  pickupEnd?: string;
+  deliveryDate?: string;
+  deliveryStart?: string;
+  deliveryEnd?: string;
+}): Promise<string> {
+  const data = await rateLimitedFetch("/addOrder", {
+    customerID: params.customerID,
+    products: params.products,
+    finalTotal: params.finalTotal,
+    delivery: params.delivery ?? 1,
+    paid: params.paid ?? 1,
+    paymentType: params.paymentType ?? 2,
+    notifyMethod: params.notifyMethod ?? 4,
+    orderNotes: params.orderNotes ?? "",
+    ...(params.pickupDate && { pickupDate: params.pickupDate }),
+    ...(params.pickupStart && { pickupStart: params.pickupStart }),
+    ...(params.pickupEnd && { pickupEnd: params.pickupEnd }),
+    ...(params.deliveryDate && { deliveryDate: params.deliveryDate }),
+    ...(params.deliveryStart && { deliveryStart: params.deliveryStart }),
+    ...(params.deliveryEnd && { deliveryEnd: params.deliveryEnd }),
+  });
+
+  if (data.Error) throw new Error(`CleanCloud addOrder: ${data.Error}`);
+  return String(data.orderID ?? data.OrderID);
+}
+
+/** Get the next available pickup/delivery schedule for an address. */
+export async function getNextPickupDelivery(address: string): Promise<{
+  routeID: string;
+  pickupDate: string;
+  pickupTime: string;
+  deliveryDate: string;
+  deliveryTime: string;
+} | null> {
+  if (!address) return null;
+
+  try {
+    const route = await rateLimitedFetch("/getRoute", {
+      customerAddress: address,
+    });
+    if (!route.Route) return null;
+    const routeID = String(route.Route);
+
+    const datesData = await rateLimitedFetch("/getDates", { routeID });
+    const dates =
+      (datesData.Dates as Array<Record<string, unknown>>) ?? [];
+    if (dates.length === 0) return null;
+
+    const pickup = dates[0];
+    const pickupTime = String(pickup.times ?? "").split(",")[0];
+
+    const minDeliveryStamp = (datesData.MinDeliveryDateStamp as number) ?? 0;
+    const delivery =
+      dates.find(
+        (d) => (d.dateStamp as number) >= minDeliveryStamp,
+      ) ??
+      dates[1] ??
+      dates[0];
+    const deliveryTime = String(delivery.times ?? "").split(",")[0];
+
+    return {
+      routeID,
+      pickupDate: String(pickup.dateStamp),
+      pickupTime,
+      deliveryDate: String(delivery.dateStamp),
+      deliveryTime,
+    };
+  } catch {
+    return null;
+  }
+}

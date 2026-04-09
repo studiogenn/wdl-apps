@@ -3,6 +3,7 @@ import { getStripe } from "@/lib/stripe";
 import { getDb, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { STRIPE_IDS } from "@/lib/stripe-config";
+import { handleInvoicePaid } from "@/lib/stripe-cleancloud";
 import type Stripe from "stripe";
 
 export async function POST(request: Request) {
@@ -196,6 +197,19 @@ export async function POST(request: Request) {
             .where(
               eq(schema.subscriptions.stripeSubscriptionId, subscription.id)
             );
+        }
+
+        // Create CleanCloud order when invoice is paid
+        if (event.type === "invoice.paid") {
+          try {
+            await handleInvoicePaid(invoice);
+          } catch (err) {
+            // Log but don't fail the webhook — the payment is already recorded
+            console.error(
+              "[Webhook] CleanCloud order creation failed:",
+              err instanceof Error ? err.message : err,
+            );
+          }
         }
         break;
       }
