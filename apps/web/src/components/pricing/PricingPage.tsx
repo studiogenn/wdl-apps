@@ -263,9 +263,16 @@ export function PricingPage() {
           state={paygState}
           onChange={setPaygState}
           onNavigate={navigate}
-          onCheckout={handlePaygCheckout}
-          checkoutLoading={checkoutLoading}
-          checkoutError={checkoutError}
+          onCheckout={() => isLoggedIn ? handlePaygCheckout() : navigate("payg-auth")}
+          checkoutLoading={isLoggedIn ? checkoutLoading : false}
+          checkoutError={isLoggedIn ? checkoutError : null}
+        />
+      );
+    case "payg-auth":
+      return (
+        <AuthStep
+          onComplete={handlePaygCheckout}
+          onBack={() => navigate("payg")}
         />
       );
   }
