@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import {
   type PageView,
   type SubState,
@@ -37,6 +37,25 @@ export function PricingPage() {
   const [scheduleState, setScheduleState] = useState<ScheduleState>(defaultScheduleState);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  const sessionChecked = useRef(false);
+
+  // Check if user is already logged in and has an active subscription
+  useEffect(() => {
+    if (sessionChecked.current) return;
+    sessionChecked.current = true;
+
+    fetch("/api/account/subscription-status")
+      .then((r) => r.json())
+      .then((json) => {
+        if (json.success && json.data.loggedIn) {
+          setIsLoggedIn(true);
+          setHasActiveSubscription(json.data.hasActiveSubscription ?? false);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const navigate = useCallback((page: PageView) => {
     setView(page);
@@ -82,6 +101,23 @@ export function PricingPage() {
   const handleSubscriptionCheckout = useCallback(async () => {
     setCheckoutError(null);
     setCheckoutLoading(true);
+
+    // Check for active subscription before proceeding
+    try {
+      const statusRes = await fetch("/api/account/subscription-status");
+      const statusJson = await statusRes.json();
+      if (statusJson.success && statusJson.data.hasActiveSubscription) {
+        const confirmed = window.confirm(
+          "You already have an active subscription. Starting a new checkout will create an additional subscription. Do you want to continue?"
+        );
+        if (!confirmed) {
+          setCheckoutLoading(false);
+          return;
+        }
+      }
+    } catch {
+      // Non-critical — proceed with checkout
+    }
 
     try {
       const planMetadata: Record<string, string> = {};
@@ -209,9 +245,9 @@ export function PricingPage() {
           state={scheduleState}
           onChange={setScheduleState}
           onNavigate={navigate}
-          onCheckout={() => navigate("auth")}
-          checkoutLoading={false}
-          checkoutError={null}
+          onCheckout={() => isLoggedIn ? handleSubscriptionCheckout() : navigate("auth")}
+          checkoutLoading={isLoggedIn ? checkoutLoading : false}
+          checkoutError={isLoggedIn ? checkoutError : null}
         />
       );
     case "auth":
