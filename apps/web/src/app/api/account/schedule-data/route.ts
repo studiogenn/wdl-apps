@@ -57,6 +57,35 @@ async function resolveCleanCloudId(
   }
 }
 
+/** Get customer address from Stripe (shipping or subscription metadata) */
+async function getStripeAddress(authUserId: string): Promise<string> {
+  try {
+    const db = getDb();
+    const stripeCustomer = await db.query.customers.findFirst({
+      where: eq(schema.customers.authUserId, authUserId),
+    });
+    if (!stripeCustomer) return "";
+
+    const sc = await getStripe().customers.retrieve(stripeCustomer.stripeCustomerId);
+    if (sc.deleted) return "";
+
+    const addr = sc.shipping?.address;
+    if (addr) {
+      const parts = [addr.line1, addr.line2, addr.city, addr.state, addr.postal_code].filter(Boolean);
+      if (parts.length > 0) return parts.join(", ");
+    }
+
+    // Check subscription metadata
+    const subs = await getStripe().subscriptions.list({
+      customer: stripeCustomer.stripeCustomerId,
+      limit: 1,
+    });
+    return subs.data[0]?.metadata?.pickupAddress ?? "";
+  } catch {
+    return "";
+  }
+}
+
 export async function POST(request: Request) {
   const auth = await authenticateRequest(request);
   if (isErrorResponse(auth)) return auth;
@@ -68,15 +97,24 @@ export async function POST(request: Request) {
   if (!cleancloudCustomerId) {
     return NextResponse.json(
       { success: false, error: "No CleanCloud account linked. Please update your profile with your address first." },
-      { status: 422 }
+      { status: 422 },
     );
   }
 
+  // 1. Try to get customer data from staging table
+  let customerAddress = "";
+  let routeId: number | null = null;
+  let customerPrefs = {
+    detergent: null as string | null,
+    bleach: null as string | null,
+    fabricSoftener: null as string | null,
+    dryerTemperature: null as string | null,
+    dryerSheets: null as string | null,
+  };
+
   try {
     const sql = getsql();
-
-    // Fetch customer data — use only confirmed columns
-    const customerRows = await sql`
+    const [customer] = await sql`
       SELECT
         route_id          AS "routeId",
         address,
@@ -93,150 +131,134 @@ export async function POST(request: Request) {
       LIMIT 1
     `;
 
-    // Fetch preference options — may not exist in all environments
-    let preferenceOptions: readonly Record<string, unknown>[] = [];
-    try {
-      preferenceOptions = await sql`
-        SELECT
-          api_field AS "apiField",
-          preference_name AS "name"
-        FROM seed.cleancloud_laundry_preference
-        ORDER BY api_field, preference_code
-      `;
-    } catch {
-      // Table doesn't exist — use empty options (users can still type custom values)
-    }
+    if (customer) {
+      routeId = (customer.routeId as number) ?? null;
+      customerAddress = (customer.address as string) ?? "";
+      customerPrefs = {
+        detergent: (customer.detergent as string) ?? null,
+        bleach: (customer.bleach as string) ?? null,
+        fabricSoftener: (customer.fabricSoftener as string) ?? null,
+        dryerTemperature: (customer.dryerTemperature as string) ?? null,
+        dryerSheets: (customer.dryerSheets as string) ?? null,
+      };
 
-    const customer = customerRows[0];
-
-    let routeId = customer?.routeId as number | null;
-    let customerAddress = (customer?.address as string) ?? "";
-
-    // If staging table is empty, pull address from Stripe
-    if (!customerAddress) {
-      try {
-        const db = getDb();
-        const stripeCustomer = await db.query.customers.findFirst({
-          where: eq(schema.customers.authUserId, auth.uid),
-        });
-        if (stripeCustomer) {
-          const sc = await getStripe().customers.retrieve(stripeCustomer.stripeCustomerId);
-          if (!sc.deleted) {
-            const addr = sc.shipping?.address;
-            if (addr) {
-              customerAddress = [addr.line1, addr.line2, addr.city, addr.state, addr.postal_code]
-                .filter(Boolean).join(", ");
-            }
-          }
-          // Also check subscription metadata
-          if (!customerAddress) {
-            const subs = await getStripe().subscriptions.list({
-              customer: stripeCustomer.stripeCustomerId,
-              limit: 1,
-            });
-            const sub = subs.data[0];
-            if (sub?.metadata?.pickupAddress) {
-              customerAddress = sub.metadata.pickupAddress;
-            }
-          }
-        }
-      } catch { /* non-critical */ }
-    }
-
-    // Auto-resolve route if missing
-    if (!routeId) {
-      const routeParams: Record<string, unknown> = {};
-      if (customer?.lat && customer?.lng) {
-        routeParams.lat = customer.lat;
-        routeParams.lng = customer.lng;
-      } else if (customerAddress) {
-        routeParams.address = customerAddress;
-      }
-
-      if (Object.keys(routeParams).length > 0) {
+      // Try lat/lng route resolution if no routeId
+      if (!routeId && customer.lat && customer.lng) {
         try {
-          const routeResult = await cleancloudProxy<{ routeID: number }>("/route", routeParams);
-          if (routeResult.success && routeResult.data?.routeID) {
-            routeId = routeResult.data.routeID;
-          }
-        } catch { /* route lookup failed */ }
+          const r = await cleancloudProxy<{ routeID: number }>("/route", {
+            lat: customer.lat, lng: customer.lng,
+          });
+          if (r.success && r.data?.routeID) routeId = r.data.routeID;
+        } catch { /* non-critical */ }
       }
     }
+  } catch {
+    // Staging table unavailable — will fall back to Stripe
+  }
 
-    if (!routeId) {
-      return NextResponse.json(
-        { success: false, error: "We couldn't determine your delivery area. Please update your address." },
-        { status: 422 }
-      );
-    }
+  // 2. If no address from staging, try Stripe
+  if (!customerAddress) {
+    customerAddress = await getStripeAddress(auth.uid);
+  }
 
-    // Fetch available windows — fall back to CleanCloud dates API if table doesn't exist
-    let windowRows: readonly WindowRow[] = [];
+  // 3. If still no routeId, resolve from address
+  if (!routeId && customerAddress) {
     try {
-      windowRows = await sql`
-        SELECT
-          date::text AS "date",
-          window_start,
-          window_end
-        FROM operations.agent_available_windows
-        WHERE route_id = ${routeId}
-          AND date >= CURRENT_DATE
-          AND window_type = 'pickup'
-        ORDER BY date, window_start
-      ` as readonly WindowRow[];
-    } catch {
-      // Table doesn't exist — fetch from CleanCloud dates/slots API
-      try {
-        const datesResult = await cleancloudProxy<{ Dates: Array<{ dateStamp: number; times: string }> }>(
-          "/scheduling/dates",
-          { routeID: routeId },
-        );
-        if (datesResult.success && datesResult.data?.Dates) {
-          const rows: WindowRow[] = [];
-          for (const d of datesResult.data.Dates.slice(0, 14)) {
-            const dateObj = new Date(d.dateStamp * 1000);
-            const dateStr = dateObj.toISOString().split("T")[0];
-            const times = (d.times ?? "").split(",").filter(Boolean);
-            for (const t of times) {
-              const parts = t.trim().split("-");
-              rows.push({ date: dateStr, window_start: parts[0]?.trim() ?? "", window_end: parts[1]?.trim() ?? parts[0]?.trim() ?? "" });
-            }
-          }
-          windowRows = rows;
-        }
-      } catch {
-        // Both failed — return empty dates
-      }
-    }
+      const r = await cleancloudProxy<{ routeID: number }>("/route", {
+        address: customerAddress,
+      });
+      if (r.success && r.data?.routeID) routeId = r.data.routeID;
+    } catch { /* route lookup failed */ }
+  }
 
-    // Group windows by date
-    const dateMap = new Map<string, Slot[]>();
-    for (const row of windowRows) {
-      const existing = dateMap.get(row.date);
-      const slot: Slot = { start: row.window_start, end: row.window_end };
-      if (existing) {
-        existing.push(slot);
-      } else {
-        dateMap.set(row.date, [slot]);
-      }
-    }
-
-    const dates: DateWithSlots[] = Array.from(dateMap.entries()).map(
-      ([date, slots]) => ({ date, slots })
+  if (!routeId) {
+    return NextResponse.json(
+      { success: false, error: "We couldn't determine your delivery area. Please update your address in your profile." },
+      { status: 422 },
     );
+  }
 
-    // Group preference options by field
+  // 4. Fetch available pickup windows
+  let windowRows: readonly WindowRow[] = [];
+
+  // Try internal table first
+  try {
+    const sql = getsql();
+    windowRows = await sql`
+      SELECT
+        date::text AS "date",
+        window_start,
+        window_end
+      FROM operations.agent_available_windows
+      WHERE route_id = ${routeId}
+        AND date >= CURRENT_DATE
+        AND window_type = 'pickup'
+      ORDER BY date, window_start
+    ` as readonly WindowRow[];
+  } catch {
+    // Table doesn't exist
+  }
+
+  // Fall back to CleanCloud dates API
+  if (windowRows.length === 0) {
+    try {
+      const datesResult = await cleancloudProxy<{ Dates: Array<{ dateStamp: number; times: string }> }>(
+        "/scheduling/dates",
+        { routeID: routeId },
+      );
+      if (datesResult.success && datesResult.data?.Dates) {
+        const rows: WindowRow[] = [];
+        for (const d of datesResult.data.Dates.slice(0, 14)) {
+          const dateObj = new Date(d.dateStamp * 1000);
+          const dateStr = dateObj.toISOString().split("T")[0];
+          const times = (d.times ?? "").split(",").filter(Boolean);
+          for (const t of times) {
+            const parts = t.trim().split("-");
+            rows.push({
+              date: dateStr,
+              window_start: parts[0]?.trim() ?? "",
+              window_end: parts[1]?.trim() ?? parts[0]?.trim() ?? "",
+            });
+          }
+        }
+        windowRows = rows;
+      }
+    } catch {
+      // CleanCloud API also failed
+    }
+  }
+
+  // 5. Group windows by date
+  const dateMap = new Map<string, Slot[]>();
+  for (const row of windowRows) {
+    const existing = dateMap.get(row.date);
+    const slot: Slot = { start: row.window_start, end: row.window_end };
+    if (existing) existing.push(slot);
+    else dateMap.set(row.date, [slot]);
+  }
+
+  const dates: DateWithSlots[] = Array.from(dateMap.entries()).map(
+    ([date, slots]) => ({ date, slots }),
+  );
+
+  // 6. Preference options (best-effort)
+  const options: Record<string, string[]> = {};
+  try {
+    const sql = getsql();
+    const preferenceOptions = await sql`
+      SELECT api_field AS "apiField", preference_name AS "name"
+      FROM seed.cleancloud_laundry_preference
+      ORDER BY api_field, preference_code
+    `;
+
     const PREF_FIELD_MAP: Record<string, string> = {
       detergenttype: "detergent",
       detergentscent: "bleach",
       fabricsoftenertype: "fabricSoftener",
-      starchpreference: "colorSafeBleach",
-      trouserpreference: "trouser",
       whitesdryerheat: "dryerTemperature",
       colorsdryerheat: "dryerSheets",
     };
 
-    const options: Record<string, string[]> = {};
     for (const row of preferenceOptions) {
       const key = PREF_FIELD_MAP[row.apiField as string];
       if (key) {
@@ -244,29 +266,20 @@ export async function POST(request: Request) {
         options[key].push(row.name as string);
       }
     }
-
-    return NextResponse.json({
-      success: true,
-      data: {
-        routeId,
-        dates,
-        products: PRODUCTS,
-        preferences: {
-          current: {
-            detergent: customer.detergent ?? null,
-            bleach: customer.bleach ?? null,
-            fabricSoftener: customer.fabricSoftener ?? null,
-            dryerTemperature: customer.dryerTemperature ?? null,
-            dryerSheets: customer.dryerSheets ?? null,
-          },
-          options,
-        },
-      },
-    });
   } catch {
-    return NextResponse.json(
-      { success: false, error: "Failed to load scheduling data" },
-      { status: 500 }
-    );
+    // Table doesn't exist — empty options
   }
+
+  return NextResponse.json({
+    success: true,
+    data: {
+      routeId,
+      dates,
+      products: PRODUCTS,
+      preferences: {
+        current: customerPrefs,
+        options,
+      },
+    },
+  });
 }
