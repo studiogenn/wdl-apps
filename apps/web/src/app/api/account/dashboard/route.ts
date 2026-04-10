@@ -84,15 +84,73 @@ export async function GET(request: Request) {
     resolveCleanCloudId(auth.uid, auth.email, auth.cleancloudCustomerId),
   ]);
 
+  const authUser = auth;
+
+  // Helper: pull profile basics from Stripe customer if staging table is empty
+  async function getStripeProfile(): Promise<{ name: string; phone: string; address: string }> {
+    try {
+      const db = getDb();
+      const stripeCustomer = await db.query.customers.findFirst({
+        where: eq(schema.customers.authUserId, authUser.uid),
+      });
+      if (!stripeCustomer) return { name: "", phone: "", address: "" };
+
+      const sc = await getStripe().customers.retrieve(stripeCustomer.stripeCustomerId);
+      if (sc.deleted) return { name: "", phone: "", address: "" };
+
+      const shipping = sc.shipping;
+      const addr = shipping?.address;
+      const addressStr = addr
+        ? [addr.line1, addr.line2, addr.city, addr.state, addr.postal_code].filter(Boolean).join(", ")
+        : "";
+
+      return {
+        name: shipping?.name ?? sc.name ?? "",
+        phone: shipping?.phone ?? sc.phone ?? "",
+        address: addressStr,
+      };
+    } catch {
+      return { name: "", phone: "", address: "" };
+    }
+  }
+
+  // Also pull subscription metadata (has address from checkout)
+  async function getSubscriptionAddress(): Promise<string> {
+    try {
+      const db = getDb();
+      const stripeCustomer = await db.query.customers.findFirst({
+        where: eq(schema.customers.authUserId, authUser.uid),
+      });
+      if (!stripeCustomer) return "";
+
+      const subs = await getStripe().subscriptions.list({
+        customer: stripeCustomer.stripeCustomerId,
+        limit: 1,
+      });
+      const sub = subs.data[0];
+      if (!sub) return "";
+
+      return sub.metadata?.pickupAddress ?? "";
+    } catch {
+      return "";
+    }
+  }
+
   if (!ccId) {
+    // No CleanCloud — pull what we can from Stripe
+    const [stripeProfile, subAddress] = await Promise.all([
+      getStripeProfile(),
+      getSubscriptionAddress(),
+    ]);
+
     return NextResponse.json({
       success: true,
       data: {
         profile: {
           email: auth.email,
-          name: "",
-          phone: auth.phone ?? "",
-          address: "",
+          name: stripeProfile.name,
+          phone: stripeProfile.phone || auth.phone || "",
+          address: stripeProfile.address || subAddress,
         },
         preferences: {},
         delivery: {},
@@ -189,14 +247,23 @@ export async function GET(request: Request) {
 
   const c = customerData;
 
+  // If staging table is empty for this customer, fill gaps from Stripe
+  const hasProfileData = !!(c.name || c.address);
+  let stripeProfile = { name: "", phone: "", address: "" };
+  if (!hasProfileData) {
+    stripeProfile = await getStripeProfile();
+    const subAddr = await getSubscriptionAddress();
+    if (subAddr && !stripeProfile.address) stripeProfile.address = subAddr;
+  }
+
   return NextResponse.json({
     success: true,
     data: {
       profile: {
         email: (c.email as string) ?? auth.email,
-        name: (c.name as string) ?? "",
-        phone: (c.phone as string) ?? auth.phone ?? "",
-        address: (c.address as string) ?? "",
+        name: (c.name as string) || stripeProfile.name || "",
+        phone: (c.phone as string) || stripeProfile.phone || auth.phone || "",
+        address: (c.address as string) || stripeProfile.address || "",
       },
       preferences: {
         detergent: (c.detergent as string) ?? "",
