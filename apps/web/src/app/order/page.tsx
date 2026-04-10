@@ -31,27 +31,31 @@ async function resolveCustomerId(
 ): Promise<number | null> {
   if (existing) return existing;
 
-  const sql = getsql();
-  const [match] = await sql`
-    SELECT cleancloud_id AS "cleancloudId"
-    FROM stg_cleancloud.stg_cc_customers
-    WHERE lower(email) = lower(${email})
-      AND deleted_at IS NULL
-    ORDER BY created_at DESC
-    LIMIT 1
-  `;
+  try {
+    const sql = getsql();
+    const [match] = await sql`
+      SELECT cleancloud_id AS "cleancloudId"
+      FROM stg_cleancloud.stg_cc_customers
+      WHERE lower(email) = lower(${email})
+        AND deleted_at IS NULL
+      ORDER BY created_at DESC
+      LIMIT 1
+    `;
 
-  if (!match?.cleancloudId) return null;
+    if (!match?.cleancloudId) return null;
 
-  const ccId = match.cleancloudId as number;
+    const ccId = match.cleancloudId as number;
 
-  const db = getDb();
-  await db
-    .update(userTable)
-    .set({ cleancloudCustomerId: ccId })
-    .where(eq(userTable.id, userId));
+    const db = getDb();
+    await db
+      .update(userTable)
+      .set({ cleancloudCustomerId: ccId })
+      .where(eq(userTable.id, userId));
 
-  return ccId;
+    return ccId;
+  } catch {
+    return null;
+  }
 }
 
 export default async function OrderPage() {
