@@ -13,8 +13,7 @@ import { CardUpdateModal } from "./card-update-modal";
 type User = { readonly id: string; readonly name: string; readonly email: string };
 
 type Profile = {
-  email: string; name: string; phone: string;
-  address: string; apt: string; city: string; state: string; zip: string;
+  email: string; name: string; phone: string; address: string;
 };
 
 type Preferences = {
@@ -61,8 +60,7 @@ function formatDate(iso: string): string {
 }
 
 function formatAddress(p: Profile): string {
-  const parts = [p.address, p.apt, p.city, p.state, p.zip].filter(Boolean);
-  return parts.length > 0 ? parts.join(", ") : "";
+  return p.address || "";
 }
 
 // ── Component ──
@@ -80,7 +78,7 @@ export function Dashboard({ user }: DashboardProps) {
   // Draft state for modals
   const [prefDraft, setPrefDraft] = useState<Preferences>({ detergent: "", bleach: "", fabricSoftener: "", dryerTemperature: "", dryerSheets: "" });
   const [deliveryDraft, setDeliveryDraft] = useState<Delivery>({ gateCode: "", instructions: "", bagLocation: "" });
-  const [profileDraft, setProfileDraft] = useState<Profile>({ email: "", name: "", phone: "", address: "", apt: "", city: "", state: "", zip: "" });
+  const [profileDraft, setProfileDraft] = useState<Profile>({ email: "", name: "", phone: "", address: "" });
 
   // Fetch dashboard data
   useEffect(() => {
@@ -138,7 +136,7 @@ export function Dashboard({ user }: DashboardProps) {
     );
   }
 
-  const profile = data?.profile ?? { email: user.email, name: user.name, phone: "", address: "", apt: "", city: "", state: "", zip: "" };
+  const profile = data?.profile ?? { email: user.email, name: user.name, phone: "", address: "" };
   const prefs = data?.preferences ?? { detergent: "", bleach: "", fabricSoftener: "", dryerTemperature: "", dryerSheets: "" };
   const delivery = data?.delivery ?? { gateCode: "", instructions: "", bagLocation: "" };
   const orders = data?.orders ?? [];
@@ -407,13 +405,7 @@ export function Dashboard({ user }: DashboardProps) {
             </div>
             <div>
               <label className={labelClass}>Address</label>
-              <input type="text" value={profileDraft.address} onChange={(e) => setProfileDraft({ ...profileDraft, address: e.target.value })} placeholder="Street address" className={inputClass} />
-            </div>
-            <input type="text" value={profileDraft.apt} onChange={(e) => setProfileDraft({ ...profileDraft, apt: e.target.value })} placeholder="Apt (optional)" className={inputClass} />
-            <div className="grid grid-cols-3 gap-2">
-              <input type="text" value={profileDraft.city} onChange={(e) => setProfileDraft({ ...profileDraft, city: e.target.value })} placeholder="City" className={inputClass} />
-              <input type="text" value={profileDraft.state} onChange={(e) => setProfileDraft({ ...profileDraft, state: e.target.value })} placeholder="State" maxLength={2} className={inputClass} />
-              <input type="text" value={profileDraft.zip} onChange={(e) => setProfileDraft({ ...profileDraft, zip: e.target.value })} placeholder="Zip" maxLength={10} className={inputClass} />
+              <input type="text" value={profileDraft.address} onChange={(e) => setProfileDraft({ ...profileDraft, address: e.target.value })} placeholder="Full address" className={inputClass} />
             </div>
           </div>
           {error && <p className="mt-3 font-[family-name:var(--font-poppins)] text-xs text-red-600">{error}</p>}
@@ -422,10 +414,6 @@ export function Dashboard({ user }: DashboardProps) {
               name: profileDraft.name,
               phone: profileDraft.phone,
               address: profileDraft.address,
-              apt: profileDraft.apt,
-              city: profileDraft.city,
-              state: profileDraft.state,
-              zip: profileDraft.zip,
             })}>
             {saving ? "Saving..." : "Save"}
           </Button>
