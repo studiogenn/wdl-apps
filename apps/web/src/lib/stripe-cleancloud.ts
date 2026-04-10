@@ -139,8 +139,16 @@ export async function handleInvoicePaid(
   console.log(`[Stripe → CleanCloud] Processing invoice ${invoiceId}`);
 
   // 1. Get line items, total, and subscription metadata
-  const { items, total, customerId, subscriptionMetadata } =
-    await getInvoiceDetails(invoiceId);
+  let details;
+  try {
+    details = await getInvoiceDetails(invoiceId);
+  } catch (err) {
+    console.error("[Stripe → CleanCloud] Failed to get invoice details:", err instanceof Error ? err.message : err);
+    throw err;
+  }
+  const { items, total, customerId, subscriptionMetadata } = details;
+
+  console.log(`[Stripe → CleanCloud] Invoice ${invoiceId}: ${items.length} items, total=$${total}, customer=${customerId}`);
 
   if (items.length === 0) {
     console.log("[Stripe → CleanCloud] No line items, skipping");
@@ -157,12 +165,20 @@ export async function handleInvoicePaid(
   }
 
   // 3. Find or create customer in CleanCloud
-  const cleanCloudCustomerId = await findOrCreateCustomer({
-    name: customer.name,
-    email: customer.email,
-    phone: customer.phone,
-    address: customer.address,
-  });
+  console.log(`[Stripe → CleanCloud] Finding/creating CC customer for ${customer.email}`);
+  let cleanCloudCustomerId: string;
+  try {
+    cleanCloudCustomerId = await findOrCreateCustomer({
+      name: customer.name,
+      email: customer.email,
+      phone: customer.phone,
+      address: customer.address,
+    });
+    console.log(`[Stripe → CleanCloud] CC customer ID: ${cleanCloudCustomerId}`);
+  } catch (err) {
+    console.error("[Stripe → CleanCloud] findOrCreateCustomer failed:", err instanceof Error ? err.message : err);
+    throw err;
+  }
 
   // 4. Map Stripe products to CleanCloud products
   const products = items
@@ -274,6 +290,7 @@ export async function handleInvoicePaid(
   ].filter(Boolean) as string[];
 
   // 7. Create order in CleanCloud
+  console.log(`[Stripe → CleanCloud] Creating order: ${products.length} products, total=$${total}, schedule=${JSON.stringify(schedule)}`);
   const orderId = await addOrder({
     customerID: cleanCloudCustomerId,
     products,

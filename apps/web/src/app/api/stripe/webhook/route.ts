@@ -88,11 +88,20 @@ export async function POST(request: Request) {
     );
   }
 
+  console.log(`[Webhook] Received event: ${event.type} (${event.id})`);
+
   // Idempotency: skip if already processed
-  const existing = await getDb().query.subscriptionEvents.findFirst({
-    where: eq(schema.subscriptionEvents.stripeEventId, event.id),
-  });
+  let existing;
+  try {
+    existing = await getDb().query.subscriptionEvents.findFirst({
+      where: eq(schema.subscriptionEvents.stripeEventId, event.id),
+    });
+  } catch (err) {
+    console.error("[Webhook] Idempotency check failed:", err instanceof Error ? err.message : err);
+    // Continue processing even if idempotency check fails
+  }
   if (existing) {
+    console.log(`[Webhook] Event ${event.id} already processed, skipping`);
     return NextResponse.json({ success: true, data: { skipped: true } });
   }
 
@@ -257,12 +266,14 @@ export async function POST(request: Request) {
 
         // Create CleanCloud order when invoice is paid — ALWAYS runs regardless of local DB state
         if (event.type === "invoice.paid") {
+          console.log(`[Webhook] invoice.paid — calling handleInvoicePaid for ${invoice.id}`);
           try {
             await handleInvoicePaid(invoice);
+            console.log(`[Webhook] handleInvoicePaid completed for ${invoice.id}`);
           } catch (err) {
             console.error(
               "[Webhook] CleanCloud order creation failed:",
-              err instanceof Error ? err.message : err,
+              err instanceof Error ? `${err.message}\n${err.stack}` : err,
             );
           }
         }
