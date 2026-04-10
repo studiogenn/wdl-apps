@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
-import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { cleancloudProxy, findCustomerByEmail } from "@/lib/cleancloud/client";
 import { getReadableError } from "@/lib/cleancloud/errors";
 import { getDb } from "@/lib/db";
 import { user as userTable } from "@/lib/db/schema";
@@ -15,11 +15,6 @@ const linkSchema = z.object({
 
 type CleanCloudCustomerResponse = {
   readonly customerID: number;
-  readonly [key: string]: unknown;
-};
-
-type CleanCloudLoginResponse = {
-  readonly cid: number;
   readonly [key: string]: unknown;
 };
 
@@ -47,21 +42,19 @@ export async function POST(request: Request) {
   const db = getDb();
   const { name, phone, address } = parsed.data;
 
-  // Try to find existing CC customer by email first
+  // 1. Try to find existing CC customer by email (search, not login)
   let cleancloudCustomerId: number | null = null;
 
   try {
-    const ccLogin = await cleancloudProxy<CleanCloudLoginResponse>(
-      "/customers/login",
-      { email: auth.email, password: "" },
-    );
-    if (ccLogin.success && ccLogin.data?.cid) {
-      cleancloudCustomerId = ccLogin.data.cid;
+    const existing = await findCustomerByEmail(auth.email);
+    if (existing) {
+      cleancloudCustomerId = parseInt(existing.customerID, 10);
     }
   } catch {
-    // Not found — will create
+    // Search failed — will try to create
   }
 
+  // 2. If not found, create a new CleanCloud customer
   if (!cleancloudCustomerId) {
     try {
       const ccCreate = await cleancloudProxy<CleanCloudCustomerResponse>(
@@ -70,14 +63,28 @@ export async function POST(request: Request) {
       );
 
       if (!ccCreate.success) {
-        console.error("[CC Link] Create failed:", ccCreate.error);
-        return NextResponse.json(
-          { success: false, error: getReadableError(ccCreate.error ?? "") },
-          { status: 422 },
-        );
-      }
+        const errorMsg = ccCreate.error ?? "";
+        console.error("[CC Link] Create failed:", errorMsg);
 
-      cleancloudCustomerId = ccCreate.data!.customerID;
+        // If "already exists" error, try searching again
+        if (errorMsg.toLowerCase().includes("already exists") || errorMsg.toLowerCase().includes("already registered")) {
+          try {
+            const retry = await findCustomerByEmail(auth.email);
+            if (retry) {
+              cleancloudCustomerId = parseInt(retry.customerID, 10);
+            }
+          } catch { /* give up */ }
+        }
+
+        if (!cleancloudCustomerId) {
+          return NextResponse.json(
+            { success: false, error: getReadableError(errorMsg) },
+            { status: 422 },
+          );
+        }
+      } else {
+        cleancloudCustomerId = ccCreate.data!.customerID;
+      }
     } catch (err) {
       console.error("[CC Link] Create threw:", err instanceof Error ? err.message : err);
       return NextResponse.json(
@@ -87,7 +94,7 @@ export async function POST(request: Request) {
     }
   }
 
-  // Link to auth user
+  // 3. Link to auth user
   await db
     .update(userTable)
     .set({ cleancloudCustomerId, phone })
