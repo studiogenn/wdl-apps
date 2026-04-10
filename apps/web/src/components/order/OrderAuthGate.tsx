@@ -91,7 +91,8 @@ export function OrderAuthGate({ needsCleanCloud }: OrderAuthGateProps) {
         }
       }
 
-      router.refresh();
+      // Profile saved — redirect to dashboard where they can schedule or subscribe
+      window.location.href = "/account?flag=new-account";
     } catch {
       setError("Something went wrong. Please try again.");
       setLoading(false);
