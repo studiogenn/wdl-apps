@@ -241,7 +241,7 @@ export async function POST(request: Request) {
               },
             });
 
-          // Also update subscription period on invoice.paid
+          // Update subscription period on invoice.paid
           if (event.type === "invoice.paid" && subId) {
             try {
               const subscription = await getStripe().subscriptions.retrieve(subId);
@@ -258,6 +258,18 @@ export async function POST(request: Request) {
                 );
             } catch (err) {
               console.error("[Webhook] Subscription update failed:", err instanceof Error ? err.message : err);
+            }
+          }
+
+          // Mark subscription as past_due on payment failure
+          if (event.type === "invoice.payment_failed" && subId) {
+            try {
+              await getDb()
+                .update(schema.subscriptions)
+                .set({ status: "past_due", updatedAt: new Date() })
+                .where(eq(schema.subscriptions.stripeSubscriptionId, subId));
+            } catch (err) {
+              console.error("[Webhook] past_due update failed:", err instanceof Error ? err.message : err);
             }
           }
         } else {
@@ -354,22 +366,8 @@ export async function POST(request: Request) {
         break;
       }
 
-      case "invoice.payment_failed": {
-        const invoice = event.data.object as Stripe.Invoice;
-        const subId = getSubscriptionId(invoice);
-        if (!subId) break;
-
-        await getDb()
-          .update(schema.subscriptions)
-          .set({
-            status: "past_due",
-            updatedAt: new Date(),
-          })
-          .where(
-            eq(schema.subscriptions.stripeSubscriptionId, subId)
-          );
-        break;
-      }
+      // Note: invoice.payment_failed is handled in the invoices case block above
+      // (sets subscription to past_due). No separate case needed.
     }
 
     // Log the event
