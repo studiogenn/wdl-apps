@@ -189,6 +189,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
               onChange={(addr) => update({ address: addr, routeID: null })}
               onValidated={(id) => update({ routeID: id })}
               onInvalid={() => update({ routeID: null })}
+              hideLabel
             />
           </div>
           {/* Apt */}

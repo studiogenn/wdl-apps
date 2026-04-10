@@ -17,9 +17,10 @@ type AddressInputProps = {
   readonly onChange: (address: string) => void;
   readonly onValidated: (routeID: number) => void;
   readonly onInvalid: () => void;
+  readonly hideLabel?: boolean;
 };
 
-export function AddressInput({ value, onChange, onValidated, onInvalid }: AddressInputProps) {
+export function AddressInput({ value, onChange, onValidated, onInvalid, hideLabel }: AddressInputProps) {
   const [suggestions, setSuggestions] = useState<readonly Suggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [validating, setValidating] = useState(false);
@@ -93,12 +94,14 @@ export function AddressInput({ value, onChange, onValidated, onInvalid }: Addres
 
   return (
     <div className="relative">
-      <label
-        htmlFor="signup-address"
-        className="mb-1 block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70"
-      >
-        Address
-      </label>
+      {!hideLabel && (
+        <label
+          htmlFor="signup-address"
+          className="mb-1 block font-[family-name:var(--font-poppins)] text-xs font-body-medium text-navy/70"
+        >
+          Address
+        </label>
+      )}
       <input
         id="signup-address"
         type="text"
