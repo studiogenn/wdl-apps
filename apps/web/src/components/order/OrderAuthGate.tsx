@@ -20,6 +20,7 @@ export function OrderAuthGate({ needsCleanCloud }: OrderAuthGateProps) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [apt, setApt] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,10 +50,11 @@ export function OrderAuthGate({ needsCleanCloud }: OrderAuthGateProps) {
 
     try {
       if (needsCleanCloud) {
+        const fullAddress = apt ? `${address}, ${apt}` : address;
         const res = await fetch("/api/cleancloud/customers/link", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, phone, address }),
+          body: JSON.stringify({ name, phone, address: fullAddress }),
         });
         const data = await res.json();
         if (!data.success) {
@@ -64,7 +66,7 @@ export function OrderAuthGate({ needsCleanCloud }: OrderAuthGateProps) {
         const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, phone, address, password }),
+          body: JSON.stringify({ name, email, phone, address: apt ? `${address}, ${apt}` : address, password }),
         });
         const data = await res.json();
         if (!data.success) {
@@ -144,6 +146,13 @@ export function OrderAuthGate({ needsCleanCloud }: OrderAuthGateProps) {
                 onChange={(addr) => setAddress(addr)}
                 onValidated={() => {}}
                 onInvalid={() => {}}
+              />
+              <input
+                type="text"
+                value={apt}
+                onChange={(e) => setApt(e.target.value)}
+                placeholder="Apt, suite, unit, floor (optional)"
+                className="w-full rounded-xl border border-navy/15 px-4 py-3 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
             </>
           )}
