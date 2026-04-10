@@ -63,19 +63,28 @@ export async function POST(request: Request) {
   }
 
   if (!cleancloudCustomerId) {
-    const ccCreate = await cleancloudProxy<CleanCloudCustomerResponse>(
-      "/customers",
-      { name, email: auth.email, phone, address },
-    );
+    try {
+      const ccCreate = await cleancloudProxy<CleanCloudCustomerResponse>(
+        "/customers",
+        { name, email: auth.email, phone, address },
+      );
 
-    if (!ccCreate.success) {
+      if (!ccCreate.success) {
+        console.error("[CC Link] Create failed:", ccCreate.error);
+        return NextResponse.json(
+          { success: false, error: getReadableError(ccCreate.error ?? "") },
+          { status: 422 },
+        );
+      }
+
+      cleancloudCustomerId = ccCreate.data!.customerID;
+    } catch (err) {
+      console.error("[CC Link] Create threw:", err instanceof Error ? err.message : err);
       return NextResponse.json(
-        { success: false, error: getReadableError(ccCreate.error ?? "") },
-        { status: 422 },
+        { success: false, error: "Unable to set up your laundry account. Please try again or contact support." },
+        { status: 500 },
       );
     }
-
-    cleancloudCustomerId = ccCreate.data!.customerID;
   }
 
   // Link to auth user
