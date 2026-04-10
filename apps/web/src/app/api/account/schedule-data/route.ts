@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
 import { getsql } from "@/lib/db/connection";
-import { getDb } from "@/lib/db";
+import { getDb, schema } from "@/lib/db";
 import { user as userTable } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { cleancloudProxy } from "@/lib/cleancloud/client";
+import { getStripe } from "@/lib/stripe";
 
 type WindowRow = {
   readonly date: string;
@@ -109,22 +110,56 @@ export async function POST(request: Request) {
     const customer = customerRows[0];
 
     let routeId = customer?.routeId as number | null;
+    let customerAddress = (customer?.address as string) ?? "";
+
+    // If staging table is empty, pull address from Stripe
+    if (!customerAddress) {
+      try {
+        const db = getDb();
+        const stripeCustomer = await db.query.customers.findFirst({
+          where: eq(schema.customers.authUserId, auth.uid),
+        });
+        if (stripeCustomer) {
+          const sc = await getStripe().customers.retrieve(stripeCustomer.stripeCustomerId);
+          if (!sc.deleted) {
+            const addr = sc.shipping?.address;
+            if (addr) {
+              customerAddress = [addr.line1, addr.line2, addr.city, addr.state, addr.postal_code]
+                .filter(Boolean).join(", ");
+            }
+          }
+          // Also check subscription metadata
+          if (!customerAddress) {
+            const subs = await getStripe().subscriptions.list({
+              customer: stripeCustomer.stripeCustomerId,
+              limit: 1,
+            });
+            const sub = subs.data[0];
+            if (sub?.metadata?.pickupAddress) {
+              customerAddress = sub.metadata.pickupAddress;
+            }
+          }
+        }
+      } catch { /* non-critical */ }
+    }
 
     // Auto-resolve route if missing
-    if (!routeId && customer) {
+    if (!routeId) {
       const routeParams: Record<string, unknown> = {};
-      if (customer.lat && customer.lng) {
+      if (customer?.lat && customer?.lng) {
         routeParams.lat = customer.lat;
         routeParams.lng = customer.lng;
-      } else if (customer.address) {
-        routeParams.address = customer.address;
+      } else if (customerAddress) {
+        routeParams.address = customerAddress;
       }
 
       if (Object.keys(routeParams).length > 0) {
-        const routeResult = await cleancloudProxy<{ routeID: number }>("/route", routeParams);
-        if (routeResult.success && routeResult.data?.routeID) {
-          routeId = routeResult.data.routeID;
-        }
+        try {
+          const routeResult = await cleancloudProxy<{ routeID: number }>("/route", routeParams);
+          if (routeResult.success && routeResult.data?.routeID) {
+            routeId = routeResult.data.routeID;
+          }
+        } catch { /* route lookup failed */ }
       }
     }
 
