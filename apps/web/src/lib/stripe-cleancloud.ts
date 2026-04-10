@@ -107,14 +107,18 @@ async function getInvoiceDetails(invoiceId: string): Promise<{
   });
 
   let subscriptionMetadata: Record<string, string> = {};
-  const subscriptionId =
-    invoice.parent?.subscription_details?.subscription;
+  // Support both dahlia (invoice.parent.subscription_details.subscription)
+  // and clover (invoice.subscription) API versions
+  const invoiceAny = invoice as unknown as Record<string, unknown>;
+  const parent = invoiceAny.parent as Record<string, unknown> | undefined;
+  const subDetails = parent?.subscription_details as Record<string, unknown> | undefined;
+  const subscriptionId = subDetails?.subscription ?? invoiceAny.subscription;
   if (subscriptionId) {
     try {
       const subId =
         typeof subscriptionId === "string"
           ? subscriptionId
-          : subscriptionId.id;
+          : (subscriptionId as { id: string }).id;
       const sub = await getStripe().subscriptions.retrieve(subId);
       subscriptionMetadata = (sub.metadata as Record<string, string>) ?? {};
     } catch {

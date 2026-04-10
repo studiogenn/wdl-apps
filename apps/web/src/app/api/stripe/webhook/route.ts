@@ -391,10 +391,17 @@ export async function POST(request: Request) {
 }
 
 function getSubscriptionId(invoice: Stripe.Invoice): string | null {
-  if (invoice.parent?.subscription_details?.subscription) {
-    const sub = invoice.parent.subscription_details.subscription;
-    return typeof sub === "string" ? sub : sub.id;
+  // dahlia+ uses invoice.parent.subscription_details.subscription
+  const invoiceAny = invoice as unknown as Record<string, unknown>;
+  const parent = invoiceAny.parent as Record<string, unknown> | undefined;
+  if (parent?.subscription_details) {
+    const details = parent.subscription_details as Record<string, unknown>;
+    const sub = details.subscription;
+    if (sub) return typeof sub === "string" ? sub : (sub as { id: string }).id;
   }
+  // clover and earlier uses invoice.subscription
+  const legacySub = invoiceAny.subscription;
+  if (legacySub) return typeof legacySub === "string" ? legacySub : (legacySub as { id: string }).id;
   return null;
 }
 
