@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/shared/button-link";
+import { PostCheckoutAccountPrompt } from "@/components/account/post-checkout-prompt";
 
 export const metadata: Metadata = {
   title: "Thank You — Welcome to We Deliver Laundry",
@@ -77,15 +78,8 @@ export default function SubscribeThankYouPage() {
             ))}
           </div>
 
-          {/* CTA */}
-          <ButtonLink href="/account" className="w-full justify-center">
-            Go to My Account
-          </ButtonLink>
-          <div className="mt-3">
-            <ButtonLink href="/" variant="outline" className="w-full justify-center">
-              Back to Home
-            </ButtonLink>
-          </div>
+          {/* Account prompt */}
+          <PostCheckoutAccountPrompt />
         </div>
 
         {/* Footer note */}

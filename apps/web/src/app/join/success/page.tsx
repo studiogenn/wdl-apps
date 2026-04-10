@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ButtonLink } from "@/components/shared/button-link";
+import { PostCheckoutAccountPrompt } from "@/components/account/post-checkout-prompt";
 
 export const metadata: Metadata = {
   title: "Welcome to WDL — You're In",
@@ -18,13 +18,12 @@ export default function JoinSuccessPage() {
       <h1 className="font-heading-medium text-navy text-2xl uppercase text-center mb-2">
         You&apos;re in
       </h1>
-      <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 text-center mb-8 max-w-sm">
-        Your membership is active. Schedule your first pickup from the dashboard — it takes 30 seconds.
+      <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 text-center mb-4 max-w-sm">
+        Your membership is active. Your first pickup is just a few clicks away.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-3">
-        <ButtonLink href="/account?checkout=success">Schedule First Pickup</ButtonLink>
-        <ButtonLink href="/" variant="outline">Back to Home</ButtonLink>
+      <div className="w-full max-w-md">
+        <PostCheckoutAccountPrompt />
       </div>
     </div>
   );

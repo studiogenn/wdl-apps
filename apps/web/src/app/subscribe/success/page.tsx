@@ -1,4 +1,5 @@
 import { ButtonLink, SectionHeader } from "@/components/shared";
+import { PostCheckoutAccountPrompt } from "@/components/account/post-checkout-prompt";
 
 export default function SubscribeSuccessPage() {
   return (
@@ -9,13 +10,8 @@ export default function SubscribeSuccessPage() {
         headingAs="h1"
       />
 
-      <div className="rounded-xl border border-navy/10 bg-white p-8 text-center">
-        <p className="mb-6 font-[family-name:var(--font-poppins)] text-sm text-navy/60">
-          Head to your dashboard to schedule your first pickup or manage your billing.
-        </p>
-        <ButtonLink href="/account">
-          Go to Dashboard
-        </ButtonLink>
+      <div className="rounded-xl border border-navy/10 bg-white p-8">
+        <PostCheckoutAccountPrompt />
       </div>
     </div>
   );

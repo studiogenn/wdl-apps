@@ -1,6 +1,7 @@
 "use client";
 
 import { ButtonLink } from "@/components/shared";
+import { PostCheckoutAccountPrompt } from "@/components/account/post-checkout-prompt";
 
 type ConfirmationProps = {
   readonly customerName?: string;
@@ -97,9 +98,7 @@ export function Confirmation({
         </div>
       )}
 
-      <ButtonLink href="/" className="w-full">
-        Back to Home
-      </ButtonLink>
+      <PostCheckoutAccountPrompt />
     </div>
   );
 }

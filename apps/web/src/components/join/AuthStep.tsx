@@ -219,8 +219,7 @@ export function AuthStep({ onComplete, onBack, defaultAddress }: AuthStepProps) 
             </button>
           </>
         ) : (
-          <>
-            New here?{" "}
+          <span className="flex items-center justify-center gap-3">
             <button
               type="button"
               onClick={() => { setMode("register"); setError(null); }}
@@ -228,7 +227,32 @@ export function AuthStep({ onComplete, onBack, defaultAddress }: AuthStepProps) 
             >
               Create an account
             </button>
-          </>
+            <span className="text-navy/20">|</span>
+            <button
+              type="button"
+              onClick={async () => {
+                if (!email.includes("@")) {
+                  setError("Enter your email above first.");
+                  return;
+                }
+                setLoading(true);
+                try {
+                  await fetch("/api/cleancloud/customers/password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: email.trim() }),
+                  });
+                  setError("Reset link sent! Check your email.");
+                } catch {
+                  setError("Unable to send reset email.");
+                }
+                setLoading(false);
+              }}
+              className="text-navy/50 underline underline-offset-2 hover:text-primary"
+            >
+              Forgot password?
+            </button>
+          </span>
         )}
       </p>
 
