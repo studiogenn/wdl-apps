@@ -182,43 +182,13 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           <span className="block text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">
             Pickup Address
           </span>
-          {/* Zip code */}
-          <div className="mt-2.5">
-            <input
-              type="text"
-              inputMode="numeric"
-              value={s.zip}
-              onChange={(e) => {
-                const val = e.target.value.replace(/\D/g, "").slice(0, 5);
-                update({ zip: val, routeID: null });
-                setZipStatus("idle");
-              }}
-              onBlur={(e) => handleZipBlur(e.target.value)}
-              placeholder="ZIP code"
-              className={cn(
-                "w-full rounded-[14px] border-[1.5px] bg-white px-4 py-3 text-[14px] text-[#0a1580] placeholder:text-[#b0b8cc] focus:outline-none focus:ring-2 focus:ring-primary/15",
-                zipStatus === "valid" ? "border-green-400 focus:border-green-400" :
-                zipStatus === "invalid" ? "border-red-400 focus:border-red-400" :
-                "border-[#e8e5d0] focus:border-primary",
-              )}
-            />
-            {zipStatus === "checking" && (
-              <p className="mt-1 text-[11px] text-[#6b7db3]">Checking service area…</p>
-            )}
-            {zipStatus === "valid" && (
-              <p className="mt-1 text-[11px] text-green-600">Great news — we serve your area!</p>
-            )}
-            {zipStatus === "invalid" && (
-              <p className="mt-1 text-[11px] text-red-500">Sorry, we don&apos;t serve this zip code yet.</p>
-            )}
-          </div>
-          {/* Street address */}
+          {/* Street address — validates route via Mapbox + CleanCloud */}
           <div className="mt-2.5">
             <AddressInput
               value={s.address}
-              onChange={(addr) => update({ address: addr })}
-              onValidated={() => {}}
-              onInvalid={() => {}}
+              onChange={(addr) => update({ address: addr, routeID: null })}
+              onValidated={(id) => update({ routeID: id })}
+              onInvalid={() => update({ routeID: null })}
             />
           </div>
           {/* Apt */}
@@ -411,7 +381,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           perkText="Before any scheduled pickup, add specialty items, care upgrades, or a Bed Refresh. No extra trip needed — just add it to your next pickup."
           ctaLabel={checkoutLoading ? "LOADING…" : "START MY PLAN"}
           ctaVariant="yellow"
-          ctaDisabled={checkoutLoading || s.zip.length !== 5 || s.routeID === null}
+          ctaDisabled={checkoutLoading || s.routeID === null}
           error={checkoutError ?? undefined}
           finePrint="No contracts · Cancel anytime · Free pickup and delivery"
           onCta={onCheckout}
