@@ -15,7 +15,7 @@ import {
   findOrCreateCustomer,
   addOrder,
   getNextPickupDelivery,
-  updateCustomerNotes,
+  cleancloudPost,
 } from "@/lib/cleancloud/client";
 
 // ─── Product mapping ─────────────────────────────────────────────────
@@ -287,8 +287,31 @@ export async function handleInvoicePaid(
     `[Stripe → CleanCloud] Order ${orderId} created for ${customer.email} ($${total})`,
   );
 
-  // 8. Update customer profile notes (care upgrades + driver notes only)
-  if (noteLines.length > 0) {
-    await updateCustomerNotes(cleanCloudCustomerId, noteLines.join("\n"));
+  // 8. Update customer profile with checkout data (address, delivery notes, preferences)
+  try {
+    const profileUpdate: Record<string, unknown> = {
+      customerID: cleanCloudCustomerId,
+    };
+
+    // Address from checkout
+    const pickupAddr = meta.pickupAddress ?? "";
+    const apt = meta.pickupApt ?? "";
+    if (pickupAddr) profileUpdate.customerAddress = pickupAddr;
+    if (apt) profileUpdate.customerApt = apt;
+
+    // Driver/delivery notes
+    if (driverNotes) profileUpdate.deliveryInstructions = driverNotes;
+
+    // Care preferences → customer notes
+    if (noteLines.length > 0) {
+      profileUpdate.customerNotes = noteLines.join("\n");
+    }
+
+    if (Object.keys(profileUpdate).length > 1) {
+      await cleancloudPost("/editCustomer", profileUpdate);
+    }
+  } catch (err) {
+    // Non-critical — profile update can fail silently
+    console.warn("[Stripe → CleanCloud] Profile update failed:", err);
   }
 }

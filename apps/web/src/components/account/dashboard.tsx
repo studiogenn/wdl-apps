@@ -35,7 +35,7 @@ type Order = {
 
 type DashboardData = {
   profile: Profile; preferences: Preferences; delivery: Delivery;
-  orders: readonly Order[]; hasCleanCloud: boolean;
+  orders: readonly Order[]; hasCleanCloud: boolean; hasSubscription: boolean;
 };
 
 type Modal = null | "preferences" | "delivery" | "profile" | "card";
@@ -75,7 +75,6 @@ export function Dashboard({ user }: DashboardProps) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [signingOut, setSigningOut] = useState(false);
-  const [managingAccount, setManagingAccount] = useState(false);
   const [payingOrder, setPayingOrder] = useState<Order | null>(null);
 
   // Draft state for modals
@@ -125,23 +124,6 @@ export function Dashboard({ user }: DashboardProps) {
     setSaving(false);
   }, []);
 
-  const handleManageAccount = useCallback(async () => {
-    setManagingAccount(true);
-    try {
-      const res = await fetch("/api/stripe/portal", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ returnUrl: window.location.href }),
-      });
-      const json = await res.json();
-      if (json.success && json.data.url) {
-        window.location.href = json.data.url;
-        return;
-      }
-    } catch { /* fall through */ }
-    setManagingAccount(false);
-  }, []);
-
   const handleSignOut = useCallback(async () => {
     setSigningOut(true);
     await authClient.signOut();
@@ -160,22 +142,31 @@ export function Dashboard({ user }: DashboardProps) {
   const prefs = data?.preferences ?? { detergent: "", bleach: "", fabricSoftener: "", dryerTemperature: "", dryerSheets: "" };
   const delivery = data?.delivery ?? { gateCode: "", instructions: "", bagLocation: "" };
   const orders = data?.orders ?? [];
+  const hasSubscription = data?.hasSubscription ?? false;
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-10">
 
       {/* ── Quick Actions ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <ButtonLink href="/account/schedule" className="justify-center py-6 text-center">
-          Schedule Pickup
-        </ButtonLink>
-        <ButtonLink href="/order" variant="outline" className="justify-center py-6 text-center">
-          One-Time Order
-        </ButtonLink>
-        <ButtonLink href="/subscriptions" variant="outline" className="justify-center py-6 text-center bg-navy text-white border-navy hover:bg-navy/90">
-          Join a Plan
-        </ButtonLink>
-      </div>
+      {hasSubscription ? (
+        <div>
+          <ButtonLink href="/account/schedule" className="justify-center py-6 text-center w-full">
+            Schedule Pickup
+          </ButtonLink>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <ButtonLink href="/account/schedule" className="justify-center py-6 text-center">
+            Schedule Pickup
+          </ButtonLink>
+          <ButtonLink href="/order" variant="outline" className="justify-center py-6 text-center">
+            One-Time Order
+          </ButtonLink>
+          <ButtonLink href="/subscriptions" variant="outline" className="justify-center py-6 text-center bg-navy text-white border-navy hover:bg-navy/90">
+            Join a Plan
+          </ButtonLink>
+        </div>
+      )}
 
       {/* ── Orders ── */}
       <div className="mt-8">
@@ -340,11 +331,6 @@ export function Dashboard({ user }: DashboardProps) {
             <span className="mx-1.5">·</span>
             <a href="mailto:start@wedeliverlaundry.com" className="hover:text-primary">start@wedeliverlaundry.com</a>
           </p>
-          <div className="mt-3">
-            <Button variant="outline" size="sm" onClick={handleManageAccount} disabled={managingAccount}>
-              {managingAccount ? "Opening..." : "Manage Account"}
-            </Button>
-          </div>
         </div>
       </div>
 

@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { authenticateRequest, isErrorResponse } from "@/lib/auth/middleware";
 import { cleancloudPost } from "@/lib/cleancloud/client";
+import { getStripe } from "@/lib/stripe";
 import { getsql } from "@/lib/db/connection";
-import { getDb } from "@/lib/db";
+import { getDb, schema } from "@/lib/db";
 import { user as userTable } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 async function resolveCleanCloudId(
   userId: string,
@@ -43,6 +44,24 @@ export async function GET(request: Request) {
   const ccId = await resolveCleanCloudId(auth.uid, auth.email, auth.cleancloudCustomerId);
 
   if (!ccId) {
+    // Still check for subscription even without CleanCloud
+    let hasSubscription = false;
+    try {
+      const db = getDb();
+      const customer = await db.query.customers.findFirst({
+        where: eq(schema.customers.authUserId, auth.uid),
+      });
+      if (customer) {
+        const sub = await db.query.subscriptions.findFirst({
+          where: and(
+            eq(schema.subscriptions.customerId, customer.id),
+            eq(schema.subscriptions.status, "active"),
+          ),
+        });
+        hasSubscription = !!sub;
+      }
+    } catch { /* non-critical */ }
+
     return NextResponse.json({
       success: true,
       data: {
@@ -51,6 +70,7 @@ export async function GET(request: Request) {
         delivery: {},
         orders: [],
         hasCleanCloud: false,
+        hasSubscription,
       },
     });
   }
@@ -128,6 +148,35 @@ export async function GET(request: Request) {
 
   const c = customerRows[0] ?? {};
 
+  // Check for active subscription
+  let hasSubscription = false;
+  try {
+    const db = getDb();
+    const customer = await db.query.customers.findFirst({
+      where: eq(schema.customers.authUserId, auth.uid),
+    });
+    if (customer) {
+      const sub = await db.query.subscriptions.findFirst({
+        where: and(
+          eq(schema.subscriptions.customerId, customer.id),
+          eq(schema.subscriptions.status, "active"),
+        ),
+      });
+      hasSubscription = !!sub;
+    }
+    // Fallback to Stripe if local DB doesn't have it
+    if (!hasSubscription && customer) {
+      const stripeSubs = await getStripe().subscriptions.list({
+        customer: customer.stripeCustomerId,
+        status: "active",
+        limit: 1,
+      });
+      hasSubscription = stripeSubs.data.length > 0;
+    }
+  } catch {
+    // Non-critical
+  }
+
   return NextResponse.json({
     success: true,
     data: {
@@ -155,6 +204,7 @@ export async function GET(request: Request) {
       },
       orders: orderRows,
       hasCleanCloud: true,
+      hasSubscription,
     },
   });
 }
