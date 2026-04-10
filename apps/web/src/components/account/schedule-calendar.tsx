@@ -400,6 +400,15 @@ export function ScheduleCalendar({ customerId }: ScheduleCalendarProps) {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
+      <button
+        onClick={() => router.push("/account")}
+        className="mb-4 flex items-center gap-1 font-[family-name:var(--font-poppins)] text-sm text-navy/50 hover:text-primary transition-colors"
+      >
+        <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+          <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd" />
+        </svg>
+        Back to Dashboard
+      </button>
       <div className="flex flex-col md:flex-row rounded-2xl border border-navy/10 bg-white overflow-hidden shadow-sm">
         {/* ─── LEFT: Calendar ──────────────────────────────────────── */}
         <div className="md:w-[340px] shrink-0 border-b md:border-b-0 md:border-r border-navy/10 p-7 flex flex-col gap-5">
