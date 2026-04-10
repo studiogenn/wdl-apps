@@ -301,6 +301,7 @@ export async function addOrder(params: {
   paymentType?: number;
   notifyMethod?: number;
   orderNotes?: string;
+  regularOrder?: number; // 1 = recurring/repeat pickup
   pickupDate?: string;
   pickupStart?: string;
   pickupEnd?: string;
@@ -317,6 +318,7 @@ export async function addOrder(params: {
     paymentType: params.paymentType ?? 2,
     notifyMethod: params.notifyMethod ?? 4,
     orderNotes: params.orderNotes ?? "",
+    ...(params.regularOrder && { regularOrder: params.regularOrder }),
     ...(params.pickupDate && { pickupDate: params.pickupDate }),
     ...(params.pickupStart && { pickupStart: params.pickupStart }),
     ...(params.pickupEnd && { pickupEnd: params.pickupEnd }),

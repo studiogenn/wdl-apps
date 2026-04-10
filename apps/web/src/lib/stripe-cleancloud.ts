@@ -279,6 +279,7 @@ export async function handleInvoicePaid(
     products,
     finalTotal: total.toFixed(2),
     orderNotes: noteLines.join("\n"),
+    ...(repeatPickup === "true" && { regularOrder: 1 }),
     ...schedule,
   });
 

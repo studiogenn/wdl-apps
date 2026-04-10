@@ -70,7 +70,7 @@ export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checko
         </div>
       </div>
 
-      <div className="mx-auto max-w-[500px] px-4 pb-28">
+      <div className="mx-auto max-w-[500px] px-4 pb-8">
 
         {/* When would you like your pickup? */}
         <p className="mt-8 mb-4 text-center text-[15px] text-[#0a1580]">When would you like your pickup?</p>
@@ -159,21 +159,19 @@ export function SchedulePicker({ state, onChange, onNavigate, onCheckout, checko
         )}
 
         {/* Continue button */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white/95 px-4 pb-6 pt-3 backdrop-blur-sm">
-          <div className="mx-auto max-w-[500px]">
-            <button
-              onClick={onCheckout}
-              disabled={!canContinue || checkoutLoading}
-              className={cn(
-                "w-full rounded-[14px] py-4 text-[15px] font-bold uppercase tracking-[1.5px] transition-all",
-                canContinue && !checkoutLoading
-                  ? "bg-[#F9EBAA] text-[#0a1580] hover:bg-[#f0d96a]"
-                  : "bg-[#e8e5d0] text-[#9ca3af] cursor-not-allowed",
-              )}
-            >
-              {checkoutLoading ? "Loading…" : "Continue"}
-            </button>
-          </div>
+        <div className="mt-6">
+          <button
+            onClick={onCheckout}
+            disabled={!canContinue || checkoutLoading}
+            className={cn(
+              "w-full rounded-[14px] py-4 text-[15px] font-bold uppercase tracking-[1.5px] transition-all",
+              canContinue && !checkoutLoading
+                ? "bg-[#F9EBAA] text-[#0a1580] hover:bg-[#f0d96a]"
+                : "bg-[#e8e5d0] text-[#9ca3af] cursor-not-allowed",
+            )}
+          >
+            {checkoutLoading ? "Loading…" : "Continue"}
+          </button>
         </div>
 
         <button

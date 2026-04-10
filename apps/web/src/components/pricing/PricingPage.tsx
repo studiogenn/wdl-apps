@@ -31,7 +31,14 @@ const defaultScheduleState: ScheduleState = {
 };
 
 export function PricingPage() {
-  const [view, setView] = useState<PageView>("home");
+  const [view, setView] = useState<PageView>(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const v = params.get("view");
+      if (v === "schedule" || v === "subscription" || v === "payg") return v;
+    }
+    return "home";
+  });
   const [subState, setSubState] = useState<SubState>(defaultSubState);
   const [paygState, setPaygState] = useState<PaygState>(defaultPaygState);
   const [scheduleState, setScheduleState] = useState<ScheduleState>(defaultScheduleState);
@@ -141,7 +148,7 @@ export function PricingPage() {
           bags: subState.bags,
           frequency: subState.freq,
           successUrl: `${window.location.origin}/subscribe/thank-you`,
-          cancelUrl: `${window.location.origin}/subscriptions`,
+          cancelUrl: `${window.location.origin}/subscriptions?view=schedule`,
           planMetadata,
         }),
       });
