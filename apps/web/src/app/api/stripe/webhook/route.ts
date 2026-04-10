@@ -203,56 +203,63 @@ export async function POST(request: Request) {
       case "invoice.payment_failed": {
         const invoice = event.data.object as Stripe.Invoice;
         if (!invoice.customer) break;
+
+        // Save invoice to local DB (best-effort — don't block CleanCloud order)
         const customerId = await findCustomerByStripeId(invoice.customer as string);
-        if (!customerId) break;
+        if (customerId) {
+          const subId = getSubscriptionId(invoice);
 
-        const subId = getSubscriptionId(invoice);
-
-        await getDb()
-          .insert(schema.invoices)
-          .values({
-            customerId,
-            stripeInvoiceId: invoice.id,
-            stripeSubscriptionId: subId,
-            amountDue: invoice.amount_due,
-            amountPaid: invoice.amount_paid,
-            currency: invoice.currency,
-            status: invoice.status ?? "draft",
-            invoiceUrl: invoice.hosted_invoice_url ?? null,
-            invoicePdf: invoice.invoice_pdf ?? null,
-          })
-          .onConflictDoUpdate({
-            target: schema.invoices.stripeInvoiceId,
-            set: {
+          await getDb()
+            .insert(schema.invoices)
+            .values({
+              customerId,
+              stripeInvoiceId: invoice.id,
+              stripeSubscriptionId: subId,
+              amountDue: invoice.amount_due,
               amountPaid: invoice.amount_paid,
+              currency: invoice.currency,
               status: invoice.status ?? "draft",
               invoiceUrl: invoice.hosted_invoice_url ?? null,
               invoicePdf: invoice.invoice_pdf ?? null,
-            },
-          });
-
-        // Also update subscription period on invoice.paid
-        if (event.type === "invoice.paid" && subId) {
-          const subscription = await getStripe().subscriptions.retrieve(subId);
-          await getDb()
-            .update(schema.subscriptions)
-            .set({
-              status: subscription.status,
-              currentPeriodStart: new Date(invoice.period_start * 1000),
-              currentPeriodEnd: new Date(invoice.period_end * 1000),
-              updatedAt: new Date(),
             })
-            .where(
-              eq(schema.subscriptions.stripeSubscriptionId, subscription.id)
-            );
+            .onConflictDoUpdate({
+              target: schema.invoices.stripeInvoiceId,
+              set: {
+                amountPaid: invoice.amount_paid,
+                status: invoice.status ?? "draft",
+                invoiceUrl: invoice.hosted_invoice_url ?? null,
+                invoicePdf: invoice.invoice_pdf ?? null,
+              },
+            });
+
+          // Also update subscription period on invoice.paid
+          if (event.type === "invoice.paid" && subId) {
+            try {
+              const subscription = await getStripe().subscriptions.retrieve(subId);
+              await getDb()
+                .update(schema.subscriptions)
+                .set({
+                  status: subscription.status,
+                  currentPeriodStart: new Date(invoice.period_start * 1000),
+                  currentPeriodEnd: new Date(invoice.period_end * 1000),
+                  updatedAt: new Date(),
+                })
+                .where(
+                  eq(schema.subscriptions.stripeSubscriptionId, subscription.id)
+                );
+            } catch (err) {
+              console.error("[Webhook] Subscription update failed:", err instanceof Error ? err.message : err);
+            }
+          }
+        } else {
+          console.warn(`[Webhook] No local customer for Stripe ID ${invoice.customer} — skipping invoice DB write, but will still create CleanCloud order`);
         }
 
-        // Create CleanCloud order when invoice is paid
+        // Create CleanCloud order when invoice is paid — ALWAYS runs regardless of local DB state
         if (event.type === "invoice.paid") {
           try {
             await handleInvoicePaid(invoice);
           } catch (err) {
-            // Log but don't fail the webhook — the payment is already recorded
             console.error(
               "[Webhook] CleanCloud order creation failed:",
               err instanceof Error ? err.message : err,
