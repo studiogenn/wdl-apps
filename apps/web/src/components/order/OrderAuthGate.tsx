@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/shared";
+import { AddressInput } from "@/components/account/address-input";
 import Link from "next/link";
 
 type Mode = "login" | "register";
@@ -137,13 +138,11 @@ export function OrderAuthGate({ needsCleanCloud }: OrderAuthGateProps) {
                 placeholder="Phone number"
                 className="w-full rounded-xl border border-navy/15 px-4 py-3 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
-              <input
-                type="text"
+              <AddressInput
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                required
-                placeholder="Pickup address"
-                className="w-full rounded-xl border border-navy/15 px-4 py-3 font-[family-name:var(--font-poppins)] text-sm text-navy placeholder:text-navy/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                onChange={(addr) => setAddress(addr)}
+                onValidated={() => {}}
+                onInvalid={() => {}}
               />
             </>
           )}
