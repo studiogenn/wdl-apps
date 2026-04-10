@@ -95,11 +95,14 @@ export async function POST(request: Request) {
   );
 
   if (!cleancloudCustomerId) {
+    console.log("[Schedule] No CC ID for", auth.email);
     return NextResponse.json(
       { success: false, error: "No CleanCloud account linked. Please update your profile with your address first." },
       { status: 422 },
     );
   }
+
+  console.log("[Schedule] CC ID:", cleancloudCustomerId, "for", auth.email);
 
   // 1. Try to get customer data from staging table
   let customerAddress = "";
@@ -152,13 +155,16 @@ export async function POST(request: Request) {
         } catch { /* non-critical */ }
       }
     }
-  } catch {
-    // Staging table unavailable — will fall back to Stripe
+  } catch (err) {
+    console.log("[Schedule] Staging table error:", err instanceof Error ? err.message : err);
   }
+
+  console.log("[Schedule] After staging: routeId=", routeId, "address=", customerAddress ? "yes" : "no");
 
   // 2. If no address from staging, try Stripe
   if (!customerAddress) {
     customerAddress = await getStripeAddress(auth.uid);
+    console.log("[Schedule] Stripe address:", customerAddress ? customerAddress.slice(0, 30) : "none");
   }
 
   // 3. If still no routeId, resolve from address
@@ -170,6 +176,8 @@ export async function POST(request: Request) {
       if (r.success && r.data?.routeID) routeId = r.data.routeID;
     } catch { /* route lookup failed */ }
   }
+
+  console.log("[Schedule] Final: routeId=", routeId);
 
   if (!routeId) {
     return NextResponse.json(
@@ -198,6 +206,8 @@ export async function POST(request: Request) {
   } catch {
     // Table doesn't exist
   }
+
+  console.log("[Schedule] Internal windows:", windowRows.length);
 
   // Fall back to CleanCloud dates API
   if (windowRows.length === 0) {
