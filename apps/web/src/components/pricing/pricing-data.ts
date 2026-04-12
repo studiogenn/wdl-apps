@@ -41,9 +41,9 @@ export interface CareUpgrade {
 }
 
 export const careUpgrades: CareUpgrade[] = [
-  { id: "deepclean", emoji: "🧼", name: "Deep Clean", price: 9.99, unit: "per bag", note: "Or $1.49/item in a separate disposable bag" },
-  { id: "family", emoji: "👨‍👩‍👧", name: "Family Sort + Hypoallergenic", price: 4.99, unit: "per bag", note: "Sorted by person, fragrance-free detergent" },
-  { id: "premium", emoji: "✨", name: "Premium Care", price: 4.99, unit: "per bag", note: "For delicates — no sorting needed from you" },
+  { id: "deepclean", emoji: "🧼", name: "Deep Clean", price: 9.99, unit: "per load", note: "Or $1.49/item in a separate disposable bag" },
+  { id: "family", emoji: "👨‍👩‍👧", name: "Family Sort + Hypoallergenic", price: 4.99, unit: "per load", note: "Sorted by person, fragrance-free detergent" },
+  { id: "premium", emoji: "✨", name: "Premium Care", price: 4.99, unit: "per load", note: "For delicates — no sorting needed from you" },
 ];
 
 /* ---- Specialty items ---- */

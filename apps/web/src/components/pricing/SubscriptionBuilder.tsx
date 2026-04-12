@@ -74,7 +74,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
 
   const update = (partial: Partial<SubState>) => {
     let next = { ...stateRef.current, ...partial };
-    // Biweekly requires minimum 2 bags
+    // Biweekly requires minimum 2 loads
     if (next.freq === "biweekly" && next.bags < 2) next = { ...next, bags: 2 };
     onChange(next);
   };
@@ -141,7 +141,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
 
   /* ---- Summary lines ---- */
   const lines = [
-    { label: `Laundry (${monthlyBags} bag${monthlyBags > 1 ? "s" : ""}/month)`, value: `${fmt(monthlyBase)}/mo` },
+    { label: `Laundry (${monthlyBags} load${monthlyBags > 1 ? "s" : ""}/month)`, value: `${fmt(monthlyBase)}/mo` },
     ...(s.addBedding ? [{ label: `Bed Refresh (${beddingPickups}x/month)`, value: `${fmt(beddingTotal)}/mo` }] : []),
     ...(careMonthly > 0 ? [{ label: "Care preferences", value: `${fmt(careMonthly)}/mo` }] : []),
   ];
@@ -160,7 +160,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           <div className="mt-5 rounded-[14px] border-[1.5px] border-[#A2D5E6] bg-[#d4eef6] px-4 py-3 text-[13px] leading-relaxed text-[#0a158a]">
             Based on your answers:{" "}
             <strong>
-              {s.bags} bag{s.bags > 1 ? "s" : ""} {freqObj.label.toLowerCase()}
+              {s.bags} load{s.bags > 1 ? "s" : ""} {freqObj.label.toLowerCase()}
             </strong>
             .
             {(s.quizAnswers.baby === "yes" || s.quizAnswers.pets === "yes") && (
@@ -218,7 +218,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
 
         {/* Bags */}
         <span className="block text-[10px] font-semibold uppercase tracking-[2px] text-[#6b7db3]">
-          How many bags per pickup?
+          How many loads per pickup?
         </span>
         <div className="mt-2.5 grid grid-cols-4 gap-2">
           {[1, 2, 3, 4].map((n) => {
@@ -237,7 +237,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
                       : "border-[#e8e5d0] bg-white text-[#0a1580] hover:border-primary hover:bg-[#f0f3ff]",
                 )}
               >
-                {n} {n === 1 ? "bag" : "bags"}
+                {n} {n === 1 ? "load" : "loads"}
                 <span className={cn("mt-1 block text-[10px] font-normal", disabled ? "text-[#c0c0c0]" : s.bags === n ? "text-white/65" : "text-[#6b7db3]")}>
                   {disabled ? "weekly only" : `${n * 15}-${n * 18} lbs`}
                 </span>
@@ -246,7 +246,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           })}
         </div>
         <p className="mt-1.5 mb-4 text-center text-[11px] leading-relaxed text-[#6b7db3]">
-          Each bag holds ~15-18 lbs. Bag zipper must close. Overages billed at $1.99/lb.
+          Each load holds ~15-18 lbs. Bag zipper must close. Overages billed at $1.99/lb.
         </p>
 
         {/* Frequency */}
@@ -277,7 +277,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
         </div>
         {s.freq === "biweekly" ? (
           <p className="mt-2 mb-4 rounded-[10px] border border-[#e8e5d0] bg-[#f5f5f5] px-3 py-2 text-center text-[11px] leading-relaxed text-[#6b7db3]">
-            Biweekly plans require a minimum of 2 bags per pickup — the 1-bag option is not available.
+            Biweekly plans require a minimum of 2 loads per pickup — the 1-load option is not available.
           </p>
         ) : (
           <p className="mt-1.5 mb-4 text-center text-[11px] text-[#6b7db3]">Most popular: every week at $1.95/lb</p>
@@ -306,7 +306,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-1">
                     <span className={cn("text-[13px] font-semibold", isOn ? "text-primary" : "text-[#0a1580]")}>{c.name}</span>
-                    <span className="text-xs text-[#6b7db3]">+${c.price}/bag</span>
+                    <span className="text-xs text-[#6b7db3]">+${c.price}/load</span>
                     {isSuggested && (
                       <span className="rounded-full border border-[#A2D5E6] bg-[#d4eef6] px-2 py-0.5 text-[10px] font-bold text-[#0a158a]">
                         Suggested
@@ -372,7 +372,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
         {/* Summary */}
         <SummaryCard
           planLabel="Your plan"
-          planName={`${s.bags} bag${s.bags > 1 ? "s" : ""} · ${freqObj.label.toLowerCase()}`}
+          planName={`${s.bags} load${s.bags > 1 ? "s" : ""} · ${freqObj.label.toLowerCase()}`}
           priceLabel="per pickup"
           priceBig={fmt(perPickup)}
           priceNote={`${fmt(monthlyTotal)}/month`}

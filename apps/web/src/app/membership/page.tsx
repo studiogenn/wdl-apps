@@ -6,11 +6,11 @@ import { FAQAccordion } from "@/components/shared/faq-accordion";
 export const metadata: Metadata = {
   title: "Membership — How Our Laundry Subscription Works",
   description:
-    "Learn how We Deliver Laundry's subscription plan works. Weekly or biweekly pickup, ~15–18 lbs per bag, free delivery, 24-hour turnaround. No contracts.",
+    "Learn how We Deliver Laundry's subscription plan works. Weekly or biweekly pickup, ~15–18 lbs per load, free delivery, 24-hour turnaround. No contracts.",
   openGraph: {
     title: "We Deliver Laundry — Membership & Subscription Plans",
     description:
-      "Laundry on autopilot. Weekly or biweekly pickup, clean clothes back in 24 hours. From $30.99/bag.",
+      "Laundry on autopilot. Weekly or biweekly pickup, clean clothes back in 24 hours. From $30.99/load.",
     url: "https://wedeliverlaundry.com/membership",
   },
   alternates: {
@@ -47,26 +47,26 @@ const plans = [
     label: "Weekly",
     freq: "4 pickups / month",
     priceFrom: "$30.99",
-    unit: "/bag",
-    note: "From $30.99/bag · Best value",
+    unit: "/load",
+    note: "From $30.99/load · Best value",
     highlight: true,
     perks: [
       "Free pickup & delivery",
-      "~15–18 lbs per bag",
+      "~15–18 lbs per load",
       "24-hour turnaround",
       "Cancel anytime",
     ],
   },
   {
     label: "Biweekly",
-    freq: "2 pickups / month · min. 2 bags required",
+    freq: "2 pickups / month · min. 2 loads required",
     priceFrom: "$34.99",
-    unit: "/bag",
-    note: "$34.99/bag",
+    unit: "/load",
+    note: "$34.99/load",
     highlight: false,
     perks: [
       "Free pickup & delivery",
-      "~15–18 lbs per bag",
+      "~15–18 lbs per load",
       "24-hour turnaround",
       "Cancel anytime",
     ],
@@ -77,19 +77,19 @@ const addOns = [
   {
     emoji: "🧼",
     name: "Deep Clean",
-    price: "$9.99/bag",
+    price: "$9.99/load",
     desc: "Extra detergent pass for heavily soiled loads. Or add per item ($1.49/item) in a separate bag.",
   },
   {
     emoji: "👨‍👩‍👧",
     name: "Family Sort + Hypoallergenic",
-    price: "$4.99/bag",
+    price: "$4.99/load",
     desc: "Clothes sorted by person and washed with fragrance-free, hypoallergenic detergent.",
   },
   {
     emoji: "✨",
     name: "Premium Care",
-    price: "$4.99/bag",
+    price: "$4.99/load",
     desc: "Gentle cycle and premium detergent for delicates. No special sorting needed from you.",
   },
   {
@@ -102,9 +102,9 @@ const addOns = [
 
 const faqs = [
   {
-    question: "How big is a bag?",
+    question: "How much does a load weigh?",
     answer:
-      "Each bag holds roughly 15–18 lbs of laundry — that's about a week's worth of clothes for one person. If you have more, you can add a second bag to your plan.",
+      "Each load holds roughly 15–18 lbs of laundry — that's about a week's worth of clothes for one person. If you have more, you can add a second load to your plan.",
   },
   {
     question: "What do I do if I don't have laundry that week?",
@@ -127,9 +127,9 @@ const faqs = [
       "We use Tide Free & Gentle by default — unscented and hypoallergenic. If you have a preference, note it in your account and we'll do our best to accommodate.",
   },
   {
-    question: "Can I add a second bag later?",
+    question: "Can I add a second load later?",
     answer:
-      "Yes. You can add or remove bags from your plan at any time. Pricing adjusts automatically — 2+ bags/week drops to $30.99/bag.",
+      "Yes. You can add or remove loads from your plan at any time. Pricing adjusts automatically — 2+ loads/week drops to $30.99/load.",
   },
 ];
 
@@ -155,7 +155,7 @@ export default function MembershipPage() {
                 {[
                   "Free pickup & delivery, always",
                   "No contracts — cancel anytime",
-                  "~15–18 lbs per bag",
+                  "~15–18 lbs per load",
                   "24-hour turnaround",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5 font-[family-name:var(--font-poppins)] text-[15px] text-navy/80">
@@ -177,15 +177,15 @@ export default function MembershipPage() {
                 </p>
                 <div className="flex items-end justify-center gap-1 mb-2">
                   <span className="text-[3.5rem] font-body-bold text-navy leading-none">$30.99</span>
-                  <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 mb-2">/bag</span>
+                  <span className="font-[family-name:var(--font-poppins)] text-sm text-navy/60 mb-2">/load</span>
                 </div>
                 <p className="font-[family-name:var(--font-poppins)] text-sm text-navy/50 text-center mb-8">
-                  Weekly plan · 2+ bags
+                  Weekly plan · 2+ loads
                 </p>
                 <div className="border-t border-navy/10 pt-6 space-y-3">
                   {[
-                    ["Weekly", "from $30.99/bag"],
-                    ["Biweekly", "from $34.99/bag"],
+                    ["Weekly", "from $30.99/load"],
+                    ["Biweekly", "from $34.99/load"],
                   ].map(([label, price]) => (
                     <div key={label} className="flex justify-between font-[family-name:var(--font-poppins)] text-sm">
                       <span className="text-navy/70">{label}</span>
@@ -231,7 +231,7 @@ export default function MembershipPage() {
           <SectionHeader
             eyebrow="Plans"
             heading="Pick your frequency"
-            description="All plans include free pickup and delivery. No hidden fees, no delivery charges — just a flat per-bag rate."
+            description="All plans include free pickup and delivery. No hidden fees, no delivery charges — just a flat per-load rate."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[720px] mx-auto">
             {plans.map((plan) => (
@@ -279,12 +279,12 @@ export default function MembershipPage() {
             <div className="flex-1">
               <SectionHeader
                 eyebrow="What's Included"
-                heading="Everything in your bag, handled"
+                heading="Everything in your load, handled"
                 align="left"
                 headingClassName="mb-4"
               />
               <p className="font-[family-name:var(--font-poppins)] text-[15px] text-navy/70 leading-relaxed mb-6">
-                Each bag holds roughly 15–18 lbs — about a week&apos;s worth of everyday clothes for one person.
+                Each load holds roughly 15–18 lbs — about a week&apos;s worth of everyday clothes for one person.
                 We wash, dry, and fold everything neatly. You never need to sort or separate anything.
               </p>
               <ul className="space-y-3">
