@@ -375,7 +375,7 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
           planName={`${s.bags} load${s.bags > 1 ? "s" : ""} · ${freqObj.label.toLowerCase()}`}
           priceLabel="per month"
           priceBig={fmt(monthlyTotal)}
-          priceNote={`${fmt(perPickup)} per pickup`}
+          priceNote={`${fmt(perPickup)}/pickup × ${freqObj.pickups} pickups/month`}
           lines={lines}
           totalLabel="Total/month"
           totalValue={fmt(monthlyTotal)}
