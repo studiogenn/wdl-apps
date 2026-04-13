@@ -239,14 +239,14 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
               >
                 {n} {n === 1 ? "load" : "loads"}
                 <span className={cn("mt-1 block text-[10px] font-normal", disabled ? "text-[#c0c0c0]" : s.bags === n ? "text-white/65" : "text-[#6b7db3]")}>
-                  {disabled ? "weekly only" : `${n * 20} lbs`}
+                  {disabled ? "weekly only" : `${[20, 36, 54, 72][n - 1]} lbs`}
                 </span>
               </button>
             );
           })}
         </div>
         <p className="mt-1.5 mb-4 text-center text-[11px] leading-relaxed text-[#6b7db3]">
-          Each load holds ~20 lbs. Bag zipper must close. Overages billed at $1.99/lb.
+          Each load holds ~20 lbs. Overages billed at $1.99/lb, in the next billing cycle.
         </p>
 
         {/* Frequency */}
