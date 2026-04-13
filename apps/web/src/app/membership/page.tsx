@@ -6,7 +6,7 @@ import { FAQAccordion } from "@/components/shared/faq-accordion";
 export const metadata: Metadata = {
   title: "Membership — How Our Laundry Subscription Works",
   description:
-    "Learn how We Deliver Laundry's subscription plan works. Weekly or biweekly pickup, ~15–18 lbs per load, free delivery, 24-hour turnaround. No contracts.",
+    "Learn how We Deliver Laundry's subscription plan works. Weekly or biweekly pickup, ~20 lbs per load, free delivery, 24-hour turnaround. No contracts.",
   openGraph: {
     title: "We Deliver Laundry — Membership & Subscription Plans",
     description:
@@ -52,7 +52,7 @@ const plans = [
     highlight: true,
     perks: [
       "Free pickup & delivery",
-      "~15–18 lbs per load",
+      "~20 lbs per load",
       "24-hour turnaround",
       "Cancel anytime",
     ],
@@ -66,7 +66,7 @@ const plans = [
     highlight: false,
     perks: [
       "Free pickup & delivery",
-      "~15–18 lbs per load",
+      "~20 lbs per load",
       "24-hour turnaround",
       "Cancel anytime",
     ],
@@ -104,7 +104,7 @@ const faqs = [
   {
     question: "How much does a load weigh?",
     answer:
-      "Each load holds roughly 15–18 lbs of laundry — that's about a week's worth of clothes for one person. If you have more, you can add a second load to your plan.",
+      "Each load holds roughly 20 lbs of laundry — that's about a week's worth of clothes for one person. If you have more, you can add a second load to your plan.",
   },
   {
     question: "What do I do if I don't have laundry that week?",
@@ -155,7 +155,7 @@ export default function MembershipPage() {
                 {[
                   "Free pickup & delivery, always",
                   "No contracts — cancel anytime",
-                  "~15–18 lbs per load",
+                  "~20 lbs per load",
                   "24-hour turnaround",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5 font-[family-name:var(--font-poppins)] text-[15px] text-navy/80">
@@ -284,7 +284,7 @@ export default function MembershipPage() {
                 headingClassName="mb-4"
               />
               <p className="font-[family-name:var(--font-poppins)] text-[15px] text-navy/70 leading-relaxed mb-6">
-                Each load holds roughly 15–18 lbs — about a week&apos;s worth of everyday clothes for one person.
+                Each load holds roughly 20 lbs — about a week&apos;s worth of everyday clothes for one person.
                 We wash, dry, and fold everything neatly. You never need to sort or separate anything.
               </p>
               <ul className="space-y-3">

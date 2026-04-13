@@ -53,7 +53,7 @@ export function HeroSection({ onNavigate, onStartQuiz }: HeroSectionProps) {
             From $30.99/load.
           </h1>
           <p className="mx-auto mb-8 max-w-[320px] text-sm leading-relaxed text-white/70">
-            15-18 lbs per load · Free pickup & delivery · No contracts
+            ~20 lbs per load · Free pickup & delivery · No contracts
           </p>
           <div className="flex flex-col gap-2.5">
             <button
