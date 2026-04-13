@@ -193,7 +193,7 @@ export function PaygBuilder({ state, onChange, onNavigate, onCheckout, checkoutL
             <span className="min-w-[50px] text-right text-[15px] font-bold text-primary">{p.lbs} lbs</span>
           </div>
           <p className="mt-2 text-[11px] leading-snug text-[#6b7db3]">
-            Not sure? An average bag is ~15-18 lbs. You&apos;re only charged for actual weight at pickup.
+            Not sure? An average bag is ~20 lbs. You&apos;re only charged for actual weight at pickup.
           </p>
         </div>
 
