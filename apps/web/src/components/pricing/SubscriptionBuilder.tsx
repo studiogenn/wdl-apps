@@ -373,18 +373,17 @@ export function SubscriptionBuilder({ state, onChange, onNavigate, onCheckout, c
         <SummaryCard
           planLabel="Your plan"
           planName={`${s.bags} load${s.bags > 1 ? "s" : ""} · ${freqObj.label.toLowerCase()}`}
-          priceLabel="per pickup"
-          priceBig={fmt(perPickup)}
-          priceNote={`${fmt(monthlyTotal)}/month`}
+          priceLabel="per month"
+          priceBig={fmt(monthlyTotal)}
+          priceNote={`${fmt(perPickup)} per pickup`}
           lines={lines}
           totalLabel="Total/month"
           totalValue={fmt(monthlyTotal)}
-          perkText="Before any scheduled pickup, add specialty items, care upgrades, or a Bed Refresh. No extra trip needed — just add it to your next pickup."
           ctaLabel={checkoutLoading ? "LOADING…" : "START MY PLAN"}
           ctaVariant="yellow"
           ctaDisabled={checkoutLoading || s.routeID === null}
           error={checkoutError ?? undefined}
-          finePrint="No contracts · Cancel anytime · Free pickup and delivery"
+          finePrint="No contracts · Cancel anytime · Renews automatically"
           onCta={onCheckout}
         />
 

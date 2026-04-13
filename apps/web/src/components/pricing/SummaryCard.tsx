@@ -78,7 +78,7 @@ export function SummaryCard({
                   {priceBig}
                 </div>
                 {priceNote && (
-                  <div className="mt-1 text-[11px] text-white/40">{priceNote}</div>
+                  <div className="mt-1 text-[12px] text-white/60">{priceNote}</div>
                 )}
               </div>
             )}
